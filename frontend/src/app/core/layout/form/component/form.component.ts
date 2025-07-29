@@ -6,12 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import {
-  MatError,
-  MatFormField,
-  MatInput,
-  MatLabel,
-} from '@angular/material/input';
+import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import {
   MatCard,
   MatCardActions,
@@ -44,7 +39,6 @@ type LogInForm = {
 })
 export class FormComponent {
   private readonly formBuilder = inject(NonNullableFormBuilder);
-
 
   protected readonly loginFormGroup = this.formBuilder.group<LogInForm>({
     username: this.formBuilder.control('', [Validators.required]),
