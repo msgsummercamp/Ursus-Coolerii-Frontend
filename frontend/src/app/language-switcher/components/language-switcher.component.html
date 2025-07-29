@@ -1,0 +1,9 @@
+<ng-container *transloco="let translate; prefix: 'language-switcher'">
+    <mat-form-field>
+        <mat-select [value]="currentLanguage" (selectionChange)="onChange($event)">
+            @for (lang of languages; track $index) {
+                <mat-option [value]="lang">{{ translate(lang) }}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+</ng-container>

@@ -2,7 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
-import {environment} from "../../core/environments/environment";
+import {environment} from "../../../environments/environment";
 
 type ResponseType = {
   token: string;

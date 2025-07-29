@@ -19,6 +19,7 @@ import {
   MatCardHeader,
   MatCardTitle,
 } from '@angular/material/card';
+import {TranslocoPipe} from "@jsverse/transloco";
 
 type LogInForm = {
   username: FormControl<string>;
@@ -26,19 +27,20 @@ type LogInForm = {
 
 @Component({
   selector: 'app-form',
-  imports: [
-    MatButton,
-    ReactiveFormsModule,
-    MatInput,
-    MatFormField,
-    MatLabel,
-    MatError,
-    MatCard,
-    MatCardHeader,
-    MatCardTitle,
-    MatCardContent,
-    MatCardActions,
-  ],
+    imports: [
+        MatButton,
+        ReactiveFormsModule,
+        MatInput,
+        MatFormField,
+        MatLabel,
+        MatError,
+        MatCard,
+        MatCardHeader,
+        MatCardTitle,
+        MatCardContent,
+        MatCardActions,
+        TranslocoPipe,
+    ],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
 })
