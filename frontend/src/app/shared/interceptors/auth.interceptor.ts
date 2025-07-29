@@ -1,9 +1,11 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 import { inject } from '@angular/core';
+import {environment} from "../../core/environments/environment";
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const skipUrls = ['https://dog.ceo/api/breeds/image/random'];
+  const authUrl = environment.apiURL + "/auth";
+  const skipUrls = [authUrl];
   const authService = inject(AuthService);
   const token = authService.getToken();
 
