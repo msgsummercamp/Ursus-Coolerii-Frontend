@@ -2,6 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
+import {environment} from "../../core/environments/environment";
 
 type ResponseType = {
   token: string;
@@ -22,12 +23,12 @@ export class AuthService {
   private readonly router = inject(Router);
   private readonly http = inject(HttpClient);
   private readonly cookieService = inject(CookieService);
-  private readonly API_URL = 'http://localhost:8080';
+  private readonly API_URL = environment.apiURL;
 
   constructor() {
     if (this.cookieService.get('token') != '') {
       this._isLoggedIn.set(true);
-      this.router.navigate(['/home']);
+      this.router.navigate(['/form']);
     }
   }
 
@@ -38,7 +39,7 @@ export class AuthService {
         next: (response) => {
           this.cookieService.set('token', response.token);
           this._isLoggedIn.set(true);
-          this.router.navigate(['/home']);
+          this.router.navigate(['/form']);
         },
       });
   }
