@@ -1,30 +1,25 @@
-import {Component, inject} from '@angular/core';
-import {TranslocoDirective} from "@jsverse/transloco";
-import {MatFormField} from "@angular/material/input";
-import {MatSelect, MatSelectChange} from "@angular/material/select";
-import {MatOption} from "@angular/material/core";
-import {LanguageSwitcherService} from "../services/language-switcher.service";
+import { Component, inject } from '@angular/core';
+import { TranslocoDirective } from '@jsverse/transloco';
+import { LanguageSwitcherService } from '../services/language-switcher.service';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
-    selector: 'app-language-switcher',
-    imports: [
-        MatFormField,
-        MatSelect,
-        MatOption,
-        TranslocoDirective,
-    ],
-    providers: [LanguageSwitcherService],
-    templateUrl: './language-switcher.component.html',
-    styleUrl: './language-switcher.component.scss'
+  selector: 'app-language-switcher',
+  imports: [TranslocoDirective, MatMenu, MatMenuItem, MatMenuTrigger, MatIconButton, MatIcon],
+  providers: [LanguageSwitcherService],
+  templateUrl: './language-switcher.component.html',
+  styleUrl: './language-switcher.component.scss',
 })
 export class LanguageSwitcherComponent {
-    // DI
-    private languageSwitcherService = inject(LanguageSwitcherService);
+  // DI
+  private languageSwitcherService = inject(LanguageSwitcherService);
 
-    protected languages = this.languageSwitcherService.languages();
-    protected currentLanguage = this.languageSwitcherService.currentLanguage();
+  protected languages = this.languageSwitcherService.languages();
+  protected currentLanguage = this.languageSwitcherService.currentLanguage();
 
-    public onChange(event: MatSelectChange): void {
-        this.languageSwitcherService.setCurrentLanguage(event.value);
-    }
+  public selectLanguage(lang: string): void {
+    this.languageSwitcherService.setCurrentLanguage(lang);
+  }
 }
