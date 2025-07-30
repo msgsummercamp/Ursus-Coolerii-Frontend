@@ -1,1 +1,21 @@
-<p>stepper works!</p>
+<mat-stepper #stepper *transloco="let translate; prefix: 'stepper'" linear>
+  <mat-step [stepControl]="testForm.firstFormGroup">
+    <ng-template matStepLabel>{{ translate('flight-details') }}</ng-template>
+    <app-test-form #testForm (nextForm)="stepper.next()"></app-test-form>
+    <button mat-button (click)="stepper.previous()">{{ translate('back') }}</button>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>{{ translate('passenger-details') }}</ng-template>
+    <button mat-button (click)="stepper.previous()">{{ translate('back') }}</button>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>{{ translate('documents') }}</ng-template>
+    <button mat-button (click)="stepper.previous()">{{ translate('back') }}</button>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>{{ translate('done') }}</ng-template>
+    <p>{{ translate('finish-message') }}</p>
+    <button mat-button (click)="stepper.previous()">{{ translate('back') }}</button>
+    <button mat-button (click)="stepper.reset()">{{ translate('reset') }}</button>
+  </mat-step>
+</mat-stepper>

@@ -3,5 +3,15 @@
   "language-switcher": {
     "en": "English",
     "ro": "Romanian"
+  },
+  "stepper": {
+    "flight-details": "Flight Details",
+    "passenger-details": "Passenger Details",
+    "documents": "Documents",
+    "done": "Done",
+    "next": "Next",
+    "back": "Back",
+    "reset": "Reset",
+    "finish-message": "You are done"
   }
 }

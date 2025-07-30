@@ -3,5 +3,15 @@
   "language-switcher": {
     "en": "Engleză",
     "ro": "Română"
+  },
+  "stepper": {
+    "flight-details": "Detaliile Zborului",
+    "passenger-details": "Detaliile Pasagerului",
+    "documents": "Documente",
+    "done": "Gata",
+    "next": "Mai departe",
+    "back": "Înapoi",
+    "reset": "Resetează",
+    "finish-message": "Ați terminat"
   }
 }
