@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, Signal, viewChild } from '@angular/core';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -23,9 +23,8 @@ import { TestFormComponent } from '../../../test-form/test-form.component';
   styleUrl: './stepper.component.scss',
 })
 export class StepperComponent {
-  protected step1Completed = signal(false);
-
-  protected isValid() {
-    this.step1Completed.set(true);
-  }
+  private flightDetailsForm = viewChild(TestFormComponent);
+  protected flightDetailsFormCompleted: Signal<boolean | undefined> = computed(() =>
+    this.flightDetailsForm()?.isValid()
+  );
 }
