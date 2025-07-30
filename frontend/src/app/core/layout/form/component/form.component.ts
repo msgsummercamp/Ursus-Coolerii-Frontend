@@ -6,12 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import {
-  MatError,
-  MatFormField,
-  MatInput,
-  MatLabel,
-} from '@angular/material/input';
+import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import {
   MatCard,
   MatCardActions,
@@ -19,6 +14,7 @@ import {
   MatCardHeader,
   MatCardTitle,
 } from '@angular/material/card';
+import {TranslocoPipe} from "@jsverse/transloco";
 
 type LogInForm = {
   username: FormControl<string>;
@@ -26,25 +22,25 @@ type LogInForm = {
 
 @Component({
   selector: 'app-form',
-  imports: [
-    MatButton,
-    ReactiveFormsModule,
-    MatInput,
-    MatFormField,
-    MatLabel,
-    MatError,
-    MatCard,
-    MatCardHeader,
-    MatCardTitle,
-    MatCardContent,
-    MatCardActions,
-  ],
+    imports: [
+        MatButton,
+        ReactiveFormsModule,
+        MatInput,
+        MatFormField,
+        MatLabel,
+        MatError,
+        MatCard,
+        MatCardHeader,
+        MatCardTitle,
+        MatCardContent,
+        MatCardActions,
+        TranslocoPipe,
+    ],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
 })
 export class FormComponent {
   private readonly formBuilder = inject(NonNullableFormBuilder);
-
 
   protected readonly loginFormGroup = this.formBuilder.group<LogInForm>({
     username: this.formBuilder.control('', [Validators.required]),
