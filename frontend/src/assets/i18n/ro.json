@@ -2,7 +2,9 @@
   "form": "Formular",
   "language-switcher": {
     "en": "Engleză",
-    "ro": "Română"
+    "ro": "Română",
+    "hu": "Maghiară",
+    "de": "Germană"
   },
   "stepper": {
     "flight-details": "Detaliile Zborului",
@@ -13,5 +15,16 @@
     "back": "Înapoi",
     "reset": "Resetează",
     "finish-message": "Ați terminat"
+  },
+
+  "passenger-details": {
+    "title": "Detalii Pasager",
+    "firstName": "Prenume",
+    "lastName": "Nume",
+    "dateOfBirth": "Data nașterii",
+    "phoneNumber": "Număr de telefon",
+    "address": "Adresă",
+    "postalCode": "Cod poștal",
+    "next": "Următorul"
   }
 }
