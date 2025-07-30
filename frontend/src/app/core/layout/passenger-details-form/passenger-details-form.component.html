@@ -1,4 +1,6 @@
 <form [formGroup]="passengerDetailsForm" (ngSubmit)="onFormSubmit()" class="passenger-form">
+    <h2 class="mat-headline-5">Passenger Details</h2>
+
     <mat-form-field appearance="fill">
         <mat-label>Firstname</mat-label>
         <input matInput formControlName="firstName" type="text" id="firstName"/>
@@ -49,5 +51,8 @@
             <mat-error>Postal code is required!</mat-error>
         }
     </mat-form-field>
-    <button type="button" [disabled]="!passengerDetailsForm.valid">Next</button>
+
+  <div class="form-actions">
+    <button mat-button type="button" [disabled]="!passengerDetailsForm.valid">Next</button>
+  </div>
 </form>

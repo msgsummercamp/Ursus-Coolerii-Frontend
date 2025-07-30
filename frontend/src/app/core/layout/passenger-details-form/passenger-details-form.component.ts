@@ -18,11 +18,12 @@ import {
   MatDatepickerInput,
   MatDatepickerToggle,
 } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
 
 type PassengerDetailsForm = {
   firstName: FormControl<string>;
   lastName: FormControl<string>;
-  dateOfBirth: FormControl<Date | null>;
+  dateOfBirth: FormControl<Date>;
   phoneNumber: FormControl<string>;
   address: FormControl<string>;
   postalCode: FormControl<string>;
@@ -41,26 +42,26 @@ type PassengerDetailsForm = {
     MatDatepicker,
     MatHint,
     MatSuffix,
+    MatButton,
   ],
   templateUrl: './passenger-details-form.component.html',
   styleUrl: './passenger-details-form.component.scss',
 })
 export class PassengerDetailsFormComponent {
-  private readonly _formBuilder = inject(NonNullableFormBuilder);
-  protected readonly passengerDetailsForm = this._formBuilder.group<PassengerDetailsForm>({
-    firstName: this._formBuilder.control('', Validators.required),
-    lastName: this._formBuilder.control('', Validators.required),
-    dateOfBirth: this._formBuilder.control<Date | null>(null, Validators.required),
-    phoneNumber: this._formBuilder.control('', Validators.required),
-    address: this._formBuilder.control('', Validators.required),
-    postalCode: this._formBuilder.control('', Validators.required),
+  private readonly formBuilder = inject(NonNullableFormBuilder);
+  protected readonly passengerDetailsForm = this.formBuilder.group<PassengerDetailsForm>({
+    firstName: this.formBuilder.control('', Validators.required),
+    lastName: this.formBuilder.control('', Validators.required),
+    dateOfBirth: this.formBuilder.control<Date>(new Date(), Validators.required),
+    phoneNumber: this.formBuilder.control('', Validators.required),
+    address: this.formBuilder.control('', Validators.required),
+    postalCode: this.formBuilder.control('', Validators.required),
   });
 
-  onFormSubmit(): void {
+  protected onFormSubmit(): void {
     if (this.passengerDetailsForm.valid) {
       const formData = this.passengerDetailsForm.getRawValue();
       console.log('Form submitted successfully:', formData);
-      // Here you can handle the form submission, e.g., send data to a server
     } else {
       console.error('Form is invalid');
     }
