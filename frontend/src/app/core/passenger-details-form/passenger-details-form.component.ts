@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, output, signal } from '@angular/core';
 import {
   FormControl,
   NonNullableFormBuilder,
@@ -19,6 +19,7 @@ import {
   MatDatepickerToggle,
 } from '@angular/material/datepicker';
 import { MatButton } from '@angular/material/button';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 type PassengerDetailsForm = {
   firstName: FormControl<string>;
@@ -43,12 +44,15 @@ type PassengerDetailsForm = {
     MatHint,
     MatSuffix,
     MatButton,
+    TranslocoDirective,
   ],
   templateUrl: './passenger-details-form.component.html',
   styleUrl: './passenger-details-form.component.scss',
 })
-export class PassengerDetailsFormComponent {
+export class PassengerDetailsFormComponent implements OnInit {
   private readonly formBuilder = inject(NonNullableFormBuilder);
+  private readonly _isValid = signal(false);
+
   protected readonly passengerDetailsForm = this.formBuilder.group<PassengerDetailsForm>({
     firstName: this.formBuilder.control('', Validators.required),
     lastName: this.formBuilder.control('', Validators.required),
@@ -58,12 +62,16 @@ export class PassengerDetailsFormComponent {
     postalCode: this.formBuilder.control('', Validators.required),
   });
 
-  protected onFormSubmit(): void {
-    if (this.passengerDetailsForm.valid) {
-      const formData = this.passengerDetailsForm.getRawValue();
-      console.log('Form submitted successfully:', formData);
-    } else {
-      console.error('Form is invalid');
-    }
+  public readonly isValid = this._isValid.asReadonly();
+  public readonly continue = output<void>();
+
+  ngOnInit() {
+    this.passengerDetailsForm.statusChanges.subscribe((status) => {
+      this._isValid.set(status === 'VALID');
+    });
+  }
+
+  protected next() {
+    this.continue.emit();
   }
 }

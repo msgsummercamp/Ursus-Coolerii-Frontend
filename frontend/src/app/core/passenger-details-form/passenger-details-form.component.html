@@ -1,0 +1,62 @@
+<form [formGroup]="passengerDetailsForm" class="passenger-form">
+  <mat-form-field appearance="fill">
+    <mat-label>Firstname</mat-label>
+    <input matInput formControlName="firstName" type="text" id="firstName" />
+    @if (passengerDetailsForm.controls.firstName.errors?.['required']) {
+      <mat-error>Firstname is required!</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Lastname</mat-label>
+    <input matInput formControlName="lastName" type="text" id="lastName" />
+    @if (passengerDetailsForm.controls.lastName.errors?.['required']) {
+      <mat-error>Lastname is required!</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Date of Birth</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" id="dateOfBirth" />
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker" />
+    <mat-datepicker #picker />
+    @if (passengerDetailsForm.controls.dateOfBirth.errors?.['required']) {
+      <mat-error>Date is required!</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Phone Number</mat-label>
+    <input matInput formControlName="phoneNumber" type="tel" id="phoneNumber" />
+    @if (passengerDetailsForm.controls.phoneNumber.errors?.['required']) {
+      <mat-error>Phone number is required!</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Address</mat-label>
+    <input matInput formControlName="address" type="text" id="address" />
+    @if (passengerDetailsForm.controls.address.errors?.['required']) {
+      <mat-error>Address is required!</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Postal Code</mat-label>
+    <input matInput formControlName="postalCode" type="text" id="postalCode" />
+    @if (passengerDetailsForm.controls.postalCode.errors?.['required']) {
+      <mat-error>Postal code is required!</mat-error>
+    }
+  </mat-form-field>
+
+  <div *transloco="let translate; prefix: 'stepper'">
+    <button
+      class="form-actions"
+      mat-button
+      [disabled]="passengerDetailsForm.invalid"
+      (click)="next()"
+      >{{ translate('next') }}</button
+    >
+  </div>
+</form>
