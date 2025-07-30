@@ -3,5 +3,26 @@
   "language-switcher": {
     "en": "Engleză",
     "ro": "Română"
+  },
+  "flightDetails": {
+    "title": "Detalii Zbor",
+    "flightDate": "Data Zborului",
+    "flightNr": "Nr. Zbor",
+    "airline": "Companie Aeriană",
+    "reservationNumber": "Număr Rezervare",
+    "departingAirport": "Aeroport de Plecare",
+    "destinationAirport": "Aeroport de Destinație",
+    "plannedDepartureDate": "Data Planificată de Plecare",
+    "plannedDepartureTime": "Ora Planificată de Plecare",
+    "plannedArrivalDate": "Data Planificată de Sosire",
+    "plannedArrivalTime": "Ora Planificată de Sosire",
+    "connectingFlight": "Zbor de Legătură",
+    "noConnectingFlight": "Fără Zboruri de Legătură",
+    "typeFlightNr": "Introduceți Numărul Zborului...",
+    "typeAirline": "Introduceți Compania Aeriană...",
+    "searchAirport": "Caută Aeroport...",
+    "searchConnectingFlights": "Caută Zboruri de Legătură...",
+    "next": "Următorul Pas",
+    "add": "Adaugă Zbor de Legătură"
   }
 }
