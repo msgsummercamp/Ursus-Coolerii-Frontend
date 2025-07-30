@@ -19,6 +19,7 @@ import {
   MatDatepickerToggle,
 } from '@angular/material/datepicker';
 import { MatButton } from '@angular/material/button';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 type PassengerDetailsForm = {
   firstName: FormControl<string>;
@@ -43,6 +44,7 @@ type PassengerDetailsForm = {
     MatHint,
     MatSuffix,
     MatButton,
+    TranslocoDirective,
   ],
   templateUrl: './passenger-details-form.component.html',
   styleUrl: './passenger-details-form.component.scss',

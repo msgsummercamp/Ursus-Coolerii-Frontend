@@ -1,0 +1,20 @@
+{
+  "form": "Form",
+  "language-switcher": {
+    "en": "Angol",
+    "ro": "Román",
+    "hu": "Magyar",
+    "de": "Német"
+  },
+
+  "passenger-details": {
+    "title": "Utas adatai",
+    "firstName": "Keresztnév",
+    "lastName": "Vezetéknév",
+    "dateOfBirth": "Születési dátum",
+    "phoneNumber": "Telefonszám",
+    "address": "Cím",
+    "postalCode": "Irányítószám",
+    "next": "Tovább"
+  }
+}
