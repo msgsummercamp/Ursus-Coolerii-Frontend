@@ -5,8 +5,10 @@
   </mat-step>
   <mat-step [completed]="passengerDetailsFormCompleted()">
     <ng-template matStepLabel>{{ translate('passenger-details') }}</ng-template>
-    <app-passenger-details-form (continue)="stepper.next()"></app-passenger-details-form>
-    <button mat-button (click)="stepper.previous()">{{ translate('back') }}</button>
+    <app-passenger-details-form
+      (next)="stepper.next()"
+      (previous)="stepper.previous()"
+    ></app-passenger-details-form>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>{{ translate('documents') }}</ng-template>

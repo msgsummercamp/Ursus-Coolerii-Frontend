@@ -55,8 +55,9 @@
       class="form-actions"
       mat-button
       [disabled]="passengerDetailsForm.invalid"
-      (click)="next()"
+      (click)="continue()"
       >{{ translate('next') }}</button
     >
+    <button class="form-actions" mat-button (click)="back()">{{ translate('back') }}</button>
   </div>
 </form>

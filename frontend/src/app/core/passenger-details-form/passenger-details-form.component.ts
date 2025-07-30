@@ -63,7 +63,8 @@ export class PassengerDetailsFormComponent implements OnInit {
   });
 
   public readonly isValid = this._isValid.asReadonly();
-  public readonly continue = output<void>();
+  public readonly next = output<void>();
+  public readonly previous = output<void>();
 
   ngOnInit() {
     this.passengerDetailsForm.statusChanges.subscribe((status) => {
@@ -71,7 +72,11 @@ export class PassengerDetailsFormComponent implements OnInit {
     });
   }
 
-  protected next() {
-    this.continue.emit();
+  protected continue() {
+    this.next.emit();
+  }
+
+  protected back() {
+    this.previous.emit();
   }
 }
