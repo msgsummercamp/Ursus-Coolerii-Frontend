@@ -16,7 +16,6 @@
     "reset": "Reset",
     "finish-message": "You are done"
   },
-
   "passenger-details": {
     "title": "Passenger Details",
     "firstName": "First Name",
