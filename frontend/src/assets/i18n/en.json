@@ -2,6 +2,19 @@
   "form": "Form",
   "language-switcher": {
     "en": "English",
-    "ro": "Romanian"
+    "ro": "Romanian",
+    "hu": "Hungarian",
+    "de": "German"
+  },
+
+  "passenger-details": {
+    "title": "Passenger Details",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "dateOfBirth": "Date of Birth",
+    "phoneNumber": "Phone Number",
+    "address": "Address",
+    "postalCode": "Postal Code",
+    "next": "Next"
   }
 }
