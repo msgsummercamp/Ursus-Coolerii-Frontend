@@ -6,6 +6,16 @@
     "hu": "Ungarisch",
     "de": "Deutsch"
   },
+  "stepper": {
+    "flight-details": "Flugdetails",
+    "passenger-details": "Passagierdetails",
+    "documents": "Dokumente",
+    "done": "Fertig",
+    "next": "Weiter",
+    "back": "Zurück",
+    "reset": "Zurücksetzen",
+    "finish-message": "Sie sind fertig"
+  },
   "passenger-details": {
     "title": "Passagierdetails",
     "firstName": "Vorname",

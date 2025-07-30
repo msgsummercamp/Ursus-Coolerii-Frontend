@@ -1,12 +1,21 @@
 {
-  "form": "Form",
+  "form": "Űrlap",
   "language-switcher": {
     "en": "Angol",
     "ro": "Román",
     "hu": "Magyar",
     "de": "Német"
   },
-
+  "stepper": {
+    "flight-details": "Járat részletei",
+    "passenger-details": "Utas adatai",
+    "documents": "Dokumentumok",
+    "done": "Kész",
+    "next": "Tovább",
+    "back": "Vissza",
+    "reset": "Visszaállítás",
+    "finish-message": "Készen van"
+  },
   "passenger-details": {
     "title": "Utas adatai",
     "firstName": "Keresztnév",
