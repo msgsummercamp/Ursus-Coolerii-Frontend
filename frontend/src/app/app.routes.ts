@@ -6,7 +6,7 @@ export const routes: Routes = [
   {
     path: 'form',
     loadComponent: () =>
-      import('./core/layout/form/component/form.component').then((m) => m.FormComponent),
+      import('./core/stepper/component/stepper.component').then((m) => m.StepperComponent),
   },
   { path: '**', component: NotFoundComponent },
 ];
