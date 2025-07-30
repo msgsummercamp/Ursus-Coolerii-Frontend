@@ -19,12 +19,12 @@ import {LanguageSwitcherService} from "../services/language-switcher.service";
 })
 export class LanguageSwitcherComponent {
     // DI
-    private _languageSwitcherService = inject(LanguageSwitcherService);
+    private languageSwitcherService = inject(LanguageSwitcherService);
 
-    protected languages = this._languageSwitcherService.languages();
-    protected currentLanguage = this._languageSwitcherService.currentLanguage();
+    protected languages = this.languageSwitcherService.languages();
+    protected currentLanguage = this.languageSwitcherService.currentLanguage();
 
     public onChange(event: MatSelectChange): void {
-        this._languageSwitcherService.setCurrentLanguage(event.value);
+        this.languageSwitcherService.setCurrentLanguage(event.value);
     }
 }

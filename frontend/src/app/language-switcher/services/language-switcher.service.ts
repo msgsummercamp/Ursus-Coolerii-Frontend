@@ -13,39 +13,40 @@ export class LanguageSwitcherService {
     languages: Signal<string[]>;
     currentLanguage: Signal<string>;
 
-    private _translocoService = inject(TranslocoService);
+    private translocoService = inject(TranslocoService);
 
-    private _initialState: LanguagesState = {
+    private initialState: LanguagesState = {
         languages: [],
         currentLanguage: ''
     }
-    private _state = signal(this._initialState);
+    private state = signal(this.initialState);
 
+    constructor() {
+        this.languages = computed(() => this.state().languages);
+        this.currentLanguage = computed(() => this.state().currentLanguage);
 
-    setLanguages(languages: string[]): void {
-        this._state.update(state => ({
+        this.translocoService.langChanges$.pipe(
+            switchMap((lang) => this.translocoService.selectTranslation(lang),
+            ), takeUntilDestroyed()).subscribe()
+
+        this.setLanguages(this.translocoService.getAvailableLangs() as string[]);
+        this.setCurrentLanguage(this.translocoService.getActiveLang());
+    }
+
+    public setLanguages(languages: string[]): void {
+        this.state.update(state => ({
             ...state,
             languages: languages
         }));
     }
 
-    setCurrentLanguage(language: string): void {
-        this._state.update(state => ({
+    public setCurrentLanguage(language: string): void {
+        this.state.update(state => ({
             ...state,
             currentLanguage: language
         }));
-        this._translocoService.setActiveLang(this._state().currentLanguage);
+        this.translocoService.setActiveLang(this.state().currentLanguage);
     }
 
-    constructor() {
-        this.languages = computed(() => this._state().languages);
-        this.currentLanguage = computed(() => this._state().currentLanguage);
 
-        this._translocoService.langChanges$.pipe(
-            switchMap((lang) => this._translocoService.selectTranslation(lang),
-            ), takeUntilDestroyed()).subscribe()
-
-        this.setLanguages(this._translocoService.getAvailableLangs() as string[]);
-        this.setCurrentLanguage(this._translocoService.getActiveLang());
-    }
 }
