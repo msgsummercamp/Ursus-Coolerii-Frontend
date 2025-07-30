@@ -1,0 +1,47 @@
+.passenger-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  max-width: 80vw;
+  margin: 4vh auto;
+  padding: 4em;
+  background: #f9f9f9;
+  border-radius: 1em;
+  box-shadow: 0 0.5em 2em rgba(0,0,0,0.05);
+
+  label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    color: #333;
+
+    input {
+      margin-top: 1em;
+      padding: 1em;
+      border: 0.1em solid #ccc;
+      border-radius: 0.5em;
+      font-size: 1em;
+    }
+  }
+
+  button {
+    padding: 1.5em;
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    border-radius: 0.5em;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:disabled {
+      background: #bdbdbd;
+      cursor: not-allowed;
+    }
+  }
+  .error{
+    color: red;
+    font-size: 0.9em;
+    margin-top: 0.5em;
+  }
+}
