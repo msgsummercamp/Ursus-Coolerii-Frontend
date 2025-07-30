@@ -24,5 +24,25 @@
     "searchConnectingFlights": "Search Connecting Flights...",
     "next": "Next",
     "add": "Add Connecting Flight"
+  },
+  "stepper": {
+    "flight-details": "Flight Details",
+    "passenger-details": "Passenger Details",
+    "documents": "Documents",
+    "done": "Done",
+    "next": "Next",
+    "back": "Back",
+    "reset": "Reset",
+    "finish-message": "You are done"
+  },
+  "passenger-details": {
+    "title": "Passenger Details",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "dateOfBirth": "Date of Birth",
+    "phoneNumber": "Phone Number",
+    "address": "Address",
+    "postalCode": "Postal Code",
+    "next": "Next"
   }
 }

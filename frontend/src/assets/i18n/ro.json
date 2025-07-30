@@ -24,5 +24,27 @@
     "searchConnectingFlights": "Caută Zboruri de Legătură...",
     "next": "Următorul Pas",
     "add": "Adaugă Zbor de Legătură"
+
+  },
+  "stepper": {
+    "flight-details": "Detaliile Zborului",
+    "passenger-details": "Detaliile Pasagerului",
+    "documents": "Documente",
+    "done": "Gata",
+    "next": "Mai departe",
+    "back": "Înapoi",
+    "reset": "Resetează",
+    "finish-message": "Ați terminat"
+  },
+
+  "passenger-details": {
+    "title": "Detalii Pasager",
+    "firstName": "Prenume",
+    "lastName": "Nume",
+    "dateOfBirth": "Data nașterii",
+    "phoneNumber": "Număr de telefon",
+    "address": "Adresă",
+    "postalCode": "Cod poștal",
+    "next": "Următorul"
   }
 }
