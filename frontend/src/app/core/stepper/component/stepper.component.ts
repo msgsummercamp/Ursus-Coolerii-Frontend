@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,4 +22,10 @@ import { TestFormComponent } from '../../../test-form/test-form.component';
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss',
 })
-export class StepperComponent {}
+export class StepperComponent {
+  protected step1Completed = signal(false);
+
+  protected isValid() {
+    this.step1Completed.set(true);
+  }
+}

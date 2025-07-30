@@ -1,7 +1,7 @@
 <mat-stepper #stepper *transloco="let translate; prefix: 'stepper'" linear>
-  <mat-step [stepControl]="testForm.firstFormGroup">
+  <mat-step [completed]="step1Completed()">
     <ng-template matStepLabel>{{ translate('flight-details') }}</ng-template>
-    <app-test-form #testForm (nextForm)="stepper.next()"></app-test-form>
+    <app-test-form (isValid)="isValid()" (nextForm)="stepper.next()"></app-test-form>
     <button mat-button (click)="stepper.previous()">{{ translate('back') }}</button>
   </mat-step>
   <mat-step>
