@@ -7,7 +7,7 @@
   padding: 4em;
   background: var(--mat-sys-primary-container);
   border-radius: 1em;
-  box-shadow: 0 0.5em 2em rgba(0,0,0,0.05);
+  box-shadow: 0 0.5em 2em rgba(0, 0, 0, 0.05);
 
   label {
     display: flex;
@@ -21,16 +21,10 @@
     }
   }
 
-  .error{
-    color: red;
-    font-size: 0.9em;
-    margin-top: 0.5em;
-  }
-
-  .form-actions{
+  .form-actions {
     display: flex;
     justify-content: center;
-    margin-top:2rem;
+    margin-top: 2rem;
 
     button {
       padding: 0.75rem 6rem;
@@ -39,11 +33,13 @@
       border: none;
       border-radius: 0.5rem;
       cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s;
+      transition:
+        background-color 0.3s ease,
+        transform 0.2s;
       background-color: #a6eb55;
       color: #1a3547;
 
-      &:hover{
+      &:hover {
         background-color: darken(#a6eb55, 5%);
         transform: scale(1.03);
       }
