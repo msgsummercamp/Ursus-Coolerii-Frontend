@@ -1,18 +1,15 @@
 <mat-stepper #stepper *transloco="let translate; prefix: 'stepper'" linear>
   <mat-step [completed]="flightDetailsFormCompleted()">
     <ng-template matStepLabel>{{ translate('flight-details') }}</ng-template>
-    <app-flight-details-form (next)="stepper.next()"></app-flight-details-form>
+    <app-flight-details-form (next)="stepper.next()" />
   </mat-step>
   <mat-step [completed]="passengerDetailsFormCompleted()">
     <ng-template matStepLabel>{{ translate('passenger-details') }}</ng-template>
-    <app-passenger-details-form
-      (next)="stepper.next()"
-      (previous)="stepper.previous()"
-    ></app-passenger-details-form>
+    <app-passenger-details-form (next)="stepper.next()" (previous)="stepper.previous()" />
   </mat-step>
-  <mat-step>
+  <mat-step [completed]="documentsFormCompleted()">
     <ng-template matStepLabel>{{ translate('documents') }}</ng-template>
-    <button mat-button (click)="stepper.previous()">{{ translate('back') }}</button>
+    <app-documents-form (next)="stepper.next()" (previous)="stepper.previous()" />
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>{{ translate('done') }}</ng-template>

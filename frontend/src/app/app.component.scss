@@ -1,4 +1,7 @@
 main {
-  margin-top: 64px;
   padding: 2rem;
+  margin-top: 64px;
+  height: 100%;
+  overflow: auto;
+  background-color: var(--mat-sys-background);
 }
