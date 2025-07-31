@@ -1,5 +1,6 @@
-<form [formGroup]="documentsFormGroup">
-   <h1>Upload Documents</h1>
+<ng-container *transloco="let translate; prefix: 'passenger-details'">
+  <form [formGroup]="documentsFormGroup">
+    <h1>Upload Documents</h1>
 
     <button mat-raised-button color="primary" (click)="fileInput.click()">
       <mat-icon>upload</mat-icon>
@@ -33,4 +34,16 @@
     @if (documentsFormGroup.get('files')?.invalid && documentsFormGroup.get('files')?.touched) {
       <mat-error>Please select at least one file.</mat-error>
     }
-</form>
+
+    <div *transloco="let translate; prefix: 'stepper'">
+      <button
+        class="form-actions"
+        mat-button
+        [disabled]="documentsFormGroup.invalid"
+        (click)="continue()"
+        >{{ translate('next') }}</button
+      >
+      <button class="form-actions" mat-button (click)="back()">{{ translate('back') }}</button>
+    </div>
+  </form>
+</ng-container>

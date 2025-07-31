@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { PassengerDetailsFormComponent } from '../../passenger-details-form/passenger-details-form.component';
 import { FlightDetailsFormComponent } from '../../layout/flight-details-form/component/flight-details-form.component';
+import { DocumentsFormComponent } from '../../documents-form/documents-form.component';
 
 @Component({
   selector: 'app-stepper',
@@ -20,6 +21,7 @@ import { FlightDetailsFormComponent } from '../../layout/flight-details-form/com
     TranslocoDirective,
     PassengerDetailsFormComponent,
     FlightDetailsFormComponent,
+    DocumentsFormComponent,
   ],
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss',
@@ -33,5 +35,10 @@ export class StepperComponent {
   private passengerDetailsForm = viewChild(PassengerDetailsFormComponent);
   protected passengerDetailsFormCompleted: Signal<boolean | undefined> = computed(() =>
     this.passengerDetailsForm()?.isValid()
+  );
+
+  private documentsForm = viewChild(DocumentsFormComponent);
+  protected documentsFormCompleted: Signal<boolean | undefined> = computed(() =>
+    this.documentsForm()?.isValid()
   );
 }
