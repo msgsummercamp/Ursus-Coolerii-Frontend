@@ -1,6 +1,35 @@
 <form [formGroup]="documentsFormGroup">
-  <mat-form-field appearance="fill">
-    <mat-label>Select a file</mat-label>
-  </mat-form-field>
-  <input type="file" id="myFile" name="filename">
+   <h1>Upload Documents</h1>
+
+    <button mat-raised-button color="primary" (click)="fileInput.click()">
+      <mat-icon>upload</mat-icon>
+      Choose File(s)
+    </button>
+
+    <input
+      #fileInput
+      type="file"
+      (change)="onFileSelected($event)"
+      multiple
+      hidden
+    />
+
+    @if (documentsFormGroup.get('files')?.value?.length) {
+      <mat-list>
+        @for (file of documentsFormGroup.get('files')?.value; track file) {
+          <mat-list-item class="file-list-item">
+            <mat-icon matListIcon>insert_drive_file</mat-icon>
+            <span matLine>{{ file.name }}</span>
+            <span class="spacer"></span>
+            <button mat-icon-button color="warn" (click)="removeFile(file)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-list-item>
+        }
+      </mat-list>
+    }
+
+    @if (documentsFormGroup.get('files')?.invalid && documentsFormGroup.get('files')?.touched) {
+      <mat-error>Please select at least one file.</mat-error>
+    }
 </form>
