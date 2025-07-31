@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { AirportAttributes, AirportService } from '../service/airport.service';
@@ -44,8 +44,14 @@ import {
   providers: [provideNativeDateAdapter()],
 })
 export class FlightDetailsFormComponent implements OnInit {
+  private readonly _isValid = signal(false);
+
   flightForm: FormGroup;
   airports: AirportAttributes[] = [];
+
+  public readonly isValid = this._isValid.asReadonly();
+  public readonly next = output<void>();
+  public readonly previous = output<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -76,5 +82,17 @@ export class FlightDetailsFormComponent implements OnInit {
     } else {
       this.flightForm.markAllAsTouched();
     }
+
+    this.flightForm.statusChanges.subscribe((status) => {
+      this._isValid.set(status === 'VALID');
+    });
+  }
+
+  protected continue() {
+    this.next.emit();
+  }
+
+  protected back() {
+    this.previous.emit();
   }
 }
