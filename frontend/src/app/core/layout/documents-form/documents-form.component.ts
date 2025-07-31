@@ -38,16 +38,25 @@ export class DocumentsFormComponent {
 
   protected onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-    if (input.files) {
-      const existingFiles = this.documentsFormGroup.get('files')?.value || [];
-      const newFiles = Array.from(input.files);
-      const mergedFiles = [...existingFiles, ...newFiles].filter(
-        (file, index, self) =>
-          self.findIndex((f) => f.name === file.name && f.size === file.size) === index
-      );
-      this.documentsFormGroup.get('files')?.setValue(mergedFiles);
-      this.documentsFormGroup.get('files')?.markAsTouched();
-    }
+    if (!input.files) return;
+
+    const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+    const maxSize = 5 * 1024 * 1024;
+
+    const existingFiles = this.documentsFormGroup.get('files')?.value || [];
+    const newFiles = Array.from(input.files);
+
+    const validFiles = newFiles.filter(
+      (file) => allowedTypes.includes(file.type) && file.size <= maxSize
+    );
+
+    const mergedFiles = [...existingFiles, ...validFiles].filter(
+      (file, index, self) =>
+        self.findIndex((f) => f.name === file.name && f.size === file.size) === index
+    );
+
+    this.documentsFormGroup.get('files')?.setValue(mergedFiles);
+    this.documentsFormGroup.get('files')?.markAsTouched();
   }
 
   protected removeFile(fileToRemove: File): void {

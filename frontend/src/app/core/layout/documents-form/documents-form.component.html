@@ -12,6 +12,7 @@
       (change)="onFileSelected($event)"
       multiple
       hidden
+      accept=".jpg,.jpeg,.png,.pdf"
     />
 
     @if (documentsFormGroup.get('files')?.value?.length) {
