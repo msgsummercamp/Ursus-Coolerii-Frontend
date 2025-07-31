@@ -2,9 +2,28 @@
   "form": "Form",
   "language-switcher": {
     "en": "English",
-    "ro": "Romanian",
-    "hu": "Hungarian",
-    "de": "German"
+    "ro": "Romanian"
+  },
+  "flightDetails": {
+    "title": "Flight Details",
+    "flightDate": "Flight Date",
+    "flightNr": "Flight Nr.",
+    "airline": "Airline",
+    "reservationNumber": "Reservation Number",
+    "departingAirport": "Departing Airport",
+    "destinationAirport": "Destination Airport",
+    "plannedDepartureDate": "Planned Departure Date",
+    "plannedDepartureTime": "Planned Departure Time",
+    "plannedArrivalDate": "Planned Arrival Date",
+    "plannedArrivalTime": "Planned Arrival Time",
+    "connectingFlight": "Connecting Flight",
+    "noConnectingFlight": "No Connecting Flights",
+    "typeFlightNr": "Type Flight Number...",
+    "typeAirline": "Type Airline...",
+    "searchAirport": "Search Airport...",
+    "searchConnectingFlights": "Search Connecting Flights...",
+    "next": "Next",
+    "add": "Add Connecting Flight"
   },
   "stepper": {
     "flight-details": "Flight Details",
