@@ -5,8 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { TestFormComponent } from '../../../test-form/test-form.component';
 import { PassengerDetailsFormComponent } from '../../passenger-details-form/passenger-details-form.component';
+import { FlightDetailsFormComponent } from '../../layout/flight-details-form/component/flight-details-form.component';
 
 @Component({
   selector: 'app-stepper',
@@ -18,14 +18,14 @@ import { PassengerDetailsFormComponent } from '../../passenger-details-form/pass
     MatFormFieldModule,
     MatInputModule,
     TranslocoDirective,
-    TestFormComponent,
     PassengerDetailsFormComponent,
+    FlightDetailsFormComponent,
   ],
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss',
 })
 export class StepperComponent {
-  private flightDetailsForm = viewChild(TestFormComponent);
+  private flightDetailsForm = viewChild(FlightDetailsFormComponent);
   protected flightDetailsFormCompleted: Signal<boolean | undefined> = computed(() =>
     this.flightDetailsForm()?.isValid()
   );

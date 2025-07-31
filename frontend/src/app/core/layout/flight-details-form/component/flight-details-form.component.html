@@ -109,7 +109,7 @@
     <button mat-raised-button color="primary" type="button">{{
       'flightDetails.add' | transloco
     }}</button>
-    <button mat-raised-button color="accent" type="button">{{
+    <button class="form-actions" mat-button [disabled]="flightForm.invalid" (click)="continue()">{{
       'flightDetails.next' | transloco
     }}</button>
   </div>
