@@ -1,0 +1,38 @@
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  max-width: 56.25rem;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--mat-primary);
+  border-radius: 0.75rem;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+
+  h1 {
+    grid-column: 1 / -1;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--mat-on-primary);
+    margin-bottom: 1rem;
+  }
+
+  mat-list {
+    grid-column: 1 / -1;
+    margin-top: 1rem;
+  }
+
+  .file-list-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    .spacer {
+      flex: 1 1 auto;
+    }
+
+    button[mat-icon-button] {
+      margin-left: 1rem;
+    }
+  }
+}
