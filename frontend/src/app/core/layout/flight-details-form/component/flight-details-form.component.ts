@@ -75,14 +75,6 @@ export class FlightDetailsFormComponent implements OnInit {
     this.airportService.getAirports().subscribe((data) => {
       this.airports = data;
     });
-  }
-
-  public onSubmit() {
-    if (this.flightForm.valid) {
-    } else {
-      this.flightForm.markAllAsTouched();
-    }
-
     this.flightForm.statusChanges.subscribe((status) => {
       this._isValid.set(status === 'VALID');
     });
