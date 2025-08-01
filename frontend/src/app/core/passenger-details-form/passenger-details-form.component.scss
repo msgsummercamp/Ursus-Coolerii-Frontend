@@ -36,11 +36,7 @@
       transition:
         background-color 0.3s ease,
         transform 0.2s;
-      background-color: #a6eb55;
-      color: #1a3547;
-
       &:hover {
-        background-color: darken(#a6eb55, 5%);
         transform: scale(1.03);
       }
       &:disabled {
@@ -49,4 +45,16 @@
       }
     }
   }
+}
+
+.buttons-div {
+  display: flex;
+  flex-direction: row;
+  gap: 45rem;
+}
+
+button[mat-raised-button]:enabled {
+  background-color: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-secondary-on-container);
+  align-self: flex-end;
 }
