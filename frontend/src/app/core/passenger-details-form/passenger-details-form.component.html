@@ -68,6 +68,7 @@
     <div *transloco="let translate; prefix: 'stepper'" class="form-actions">
       <button mat-raised-button (click)="back()">{{ translate('back') }}</button>
       <button mat-raised-button [disabled]="passengerDetailsForm.invalid" (click)="continue()">{{ translate('next') }}</button>
+
     </div>
   </form>
 </ng-container>

@@ -2,7 +2,7 @@
   <form [formGroup]="documentsFormGroup">
     <h1>Upload Documents</h1>
 
-    <button mat-raised-button color="primary" (click)="fileInput.click()">
+    <button mat-raised-button (click)="fileInput.click()" class="button-upload">
       <mat-icon>upload</mat-icon>
       Choose File(s)
     </button>
@@ -35,15 +35,15 @@
       <mat-error>Please select at least one file.</mat-error>
     }
 
-    <div *transloco="let translate; prefix: 'stepper'">
+    <div *transloco="let translate; prefix: 'stepper'" class="buttons-div">
+      <button class="form-actions" mat-raised-button (click)="back()">{{ translate('back') }}</button>
       <button
         class="form-actions"
-        mat-button
+        mat-raised-button
         [disabled]="documentsFormGroup.invalid"
         (click)="continue()"
         >{{ translate('next') }}</button
       >
-      <button class="form-actions" mat-button (click)="back()">{{ translate('back') }}</button>
     </div>
   </form>
 </ng-container>
