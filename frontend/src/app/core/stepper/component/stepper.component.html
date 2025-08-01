@@ -14,7 +14,7 @@
   <mat-step>
     <ng-template matStepLabel>{{ translate('done') }}</ng-template>
     <p>{{ translate('finish-message') }}</p>
-    <button mat-button (click)="stepper.previous()">{{ translate('back') }}</button>
-    <button mat-button (click)="stepper.reset()">{{ translate('reset') }}</button>
+    <button mat-raised-button (click)="stepper.previous()">{{ translate('back') }}</button>
+    <button mat-raised-button (click)="stepper.reset()">{{ translate('reset') }}</button>
   </mat-step>
 </mat-stepper>

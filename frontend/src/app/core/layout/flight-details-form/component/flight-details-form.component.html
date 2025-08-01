@@ -14,18 +14,6 @@
           <mat-error>{{ 'flightDetails.flightNrError' | transloco }}</mat-error>
         }
       </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>{{ 'flightDetails.flightDate' | transloco }}</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="flightDate" />
-        <mat-hint>DD/MM/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker" />
-        <mat-datepicker #picker />
-        @if (this.flightForm.controls['flightDate'].errors?.['required']) {
-          <mat-error>{{ 'flightDetails.flightDateError' | transloco }}</mat-error>
-        }
-      </mat-form-field>
-
       <mat-form-field appearance="fill">
         <mat-label>{{ 'flightDetails.departingAirport' | transloco }}</mat-label>
         <input
@@ -36,7 +24,7 @@
           placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
         />
         <mat-autocomplete #autoDepart="matAutocomplete">
-          <mat-option *ngFor="let airport of filteredDepartingAirports" [value]="airport.name">
+          <mat-option *ngFor="let airport of filteredAirports" [value]="airport.name">
             {{ airport.name }}
           </mat-option>
         </mat-autocomplete>
@@ -55,7 +43,7 @@
           placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
         />
         <mat-autocomplete #autoDest="matAutocomplete">
-          <mat-option *ngFor="let airport of filteredDestinationAirports" [value]="airport.name">
+          <mat-option *ngFor="let airport of filteredAirports" [value]="airport.name">
             {{ airport.name }}
           </mat-option>
         </mat-autocomplete>
@@ -64,69 +52,48 @@
         }
       </mat-form-field>
 
-      <div>
-        <mat-form-field>
-          <mat-label>{{ 'flightDetails.plannedDepartureDate' | transloco }}</mat-label>
-          <input
-            matInput
-            [matDatepicker]="departureDatePicker"
-            formControlName="plannedDepartureDate"
-          />
-          <mat-hint>DD/MM/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="departureDatePicker" />
-          <mat-datepicker #departureDatePicker />
-          @if (this.flightForm.controls['plannedDepartureDate'].errors?.['required']) {
-            <mat-error>{{ 'flightDetails.plannedDepartureDateError' | transloco }}</mat-error>
-          }
-        </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'flightDetails.plannedDepartureDate' | transloco }}</mat-label>
+        <input
+          matInput
+          [matDatepicker]="departureDatePicker"
+          formControlName="plannedDepartureDate"
+        />
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="departureDatePicker" />
+        <mat-datepicker #departureDatePicker />
+      </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>{{ 'flightDetails.plannedDepartureTime' | transloco }}</mat-label>
-          <input
-            matInput
-            [matTimepicker]="departureTimePicker"
-            formControlName="plannedDepartureTime"
-          />
-          <mat-timepicker-toggle matIconSuffix [for]="departureTimePicker" />
-          <mat-timepicker #departureTimePicker />
-          @if (this.flightForm.controls['plannedDepartureTime'].errors?.['required']) {
-            <mat-error>{{ 'flightDetails.plannedDepartureTimeError' | transloco }}</mat-error>
-          }
-        </mat-form-field>
-      </div>
+      <mat-form-field>
+        <mat-label>{{ 'flightDetails.plannedDepartureTime' | transloco }}</mat-label>
+        <input
+          matInput
+          [matTimepicker]="departureTimePicker"
+          formControlName="plannedDepartureTime"
+        />
+        <mat-timepicker-toggle matIconSuffix [for]="departureTimePicker" />
+        <mat-timepicker #departureTimePicker />
+      </mat-form-field>
 
-      <div>
-        <mat-form-field>
-          <mat-label>{{ 'flightDetails.plannedArrivalDate' | transloco }}</mat-label>
-          <input
-            matInput
-            [matDatepicker]="arrivalDatePicker"
-            formControlName="plannedArrivalDate"
-            [min]="flightForm.get('plannedDepartureDate')?.value"
-          />
-          <mat-hint>DD/MM/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="arrivalDatePicker" />
-          <mat-datepicker #arrivalDatePicker />
-          @if (this.flightForm.controls['plannedArrivalDate'].errors?.['required']) {
-            <mat-error>{{ 'flightDetails.plannedArrivalDateError' | transloco }}</mat-error>
-          }
-        </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'flightDetails.plannedArrivalDate' | transloco }}</mat-label>
+        <input
+          matInput
+          [matDatepicker]="arrivalDatePicker"
+          formControlName="plannedArrivalDate"
+          [min]="flightForm.get('plannedDepartureDate')?.value"
+        />
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="arrivalDatePicker" />
+        <mat-datepicker #arrivalDatePicker />
+      </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>{{ 'flightDetails.plannedArrivalTime' | transloco }}</mat-label>
-          <input
-            matInput
-            [matTimepicker]="arrivalTimePicker"
-            formControlName="plannedArrivalTime"
-          />
-          <mat-timepicker-toggle matIconSuffix [for]="arrivalTimePicker" />
-          <mat-timepicker #arrivalTimePicker />
-          @if (this.flightForm.controls['plannedArrivalTime'].errors?.['required']) {
-            <mat-error>{{ 'flightDetails.plannedArrivalTimeError' | transloco }}</mat-error>
-          }
-        </mat-form-field>
-      </div>
-
+      <mat-form-field>
+        <mat-label>{{ 'flightDetails.plannedArrivalTime' | transloco }}</mat-label>
+        <input matInput [matTimepicker]="arrivalTimePicker" formControlName="plannedArrivalTime" />
+        <mat-timepicker-toggle matIconSuffix [for]="arrivalTimePicker" />
+        <mat-timepicker #arrivalTimePicker />
+      </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>{{ 'flightDetails.airline' | transloco }}</mat-label>
         <input
@@ -141,152 +108,17 @@
       </mat-form-field>
     </div>
 
-    <div formArrayName="connectingFlights" class="connecting-flights-list">
-      <div
-        *ngFor="let flight of connectingFlights().controls; let i = index"
-        [formGroupName]="i"
-        style="
-          margin-bottom: 1.5rem;
-          border: 1px solid #e0e0e0;
-          border-radius: 0.5rem;
-          padding: 1rem;
-        "
-      >
-        <h3 style="margin-top: 0"
-          >{{ 'flightDetails.connectingFlight' | transloco }} #{{ i + 1 }}</h3
-        >
-        <mat-form-field appearance="fill">
-          <mat-label>{{ 'flightDetails.flightNr' | transloco }}</mat-label>
-          <input
-            matInput
-            type="text"
-            formControlName="flightNr"
-            placeholder="{{ 'flightDetails.typeFlightNr' | transloco }}"
-          />
-          @if (flight.get('flightNr')?.errors?.['required']) {
-            <mat-error>{{ 'flightDetails.flightNrError' | transloco }}</mat-error>
-          }
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>{{ 'flightDetails.flightDate' | transloco }}</mat-label>
-          <input matInput [matDatepicker]="connFlightDatePicker" formControlName="flightDate" />
-          <mat-hint>DD/MM/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="connFlightDatePicker" />
-          <mat-datepicker #connFlightDatePicker />
-          @if (flight.get('flightDate')?.errors?.['required']) {
-            <mat-error>{{ 'flightDetails.flightDateError' | transloco }}</mat-error>
-          }
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-          <mat-label>{{ 'flightDetails.departingAirport' | transloco }}</mat-label>
-          <mat-select formControlName="departingAirport" required>
-            <mat-option value="">{{ 'flightDetails.searchAirport' | transloco }}</mat-option>
-            <mat-option *ngFor="let airport of airports" [value]="airport.name">
-              {{ airport.name }}
-            </mat-option>
-          </mat-select>
-          @if (flight.get('departingAirport')?.errors?.['required']) {
-            <mat-error>{{ 'flightDetails.departingAirportError' | transloco }}</mat-error>
-          }
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-          <mat-label>{{ 'flightDetails.destinationAirport' | transloco }}</mat-label>
-          <input
-            type="text"
-            matInput
-            formControlName="destinationAirport"
-            [matAutocomplete]="autoDestConn"
-            placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
-          />
-          <mat-autocomplete #autoDestConn="matAutocomplete">
-            <mat-option
-              *ngFor="let airport of filteredConnectingDestAirports[i]"
-              [value]="airport.name"
-            >
-              {{ airport.name }}
-            </mat-option>
-          </mat-autocomplete>
-          @if (flight.get('destinationAirport')?.errors?.['required']) {
-            <mat-error>{{ 'flightDetails.destinationAirportError' | transloco }}</mat-error>
-          }
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>{{ 'flightDetails.plannedDepartureDate' | transloco }}</mat-label>
-          <input matInput [matDatepicker]="depDatePicker" formControlName="plannedDepartureDate" />
-          <mat-hint>DD/MM/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="depDatePicker" />
-          <mat-datepicker #depDatePicker />
-          @if (flight.get('plannedDepartureDate')?.errors?.['required']) {
-            <mat-error>{{ 'flightDetails.plannedDepartureDateError' | transloco }}</mat-error>
-          }
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>{{ 'flightDetails.plannedDepartureTime' | transloco }}</mat-label>
-          <input matInput [matTimepicker]="depTimePicker" formControlName="plannedDepartureTime" />
-          <mat-timepicker-toggle matIconSuffix [for]="depTimePicker" />
-          <mat-timepicker #depTimePicker />
-          @if (flight.get('plannedDepartureTime')?.errors?.['required']) {
-            <mat-error>{{ 'flightDetails.plannedDepartureTimeError' | transloco }}</mat-error>
-          }
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>{{ 'flightDetails.plannedArrivalDate' | transloco }}</mat-label>
-          <input
-            matInput
-            [matDatepicker]="arrDatePicker"
-            formControlName="plannedArrivalDate"
-            [min]="flight.get('plannedDepartureDate')?.value"
-          />
-          <mat-hint>DD/MM/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="arrDatePicker" />
-          <mat-datepicker #arrDatePicker />
-          @if (flight.get('plannedArrivalDate')?.errors?.['required']) {
-            <mat-error>{{ 'flightDetails.plannedArrivalDateError' | transloco }}</mat-error>
-          }
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>{{ 'flightDetails.plannedArrivalTime' | transloco }}</mat-label>
-          <input matInput [matTimepicker]="arrTimePicker" formControlName="plannedArrivalTime" />
-          <mat-timepicker-toggle matIconSuffix [for]="arrTimePicker" />
-          <mat-timepicker #arrTimePicker />
-          @if (flight.get('plannedArrivalTime')?.errors?.['required']) {
-            <mat-error>{{ 'flightDetails.plannedArrivalTimeError' | transloco }}</mat-error>
-          }
-        </mat-form-field>
-
-        <div class="form-buttons">
-          <button
-            mat-raised-button
-            color="warn"
-            type="button"
-            (click)="removeConnectingFlight(i)"
-            style="margin-top: 1rem"
-          >
-            {{ 'flightDetails.deleteConnectingFlight' | transloco }}
-          </button>
-        </div>
-      </div>
-    </div>
-
     <div class="form-spacer"></div>
     <div class="form-buttons">
-      <button
-        mat-raised-button
-        color="primary"
-        type="button"
-        (click)="addConnectingFlight()"
-        [disabled]="disableAddConnectingFlight()"
-      >
+      <button mat-raised-button color="primary" type="button" (click)="addConnectingFlight()">
         {{ 'flightDetails.add' | transloco }}
       </button>
-      <button class="form-actions" mat-button [disabled]="flightForm.invalid" (click)="continue()">
+      <button
+        class="form-actions"
+        mat-raised-button
+        [disabled]="flightForm.invalid"
+        (click)="continue()"
+      >
         {{ 'flightDetails.next' | transloco }}
       </button>
     </div>

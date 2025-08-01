@@ -1,7 +1,7 @@
 main {
   padding: 2rem;
-  margin-top: 64px;
-  height: 100%;
+  margin-top: 4rem;
+  height: calc(100% - 4rem);
   overflow: auto;
   background-color: var(--mat-sys-background);
 }

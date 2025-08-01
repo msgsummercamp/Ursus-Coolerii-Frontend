@@ -1,14 +1,13 @@
-import { Component, OnInit, output, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnDestroy, OnInit, output, signal } from '@angular/core';
 import {
-  AbstractControl,
   FormArray,
-  FormBuilder,
   FormGroup,
+  FormControl,
+  NonNullableFormBuilder,
   ReactiveFormsModule,
-  ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
+import type { FlightConnectionForm, FlightDetailsForm } from '../../../../shared/types';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { AirportAttributes, AirportService } from '../service/airport.service';
 import { NgForOf } from '@angular/common';
@@ -34,31 +33,7 @@ import {
   MatTimepickerToggle,
 } from '@angular/material/timepicker';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { startWith } from 'rxjs';
-
-export function departureBeforeArrivalValidator(): ValidatorFn {
-  return (group: AbstractControl): ValidationErrors | null => {
-    const depDate = group.get('plannedDepartureDate')?.value;
-    const arrDate = group.get('plannedArrivalDate')?.value;
-    const depTime = group.get('plannedDepartureTime')?.value;
-    const arrTime = group.get('plannedArrivalTime')?.value;
-
-    const depDateStr = depDate instanceof Date ? depDate.toISOString().slice(0, 10) : depDate;
-    const arrDateStr = arrDate instanceof Date ? arrDate.toISOString().slice(0, 10) : arrDate;
-
-    if (depDateStr && arrDateStr && depTime && arrTime && depDateStr === arrDateStr) {
-      const [depHour, depMin] = depTime.split(':').map(Number);
-      const [arrHour, arrMin] = arrTime.split(':').map(Number);
-      const depTotal = depHour * 60 + depMin;
-      const arrTotal = arrHour * 60 + arrMin;
-
-      if (depTotal >= arrTotal) {
-        return { departureAfterArrival: true };
-      }
-    }
-    return null;
-  };
-}
+import { startWith, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-flight-details-form',
@@ -87,233 +62,88 @@ export function departureBeforeArrivalValidator(): ValidatorFn {
     MatError,
   ],
 })
-export class FlightDetailsFormComponent implements OnInit {
+export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   private readonly _isValid = signal(false);
-
-  flightForm: FormGroup;
-  airports: AirportAttributes[] = [];
-
-  filteredDepartingAirports: AirportAttributes[] = [];
-  filteredDestinationAirports: AirportAttributes[] = [];
-  filteredConnectingDestAirports: AirportAttributes[][] = [];
-
+  public filteredAirports: AirportAttributes[] = [];
   public readonly isValid = this._isValid.asReadonly();
+  private fb = inject(NonNullableFormBuilder);
+  private airportService = inject(AirportService);
+  private airports: AirportAttributes[] = [];
   public readonly next = output<void>();
-  public readonly previous = output<void>();
+  private onDestroy$ = new Subject<void>();
+  private connectionFlightsForms: FormGroup<FlightConnectionForm>[] = [];
 
-  private connectingFlightSyncSubs: any[] = [];
-
-  constructor(
-    private fb: FormBuilder,
-    private airportService: AirportService
-  ) {
-    this.flightForm = this.fb.group(
-      {
-        flightDate: ['', Validators.required],
-        flightNr: ['', Validators.required],
-        airline: ['', Validators.required],
-        departingAirport: ['', Validators.required],
-        destinationAirport: ['', Validators.required],
-        plannedDepartureDate: ['', Validators.required],
-        plannedArrivalDate: ['', Validators.required],
-        plannedDepartureTime: ['', Validators.required],
-        plannedArrivalTime: ['', Validators.required],
-        connectingFlights: this.fb.array([]),
-      },
-      { validators: departureBeforeArrivalValidator() }
-    );
-  }
+  protected readonly flightForm = this.fb.group<FlightDetailsForm>(
+    {
+      flightNr: this.fb.control('', Validators.required),
+      airline: this.fb.control('', Validators.required),
+      departingAirport: this.fb.control('', Validators.required),
+      destinationAirport: this.fb.control('', Validators.required),
+      plannedDepartureDate: this.fb.control(null, Validators.required),
+      plannedArrivalDate: this.fb.control(null, Validators.required),
+      plannedDepartureTime: this.fb.control('', Validators.required),
+      plannedArrivalTime: this.fb.control('', Validators.required),
+    },
+    { validators: this.airportService.departureBeforeArrivalValidator() }
+  );
 
   ngOnInit(): void {
-    this.airportService.getAirports().subscribe((data) => {
-      this.airports = data;
-      this.filteredDepartingAirports = this.filterAirports(
-        this.flightForm.get('departingAirport')?.value
-      );
-      this.filteredDestinationAirports = this.filterAirports(
-        this.flightForm.get('destinationAirport')?.value
-      );
-      this.setupConnectingFlightListeners();
-    });
+    this.subscribeToFetchAirports();
+    this.subscribeAllFormElements();
     this.flightForm.statusChanges.subscribe((status) => {
       this._isValid.set(status === 'VALID');
     });
-
-    this.flightForm.get('destinationAirport')?.valueChanges.subscribe((value) => {
-      if (this.connectingFlights().length > 0) {
-        this.connectingFlights()
-          .at(0)
-          .get('departingAirport')
-          ?.setValue(value, { emitEvent: false });
-      }
-    });
-
-    this.flightForm
-      .get('departingAirport')
-      ?.valueChanges.pipe(startWith(''))
-      .subscribe((value) => {
-        this.filteredDepartingAirports = this.filterAirports(value);
-      });
-
-    this.flightForm
-      .get('destinationAirport')
-      ?.valueChanges.pipe(startWith(''))
-      .subscribe((value) => {
-        this.filteredDestinationAirports = this.filterAirports(value);
-      });
-
-    this.flightForm.get('flightDate')?.valueChanges.subscribe((value) => {
-      if (this.flightForm.get('plannedDepartureDate')?.value !== value) {
-        this.flightForm.get('plannedDepartureDate')?.setValue(value, { emitEvent: false });
-      }
-    });
-    this.flightForm.get('plannedDepartureDate')?.valueChanges.subscribe((value) => {
-      if (this.flightForm.get('flightDate')?.value !== value) {
-        this.flightForm.get('flightDate')?.setValue(value, { emitEvent: false });
-      }
-    });
-
-    this.flightForm.get('plannedDepartureTime')?.valueChanges.subscribe(() => {
-      this.flightForm.updateValueAndValidity({ onlySelf: false, emitEvent: false });
-    });
-    this.flightForm.get('plannedArrivalTime')?.valueChanges.subscribe(() => {
-      this.flightForm.updateValueAndValidity({ onlySelf: false, emitEvent: false });
-    });
-
-    this.connectingFlights().valueChanges.subscribe(() => {
-      this.setupConnectingFlightListeners();
-    });
-    this.setupConnectingFlightListeners();
+  }
+  ngOnDestroy(): void {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
   }
 
-  private setupConnectingFlightListeners() {
-    this.connectingFlightSyncSubs.forEach((sub) => sub.unsubscribe && sub.unsubscribe());
-    this.connectingFlightSyncSubs = [];
-
-    if (this.connectingFlights().length > 0) {
-      const first = this.connectingFlights().at(0);
-      const sub = this.flightForm.get('destinationAirport')?.valueChanges.subscribe((value) => {
-        first.get('departingAirport')?.setValue(value, { emitEvent: false });
-      });
-      if (sub) this.connectingFlightSyncSubs.push(sub);
-      first
-        .get('departingAirport')
-        ?.setValue(this.flightForm.get('destinationAirport')?.value, { emitEvent: false });
-    }
-
-    for (let i = 0; i < this.connectingFlights().length - 1; i++) {
-      const current = this.connectingFlights().at(i);
-      const next = this.connectingFlights().at(i + 1);
-      const sub = current.get('destinationAirport')?.valueChanges.subscribe((value) => {
-        next.get('departingAirport')?.setValue(value, { emitEvent: false });
-      });
-      if (sub) this.connectingFlightSyncSubs.push(sub);
-      next
-        .get('departingAirport')
-        ?.setValue(current.get('destinationAirport')?.value, { emitEvent: false });
-    }
-    this.filteredConnectingDestAirports = [];
-    for (let i = 0; i < this.connectingFlights().length; i++) {
-      const group = this.connectingFlights().at(i);
-      this.filteredConnectingDestAirports[i] = this.filterAirports(
-        group.get('destinationAirport')?.value
-      );
-      const sub = group
-        .get('destinationAirport')
-        ?.valueChanges.pipe(startWith(group.get('destinationAirport')?.value || ''))
-        .subscribe((value) => {
-          this.filteredConnectingDestAirports[i] = this.filterAirports(value);
-        });
-      if (sub) this.connectingFlightSyncSubs.push(sub);
-      const sub1 = group.get('flightDate')?.valueChanges.subscribe((value) => {
-        if (group.get('plannedDepartureDate')?.value !== value) {
-          group.get('plannedDepartureDate')?.setValue(value, { emitEvent: false });
-        }
-      });
-      if (sub1) this.connectingFlightSyncSubs.push(sub1);
-      const sub2 = group.get('plannedDepartureDate')?.valueChanges.subscribe((value) => {
-        if (group.get('flightDate')?.value !== value) {
-          group.get('flightDate')?.setValue(value, { emitEvent: false });
-        }
-      });
-      if (sub2) this.connectingFlightSyncSubs.push(sub2);
-      group.get('plannedDepartureTime')?.valueChanges.subscribe(() => {
-        group.updateValueAndValidity({ onlySelf: false, emitEvent: false });
-      });
-      group.get('plannedArrivalTime')?.valueChanges.subscribe(() => {
-        group.updateValueAndValidity({ onlySelf: false, emitEvent: false });
-      });
-    }
+  private subscribeToFetchAirports() {
+    this.airportService.getAirports().subscribe((data) => {
+      this.airports = data;
+      this.filteredAirports = this.filterAirports(this.flightForm.controls.departingAirport.value);
+    });
   }
 
-  public connectingFlights(): FormArray {
-    return this.flightForm.get('connectingFlights') as FormArray;
-  }
-
-  public addConnectingFlight(): void {
-    if (this.connectingFlights().length >= 4) return;
-
-    let prevDeparture: string | null = null;
-    if (this.connectingFlights().length === 0) {
-      prevDeparture = this.flightForm.get('destinationAirport')?.value;
-    } else {
-      prevDeparture = this.connectingFlights()
-        .at(this.connectingFlights().length - 1)
-        .get('destinationAirport')?.value;
-    }
-
-    this.connectingFlights().push(
-      this.fb.group(
-        {
-          flightNr: ['', Validators.required],
-          flightDate: ['', Validators.required],
-          departingAirport: [prevDeparture, Validators.required],
-          destinationAirport: ['', Validators.required],
-          plannedDepartureDate: ['', Validators.required],
-          plannedArrivalDate: ['', Validators.required],
-          plannedDepartureTime: ['', Validators.required],
-          plannedArrivalTime: ['', Validators.required],
-        },
-        { validators: departureBeforeArrivalValidator() }
-      )
-    );
-  }
-
-  public removeConnectingFlight(index: number): void {
-    this.connectingFlights().removeAt(index);
-  }
-
-  public disableAddConnectingFlight(): boolean {
-    if (this.connectingFlights().length >= 4) return true;
-    if (
-      this.flightForm.get('flightDate')?.invalid ||
-      this.flightForm.get('flightNr')?.invalid ||
-      this.flightForm.get('airline')?.invalid ||
-      this.flightForm.get('departingAirport')?.invalid ||
-      this.flightForm.get('destinationAirport')?.invalid ||
-      this.flightForm.get('plannedDepartureDate')?.invalid ||
-      this.flightForm.get('plannedArrivalDate')?.invalid ||
-      this.flightForm.get('plannedDepartureTime')?.invalid ||
-      this.flightForm.get('plannedArrivalTime')?.invalid
-    ) {
-      return true;
-    }
-    for (let i = 0; i < this.connectingFlights().length; i++) {
-      if (this.connectingFlights().at(i).invalid) return true;
-    }
-    return false;
+  private subscribeAllFormElements() {
+    this.subscribeAirportFieldToFilterAirports(this.flightForm.controls.departingAirport);
+    this.subscribeAirportFieldToFilterAirports(this.flightForm.controls.destinationAirport);
   }
 
   private filterAirports(value: string): AirportAttributes[] {
     const filterValue = (value || '').toLowerCase();
-    return this.airports.filter((airport) => airport.name.toLowerCase().startsWith(filterValue));
+    return this.airports.filter((airport) => airport.name.toLowerCase().includes(filterValue));
+  }
+
+  private subscribeAirportFieldToFilterAirports(control: FormControl<string> | null): void {
+    control?.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((val) => {
+      this.filteredAirports = this.filterAirports(val);
+    });
+  }
+
+  private createFlightForm(): FormGroup<FlightConnectionForm> {
+    return this.fb.group<FlightConnectionForm>(
+      {
+        flightNr: this.fb.control('', Validators.required),
+        airline: this.fb.control('', Validators.required),
+        airport: this.fb.control('', Validators.required),
+        plannedDepartureDate: this.fb.control(null, Validators.required),
+        plannedArrivalDate: this.fb.control(null, Validators.required),
+        plannedDepartureTime: this.fb.control('', Validators.required),
+        plannedArrivalTime: this.fb.control('', Validators.required),
+      },
+      { validators: this.airportService.departureBeforeArrivalValidator() }
+    );
   }
 
   protected continue() {
     this.next.emit();
   }
 
-  protected back() {
-    this.previous.emit();
+  protected addConnectingFlight() {
+    const form = this.createFlightForm();
+
+    this.connectionFlightsForms.push(form);
   }
 }

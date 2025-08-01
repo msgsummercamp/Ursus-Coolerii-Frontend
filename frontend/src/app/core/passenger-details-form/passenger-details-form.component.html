@@ -63,15 +63,15 @@
       </mat-form-field>
     </div>
 
-    <div *transloco="let translate; prefix: 'stepper'">
+    <div *transloco="let translate; prefix: 'stepper'" class="buttons-div">
+      <button class="form-actions" mat-raised-button (click)="back()">{{ translate('back') }}</button>
       <button
         class="form-actions"
-        mat-button
+        mat-raised-button
         [disabled]="passengerDetailsForm.invalid"
         (click)="continue()"
         >{{ translate('next') }}</button
       >
-      <button class="form-actions" mat-button (click)="back()">{{ translate('back') }}</button>
     </div>
   </form>
 </ng-container>
