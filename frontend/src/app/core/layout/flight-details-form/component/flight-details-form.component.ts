@@ -29,25 +29,12 @@ import {
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { startWith } from 'rxjs';
 
-export function departureBeforeArrivalValidator(): ValidatorFn {
+function differentAirportsValidator(): ValidatorFn {
   return (group: AbstractControl): ValidationErrors | null => {
-    const depDate = group.get('plannedDepartureDate')?.value;
-    const arrDate = group.get('plannedArrivalDate')?.value;
-    const depTime = group.get('plannedDepartureTime')?.value;
-    const arrTime = group.get('plannedArrivalTime')?.value;
-
-    const depDateStr = depDate instanceof Date ? depDate.toISOString().slice(0, 10) : depDate;
-    const arrDateStr = arrDate instanceof Date ? arrDate.toISOString().slice(0, 10) : arrDate;
-
-    if (depDateStr && arrDateStr && depTime && arrTime && depDateStr === arrDateStr) {
-      const [depHour, depMin] = depTime.split(':').map(Number);
-      const [arrHour, arrMin] = arrTime.split(':').map(Number);
-      const depTotal = depHour * 60 + depMin;
-      const arrTotal = arrHour * 60 + arrMin;
-
-      if (depTotal >= arrTotal) {
-        return { departureAfterArrival: true };
-      }
+    const dep = group.get('departingAirport')?.value;
+    const dest = group.get('destinationAirport')?.value;
+    if (dep && dest && dep === dest) {
+      return { sameAirport: true };
     }
     return null;
   };
@@ -113,7 +100,7 @@ export class FlightDetailsFormComponent implements OnInit {
         plannedArrivalTime: ['', Validators.required],
         connectingFlights: this.fb.array([]),
       },
-      { validators: departureBeforeArrivalValidator() }
+      { validators: differentAirportsValidator() }
     );
   }
 
@@ -267,7 +254,7 @@ export class FlightDetailsFormComponent implements OnInit {
           plannedDepartureTime: ['', Validators.required],
           plannedArrivalTime: ['', Validators.required],
         },
-        { validators: departureBeforeArrivalValidator() }
+        { validators: differentAirportsValidator() }
       )
     );
   }
