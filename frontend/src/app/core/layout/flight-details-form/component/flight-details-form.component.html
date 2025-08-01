@@ -10,6 +10,9 @@
           formControlName="flightNr"
           placeholder="{{ 'flightDetails.typeFlightNr' | transloco }}"
         />
+        @if (this.flightForm.controls['flightNr'].errors?.['required']) {
+          <mat-error>{{ 'flightDetails.flightNrError' | transloco }}</mat-error>
+        }
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>{{ 'flightDetails.departingAirport' | transloco }}</mat-label>
@@ -25,6 +28,9 @@
             {{ airport.name }}
           </mat-option>
         </mat-autocomplete>
+        @if (this.flightForm.controls['departingAirport'].errors?.['required']) {
+          <mat-error>{{ 'flightDetails.departingAirportError' | transloco }}</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field appearance="fill">
@@ -41,6 +47,9 @@
             {{ airport.name }}
           </mat-option>
         </mat-autocomplete>
+        @if (this.flightForm.controls['destinationAirport'].errors?.['required']) {
+          <mat-error>{{ 'flightDetails.destinationAirportError' | transloco }}</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
@@ -85,7 +94,6 @@
         <mat-timepicker-toggle matIconSuffix [for]="arrivalTimePicker" />
         <mat-timepicker #arrivalTimePicker />
       </mat-form-field>
-
       <mat-form-field appearance="fill">
         <mat-label>{{ 'flightDetails.airline' | transloco }}</mat-label>
         <input
@@ -94,6 +102,9 @@
           formControlName="airline"
           placeholder="{{ 'flightDetails.typeAirline' | transloco }}"
         />
+        @if (this.flightForm.controls['airline'].errors?.['required']) {
+          <mat-error>{{ 'flightDetails.airlineError' | transloco }}</mat-error>
+        }
       </mat-form-field>
     </div>
 
