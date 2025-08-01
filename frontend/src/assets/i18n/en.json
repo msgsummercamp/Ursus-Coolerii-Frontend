@@ -23,7 +23,8 @@
     "searchAirport": "Search Airport...",
     "searchConnectingFlights": "Search Connecting Flights...",
     "next": "Next",
-    "add": "Add Connecting Flight"
+    "add": "Add Connecting Flight",
+    "deleteConnectingFlight": "Delete Connecting Flight"
   },
   "stepper": {
     "flight-details": "Flight Details",

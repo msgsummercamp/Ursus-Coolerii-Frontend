@@ -23,8 +23,8 @@
     "searchAirport": "Caută Aeroport...",
     "searchConnectingFlights": "Caută Zboruri de Legătură...",
     "next": "Următorul Pas",
-    "add": "Adaugă Zbor de Legătură"
-
+    "add": "Adaugă Zbor de Legătură",
+    "deleteConnectingFlight": "Șterge Zbor de Legătură"
   },
   "stepper": {
     "flight-details": "Detaliile Zborului",
