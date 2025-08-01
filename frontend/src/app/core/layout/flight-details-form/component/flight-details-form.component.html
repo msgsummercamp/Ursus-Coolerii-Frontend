@@ -98,5 +98,18 @@
     </div>
 
     <div class="form-spacer"></div>
+    <div class="form-buttons">
+      <button mat-raised-button color="primary" type="button" (click)="addConnectingFlight()">
+        {{ 'flightDetails.add' | transloco }}
+      </button>
+      <button
+        class="form-actions"
+        mat-raised-button
+        [disabled]="flightForm.invalid"
+        (click)="continue()"
+      >
+        {{ 'flightDetails.next' | transloco }}
+      </button>
+    </div>
   </form>
 </div>

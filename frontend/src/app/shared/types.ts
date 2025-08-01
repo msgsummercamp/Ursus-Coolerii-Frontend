@@ -10,3 +10,13 @@ export type FlightDetailsForm = {
   plannedDepartureTime: FormControl<string>;
   plannedArrivalTime: FormControl<string>;
 };
+
+export type FlightConnectionForm = {
+  flightNr: FormControl<string>;
+  airline: FormControl<string>;
+  airport: FormControl<string>;
+  plannedDepartureDate: FormControl<Date | null>;
+  plannedArrivalDate: FormControl<Date | null>;
+  plannedDepartureTime: FormControl<string>;
+  plannedArrivalTime: FormControl<string>;
+};

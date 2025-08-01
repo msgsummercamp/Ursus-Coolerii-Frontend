@@ -1,12 +1,13 @@
-import { Component, inject, OnInit, output, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnDestroy, OnInit, output, signal } from '@angular/core';
 import {
   FormArray,
+  FormGroup,
   FormControl,
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import type { FlightDetailsForm } from '../../../../shared/types';
+import type { FlightConnectionForm, FlightDetailsForm } from '../../../../shared/types';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { AirportAttributes, AirportService } from '../service/airport.service';
 import { NgForOf } from '@angular/common';
@@ -25,7 +26,7 @@ import {
   MatTimepickerToggle,
 } from '@angular/material/timepicker';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { startWith } from 'rxjs';
+import { startWith, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-flight-details-form',
@@ -53,13 +54,16 @@ import { startWith } from 'rxjs';
     MatAutocompleteTrigger,
   ],
 })
-export class FlightDetailsFormComponent implements OnInit {
+export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   private readonly _isValid = signal(false);
   public filteredAirports: AirportAttributes[] = [];
   public readonly isValid = this._isValid.asReadonly();
   private fb = inject(NonNullableFormBuilder);
   private airportService = inject(AirportService);
   private airports: AirportAttributes[] = [];
+  public readonly next = output<void>();
+  private onDestroy$ = new Subject<void>();
+  private connectionFlightsForms: FormGroup<FlightConnectionForm>[] = [];
 
   protected readonly flightForm = this.fb.group<FlightDetailsForm>(
     {
@@ -76,38 +80,62 @@ export class FlightDetailsFormComponent implements OnInit {
   );
 
   ngOnInit(): void {
+    this.subscribeToFetchAirports();
+    this.subscribeAllFormElements();
+    this.flightForm.statusChanges.subscribe((status) => {
+      this._isValid.set(status === 'VALID');
+    });
+  }
+  ngOnDestroy(): void {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
+
+  private subscribeToFetchAirports() {
     this.airportService.getAirports().subscribe((data) => {
       this.airports = data;
       this.filteredAirports = this.filterAirports(this.flightForm.controls.departingAirport.value);
     });
-
-    this.flightForm.statusChanges.subscribe((status) => {
-      this._isValid.set(status === 'VALID');
-    });
-    this.subscribeAllFormElements();
   }
 
   private subscribeAllFormElements() {
     this.subscribeAirportFieldToFilterAirports(this.flightForm.controls.departingAirport);
     this.subscribeAirportFieldToFilterAirports(this.flightForm.controls.destinationAirport);
-    this.subscribeArrivalTimeField(this.flightForm.controls.plannedDepartureTime);
-    this.subscribeArrivalTimeField(this.flightForm.controls.plannedArrivalTime);
   }
 
   private filterAirports(value: string): AirportAttributes[] {
     const filterValue = (value || '').toLowerCase();
-    return this.airports.filter((airport) => airport.name.toLowerCase().startsWith(filterValue));
+    return this.airports.filter((airport) => airport.name.toLowerCase().includes(filterValue));
   }
 
   private subscribeAirportFieldToFilterAirports(control: FormControl<string> | null): void {
-    control?.valueChanges.subscribe((val) => {
+    control?.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((val) => {
       this.filteredAirports = this.filterAirports(val);
     });
   }
 
-  private subscribeArrivalTimeField(control: FormControl<string | null>): void {
-    control.valueChanges.subscribe(() => {
-      this.flightForm.updateValueAndValidity({ onlySelf: false, emitEvent: false });
-    });
+  private createFlightForm(): FormGroup<FlightConnectionForm> {
+    return this.fb.group<FlightConnectionForm>(
+      {
+        flightNr: this.fb.control('', Validators.required),
+        airline: this.fb.control('', Validators.required),
+        airport: this.fb.control('', Validators.required),
+        plannedDepartureDate: this.fb.control(null, Validators.required),
+        plannedArrivalDate: this.fb.control(null, Validators.required),
+        plannedDepartureTime: this.fb.control('', Validators.required),
+        plannedArrivalTime: this.fb.control('', Validators.required),
+      },
+      { validators: this.airportService.departureBeforeArrivalValidator() }
+    );
+  }
+
+  protected continue() {
+    this.next.emit();
+  }
+
+  protected addConnectingFlight() {
+    const form = this.createFlightForm();
+
+    this.connectionFlightsForms.push(form);
   }
 }

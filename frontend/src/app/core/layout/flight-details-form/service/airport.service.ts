@@ -7,6 +7,7 @@ import { ValidatorFn } from '@angular/forms';
 import { ValidationErrors } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { FlightDetailsForm } from '../../../../shared/types';
+import { inject } from '@angular/core';
 
 export interface AirportAttributes {
   name: string;
@@ -22,10 +23,10 @@ export interface AirportAttributes {
 
 @Injectable({ providedIn: 'root' })
 export class AirportService {
-  constructor(private http: HttpClient) {}
+  private httpClient = inject(HttpClient);
 
   public getAirports(): Observable<AirportAttributes[]> {
-    return this.http.get<AirportAttributes[]>(environment.apiURL + '/airports');
+    return this.httpClient.get<AirportAttributes[]>(environment.apiURL + '/airports');
   }
 
   public departureBeforeArrivalValidator(): ValidatorFn {
