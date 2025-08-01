@@ -7,7 +7,7 @@
   padding: 4em;
   background: var(--mat-sys-primary-container);
   border-radius: 1em;
-  box-shadow: 0 0.5em 2em rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0.5em 2em rgba(0, 0, 0, 0.15);
 
   label {
     display: flex;
@@ -49,7 +49,7 @@
 
     .last {
       flex: 1;
-        margin-left: 1em;
+      margin-left: 1em;
     }
   }
 
@@ -82,16 +82,4 @@
         margin-left: 1em;
     }
   }
-}
-
-.buttons-div {
-  display: flex;
-  flex-direction: row;
-  gap: 45rem;
-}
-
-button[mat-raised-button]:enabled {
-  background-color: var(--mat-sys-secondary-container);
-  color: var(--mat-sys-secondary-on-container);
-  align-self: flex-end;
 }

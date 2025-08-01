@@ -45,7 +45,6 @@ import { startWith, Subject, takeUntil } from 'rxjs';
     NgForOf,
     MatFormField,
     MatLabel,
-    MatSelect,
     MatOption,
     MatInput,
     MatButton,
