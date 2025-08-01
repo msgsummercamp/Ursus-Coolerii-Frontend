@@ -22,7 +22,8 @@
       </mat-form-field>
     </div>
 
-    <mat-form-field>
+    <div class="data">
+    <mat-form-field class="dob">
       <mat-label>{{ translate('dateOfBirth') }}</mat-label>
       <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" id="dateOfBirth"
       [placeholder]="translate('dateOfBirthPlaceholder')"/>
@@ -34,7 +35,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="phone">
       <mat-label>{{ translate('phoneNumber') }}</mat-label>
       <input matInput formControlName="phoneNumber" type="tel" id="phoneNumber"
       [placeholder]="translate('phoneNumberPlaceholder')"/>
@@ -42,6 +43,7 @@
         <mat-error>{{ translate('phoneNumberError') }}</mat-error>
       }
     </mat-form-field>
+    </div>
 
     <div class="location">
       <mat-form-field class="adr">
@@ -63,15 +65,10 @@
       </mat-form-field>
     </div>
 
-    <div *transloco="let translate; prefix: 'stepper'" class="buttons-div">
-      <button class="form-actions" mat-raised-button (click)="back()">{{ translate('back') }}</button>
-      <button
-        class="form-actions"
-        mat-raised-button
-        [disabled]="passengerDetailsForm.invalid"
-        (click)="continue()"
-        >{{ translate('next') }}</button
-      >
+    <div *transloco="let translate; prefix: 'stepper'" class="form-actions">
+      <button mat-raised-button (click)="back()">{{ translate('back') }}</button>
+      <button mat-raised-button [disabled]="passengerDetailsForm.invalid" (click)="continue()">{{ translate('next') }}</button>
+
     </div>
   </form>
 </ng-container>
