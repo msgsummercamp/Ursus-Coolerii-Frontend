@@ -6,8 +6,8 @@
   },
   "flightDetails": {
     "title": "Detalii Zbor",
+    "flightNr": "Număr Zbor",
     "flightDate": "Data Zborului",
-    "flightNr": "Nr. Zbor",
     "airline": "Companie Aeriană",
     "reservationNumber": "Număr Rezervare",
     "departingAirport": "Aeroport de Plecare",
@@ -22,19 +22,19 @@
     "typeAirline": "Introduceți Compania Aeriană...",
     "searchAirport": "Caută Aeroport...",
     "searchConnectingFlights": "Caută Zboruri de Legătură...",
-    "next": "Următorul Pas",
     "add": "Adaugă Zbor de Legătură",
-    "deleteConnectingFlight": "Șterge Zbor de Legătură"
-  },
-  "stepper": {
-    "flight-details": "Detaliile Zborului",
-    "passenger-details": "Detaliile Pasagerului",
-    "documents": "Documente",
-    "done": "Gata",
-    "next": "Mai departe",
-    "back": "Înapoi",
-    "reset": "Resetează",
-    "finish-message": "Ați terminat"
+    "deleteConnectingFlight": "Șterge Zbor de Legătură",
+    "flightNrError": "Numărul zborului este obligatoriu!",
+    "flightDateError": "Data zborului este obligatorie!",
+    "airlineError": "Compania aeriană este obligatorie!",
+    "reservationNumberError": "Numărul de rezervare este obligatoriu!",
+    "departingAirportError": "Aeroportul de plecare este obligatoriu!",
+    "destinationAirportError": "Aeroportul de destinație este obligatoriu!",
+    "plannedDepartureDateError": "Data planificată de plecare este obligatorie!",
+    "plannedDepartureTimeError": "Ora planificată de plecare este obligatorie!",
+    "plannedArrivalDateError": "Data planificată de sosire este obligatorie!",
+    "plannedArrivalTimeError": "Ora planificată de sosire este obligatorie!",
+    "next": "Mai Departe"
   },
 
   "passenger-details": {
@@ -45,6 +45,29 @@
     "phoneNumber": "Număr de telefon",
     "address": "Adresă",
     "postalCode": "Cod poștal",
-    "next": "Următorul"
+    "firstNameError": "Prenumele este obligatoriu!",
+    "lastNameError": "Numele este obligatoriu!",
+    "dateOfBirthError": "Data nașterii este obligatorie!",
+    "phoneNumberError": "Numărul de telefon este obligatoriu!",
+    "addressError": "Adresa este obligatorie!",
+    "postalCodeError": "Codul poștal este obligatoriu!",
+    "firstNamePlaceholder": "Introduceți Prenumele...",
+    "lastNamePlaceholder": "Introduceți Numele...",
+    "dateOfBirthPlaceholder": "Selectați Data Nașterii...",
+    "phoneNumberPlaceholder": "Introduceți Numărul de Telefon...",
+    "addressPlaceholder": "Introduceți Adresa...",
+    "postalCodePlaceholder": "Introduceți Codul Poștal...",
+    "next": "Mai Departe"
+  },
+
+  "stepper": {
+    "flight-details": "Detalii Zbor",
+    "passenger-details": "Detalii Pasager",
+    "documents": "Documente",
+    "done": "Gata",
+    "next": "Mai departe",
+    "back": "Înapoi",
+    "reset": "Resetează",
+    "finish-message": "Ați terminat"
   }
 }
