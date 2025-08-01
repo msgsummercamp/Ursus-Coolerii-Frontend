@@ -49,4 +49,34 @@
       }
     }
   }
+
+  .names {
+    display: flex;
+    justify-content: space-between;
+
+    .first {
+      flex: 1;
+      margin-right: 1em;
+    }
+
+    .last {
+      flex: 1;
+        margin-left: 1em;
+    }
+  }
+
+  .location {
+    display: flex;
+    justify-content: space-between;
+
+    .adr {
+      flex: 1.25;
+      margin-right: 1em;
+    }
+
+    .plz {
+        flex: 0.75;
+        margin-left: 1em;
+    }
+  }
 }

@@ -12,9 +12,16 @@ import {
 import { TranslocoPipe } from '@jsverse/transloco';
 import { AirportAttributes, AirportService } from '../service/airport.service';
 import { NgForOf } from '@angular/common';
-import { MatFormField, MatHint, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
+import {
+  MatError,
+  MatFormField,
+  MatHint,
+  MatInput,
+  MatLabel,
+  MatSuffix,
+} from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
-import { MatOption, provideNativeDateAdapter } from '@angular/material/core';
+import { MatOption } from '@angular/material/core';
 import { MatButton } from '@angular/material/button';
 import {
   MatDatepicker,
@@ -77,8 +84,8 @@ export function departureBeforeArrivalValidator(): ValidatorFn {
     MatTimepickerInput,
     MatAutocomplete,
     MatAutocompleteTrigger,
+    MatError,
   ],
-  providers: [provideNativeDateAdapter()],
 })
 export class FlightDetailsFormComponent implements OnInit {
   private readonly _isValid = signal(false);
