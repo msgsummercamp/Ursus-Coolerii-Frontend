@@ -67,5 +67,13 @@
     "back": "Back",
     "reset": "Reset",
     "finish-message": "You are done"
+  },
+
+  "documents": {
+    "title":"Upload Documents",
+    "chooseFile": "Choose File(s)",
+    "chooseFileError": "Please choose at least one file!",
+    "next": "Next",
+    "back": "Back"
   }
 }

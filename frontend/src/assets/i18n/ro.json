@@ -69,5 +69,13 @@
     "back": "Înapoi",
     "reset": "Resetează",
     "finish-message": "Ați terminat"
+  },
+
+  "documents": {
+    "title": "Încărcare Documente",
+    "chooseFile": "Alegeți Fișier(e)",
+    "chooseFileError": "Vă rog, alegeți măcar un fișier!",
+    "next": "Mai Departe",
+    "back": "Înapoi"
   }
 }
