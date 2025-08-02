@@ -19,3 +19,15 @@ export type PassengerDetailsForm = {
   address: FormControl<string>;
   postalCode: FormControl<string>;
 };
+
+export type AirportAttributes ={
+  name: string;
+  city: string;
+  country: string;
+  iata: string;
+  icao: string;
+  latitude: string;
+  longitude: string;
+  altitude: number;
+  timezone: string;
+}

@@ -1,6 +1,7 @@
 <div class="flight-form-wrapper">
   <h2>{{ 'flightDetails.title' | transloco }}</h2>
   <app-flight-details-form [flightForm]="form" />
+  <h2 *ngIf="connectingFlights.length != 0">Connecting flights</h2>
   <div *ngFor="let flight of connectingFlights; let i = index">
     <app-flight-details-form [flightForm]="flight" />
   </div>

@@ -1,29 +1,23 @@
 import {
   Component,
-  DestroyRef,
   inject,
   OnDestroy,
   OnInit,
   output,
   signal,
-  ViewChild,
   Input
 } from '@angular/core';
 import {
   FormGroup,
   FormControl,
-  NonNullableFormBuilder,
   ReactiveFormsModule,
-  Validators,
 } from '@angular/forms';
-import type { FlightDetailsForm } from '../../../../shared/types';
+import type { AirportAttributes, FlightDetailsForm } from '../../../../shared/types';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { AirportAttributes, AirportService } from '../service/airport.service';
+import { AirportService } from '../service/airport.service';
 import { NgForOf } from '@angular/common';
 import { MatFormField, MatHint, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
-import { MatSelect } from '@angular/material/select';
-import { MatOption, provideNativeDateAdapter } from '@angular/material/core';
-import { MatButton } from '@angular/material/button';
+import { MatOption } from '@angular/material/core';
 import {
   MatDatepicker,
   MatDatepickerInput,
@@ -35,7 +29,7 @@ import {
   MatTimepickerToggle,
 } from '@angular/material/timepicker';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { startWith, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-flight-details-form',
@@ -85,7 +79,7 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToFetchAirports() {
-    this.airportService.getAirports().subscribe((data) => {
+    this.airportService.airportList?.subscribe((data) => {
       this.airports = data;
       this.filteredAirports = this.filterAirports(this.flightForm.controls.departingAirport.value);
     });

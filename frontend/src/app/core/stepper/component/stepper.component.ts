@@ -30,7 +30,6 @@ import { FlightDetailsWrapComponent } from '../../layout/flight-details-wrap/fli
 })
 export class StepperComponent {
   private flightDetailsWrapComponent = viewChild(FlightDetailsWrapComponent);
-  private flightDetailsForm = this.flightDetailsWrapComponent()?.form;
   protected flightDetailsFormCompleted: Signal<boolean | undefined> = computed(() =>
     this.flightDetailsWrapComponent()?.validForms()
   );

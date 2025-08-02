@@ -6,28 +6,22 @@ import { AbstractControl, NonNullableFormBuilder, Validators } from '@angular/fo
 import { ValidatorFn } from '@angular/forms';
 import { ValidationErrors } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
-import { FlightDetailsForm } from '../../../../shared/types';
+import { FlightDetailsForm, AirportAttributes } from '../../../../shared/types';
 import { inject } from '@angular/core';
 
-export interface AirportAttributes {
-  name: string;
-  city: string;
-  country: string;
-  iata: string;
-  icao: string;
-  latitude: string;
-  longitude: string;
-  altitude: number;
-  timezone: string;
-}
 
 @Injectable({ providedIn: 'root' })
 export class AirportService {
   private httpClient = inject(HttpClient);
   private fb = inject(NonNullableFormBuilder);
+  private _airportList : Observable<AirportAttributes[]>   | undefined;
 
-  public getAirports(): Observable<AirportAttributes[]> {
-    return this.httpClient.get<AirportAttributes[]>(environment.apiURL + '/airports');
+  constructor() {
+    this._airportList = this.httpClient.get<AirportAttributes[]>(environment.apiURL + '/airports');
+  }
+
+  get airportList(): Observable<AirportAttributes[]> | undefined {
+    return this._airportList;
   }
 
   public departureBeforeArrivalValidator(): ValidatorFn {
@@ -44,7 +38,6 @@ export class AirportService {
       if (depDateStr === arrDateStr) {
         const [depHour, depMin] = depTime.split(':').map(Number);
         const [arrHour, arrMin] = arrTime.split(':').map(Number);
-
         const depTotal = depHour * 60 + depMin;
         const arrTotal = arrHour * 60 + arrMin;
 
