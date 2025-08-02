@@ -1,7 +1,7 @@
 <mat-stepper #stepper *transloco="let translate; prefix: 'stepper'" linear>
   <mat-step [completed]="flightDetailsFormCompleted()">
     <ng-template matStepLabel>{{ translate('flight-details') }}</ng-template>
-    <app-flight-details-form (next)="stepper.next()" />
+    <app-flight-details-wrap (next)="stepper.next()" />
   </mat-step>
   <mat-step [completed]="passengerDetailsFormCompleted()">
     <ng-template matStepLabel>{{ translate('passenger-details') }}</ng-template>

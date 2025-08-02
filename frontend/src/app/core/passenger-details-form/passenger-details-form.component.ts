@@ -20,15 +20,8 @@ import {
 } from '@angular/material/datepicker';
 import { MatButton } from '@angular/material/button';
 import { TranslocoDirective } from '@jsverse/transloco';
+import { PassengerDetailsForm } from '../../shared/types';
 
-type PassengerDetailsForm = {
-  firstName: FormControl<string>;
-  lastName: FormControl<string>;
-  dateOfBirth: FormControl<Date>;
-  phoneNumber: FormControl<string>;
-  address: FormControl<string>;
-  postalCode: FormControl<string>;
-};
 
 @Component({
   selector: 'app-passenger-details-form',
@@ -56,7 +49,7 @@ export class PassengerDetailsFormComponent implements OnInit {
   protected readonly passengerDetailsForm = this.formBuilder.group<PassengerDetailsForm>({
     firstName: this.formBuilder.control('', Validators.required),
     lastName: this.formBuilder.control('', Validators.required),
-    dateOfBirth: this.formBuilder.control<Date>(new Date(), Validators.required),
+    dateOfBirth: this.formBuilder.control(null, Validators.required),
     phoneNumber: this.formBuilder.control('', Validators.required),
     address: this.formBuilder.control('', Validators.required),
     postalCode: this.formBuilder.control('', Validators.required),

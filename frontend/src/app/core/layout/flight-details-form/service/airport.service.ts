@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { ValidatorFn } from '@angular/forms';
 import { ValidationErrors } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
@@ -24,6 +24,7 @@ export interface AirportAttributes {
 @Injectable({ providedIn: 'root' })
 export class AirportService {
   private httpClient = inject(HttpClient);
+  private fb = inject(NonNullableFormBuilder);
 
   public getAirports(): Observable<AirportAttributes[]> {
     return this.httpClient.get<AirportAttributes[]>(environment.apiURL + '/airports');
@@ -53,5 +54,21 @@ export class AirportService {
       }
       return null;
     };
+  }
+
+  public createForm() {
+    return this.fb.group<FlightDetailsForm>(
+      {
+        flightNr: this.fb.control('', Validators.required),
+        airline: this.fb.control('', Validators.required),
+        departingAirport: this.fb.control('', Validators.required),
+        destinationAirport: this.fb.control('', Validators.required),
+        plannedDepartureDate: this.fb.control(null, Validators.required),
+        plannedArrivalDate: this.fb.control(null, Validators.required),
+        plannedDepartureTime: this.fb.control('', Validators.required),
+        plannedArrivalTime: this.fb.control('', Validators.required),
+      },
+      { validators: this.departureBeforeArrivalValidator() }
+    );
   }
 }
