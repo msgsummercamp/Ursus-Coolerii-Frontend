@@ -28,7 +28,7 @@
         }
       </mat-list>
     }
-    @if (documentsFormGroup.get('files')?.invalid && documentsFormGroup.get('files')?.touched) {
+    @if (documentsFormGroup.controls.files.invalid && documentsFormGroup.controls.files.touched) {
       <mat-error>{{ translate('chooseFileError') }}</mat-error>
     }
 
