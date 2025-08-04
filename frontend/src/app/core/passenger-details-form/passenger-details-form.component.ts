@@ -40,7 +40,13 @@ export class PassengerDetailsFormComponent implements OnInit {
   private readonly formBuilder = inject(NonNullableFormBuilder);
   private readonly _isValid = signal(false);
 
-  protected readonly currentDate = new Date();
+  private readonly currentDate = new Date();
+
+  protected readonly maxDate = new Date(
+    this.currentDate.getFullYear() - 1,
+    this.currentDate.getMonth(),
+    this.currentDate.getDate()
+  );
 
   protected readonly passengerDetailsForm = this.formBuilder.group<PassengerDetailsForm>({
     firstName: this.formBuilder.control('', Validators.required),
