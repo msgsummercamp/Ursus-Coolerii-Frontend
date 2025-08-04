@@ -1,6 +1,7 @@
-<form [formGroup]="flightForm">
-  <div class="form-fields">
-    <mat-form-field appearance="fill">
+<form [formGroup]="flightForm" class="flight-form">
+  <h2 class="mat-headline-5">{{ 'flightDetails.title' | transloco }}</h2>
+  <div class="air-data">
+    <mat-form-field appearance="fill" class="flight">
       <mat-label>{{ 'flightDetails.flightNr' | transloco }}</mat-label>
       <input
         matInput
@@ -9,7 +10,20 @@
         placeholder="{{ 'flightDetails.typeFlightNr' | transloco }}"
       />
     </mat-form-field>
-    <mat-form-field appearance="fill">
+
+    <mat-form-field appearance="fill" class="airline">
+      <mat-label>{{ 'flightDetails.airline' | transloco }}</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="airline"
+        placeholder="{{ 'flightDetails.typeAirline' | transloco }}"
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="airports">
+    <mat-form-field appearance="fill" class="depart">
       <mat-label>{{ 'flightDetails.departingAirport' | transloco }}</mat-label>
       <input
         type="text"
@@ -25,7 +39,7 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="dest">
       <mat-label>{{ 'flightDetails.destinationAirport' | transloco }}</mat-label>
       <input
         type="text"
@@ -40,8 +54,10 @@
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
+  </div>
 
-    <mat-form-field>
+  <div class="depDate">
+    <mat-form-field class="date">
       <mat-label>{{ 'flightDetails.plannedDepartureDate' | transloco }}</mat-label>
       <input
         matInput
@@ -53,7 +69,7 @@
       <mat-datepicker #departureDatePicker />
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field class="time">
       <mat-label>{{ 'flightDetails.plannedDepartureTime' | transloco }}</mat-label>
       <input
         matInput
@@ -63,8 +79,10 @@
       <mat-timepicker-toggle matIconSuffix [for]="departureTimePicker" />
       <mat-timepicker #departureTimePicker />
     </mat-form-field>
+  </div>
 
-    <mat-form-field>
+  <div class="destDate">
+    <mat-form-field class="date">
       <mat-label>{{ 'flightDetails.plannedArrivalDate' | transloco }}</mat-label>
       <input
         matInput
@@ -77,22 +95,11 @@
       <mat-datepicker #arrivalDatePicker />
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field class="time">
       <mat-label>{{ 'flightDetails.plannedArrivalTime' | transloco }}</mat-label>
       <input matInput [matTimepicker]="arrivalTimePicker" formControlName="plannedArrivalTime" />
       <mat-timepicker-toggle matIconSuffix [for]="arrivalTimePicker" />
       <mat-timepicker #arrivalTimePicker />
     </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>{{ 'flightDetails.airline' | transloco }}</mat-label>
-      <input
-        matInput
-        type="text"
-        formControlName="airline"
-        placeholder="{{ 'flightDetails.typeAirline' | transloco }}"
-      />
-    </mat-form-field>
   </div>
 </form>
-

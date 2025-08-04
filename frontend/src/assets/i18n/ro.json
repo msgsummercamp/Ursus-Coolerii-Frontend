@@ -36,7 +36,6 @@
     "plannedArrivalTimeError": "Ora planificată de sosire este obligatorie!",
     "next": "Mai Departe"
   },
-
   "passenger-details": {
     "title": "Detalii Pasager",
     "firstName": "Prenume",
@@ -59,7 +58,6 @@
     "postalCodePlaceholder": "Introduceți Codul Poștal...",
     "next": "Mai Departe"
   },
-
   "stepper": {
     "flight-details": "Detalii Zbor",
     "passenger-details": "Detalii Pasager",
@@ -70,12 +68,14 @@
     "reset": "Resetează",
     "finish-message": "Ați terminat"
   },
-
   "documents": {
     "title": "Încărcare Documente",
     "chooseFile": "Alegeți Fișier(e)",
     "chooseFileError": "Vă rog, alegeți măcar un fișier!",
     "next": "Mai Departe",
     "back": "Înapoi"
+  },
+  "connecting-flight": {
+    "title": "Zbor de Legătură"
   }
 }
