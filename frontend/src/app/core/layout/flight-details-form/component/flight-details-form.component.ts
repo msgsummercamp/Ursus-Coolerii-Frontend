@@ -1,36 +1,11 @@
-import {
-  Component,
-  DestroyRef,
-  inject,
-  OnDestroy,
-  OnInit,
-  output,
-  signal,
-  ViewChild,
-  Input
-} from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  NonNullableFormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { Component, inject, OnDestroy, OnInit, output, signal, Input } from '@angular/core';
+import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import type { FlightDetailsForm } from '../../../../shared/types';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { AirportAttributes, AirportService } from '../service/airport.service';
 import { NgForOf } from '@angular/common';
-import {
-  MatError,
-  MatFormField,
-  MatHint,
-  MatInput,
-  MatLabel,
-  MatSuffix,
-} from '@angular/material/input';
-import { MatSelect } from '@angular/material/select';
+import { MatFormField, MatHint, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { MatOption } from '@angular/material/core';
-import { MatButton } from '@angular/material/button';
 import {
   MatDatepicker,
   MatDatepickerInput,
@@ -42,14 +17,14 @@ import {
   MatTimepickerToggle,
 } from '@angular/material/timepicker';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { startWith, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-flight-details-form',
   templateUrl: './flight-details-form.component.html',
   styleUrl: './flight-details-form.component.scss',
   imports: [
-      ReactiveFormsModule,
+    ReactiveFormsModule,
     TranslocoPipe,
     NgForOf,
     MatFormField,
@@ -66,18 +41,16 @@ import { startWith, Subject, takeUntil } from 'rxjs';
     MatTimepickerInput,
     MatAutocomplete,
     MatAutocompleteTrigger,
-    MatError,
   ],
 })
 export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   private readonly _isValid = signal(false);
-  public filteredAirports: AirportAttributes[] = [];
   public readonly isValid = this._isValid.asReadonly();
   private airportService = inject(AirportService);
   private airports: AirportAttributes[] = [];
   public readonly next = output<void>();
   private onDestroy$ = new Subject<void>();
-
+  public filteredAirports: AirportAttributes[] = [];
   @Input() flightForm!: FormGroup<FlightDetailsForm>;
 
   ngOnInit(): void {
@@ -93,7 +66,7 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToFetchAirports() {
-    this.airportService.getAirports().subscribe((data) => {
+    this.airportService.airportList?.subscribe((data) => {
       this.airports = data;
       this.filteredAirports = this.filterAirports(this.flightForm.controls.departingAirport.value);
     });
@@ -107,7 +80,6 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   private filterAirports(value: string): AirportAttributes[] {
     const filterValue = (value || '').toLowerCase();
     return this.airports.filter((airport) => airport.name.toLowerCase().includes(filterValue));
-
   }
 
   private subscribeAirportFieldToFilterAirports(control: FormControl<string> | null): void {
@@ -115,5 +87,4 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
       this.filteredAirports = this.filterAirports(val);
     });
   }
-
 }

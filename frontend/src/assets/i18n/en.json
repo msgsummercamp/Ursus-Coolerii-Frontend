@@ -34,7 +34,8 @@
     "plannedDepartureTimeError": "Planned departure time is required!",
     "plannedArrivalDateError": "Planned arrival date is required!",
     "plannedArrivalTimeError": "Planned arrival time is required!",
-    "next": "Next"
+    "next": "Next",
+    "rewardMessage": "You can receive up to {{reward}} EUROS for this flight!"
   },
   "passenger-details": {
     "title": "Passenger Details",
