@@ -4,7 +4,14 @@ import type { FlightDetailsForm } from '../../../../shared/types';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { AirportAttributes, AirportService } from '../service/airport.service';
 import { NgForOf } from '@angular/common';
-import { MatFormField, MatHint, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
+import {
+  MatError,
+  MatFormField,
+  MatHint,
+  MatInput,
+  MatLabel,
+  MatSuffix,
+} from '@angular/material/input';
 import { MatOption } from '@angular/material/core';
 import {
   MatDatepicker,
@@ -17,7 +24,8 @@ import {
   MatTimepickerToggle,
 } from '@angular/material/timepicker';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { Subject, takeUntil } from 'rxjs';
+import { startWith, Subject, takeUntil } from 'rxjs';
+import { AirlineAttributes, AirlineService } from '../service/airline.service';
 
 @Component({
   selector: 'app-flight-details-form',
@@ -48,6 +56,9 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   public readonly isValid = this._isValid.asReadonly();
   private airportService = inject(AirportService);
   private airports: AirportAttributes[] = [];
+  private airlineService = inject(AirlineService);
+  private airlines: AirlineAttributes[] = [];
+  protected filteredAirlines: AirlineAttributes[] = [];
   public readonly next = output<void>();
   private onDestroy$ = new Subject<void>();
   public filteredAirports: AirportAttributes[] = [];
@@ -56,6 +67,7 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscribeToFetchAirports();
     this.subscribeAllFormElements();
+    this.subscribeToFetchAirlines();
     this.flightForm.statusChanges.subscribe((status) => {
       this._isValid.set(status === 'VALID');
     });
@@ -86,5 +98,20 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
     control?.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((val) => {
       this.filteredAirports = this.filterAirports(val);
     });
+  }
+
+  private filterAirlines(value: string): AirlineAttributes[] {
+    const filterValue = (value || '').toLowerCase();
+    return this.airlines.filter((airline) => airline.name.toLowerCase().includes(filterValue));
+  }
+
+  private subscribeToFetchAirlines() {
+    const airlineList = this.airlineService.airLineList;
+    if (airlineList) {
+      airlineList.subscribe((data: AirlineAttributes[]) => {
+        this.airlines = data;
+        this.filteredAirlines = this.filterAirlines(this.flightForm.controls.airline.value);
+      });
+    }
   }
 }
