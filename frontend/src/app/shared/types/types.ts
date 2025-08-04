@@ -1,3 +1,5 @@
+import { DisruptiveMotive } from '../enums';
+
 export type AirportAttributes ={
   name: string;
   city: string;
@@ -18,18 +20,6 @@ export type EligibilityRequest= {
   isVoluntarilyGivenUp: boolean | null
 }
 
-export const DisruptiveMotive = {
-  cancelation: "CANCELLATION",
-  deniedBoarding: "DENIED_BOARDING",
-  delay: "DELAY"
-}
-
-export const DeniedBoardingMotive = {
-  overBooked: 'Flight overbooked',
-  aggresive: 'Aggressive behavior with staff',
-  intoxication: 'Intoxication',
-  unspeciifed: 'Unspecified reason'
-}
 
 export const DisruptiveMotiveLabels: Record<DisruptiveMotive, string> = {
   [DisruptiveMotive.cancelation]: "Canceled",
@@ -37,15 +27,3 @@ export const DisruptiveMotiveLabels: Record<DisruptiveMotive, string> = {
   [DisruptiveMotive.delay]: "Delayed"
 };
 
-
-export enum AirlineMotives {
-  tehnical = 'Tehnical Problems',
-  meteorological = 'Meteorological conditions',
-  strike = 'Strike problems with airport',
-  crew = 'Crew problems',
-  other = 'Other motives'
-}
-
-
-export type DeniedBoardingMotive = typeof DeniedBoardingMotive[keyof typeof DeniedBoardingMotive];
-export type DisruptiveMotive = typeof DisruptiveMotive[keyof typeof DisruptiveMotive]

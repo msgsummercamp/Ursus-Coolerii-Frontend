@@ -1,6 +1,6 @@
 <mat-stepper #stepper *transloco="let translate; prefix: 'stepper'" linear>
   <mat-step [completed]="disruptiveFormCompleted()">
-    <ng-template matStepLabel>{{ translate('flight-details') }}</ng-template>
+    <ng-template matStepLabel>{{ translate('disruption-motives') }}</ng-template>
     <app-diruptive-form (next)="stepper.next()" />
   </mat-step>
   <mat-step [completed]="flightDetailsFormCompleted()">

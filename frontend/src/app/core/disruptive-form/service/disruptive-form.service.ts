@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { FormBuilder, FormGroup,  } from '@angular/forms';
 import {
-  DisruptiveMotive,
   DisruptiveMotiveLabels,
   EligibilityRequest,
 } from '../../../shared/types/types';
@@ -9,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { DisruptiveMotiveForm } from '../../../shared/types/form.types';
+import { DisruptiveMotive } from '../../../shared/enums';
 
 @Injectable({
   providedIn: 'root'

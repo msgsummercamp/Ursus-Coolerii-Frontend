@@ -1,4 +1,4 @@
-.flight-form-wrapper {
+.disruptive-form-wrapper {
   margin-top: 5rem;
   display: flex;
   flex-direction: column;
@@ -8,7 +8,19 @@
   padding: 0 1rem;
 }
 
+button {
+  &:hover {
+    background-color: var(--mat-sys-secondary-container);
+    transform: scale(1.075);
+  }
+
+  &:disabled {
+    background: var(--mat-sys-error-container);
+    cursor: not-allowed;
+  }
+}
 .form-fields {
+  min-width: 30vw;
   display: flex;
   flex-direction: column;
   grid-template-columns: 1fr 1fr;
@@ -27,4 +39,10 @@ form {
   gap: 1.5rem;
   width: 100%;
   max-width: 30rem;
+}
+
+.form-actions{
+  max-width: 5rem;
+  display: flex;
+  align-self: flex-end;
 }

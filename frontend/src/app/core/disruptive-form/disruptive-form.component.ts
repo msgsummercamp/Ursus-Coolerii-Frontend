@@ -2,17 +2,16 @@ import { Component, computed, inject, OnDestroy, OnInit, output, signal, Signal 
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatInput, MatInputModule, MatLabel } from '@angular/material/input';
 import { MatAutocomplete, MatAutocompleteTrigger, MatOption } from '@angular/material/autocomplete';
-import { TranslocoPipe } from '@jsverse/transloco';
-import {
-  AirlineMotives,
-  DeniedBoardingMotive,
-  DisruptiveMotive, DisruptiveMotiveLabels,
+import { toCamelCase, TranslocoPipe } from '@jsverse/transloco';
+import { DisruptiveMotiveLabels,
 } from '../../shared/types/types';
 import { CommonModule } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { MatButton } from '@angular/material/button';
 import { DisruptiveFormService } from './service/disruptive-form.service';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { AirlineMotives, DeniedBoardingMotive, DisruptiveMotive } from '../../shared/enums';
+
 
 @Component({
   selector: 'app-diruptive-form',
@@ -40,7 +39,6 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
   public motives: string[];
   public reasons: DeniedBoardingMotive[] = Object.values(DeniedBoardingMotive);
   public airlineDeniedMotives : AirlineMotives[] = Object.values(AirlineMotives);
-  protected readonly DisruptiveMotive = DisruptiveMotive;
   private service = inject(DisruptiveFormService);
   private onDestroy$ = new Subject<void>();
   public readonly next = output<void>();
@@ -77,4 +75,7 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
     this.onDestroy$.next();
     this.onDestroy$.complete();
   }
+
+  protected readonly toCamelCase = toCamelCase;
+  protected readonly DisruptiveMotive = DisruptiveMotive;
 }

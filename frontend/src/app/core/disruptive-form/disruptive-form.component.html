@@ -1,4 +1,4 @@
-<div class="flight-form-wrapper">
+<div class="disruptive-form-wrapper">
 <form [formGroup]="formDisruption">
   <div class="form-fields">
   <mat-form-field appearance="fill" >
@@ -6,15 +6,15 @@
     <mat-select formControlName="disruptionMotive">
       @for(motive of motives; track $index) {
         <mat-option [value]="motive">
-          {{ motive }}
+          {{ 'disruptiveMotive.' + toCamelCase(motive) | transloco }}
         </mat-option>
       }
     </mat-select>
   </mat-form-field>
   @if(formDisruption.controls.disruptionMotive.value === DisruptiveMotiveLabels[DisruptiveMotive.cancelation]) {
-    <mat-label>How many days before cancellation has the airline informed?</mat-label>
+    <mat-label>{{ 'disruptiveMotive.numberOfDaysLong' | transloco }}</mat-label>
     <mat-form-field appearance="fill">
-      <mat-label>Number of days</mat-label>
+      <mat-label>{{ 'disruptiveMotive.numberOfDaysLong' | transloco }}</mat-label>
       <input
         type="number"
         matInput
@@ -25,17 +25,17 @@
   }
   @else if(formDisruption.controls.disruptionMotive.value === DisruptiveMotiveLabels[DisruptiveMotive.delay]){
     <mat-form-field>
-      <mat-label>Has the flight arrived?</mat-label>
+      <mat-label>{{ 'disruptiveMotive.arrivedQuestion' | transloco  }}</mat-label>
       <mat-select formControlName="hasArrived">
         @for(motive of [true, false]; track $index) {
           <mat-option [value]="motive">
-            {{ motive ? 'Yes' : 'No' }}
+            {{ motive ? ('yes' | transloco) : ('no' | transloco) }}
           </mat-option>
         }
       </mat-select>
     </mat-form-field>
     @if(formDisruption.controls.hasArrived.value === true){
-      <mat-label>How late arrived to final destination?</mat-label>
+      <mat-label>{{ 'disruptiveMotive.lateArrival' | transloco  }}</mat-label>
       <mat-form-field appearance="fill">
         <mat-label>Number of hours</mat-label>
         <input
@@ -49,7 +49,7 @@
   }
   @else if(formDisruption.controls.disruptionMotive.value ===  DisruptiveMotiveLabels[DisruptiveMotive.deniedBoarding]) {
     <mat-form-field appearance="fill">
-      <mat-label>Did you give up your seat voluntarily?</mat-label>
+      <mat-label>{{ 'disruptiveMotive.seatGaveQuestion' | transloco  }}</mat-label>
       <input
         type="text"
         matInput
@@ -59,13 +59,13 @@
       />
       <mat-autocomplete #autoComplete="matAutocomplete">
         <mat-option *ngFor="let option of [true, false]" [value]="option ? 'Yes' : 'No'">
-          {{ option ? 'Yes' : 'No' }}
+          {{ option ? ('yes' | transloco) : ('no' | transloco) }}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
     @if(formDisruption.controls.gaveSeatVoluntarly.value === 'No' ) {
       <mat-form-field appearance="fill">
-        <mat-label>Reason behind denial of boarding</mat-label>
+        <mat-label>{{ 'disruptiveMotive.reasonDeniedBoarding' | transloco  }}</mat-label>
         <input
           type="text"
           matInput
@@ -75,7 +75,7 @@
         />
         <mat-autocomplete #autoReasonMotive="matAutocomplete">
           <mat-option *ngFor="let option of reasons " [value]="option">
-            {{ option }}
+            {{ 'disruptiveMotive.' + toCamelCase(option) | transloco }}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
@@ -84,22 +84,22 @@
   @if(formDisruption.controls.disruptionMotive.value ===  DisruptiveMotiveLabels[DisruptiveMotive.delay] ||
       formDisruption.controls.disruptionMotive.value ===  DisruptiveMotiveLabels[DisruptiveMotive.cancelation]) {
     <mat-form-field appearance="fill">
-      <mat-label>Did the airline mention disruption motive?</mat-label>
+      <mat-label>{{ 'disruptiveMotive.airlineMotiveIsMentioned'| transloco  }}</mat-label>
       <mat-select formControlName="airlineMentionedMotive">
         @for(motive of [true, false]; track $index) {
           <mat-option [value]="motive">
-            {{ motive ? 'Yes' : 'No' }}
+            {{ motive ? ('yes' | transloco) : ('no' | transloco) }}
           </mat-option>
         }
       </mat-select>
     </mat-form-field>
     @if(formDisruption.controls.airlineMentionedMotive.value === true) {
       <mat-form-field appearance="fill">
-        <mat-label>What was the motive communicated by the airline?</mat-label>
+        <mat-label>{{ 'disruptiveMotive.communicatedMotive'| transloco  }}</mat-label>
         <mat-select formControlName="communicatedMotive">
           @for(motive of airlineDeniedMotives; track $index) {
             <mat-option [value]="motive">
-              {{ motive }}
+              {{ 'disruptiveMotive.' + toCamelCase(motive) | transloco}}
             </mat-option>
           }
         </mat-select>
@@ -107,12 +107,11 @@
 
     }
   }
-    <p>{{eligibleText()}}</p>
-  <div class="form-buttons">
+  </div>
     <button class="form-actions" mat-raised-button [disabled]="!isEligibile()" (click)="continue()">
       {{ 'flightDetails.next' | transloco }}
     </button>
-  </div>
-  </div>
 </form>
+  <p>{{ 'disruptiveMotive.' + toCamelCase(eligibleText()) | transloco}}</p>
+
 </div>
