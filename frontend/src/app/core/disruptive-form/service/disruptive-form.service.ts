@@ -44,9 +44,9 @@ export class DisruptiveFormService {
     return {
       disruption: this.getDisruptionMotive(form),
       noticeDays: form.controls.daysBeforeCancelation.value ?? null,
-      arrived: false,
+      arrived: form.controls.hasArrived.value,
       delayHours: form.controls.hoursLateArrival.value ?? null,
-      isVoluntarilyGivenUp: form.controls.gaveSeatVoluntarly.value === 'Yes'
+      isVoluntarilyGivenUp: form.controls.gaveSeatVoluntarly.value !== 'No'
     };
   }
 

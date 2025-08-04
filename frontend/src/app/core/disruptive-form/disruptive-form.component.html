@@ -18,20 +18,34 @@
       <input
         type="number"
         matInput
+        min="0"
         formControlName="daysBeforeCancelation"
       />
     </mat-form-field>
   }
   @else if(formDisruption.controls.disruptionMotive.value === DisruptiveMotiveLabels[DisruptiveMotive.delay]){
-    <mat-label>How late arrived to final destination?</mat-label>
-    <mat-form-field appearance="fill">
-      <mat-label>Number of hours</mat-label>
-      <input
-        type="number"
-        matInput
-        formControlName="hoursLateArrival"
-      />
+    <mat-form-field>
+      <mat-label>Has the flight arrived?</mat-label>
+      <mat-select formControlName="hasArrived">
+        @for(motive of [true, false]; track $index) {
+          <mat-option [value]="motive">
+            {{ motive ? 'Yes' : 'No' }}
+          </mat-option>
+        }
+      </mat-select>
     </mat-form-field>
+    @if(formDisruption.controls.hasArrived.value === true){
+      <mat-label>How late arrived to final destination?</mat-label>
+      <mat-form-field appearance="fill">
+        <mat-label>Number of hours</mat-label>
+        <input
+          type="number"
+          matInput
+          min="0"
+          formControlName="hoursLateArrival"
+        />
+      </mat-form-field>
+    }
   }
   @else if(formDisruption.controls.disruptionMotive.value ===  DisruptiveMotiveLabels[DisruptiveMotive.deniedBoarding]) {
     <mat-form-field appearance="fill">
@@ -93,9 +107,9 @@
 
     }
   }
-    <p>{{isEligibile()}}</p>
+    <p>{{eligibleText()}}</p>
   <div class="form-buttons">
-    <button class="form-actions" mat-raised-button [disabled]="formDisruption.invalid" (click)="continue()">
+    <button class="form-actions" mat-raised-button [disabled]="!isEligibile()" (click)="continue()">
       {{ 'flightDetails.next' | transloco }}
     </button>
   </div>

@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, output, signal, Signal } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit, output, signal, Signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatInput, MatInputModule, MatLabel } from '@angular/material/input';
 import { MatAutocomplete, MatAutocompleteTrigger, MatOption } from '@angular/material/autocomplete';
@@ -45,8 +45,8 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
   private onDestroy$ = new Subject<void>();
   public readonly next = output<void>();
   protected readonly DisruptiveMotiveLabels = DisruptiveMotiveLabels;
-
   public isEligibile = signal<Boolean>(false);
+  public eligibleText = computed(() => this.isEligibile() ? 'Eligible' : 'Not eligible')
 
   constructor() {
     this.motives = Object.values(DisruptiveMotiveLabels);
@@ -55,19 +55,22 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
   public formDisruption = this.service.createForm();
 
   protected continue() {
-    console.log(this.service.buildEligibilityRequest(this.formDisruption));
-    this.service.checkEligibility(this.formDisruption).subscribe({
-      next: (result) => {
-        this.isEligibile.set(result);
-      },
-      error: (err) => {
-        this.isEligibile.set(false);
-      },
-    });
+    this.next.emit();
   }
 
   ngOnInit(): void {
     this.motives = Object.values(DisruptiveMotiveLabels);
+    this.formDisruption.statusChanges.subscribe(() => {
+      console.log(this.service.buildEligibilityRequest(this.formDisruption));
+      this.service.checkEligibility(this.formDisruption).subscribe({
+        next: (result) => {
+          this.isEligibile.set(result);
+        },
+        error: (err) => {
+          this.isEligibile.set(false);
+        },
+      });
+    })
   }
 
   ngOnDestroy(): void {
