@@ -6,8 +6,8 @@
   },
   "flightDetails": {
     "title": "Flight Details",
-    "flightDate": "Flight Date",
     "flightNr": "Flight Nr.",
+    "flightDate": "Flight Date",
     "airline": "Airline",
     "reservationNumber": "Reservation Number",
     "departingAirport": "Departing Airport",
@@ -22,9 +22,41 @@
     "typeAirline": "Type Airline...",
     "searchAirport": "Search Airport...",
     "searchConnectingFlights": "Search Connecting Flights...",
-    "next": "Next",
     "add": "Add Connecting Flight",
-    "deleteConnectingFlight": "Delete Connecting Flight"
+    "deleteConnectingFlight": "Delete Connecting Flight",
+    "flightNrError": "Flight number is required!",
+    "flightDateError": "Flight date is required!",
+    "airlineError": "Airline is required!",
+    "reservationNumberError": "Reservation number is required!",
+    "departingAirportError": "Departing airport is required!",
+    "destinationAirportError": "Destination airport is required!",
+    "plannedDepartureDateError": "Planned departure date is required!",
+    "plannedDepartureTimeError": "Planned departure time is required!",
+    "plannedArrivalDateError": "Planned arrival date is required!",
+    "plannedArrivalTimeError": "Planned arrival time is required!",
+    "next": "Next"
+  },
+  "passenger-details": {
+    "title": "Passenger Details",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "dateOfBirth": "Date of Birth",
+    "phoneNumber": "Phone Number",
+    "address": "Address",
+    "postalCode": "Postal Code",
+    "firstNameError": "Firstname is required!",
+    "lastNameError": "Lastname is required!",
+    "dateOfBirthError": "Date of birth is required!",
+    "phoneNumberError": "Phone number is required!",
+    "addressError": "Address is required!",
+    "postalCodeError": "Postal code is required!",
+    "firstNamePlaceholder": "Type First Name...",
+    "lastNamePlaceholder": "Type Last Name...",
+    "dateOfBirthPlaceholder": "Select Date of Birth...",
+    "phoneNumberPlaceholder": "Type Phone Number...",
+    "addressPlaceholder": "Type Address...",
+    "postalCodePlaceholder": "Type Postal Code...",
+    "next": "Next"
   },
   "stepper": {
     "flight-details": "Flight Details",
@@ -36,14 +68,12 @@
     "reset": "Reset",
     "finish-message": "You are done"
   },
-  "passenger-details": {
-    "title": "Passenger Details",
-    "firstName": "First Name",
-    "lastName": "Last Name",
-    "dateOfBirth": "Date of Birth",
-    "phoneNumber": "Phone Number",
-    "address": "Address",
-    "postalCode": "Postal Code",
-    "next": "Next"
+
+  "documents": {
+    "title":"Upload Documents",
+    "chooseFile": "Choose File(s)",
+    "chooseFileError": "Please choose at least one file!",
+    "next": "Next",
+    "back": "Back"
   }
 }

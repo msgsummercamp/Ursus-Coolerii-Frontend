@@ -20,9 +20,16 @@ import type { FlightDetailsForm } from '../../../../shared/types';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { AirportAttributes, AirportService } from '../service/airport.service';
 import { NgForOf } from '@angular/common';
-import { MatFormField, MatHint, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
+import {
+  MatError,
+  MatFormField,
+  MatHint,
+  MatInput,
+  MatLabel,
+  MatSuffix,
+} from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
-import { MatOption, provideNativeDateAdapter } from '@angular/material/core';
+import { MatOption } from '@angular/material/core';
 import { MatButton } from '@angular/material/button';
 import {
   MatDatepicker,
@@ -59,6 +66,7 @@ import { startWith, Subject, takeUntil } from 'rxjs';
     MatTimepickerInput,
     MatAutocomplete,
     MatAutocompleteTrigger,
+    MatError,
   ],
 })
 export class FlightDetailsFormComponent implements OnInit, OnDestroy {
@@ -99,6 +107,7 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   private filterAirports(value: string): AirportAttributes[] {
     const filterValue = (value || '').toLowerCase();
     return this.airports.filter((airport) => airport.name.toLowerCase().includes(filterValue));
+
   }
 
   private subscribeAirportFieldToFilterAirports(control: FormControl<string> | null): void {

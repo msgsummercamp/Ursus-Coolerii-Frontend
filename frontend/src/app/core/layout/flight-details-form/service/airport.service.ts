@@ -25,7 +25,6 @@ export interface AirportAttributes {
 export class AirportService {
   private httpClient = inject(HttpClient);
   private fb = inject(NonNullableFormBuilder);
-
   public getAirports(): Observable<AirportAttributes[]> {
     return this.httpClient.get<AirportAttributes[]>(environment.apiURL + '/airports');
   }

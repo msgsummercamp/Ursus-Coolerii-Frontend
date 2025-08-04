@@ -1,83 +1,91 @@
-form {
-  margin-bottom: 3rem;
-}
 
-.form-fields {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  max-width: 56.25rem;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: var(--mat-sys-primary-container);
-  border-radius: 0.75rem;
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
-}
-mat-form-field {
-  width: 100%;
-  margin-bottom: 1.25rem;
-}
-
-h2 {
-  margin-bottom: 2rem;
-  text-align: center;
-}
-
-.connecting-flights-list {
-  width: 100%;
-  max-width: 56.25rem;
-  margin: 2rem auto 0 auto;
+.flight-form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-}
+  gap: 2em;
+  max-width: 50vw;
+  margin: 4vh auto;
+  padding: 4em;
+  background: var(--mat-sys-primary-container);
+  border-radius: 1em;
+  box-shadow: 0 0.5em 2em rgba(0, 0, 0, 0.15);
 
-[formGroupName] {
-  width: 100%;
-  max-width: 56.25rem;
-  margin-bottom: 1.5rem;
-  border: 0.0625rem solid #e0e0e0;
-  border-radius: 0.5rem;
-  padding: 1rem;
-  h3 {
-    margin-top: 0;
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
-    font-weight: 500;
+  .air-data{
+    display: flex;
+    justify-content: space-between;
+
+    .flight {
+      flex: 0.75;
+      margin-right: 1em;
+    }
+
+    .airline {
+      flex: 1.25;
+      margin-left: 1em;
+    }
   }
 
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  .airports {
+    display: flex;
+    justify-content: space-between;
+
+    .depart {
+      flex: 1;
+      margin-right: 1em;
+    }
+
+    .dest {
+      flex: 1;
+      margin-left: 1em;
+    }
+  }
+
+  .depDate {
+    display: flex;
+    justify-content: space-between;
+
+    .date {
+      flex: 1;
+      margin-right: 1em;
+    }
+
+    .time {
+      flex: 1;
+      margin-left: 1em;
+    }
+  }
+
+  .destDate {
+    display: flex;
+    justify-content: space-between;
+
+    .date {
+      flex: 1;
+      margin-right: 1em;
+    }
+
+    .time {
+      flex: 1;
+      margin-left: 1em;
+    }
+  }
+
 }
 
-.form-spacer {
-  flex: 1 1 auto;
-}
-
-.form-buttons {
-  width: 100%;
-  max-width: 56.25rem;
+.form-actions {
   display: flex;
   justify-content: space-between;
-  position: sticky;
-  bottom: 0;
-  padding: 1rem 0;
-  z-index: 2;
+
   margin-top: 2rem;
-  border-top: 0.0625rem solid #e0e0e0;
-  color: var(--mat-sys-primary);
-}
 
-button[mat-raised-button][color='primary'][type='button']:disabled,
-button[mat-raised-button][color='primary'][type='button'].mat-button-disabled {
-  background-color: var(--mat-sys-secondary-container);
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-button[mat-raised-button]:enabled {
-  background-color: var(--mat-sys-secondary-container);
-  color: var(--mat-sys-secondary-on-container);
-  align-self: flex-end;
+  button {
+    &:hover {
+      background-color: var(--mat-sys-secondary-container);
+      transform: scale(1.075);
+    }
+    &:disabled {
+      background: var(--mat-sys-error-container);
+      cursor: not-allowed;
+    }
+  }
 }
