@@ -1,20 +1,16 @@
 import {
   Component,
-  DestroyRef,
   inject,
   OnDestroy,
   OnInit,
   output,
   signal,
-  ViewChild,
   Input
 } from '@angular/core';
 import {
   FormGroup,
   FormControl,
-  NonNullableFormBuilder,
   ReactiveFormsModule,
-  Validators,
 } from '@angular/forms';
 import type { FlightDetailsForm } from '../../../../shared/types';
 import { TranslocoPipe } from '@jsverse/transloco';
@@ -28,9 +24,7 @@ import {
   MatLabel,
   MatSuffix,
 } from '@angular/material/input';
-import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
-import { MatButton } from '@angular/material/button';
 import {
   MatDatepicker,
   MatDatepickerInput,
@@ -43,6 +37,7 @@ import {
 } from '@angular/material/timepicker';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { startWith, Subject, takeUntil } from 'rxjs';
+import { AirlineAttributes, AirlineService } from '../service/airline.service';
 
 @Component({
   selector: 'app-flight-details-form',
@@ -66,7 +61,6 @@ import { startWith, Subject, takeUntil } from 'rxjs';
     MatTimepickerInput,
     MatAutocomplete,
     MatAutocompleteTrigger,
-    MatError,
   ],
 })
 export class FlightDetailsFormComponent implements OnInit, OnDestroy {
@@ -75,6 +69,9 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   public readonly isValid = this._isValid.asReadonly();
   private airportService = inject(AirportService);
   private airports: AirportAttributes[] = [];
+  private airlineService = inject(AirlineService);
+  private airlines: AirlineAttributes[] = [];
+  protected filteredAirlines: AirlineAttributes[] = [];
   public readonly next = output<void>();
   private onDestroy$ = new Subject<void>();
 
@@ -83,6 +80,7 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscribeToFetchAirports();
     this.subscribeAllFormElements();
+    this.subscribeToFetchAirlines();
     this.flightForm.statusChanges.subscribe((status) => {
       this._isValid.set(status === 'VALID');
     });
@@ -116,4 +114,18 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
     });
   }
 
+  private filterAirlines(value: string): AirlineAttributes[] {
+    const filterValue = (value || '').toLowerCase();
+    return this.airlines.filter((airline) => airline.name.toLowerCase().includes(filterValue));
+  }
+
+  private subscribeToFetchAirlines() {
+    const airlineList = this.airlineService.airLineList;
+    if (airlineList) {
+      airlineList.subscribe((data: AirlineAttributes[]) => {
+        this.airlines = data;
+        this.filteredAirlines = this.filterAirlines(this.flightForm.controls.airline.value);
+      });
+    }
+  }
 }
