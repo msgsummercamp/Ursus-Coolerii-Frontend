@@ -40,12 +40,12 @@
           [matDatepicker]="picker"
           formControlName="dateOfBirth"
           id="dateOfBirth"
-          [max]="maxDate"
+          [max]="currentDate"
           [placeholder]="translate('dateOfBirthPlaceholder')"
         />
         <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker" />
-        <mat-datepicker #picker />
+        <mat-datepicker #picker startView="multi-year" />
         @if (passengerDetailsForm.controls.dateOfBirth.errors?.['required']) {
           <mat-error>{{ translate('error.dateOfBirth.required') }}</mat-error>
         }
