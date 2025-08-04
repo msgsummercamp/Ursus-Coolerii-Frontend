@@ -1,0 +1,30 @@
+.flight-form-wrapper {
+  margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  min-height: 100vh;
+  padding: 0 1rem;
+}
+
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  max-width: 56.25rem;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: var(--mat-sys-primary-container);
+  border-radius: 0.75rem;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 30rem;
+}

@@ -1,0 +1,130 @@
+<div class="flight-form-wrapper">
+<form [formGroup]="formDisruption">
+  <div class="form-fields">
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'disruptiveMotive.dropDownText' | transloco }}</mat-label>
+    <input
+      type="text"
+      matInput
+      formControlName="disruptionMotive"
+      [matAutocomplete]="autoMotive"
+    />
+    <mat-autocomplete #autoMotive="matAutocomplete">
+      <mat-option *ngFor="let motive of filteredMotives" [value]="motive">
+        {{ motive }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  @if(formDisruption.controls.disruptionMotive.value === DisruptiveMotive.cancelation) {
+    <mat-label>How many days before cancellation has the airline informed?</mat-label>
+    <mat-form-field appearance="fill">
+      <mat-label>Number of days</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="daysBeforeCancelation"
+        [matAutocomplete]="autoDays"
+
+      />
+      <mat-autocomplete #autoDays="matAutocomplete">
+        <mat-option *ngFor="let day of filteredDays" [value]="day">
+          {{ day }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  }
+  @else if(formDisruption.controls.disruptionMotive.value === DisruptiveMotive.delay){
+    <mat-label>How late arrived to final destination?</mat-label>
+    <mat-form-field appearance="fill">
+      <mat-label>Number of hours</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="hoursLateArrival"
+        [matAutocomplete]="autoHours"
+
+      />
+      <mat-autocomplete #autoHours="matAutocomplete">
+        <mat-option *ngFor="let hour of filteredHours" [value]="hour">
+          {{ hour }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  }
+  @else if(formDisruption.controls.disruptionMotive.value === DisruptiveMotive.deniedBoarding) {
+    <mat-form-field appearance="fill">
+      <mat-label>Did you give up your seat voluntarily?</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="gaveSeatVoluntarly"
+        [matAutocomplete]="autoComplete"
+
+      />
+      <mat-autocomplete #autoComplete="matAutocomplete">
+        <mat-option *ngFor="let option of [true, false]" [value]="option ? 'Yes' : 'No'">
+          {{ option ? 'Yes' : 'No' }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    @if(formDisruption.controls.gaveSeatVoluntarly.value === 'No' ) {
+      <mat-form-field appearance="fill">
+        <mat-label>Reason behind denial of boarding</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="deniedBoardingMotive"
+          [matAutocomplete]="autoReasonMotive"
+
+        />
+        <mat-autocomplete #autoReasonMotive="matAutocomplete">
+          <mat-option *ngFor="let option of filteredDeniedReason" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    }
+  }
+  @if(formDisruption.controls.disruptionMotive.value === DisruptiveMotive.delay ||
+      formDisruption.controls.disruptionMotive.value === DisruptiveMotive.cancelation) {
+    <mat-form-field appearance="fill">
+      <mat-label>Did the airline mention disruption motive?</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="airlineMentionedMotive"
+        [matAutocomplete]="autoReasonMotive"
+
+      />
+      <mat-autocomplete #autoReasonMotive="matAutocomplete">
+        <mat-option *ngFor="let option of [true, false]" [value]="option ? 'Yes' : 'No'">
+          {{ option ? 'Yes' : 'No' }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    @if(formDisruption.controls.airlineMentionedMotive.value === 'Yes') {
+      <mat-form-field appearance="fill">
+        <mat-label>What was the motive communicated by the airline?</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="communicatedMotive"
+          [matAutocomplete]="autoReasonMotive"
+        />
+        <mat-autocomplete #autoReasonMotive="matAutocomplete">
+          <mat-option *ngFor="let option of [true, false]" [value]="option ? 'Yes' : 'No'">
+            {{ option ? 'Yes' : 'No' }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+    }
+  }
+  <div class="form-buttons">
+    <button class="form-actions" mat-raised-button [disabled]="formDisruption.invalid" (click)="continue()">
+      {{ 'flightDetails.next' | transloco }}
+    </button>
+  </div>
+  </div>
+</form>
+</div>

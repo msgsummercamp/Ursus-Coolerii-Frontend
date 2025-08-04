@@ -36,13 +36,15 @@ import { Subject, takeUntil } from 'rxjs';
   templateUrl: './flight-details-form.component.html',
   styleUrl: './flight-details-form.component.scss',
   imports: [
-      ReactiveFormsModule,
+    ReactiveFormsModule,
     TranslocoPipe,
     NgForOf,
     MatFormField,
     MatLabel,
+    MatSelect,
     MatOption,
     MatInput,
+    MatButton,
     MatHint,
     MatDatepickerInput,
     MatDatepickerToggle,
@@ -53,6 +55,7 @@ import { Subject, takeUntil } from 'rxjs';
     MatTimepickerInput,
     MatAutocomplete,
     MatAutocompleteTrigger,
+    MatError,
   ],
 })
 export class FlightDetailsFormComponent implements OnInit, OnDestroy {

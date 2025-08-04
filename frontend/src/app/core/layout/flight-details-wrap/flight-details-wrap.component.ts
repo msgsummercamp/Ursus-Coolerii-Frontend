@@ -27,7 +27,7 @@ export class FlightDetailsWrapComponent implements OnInit {
   }
 
   ///TODO : unsubscribes
-  ngOnInit(): void {
+  ngOnInit() : void {
     this.subscribeToForms();
   }
 
@@ -39,6 +39,7 @@ export class FlightDetailsWrapComponent implements OnInit {
       this.subscribeToNewForm(f);
     });
     this.updateValidity();
+
   }
   private updateValidity() {
     const allValid = this.form.valid && this.connectingFlights.every((f) => f.valid);
