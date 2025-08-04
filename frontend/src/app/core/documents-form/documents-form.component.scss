@@ -1,21 +1,13 @@
 form {
   display: flex;
   flex-direction: column;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  max-width: 56.25rem;
-  margin: 2rem auto;
-  background-color: var(--mat-sys-primary-container);
-  border-radius: 0.75rem;
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
-
-  h1 {
-    grid-column: 1 / -1;
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--mat-on-primary-container);
-    margin-bottom: 1rem;
-  }
+  gap: 2em;
+  max-width: 50vw;
+  margin: 4vh auto;
+  padding: 4em;
+  background: var(--mat-sys-primary-container);
+  border-radius: 1em;
+  box-shadow: 0 0.5em 2em rgba(0, 0, 0, 0.15);
 
   mat-list {
     grid-column: 1 / -1;
@@ -35,20 +27,26 @@ form {
       margin-left: 1rem;
     }
   }
-}
 
-.buttons-div {
-  display: flex;
-  flex-direction: row;
-  gap: 40rem;
-}
+  .button-upload {
+     width: 15em;
+     display: flex;
+   }
 
-button[mat-raised-button]:enabled {
-  background-color: var(--mat-sys-secondary-container);
-  color: var(--mat-sys-secondary-on-container);
-}
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
 
-.button-upload {
-  width: 10rem;
-  display: flex;
+    button {
+      &:hover {
+        background-color: var(--mat-sys-secondary-container);
+        transform: scale(1.075);
+      }
+      &:disabled {
+        background: var(--mat-sys-error-container);
+        cursor: not-allowed;
+      }
+    }
+  }
 }
