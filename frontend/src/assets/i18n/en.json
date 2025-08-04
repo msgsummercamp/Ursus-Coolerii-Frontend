@@ -45,19 +45,35 @@
     "phoneNumber": "Phone Number",
     "address": "Address",
     "postalCode": "Postal Code",
-    "firstNameError": "Firstname is required!",
-    "lastNameError": "Lastname is required!",
-    "dateOfBirthError": "Date of birth is required!",
-    "phoneNumberError": "Phone number is required!",
-    "addressError": "Address is required!",
-    "postalCodeError": "Postal code is required!",
     "firstNamePlaceholder": "Type First Name...",
     "lastNamePlaceholder": "Type Last Name...",
     "dateOfBirthPlaceholder": "Select Date of Birth...",
     "phoneNumberPlaceholder": "Type Phone Number...",
     "addressPlaceholder": "Type Address...",
     "postalCodePlaceholder": "Type Postal Code...",
-    "next": "Next"
+    "next": "Next",
+    "error": {
+      "firstName": {
+        "required": "Firstname is required!"
+      },
+      "lastName": {
+        "required": "Lastname is required!"
+      },
+      "dateOfBirth": {
+        "required": "Date of birth is required!"
+      },
+      "address": {
+        "required": "Address is required!"
+      },
+      "postalCode": {
+        "required": "Postal code is required!",
+        "pattern": "Postal code should contain only digits!"
+      },
+      "phoneNumber": {
+        "required": "Phone number is required!",
+        "pattern": "Phone number should contain only digits!"
+      }
+    }
   },
   "stepper": {
     "flight-details": "Flight Details",
@@ -70,7 +86,7 @@
     "finish-message": "You are done"
   },
   "documents": {
-    "title":"Upload Documents",
+    "title": "Upload Documents",
     "chooseFile": "Choose File(s)",
     "chooseFileError": "Please choose at least one file!",
     "next": "Next",
