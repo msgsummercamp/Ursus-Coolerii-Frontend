@@ -19,7 +19,6 @@ export class AirlineService {
     this._airlineList = this.httpClient.get<AirlineAttributes[]>(environment.apiURL + '/airlines');
   }
 
-
   get airLineList(): Observable<AirlineAttributes[]> | undefined {
     return this._airlineList;
   }
