@@ -1,17 +1,25 @@
 <div class="flight-form-wrapper">
-  <h2>{{ 'flightDetails.title' | transloco }}</h2>
   <app-flight-details-form [flightForm]="form" />
   <h2 *ngIf="connectingFlights.length != 0">Connecting flights</h2>
   <div *ngFor="let flight of connectingFlights; let i = index">
+    <h2 class="mat-headline-5">{{ 'connecting-flight.title' | transloco }} #{{ i + 1 }}</h2>
     <app-flight-details-form [flightForm]="flight" />
   </div>
-  <div class="form-buttons">
-    <button mat-raised-button (click)="removeConnectingFlight()">{{ 'flightDetails.deleteConnectingFlight' | transloco }}</button>
-    <button mat-raised-button color="primary" type="button" [disabled]="!validForms()" (click)="addConnectingFlight()">
-      {{ 'flightDetails.add' | transloco }}
-    </button>
-    <button class="form-actions" mat-raised-button (click)="continue()" [disabled]="!validForms()">
-      {{ 'flightDetails.next' | transloco }}
-    </button>
+  <div class="form-actions">
+    <button mat-raised-button (click)="removeConnectingFlight()">
+      {{ 'flightDetails.deleteConnectingFlight' | transloco }}</button
+    >
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      [disabled]="!validForms()"
+      (click)="addConnectingFlight()"
+    >
+      {{ 'flightDetails.add' | transloco }}</button
+    >
+    <button mat-raised-button (click)="continue()" [disabled]="!validForms()">
+      {{ 'flightDetails.next' | transloco }}</button
+    >
   </div>
 </div>

@@ -1,13 +1,11 @@
 import { Component, inject, OnDestroy, OnInit, output } from '@angular/core';
-import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatFormField, MatHint, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatAutocomplete, MatAutocompleteTrigger, MatOption } from '@angular/material/autocomplete';
 import { TranslocoPipe } from '@jsverse/transloco';
 import {
-  type AirportAttributes,
   DeniedBoardingMotive,
   DisruptiveMotive,
-  DisruptiveMotiveForm,
 } from '../../shared/types';
 import { CommonModule } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';

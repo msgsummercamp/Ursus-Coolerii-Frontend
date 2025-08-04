@@ -1,4 +1,4 @@
-import { Component, computed, Signal, viewChild } from '@angular/core';
+import { Component, computed, Signal, viewChild, ViewEncapsulation } from '@angular/core';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -6,8 +6,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { PassengerDetailsFormComponent } from '../../passenger-details-form/passenger-details-form.component';
-import { FlightDetailsFormComponent } from '../../layout/flight-details-form/component/flight-details-form.component';
 import { DocumentsFormComponent } from '../../documents-form/documents-form.component';
+import { FlightDetailsWrapComponent } from '../../layout/flight-details-wrap/flight-details-wrap.component';
+import { DisruptiveFormComponent } from '../../disruptive-form/disruptive-form.component';
 
 @Component({
   selector: 'app-stepper',
@@ -23,12 +24,17 @@ import { DocumentsFormComponent } from '../../documents-form/documents-form.comp
     FlightDetailsWrapComponent,
     DocumentsFormComponent,
     FlightDetailsWrapComponent,
+    DisruptiveFormComponent,
   ],
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss',
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class StepperComponent {
+  private disruptiveFormComponent = viewChild(DisruptiveFormComponent);
+  protected disruptiveFormCompleted: Signal<boolean | undefined> = computed(
+    () => this.disruptiveFormComponent()?.formDisruption.valid
+  );
   private flightDetailsWrapComponent = viewChild(FlightDetailsWrapComponent);
   protected flightDetailsFormCompleted: Signal<boolean | undefined> = computed(() =>
     this.flightDetailsWrapComponent()?.validForms()
