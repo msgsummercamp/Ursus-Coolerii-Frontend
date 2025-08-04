@@ -1,18 +1,5 @@
-import {
-  Component,
-  inject,
-  OnDestroy,
-  OnInit,
-  output,
-  signal,
-  Input
-} from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  ReactiveFormsModule,
-} from '@angular/forms';
-import type { AirportAttributes } from '../../../../shared/types/types';
+import { Component, inject, Input, OnDestroy, OnInit, output, signal } from '@angular/core';
+import type { FlightDetailsForm } from '../../../../shared/types/form.types';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { AirportService } from '../service/airport.service';
 import { NgForOf } from '@angular/common';
@@ -29,8 +16,10 @@ import {
   MatTimepickerToggle,
 } from '@angular/material/timepicker';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { Subject, takeUntil } from 'rxjs';
-import { FlightDetailsForm } from '../../../../shared/types/form.types';
+import { startWith, Subject, takeUntil } from 'rxjs';
+import { AirlineAttributes, AirlineService } from '../service/airline.service';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AirportAttributes } from '../../../../shared/types/types';
 
 @Component({
   selector: 'app-flight-details-form',
@@ -58,18 +47,22 @@ import { FlightDetailsForm } from '../../../../shared/types/form.types';
 })
 export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   private readonly _isValid = signal(false);
-  public filteredAirports: AirportAttributes[] = [];
   public readonly isValid = this._isValid.asReadonly();
   private airportService = inject(AirportService);
   private airports: AirportAttributes[] = [];
+  private airlineService = inject(AirlineService);
+  private airlines: AirlineAttributes[] = [];
+  protected filteredAirlines: AirlineAttributes[] = [];
   public readonly next = output<void>();
   private onDestroy$ = new Subject<void>();
-
+  public filteredAirports: AirportAttributes[] = [];
   @Input() flightForm!: FormGroup<FlightDetailsForm>;
 
   ngOnInit(): void {
     this.subscribeToFetchAirports();
     this.subscribeAllFormElements();
+    this.subscribeToFetchAirlines();
+    this.subscribeToAirlineAutocomplete();
     this.flightForm.statusChanges.subscribe((status) => {
       this._isValid.set(status === 'VALID');
     });
@@ -102,4 +95,31 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
     });
   }
 
+  private subscribeToFetchAirlines() {
+    const airlineList = this.airlineService.airLineList;
+    if (airlineList) {
+      airlineList.subscribe((data: AirlineAttributes[]) => {
+        const seenNames = new Set<string>();
+        this.airlines = data.filter(a => {
+          if (seenNames.has(a.name)) return false;
+          seenNames.add(a.name);
+          return true;
+        });
+      });
+    }
+  }
+
+  private subscribeToAirlineAutocomplete() {
+    this.flightForm.controls.airline.valueChanges
+      .pipe(takeUntil(this.onDestroy$), startWith(''))
+      .subscribe((val: string) => {
+        if (val && val.length >= 1) {
+          this.filteredAirlines = this.airlines.filter((airline) =>
+            airline.name.toLowerCase().includes(val.toLowerCase())
+          );
+        } else {
+          this.filteredAirlines = [];
+        }
+      });
+  }
 }

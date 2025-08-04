@@ -17,8 +17,14 @@
         matInput
         type="text"
         formControlName="airline"
+        [matAutocomplete]="autoAirline"
         placeholder="{{ 'flightDetails.typeAirline' | transloco }}"
       />
+      <mat-autocomplete #autoAirline="matAutocomplete">
+        <mat-option *ngFor="let airline of filteredAirlines" [value]="airline.name">
+          {{ airline.name }}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
   </div>
 

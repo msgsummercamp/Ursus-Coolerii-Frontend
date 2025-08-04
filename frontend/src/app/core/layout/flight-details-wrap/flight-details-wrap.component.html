@@ -1,10 +1,17 @@
 <div class="flight-form-wrapper">
   <app-flight-details-form [flightForm]="form" />
-  <h2 *ngIf="connectingFlights.length != 0">Connecting flights</h2>
+  @if(connectingFlights.length != 0){
+    <h2 >Connecting flights</h2>
+  }
   <div *ngFor="let flight of connectingFlights; let i = index">
     <h2 class="mat-headline-5">{{ 'connecting-flight.title' | transloco }} #{{ i + 1 }}</h2>
     <app-flight-details-form [flightForm]="flight" />
   </div>
+  @if (reward !== null) {
+    <div class="reward-message">
+      {{ 'flightDetails.rewardMessage' | transloco: { reward: reward } }}
+    </div>
+  }
   <div class="form-actions">
     <button mat-raised-button (click)="removeConnectingFlight()">
       {{ 'flightDetails.deleteConnectingFlight' | transloco }}</button

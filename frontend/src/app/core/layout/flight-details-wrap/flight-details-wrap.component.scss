@@ -6,6 +6,14 @@
   margin: 4vh auto;
 }
 
+.reward-message {
+  color: var(--mat-sys-primary);
+  font-weight: bold;
+  font-size: 1.2em;
+  display: flex;
+  justify-content: center;
+}
+
 .form-actions {
   display: flex;
   justify-content: space-between;

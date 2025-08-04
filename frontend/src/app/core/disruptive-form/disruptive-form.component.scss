@@ -42,7 +42,15 @@ form {
 }
 
 .form-actions{
-  max-width: 5rem;
+  max-width: 5vw;
   display: flex;
   align-self: flex-end;
+}
+
+.eligiblity-message {
+  color: var(--mat-sys-primary);
+  font-weight: bold;
+  font-size: 1.2em;
+  display: flex;
+  justify-content: center;
 }

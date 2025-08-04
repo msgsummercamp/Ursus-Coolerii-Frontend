@@ -34,7 +34,8 @@
     "plannedDepartureTimeError": "Ora planificată de plecare este obligatorie!",
     "plannedArrivalDateError": "Data planificată de sosire este obligatorie!",
     "plannedArrivalTimeError": "Ora planificată de sosire este obligatorie!",
-    "next": "Mai Departe"
+    "next": "Mai Departe",
+    "rewardMessage": "Puteți primi până la {{reward}} EURO pentru acest zbor!"
   },
   "passenger-details": {
     "title": "Detalii Pasager",
@@ -44,19 +45,35 @@
     "phoneNumber": "Număr de telefon",
     "address": "Adresă",
     "postalCode": "Cod poștal",
-    "firstNameError": "Prenumele este obligatoriu!",
-    "lastNameError": "Numele este obligatoriu!",
-    "dateOfBirthError": "Data nașterii este obligatorie!",
-    "phoneNumberError": "Numărul de telefon este obligatoriu!",
-    "addressError": "Adresa este obligatorie!",
-    "postalCodeError": "Codul poștal este obligatoriu!",
     "firstNamePlaceholder": "Introduceți Prenumele...",
     "lastNamePlaceholder": "Introduceți Numele...",
     "dateOfBirthPlaceholder": "Selectați Data Nașterii...",
     "phoneNumberPlaceholder": "Introduceți Numărul de Telefon...",
     "addressPlaceholder": "Introduceți Adresa...",
     "postalCodePlaceholder": "Introduceți Codul Poștal...",
-    "next": "Mai Departe"
+    "next": "Mai Departe",
+    "error": {
+      "firstName": {
+        "required": "Prenumele este obligatoriu!"
+      },
+      "lastName": {
+        "required": "Numele este obligatoriu!"
+      },
+      "dateOfBirth": {
+        "required": "Data nașterii este obligatorie!"
+      },
+      "address": {
+        "required": "Adresa este obligatorie!"
+      },
+      "postalCode": {
+        "required": "Codul poștal este obligatoriu!",
+        "pattern": "Codul poștal ar trebui să conțină doar cifre!"
+      },
+      "phoneNumber": {
+        "required": "Numărul de telefon este obligatoriu!",
+        "pattern": "Numărul de telefon ar trebui să conțină doar cifre!"
+      }
+    }
   },
   "stepper": {
     "disruption-motives": "Motiv de perturbare",

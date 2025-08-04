@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit, Signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { AbstractControl, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { ValidatorFn } from '@angular/forms';
@@ -15,11 +15,12 @@ import { FlightDetailsForm } from '../../../../shared/types/form.types';
 export class AirportService {
   private httpClient = inject(HttpClient);
   private fb = inject(NonNullableFormBuilder);
-  private _airportList : Observable<AirportAttributes[]>   | undefined;
+  private _airportList: Observable<AirportAttributes[]> | undefined;
 
   constructor() {
-
-    // this._airportList = this.httpClient.get<AirportAttributes[]>(environment.apiURL + '/airports');
+    this._airportList = this.httpClient
+      .get<AirportAttributes[]>(environment.apiURL + '/airports')
+      .pipe(shareReplay(1));
   }
 
   get airportList(): Observable<AirportAttributes[]> | undefined {
