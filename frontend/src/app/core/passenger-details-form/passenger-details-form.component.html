@@ -5,69 +5,108 @@
     <div class="names">
       <mat-form-field appearance="fill" class="first">
         <mat-label>{{ translate('firstName') }}</mat-label>
-        <input matInput formControlName="firstName" type="text" id="firstName"
-               [placeholder]="translate('firstNamePlaceholder')"/>
+        <input
+          matInput
+          formControlName="firstName"
+          type="text"
+          id="firstName"
+          [placeholder]="translate('firstNamePlaceholder')"
+        />
         @if (passengerDetailsForm.controls.firstName.errors?.['required']) {
-          <mat-error>{{ translate('firstNameError') }}</mat-error>
+          <mat-error>{{ translate('error.firstName.required') }}</mat-error>
         }
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="last">
         <mat-label>{{ translate('lastName') }}</mat-label>
-        <input matInput formControlName="lastName" type="text" id="lastName"
-               [placeholder]="translate('lastNamePlaceholder')"/>
+        <input
+          matInput
+          formControlName="lastName"
+          type="text"
+          id="lastName"
+          [placeholder]="translate('lastNamePlaceholder')"
+        />
         @if (passengerDetailsForm.controls.lastName.errors?.['required']) {
-          <mat-error>{{ translate('lastNameError') }}</mat-error>
+          <mat-error>{{ translate('error.lastName.required') }}</mat-error>
         }
       </mat-form-field>
     </div>
 
     <div class="data">
-    <mat-form-field class="dob">
-      <mat-label>{{ translate('dateOfBirth') }}</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" id="dateOfBirth"
-      [placeholder]="translate('dateOfBirthPlaceholder')"/>
-      <mat-hint>DD/MM/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="picker" />
-      <mat-datepicker #picker />
-      @if (passengerDetailsForm.controls.dateOfBirth.errors?.['required']) {
-        <mat-error>{{ translate('dateOfBirthError') }}</mat-error>
-      }
-    </mat-form-field>
+      <mat-form-field class="dob">
+        <mat-label>{{ translate('dateOfBirth') }}</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="dateOfBirth"
+          id="dateOfBirth"
+          [max]="currentDate"
+          [placeholder]="translate('dateOfBirthPlaceholder')"
+        />
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker" />
+        <mat-datepicker #picker />
+        @if (passengerDetailsForm.controls.dateOfBirth.errors?.['required']) {
+          <mat-error>{{ translate('error.dateOfBirth.required') }}</mat-error>
+        }
+      </mat-form-field>
 
-    <mat-form-field appearance="fill" class="phone">
-      <mat-label>{{ translate('phoneNumber') }}</mat-label>
-      <input matInput formControlName="phoneNumber" type="tel" id="phoneNumber"
-      [placeholder]="translate('phoneNumberPlaceholder')"/>
-      @if (passengerDetailsForm.controls.phoneNumber.errors?.['required']) {
-        <mat-error>{{ translate('phoneNumberError') }}</mat-error>
-      }
-    </mat-form-field>
+      <mat-form-field appearance="fill" class="phone">
+        <mat-label>{{ translate('phoneNumber') }}</mat-label>
+        <input
+          matInput
+          formControlName="phoneNumber"
+          type="tel"
+          id="phoneNumber"
+          [placeholder]="translate('phoneNumberPlaceholder')"
+        />
+        @if (passengerDetailsForm.controls.phoneNumber.errors?.['required']) {
+          <mat-error>{{ translate('error.phoneNumber.required') }}</mat-error>
+        }
+        @if (passengerDetailsForm.controls.phoneNumber.errors?.['pattern']) {
+          <mat-error>{{ translate('error.phoneNumber.pattern') }}</mat-error>
+        }
+      </mat-form-field>
     </div>
 
     <div class="location">
       <mat-form-field class="adr">
-      <mat-label>{{ translate('address') }}</mat-label>
-      <input matInput formControlName="address" type="text" id="address"
-      [placeholder]="translate('addressPlaceholder')"/>
-      @if (passengerDetailsForm.controls.address.errors?.['required']) {
-        <mat-error>{{ translate('addressError') }}</mat-error>
-      }
+        <mat-label>{{ translate('address') }}</mat-label>
+        <input
+          matInput
+          formControlName="address"
+          type="text"
+          id="address"
+          [placeholder]="translate('addressPlaceholder')"
+        />
+        @if (passengerDetailsForm.controls.address.errors?.['required']) {
+          <mat-error>{{ translate('error.address.required') }}</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field class="plz">
         <mat-label>{{ translate('postalCode') }}</mat-label>
-        <input matInput formControlName="postalCode" type="text" id="postalCode"
-        [placeholder]="translate('postalCodePlaceholder')"/>
+        <input
+          matInput
+          formControlName="postalCode"
+          type="text"
+          id="postalCode"
+          [placeholder]="translate('postalCodePlaceholder')"
+        />
         @if (passengerDetailsForm.controls.postalCode.errors?.['required']) {
-          <mat-error>{{ translate('postalCodeError') }}</mat-error>
+          <mat-error>{{ translate('error.postalCode.required') }}</mat-error>
+        }
+        @if (passengerDetailsForm.controls.postalCode.errors?.['pattern']) {
+          <mat-error>{{ translate('error.postalCode.pattern') }}</mat-error>
         }
       </mat-form-field>
     </div>
 
     <div *transloco="let translate; prefix: 'stepper'" class="form-actions">
       <button mat-raised-button (click)="back()">{{ translate('back') }}</button>
-      <button mat-raised-button [disabled]="passengerDetailsForm.invalid" (click)="continue()">{{ translate('next') }}</button>
+      <button mat-raised-button [disabled]="passengerDetailsForm.invalid" (click)="continue()">{{
+        translate('next')
+      }}</button>
     </div>
   </form>
 </ng-container>
