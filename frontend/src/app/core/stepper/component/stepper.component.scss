@@ -1,16 +1,6 @@
-mat-stepper {
-  height: 100%;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.mat-stepper-horizontal {
-  height: 100%;
-}
-
-.mat-horizontal-content-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+.mat-horizontal-stepper-header-container {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: white;
 }

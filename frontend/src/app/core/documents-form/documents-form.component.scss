@@ -50,3 +50,19 @@ form {
     }
   }
 }
+
+.buttons-div {
+  display: flex;
+  flex-direction: row;
+  gap: 40rem;
+}
+
+button[mat-raised-button]:enabled {
+  background-color: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-secondary-on-container);
+}
+
+.button-upload {
+  width: 10rem;
+  display: flex;
+}

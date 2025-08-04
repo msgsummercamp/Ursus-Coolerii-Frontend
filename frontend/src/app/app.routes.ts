@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
-import {FlightDetailsFormComponent} from "./core/layout/flight-details-form/component/flight-details-form.component";
-import { DocumentsFormComponent } from './core/documents-form/documents-form.component';
+import { FlightDetailsWrapComponent } from './core/layout/flight-details-wrap/flight-details-wrap.component';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: '/form', pathMatch: 'full' },
@@ -10,8 +10,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./core/stepper/component/stepper.component').then((m) => m.StepperComponent),
   },
-    {
-    path: 'documents', component: DocumentsFormComponent
-  },
+  { path: 'wrap', component: FlightDetailsWrapComponent },
   { path: '**', component: NotFoundComponent },
 ];

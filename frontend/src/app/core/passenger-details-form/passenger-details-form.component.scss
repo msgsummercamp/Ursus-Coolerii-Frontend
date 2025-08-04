@@ -27,6 +27,7 @@
     margin-top: 2rem;
 
     button {
+
       &:hover {
         background-color: var(--mat-sys-secondary-container);
         transform: scale(1.075);
@@ -82,4 +83,16 @@
         margin-left: 1em;
     }
   }
+}
+
+.buttons-div {
+  display: flex;
+  flex-direction: row;
+  gap: 45rem;
+}
+
+button[mat-raised-button]:enabled {
+  background-color: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-secondary-on-container);
+  align-self: flex-end;
 }

@@ -1,4 +1,4 @@
-import { FormControl, FormArray } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 export type FlightDetailsForm = {
   flightNr: FormControl<string>;
@@ -11,12 +11,11 @@ export type FlightDetailsForm = {
   plannedArrivalTime: FormControl<string>;
 };
 
-export type FlightConnectionForm = {
-  flightNr: FormControl<string>;
-  airline: FormControl<string>;
-  airport: FormControl<string>;
-  plannedDepartureDate: FormControl<Date | null>;
-  plannedArrivalDate: FormControl<Date | null>;
-  plannedDepartureTime: FormControl<string>;
-  plannedArrivalTime: FormControl<string>;
+export type PassengerDetailsForm = {
+  firstName: FormControl<string>;
+  lastName: FormControl<string>;
+  dateOfBirth: FormControl<Date | null>;
+  phoneNumber: FormControl<string>;
+  address: FormControl<string>;
+  postalCode: FormControl<string>;
 };
