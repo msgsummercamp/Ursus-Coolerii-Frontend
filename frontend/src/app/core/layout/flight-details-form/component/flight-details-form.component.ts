@@ -1,5 +1,5 @@
 import { Component, inject, Input, OnDestroy, OnInit, output, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import type { FlightDetailsForm } from '../../../../shared/types';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { AirportAttributes, AirportService } from '../service/airport.service';
@@ -46,7 +46,6 @@ import { AirlineAttributes, AirlineService } from '../service/airline.service';
 })
 export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   private readonly _isValid = signal(false);
-  public filteredAirports: AirportAttributes[] = [];
   public readonly isValid = this._isValid.asReadonly();
   private airportService = inject(AirportService);
   private airports: AirportAttributes[] = [];
@@ -55,7 +54,7 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   protected filteredAirlines: AirlineAttributes[] = [];
   public readonly next = output<void>();
   private onDestroy$ = new Subject<void>();
-
+  public filteredAirports: AirportAttributes[] = [];
   @Input() flightForm!: FormGroup<FlightDetailsForm>;
 
   ngOnInit(): void {
@@ -73,7 +72,7 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToFetchAirports() {
-    this.airportService.getAirports().subscribe((data) => {
+    this.airportService.airportList?.subscribe((data) => {
       this.airports = data;
       this.filteredAirports = this.filterAirports(this.flightForm.controls.departingAirport.value);
     });

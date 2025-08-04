@@ -34,7 +34,8 @@
     "plannedDepartureTimeError": "Ora planificată de plecare este obligatorie!",
     "plannedArrivalDateError": "Data planificată de sosire este obligatorie!",
     "plannedArrivalTimeError": "Ora planificată de sosire este obligatorie!",
-    "next": "Mai Departe"
+    "next": "Mai Departe",
+    "rewardMessage": "Puteți primi până la {{reward}} EURO pentru acest zbor!"
   },
   "passenger-details": {
     "title": "Detalii Pasager",
