@@ -1,29 +1,10 @@
-import {
-  Component,
-  inject,
-  OnDestroy,
-  OnInit,
-  output,
-  signal,
-  Input
-} from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { Component, inject, Input, OnDestroy, OnInit, output, signal } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import type { FlightDetailsForm } from '../../../../shared/types';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { AirportAttributes, AirportService } from '../service/airport.service';
 import { NgForOf } from '@angular/common';
-import {
-  MatError,
-  MatFormField,
-  MatHint,
-  MatInput,
-  MatLabel,
-  MatSuffix,
-} from '@angular/material/input';
+import { MatFormField, MatHint, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { MatOption } from '@angular/material/core';
 import {
   MatDatepicker,
@@ -44,7 +25,7 @@ import { AirlineAttributes, AirlineService } from '../service/airline.service';
   templateUrl: './flight-details-form.component.html',
   styleUrl: './flight-details-form.component.scss',
   imports: [
-      ReactiveFormsModule,
+    ReactiveFormsModule,
     TranslocoPipe,
     NgForOf,
     MatFormField,
@@ -81,6 +62,7 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
     this.subscribeToFetchAirports();
     this.subscribeAllFormElements();
     this.subscribeToFetchAirlines();
+    this.subscribeToAirlineAutocomplete();
     this.flightForm.statusChanges.subscribe((status) => {
       this._isValid.set(status === 'VALID');
     });
@@ -105,7 +87,6 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   private filterAirports(value: string): AirportAttributes[] {
     const filterValue = (value || '').toLowerCase();
     return this.airports.filter((airport) => airport.name.toLowerCase().includes(filterValue));
-
   }
 
   private subscribeAirportFieldToFilterAirports(control: FormControl<string> | null): void {
@@ -114,18 +95,31 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  private filterAirlines(value: string): AirlineAttributes[] {
-    const filterValue = (value || '').toLowerCase();
-    return this.airlines.filter((airline) => airline.name.toLowerCase().includes(filterValue));
-  }
-
   private subscribeToFetchAirlines() {
     const airlineList = this.airlineService.airLineList;
     if (airlineList) {
       airlineList.subscribe((data: AirlineAttributes[]) => {
-        this.airlines = data;
-        this.filteredAirlines = this.filterAirlines(this.flightForm.controls.airline.value);
+        const seenNames = new Set<string>();
+        this.airlines = data.filter(a => {
+          if (seenNames.has(a.name)) return false;
+          seenNames.add(a.name);
+          return true;
+        });
       });
     }
+  }
+
+  private subscribeToAirlineAutocomplete() {
+    this.flightForm.controls.airline.valueChanges
+      .pipe(takeUntil(this.onDestroy$), startWith(''))
+      .subscribe((val: string) => {
+        if (val && val.length >= 1) {
+          this.filteredAirlines = this.airlines.filter((airline) =>
+            airline.name.toLowerCase().includes(val.toLowerCase())
+          );
+        } else {
+          this.filteredAirlines = [];
+        }
+      });
   }
 }
