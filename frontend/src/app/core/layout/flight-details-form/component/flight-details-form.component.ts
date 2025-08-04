@@ -12,7 +12,7 @@ import {
   FormControl,
   ReactiveFormsModule,
 } from '@angular/forms';
-import type { AirportAttributes, FlightDetailsForm } from '../../../../shared/types';
+import type { AirportAttributes } from '../../../../shared/types/types';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { AirportService } from '../service/airport.service';
 import { NgForOf } from '@angular/common';
@@ -30,8 +30,7 @@ import {
 } from '@angular/material/timepicker';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { Subject, takeUntil } from 'rxjs';
-import { MatSelect } from '@angular/material/select';
-import { MatButton } from '@angular/material/button';
+import { FlightDetailsForm } from '../../../../shared/types/form.types';
 
 @Component({
   selector: 'app-flight-details-form',
@@ -43,10 +42,8 @@ import { MatButton } from '@angular/material/button';
     NgForOf,
     MatFormField,
     MatLabel,
-    MatSelect,
     MatOption,
     MatInput,
-    MatButton,
     MatHint,
     MatDatepickerInput,
     MatDatepickerToggle,
@@ -57,7 +54,6 @@ import { MatButton } from '@angular/material/button';
     MatTimepickerInput,
     MatAutocomplete,
     MatAutocompleteTrigger,
-    MatError,
   ],
 })
 export class FlightDetailsFormComponent implements OnInit, OnDestroy {

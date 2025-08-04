@@ -22,39 +22,11 @@ export type PassengerDetailsForm = {
 
 export type DisruptiveMotiveForm = {
   disruptionMotive:  FormControl<string | null>;
-  daysBeforeCancelation:FormControl<string | null>;
-  hoursLateArrival: FormControl<string | null>;
+  daysBeforeCancelation:FormControl<number | null>;
+  hasArrived:FormControl<boolean | null>;
+  hoursLateArrival: FormControl<number | null>;
   gaveSeatVoluntarly: FormControl<string | null>;
   deniedBoardingMotive: FormControl<string | null>;
-  airlineMentionedMotive: FormControl<string | null>;
+  airlineMentionedMotive: FormControl<boolean | null>;
   communicatedMotive: FormControl<string | null>;
 }
-
-export type AirportAttributes ={
-  name: string;
-  city: string;
-  country: string;
-  iata: string;
-  icao: string;
-  latitude: string;
-  longitude: string;
-  altitude: number;
-  timezone: string;
-}
-
-export const DisruptiveMotive = {
-  cancelation: 'Cancelation',
-  delay: 'Delay',
-  deniedBoarding: 'Denied Boarding'
-} as const
-
-export const DeniedBoardingMotive = {
-  overBooked: 'Flight overbooked',
-  aggresive: 'Aggressive behavior with staff',
-  intoxication: 'Intoxication',
-  unspeciifed: 'Unspecified reason'
-} as const
-
-export type DeniedBoardingMotive = typeof DeniedBoardingMotive[keyof typeof DeniedBoardingMotive];
-
-export type DisruptiveMotive = typeof DisruptiveMotive[keyof typeof DisruptiveMotive]

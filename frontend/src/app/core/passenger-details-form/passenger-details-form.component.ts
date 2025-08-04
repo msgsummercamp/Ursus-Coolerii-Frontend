@@ -20,7 +20,7 @@ import {
 } from '@angular/material/datepicker';
 import { MatButton } from '@angular/material/button';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { PassengerDetailsForm } from '../../shared/types';
+import { PassengerDetailsForm } from '../../shared/types/form.types';
 
 
 @Component({

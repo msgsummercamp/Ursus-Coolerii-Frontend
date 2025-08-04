@@ -6,8 +6,9 @@ import { AbstractControl, NonNullableFormBuilder, Validators } from '@angular/fo
 import { ValidatorFn } from '@angular/forms';
 import { ValidationErrors } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
-import { FlightDetailsForm, AirportAttributes } from '../../../../shared/types';
+import { AirportAttributes } from '../../../../shared/types/types';
 import { inject } from '@angular/core';
+import { FlightDetailsForm } from '../../../../shared/types/form.types';
 
 
 @Injectable({ providedIn: 'root' })
@@ -17,7 +18,8 @@ export class AirportService {
   private _airportList : Observable<AirportAttributes[]>   | undefined;
 
   constructor() {
-    this._airportList = this.httpClient.get<AirportAttributes[]>(environment.apiURL + '/airports');
+
+    // this._airportList = this.httpClient.get<AirportAttributes[]>(environment.apiURL + '/airports');
   }
 
   get airportList(): Observable<AirportAttributes[]> | undefined {

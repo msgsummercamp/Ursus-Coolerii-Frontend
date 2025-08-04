@@ -7,8 +7,8 @@ import { FlightDetailsFormComponent } from '../flight-details-form/component/fli
 import { signal } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
 import { FormGroup } from '@angular/forms';
-import { FlightDetailsForm } from '../../../shared/types';
 import { Subscription } from 'rxjs';
+import { FlightDetailsForm } from '../../../shared/types/form.types';
 
 @Component({
   selector: 'app-flight-details-wrap',

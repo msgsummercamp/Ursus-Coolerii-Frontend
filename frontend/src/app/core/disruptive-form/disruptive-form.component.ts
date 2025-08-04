@@ -1,16 +1,18 @@
-import { Component, inject, OnDestroy, OnInit, output } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { Component, inject, OnDestroy, OnInit, output, signal, Signal } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormField, MatInput, MatInputModule, MatLabel } from '@angular/material/input';
 import { MatAutocomplete, MatAutocompleteTrigger, MatOption } from '@angular/material/autocomplete';
 import { TranslocoPipe } from '@jsverse/transloco';
 import {
+  AirlineMotives,
   DeniedBoardingMotive,
-  DisruptiveMotive,
-} from '../../shared/types';
+  DisruptiveMotive, DisruptiveMotiveLabels,
+} from '../../shared/types/types';
 import { CommonModule } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { MatButton } from '@angular/material/button';
 import { DisruptiveFormService } from './service/disruptive-form.service';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-diruptive-form',
@@ -26,75 +28,50 @@ import { DisruptiveFormService } from './service/disruptive-form.service';
     MatInput,
     ReactiveFormsModule,
     MatButton,
+    MatSelectModule,
+    MatInputModule,
+    FormsModule,
+
   ],
   templateUrl: './disruptive-form.component.html',
   styleUrl: './disruptive-form.component.scss',
 })
 export class DisruptiveFormComponent implements OnInit, OnDestroy {
-  public motives: DisruptiveMotive[] = Object.values(DisruptiveMotive);
-  public days: string[] = ['Less than 14 days', 'More than 14 days'];
-  public hours: string[] = ['Less than 3 hours', 'More than 3 hours'];
+  public motives: string[];
   public reasons: DeniedBoardingMotive[] = Object.values(DeniedBoardingMotive);
+  public airlineDeniedMotives : AirlineMotives[] = Object.values(AirlineMotives);
   protected readonly DisruptiveMotive = DisruptiveMotive;
   private service = inject(DisruptiveFormService);
-  public filteredMotives: string[] = this.motives;
-  public filteredDays: string[] = this.days;
-  public filteredHours: string[] = this.hours;
-  public filteredDeniedReason: string[] = this.reasons;
   private onDestroy$ = new Subject<void>();
   public readonly next = output<void>();
+  protected readonly DisruptiveMotiveLabels = DisruptiveMotiveLabels;
 
+  public isEligibile = signal<Boolean>(false);
+
+  constructor() {
+    this.motives = Object.values(DisruptiveMotiveLabels);
+  }
 
   public formDisruption = this.service.createForm();
 
   protected continue() {
-    this.next.emit();
+    console.log(this.service.buildEligibilityRequest(this.formDisruption));
+    this.service.checkEligibility(this.formDisruption).subscribe({
+      next: (result) => {
+        this.isEligibile.set(result);
+      },
+      error: (err) => {
+        this.isEligibile.set(false);
+      },
+    });
   }
 
   ngOnInit(): void {
-    this.subscribeAllFormFields();
+    this.motives = Object.values(DisruptiveMotiveLabels);
   }
 
   ngOnDestroy(): void {
     this.onDestroy$.next();
     this.onDestroy$.complete();
-  }
-
-  private subscribeAllFormFields(): void {
-    this.subscribeFormControlToFilter(
-      this.formDisruption.controls.disruptionMotive,
-      'filteredMotives',
-      this.motives
-    );
-    this.subscribeFormControlToFilter(
-      this.formDisruption.controls.daysBeforeCancelation,
-      'filteredDays',
-      this.days
-    );
-    this.subscribeFormControlToFilter(
-      this.formDisruption.controls.hoursLateArrival,
-      'filteredHours',
-      this.hours
-    );
-    this.subscribeFormControlToFilter(
-      this.formDisruption.controls.deniedBoardingMotive,
-      'filteredDeniedReason',
-      this.reasons
-    );
-  }
-
-  private subscribeFormControlToFilter(
-    control: FormControl<string | null>,
-    property: 'filteredMotives' | 'filteredDays' | 'filteredHours' | 'filteredDeniedReason',
-    allValues: string[]
-  ) {
-    control.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((value) => {
-      this[property] = this.filterArray(allValues, value);
-    });
-  }
-
-  private filterArray(arrayToFilter: string[], value: string | null): string[] {
-    const filtered = (value || '').toLowerCase();
-    return arrayToFilter.filter((f) => f.toLowerCase().includes(filtered));
   }
 }
