@@ -1,10 +1,5 @@
 import { Component, inject, OnInit, output, signal } from '@angular/core';
-import {
-  FormControl,
-  NonNullableFormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   MatError,
   MatFormField,
@@ -21,7 +16,6 @@ import {
 import { MatButton } from '@angular/material/button';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { PassengerDetailsForm } from '../../shared/types';
-
 
 @Component({
   selector: 'app-passenger-details-form',
@@ -46,13 +40,15 @@ export class PassengerDetailsFormComponent implements OnInit {
   private readonly formBuilder = inject(NonNullableFormBuilder);
   private readonly _isValid = signal(false);
 
+  protected readonly currentDate = new Date();
+
   protected readonly passengerDetailsForm = this.formBuilder.group<PassengerDetailsForm>({
     firstName: this.formBuilder.control('', Validators.required),
     lastName: this.formBuilder.control('', Validators.required),
     dateOfBirth: this.formBuilder.control(null, Validators.required),
-    phoneNumber: this.formBuilder.control('', Validators.required),
+    phoneNumber: this.formBuilder.control('', [Validators.required, Validators.pattern('^[0-9]*')]),
     address: this.formBuilder.control('', Validators.required),
-    postalCode: this.formBuilder.control('', Validators.required),
+    postalCode: this.formBuilder.control('', [Validators.required, Validators.pattern('^[0-9]*')]),
   });
 
   public readonly isValid = this._isValid.asReadonly();
