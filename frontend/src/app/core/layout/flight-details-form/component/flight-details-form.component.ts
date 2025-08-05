@@ -1,10 +1,9 @@
 import { Component, inject, Input, OnDestroy, OnInit, output, signal } from '@angular/core';
-import { FormControl, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import type { FlightDetailsForm } from '../../../../shared/types';
+import type { FlightDetailsForm } from '../../../../shared/types/form.types';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { AirportAttributes, AirportService } from '../service/airport.service';
+import { AirportService } from '../service/airport.service';
 import { NgForOf } from '@angular/common';
-import { MatFormField, MatHint, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
+import { MatError, MatFormField, MatHint, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { MatOption } from '@angular/material/core';
 import {
   MatDatepicker,
@@ -19,6 +18,8 @@ import {
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { startWith, Subject, takeUntil } from 'rxjs';
 import { AirlineAttributes, AirlineService } from '../service/airline.service';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AirportAttributes } from '../../../../shared/types/types';
 
 @Component({
   selector: 'app-flight-details-form',

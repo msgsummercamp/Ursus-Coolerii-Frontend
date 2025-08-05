@@ -1,15 +1,15 @@
-import { Component, computed, effect, OnInit, Signal, viewChild } from '@angular/core';
+import { Component, computed, OnInit } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { output, inject } from '@angular/core';
 import { AirportService } from '../flight-details-form/service/airport.service';
 import { MatButtonModule } from '@angular/material/button';
 import { FlightDetailsFormComponent } from '../flight-details-form/component/flight-details-form.component';
 import { signal } from '@angular/core';
-import { NgForOf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { FormGroup } from '@angular/forms';
-import { FlightDetailsForm } from '../../../shared/types';
 import { Subscription } from 'rxjs';
 import { CaseFileService } from '../services/case-file.service';
+import { FlightDetailsForm } from '../../../shared/types/form.types';
 
 @Component({
   selector: 'app-flight-details-wrap',
@@ -99,5 +99,7 @@ export class FlightDetailsWrapComponent implements OnInit {
     if (this.connectingFlights.length === 0) return;
     this.subscriptions.pop()?.unsubscribe();
     this.connectingFlights.pop();
+    this.updateValidity();
   }
+
 }

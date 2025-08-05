@@ -76,6 +76,7 @@
     }
   },
   "stepper": {
+    "disruption-motives": "Motiv de perturbare",
     "flight-details": "Detalii Zbor",
     "passenger-details": "Detalii Pasager",
     "documents": "Documente",
@@ -94,5 +95,32 @@
   },
   "connecting-flight": {
     "title": "Zbor de Legătură"
-  }
+  },
+  "disruptiveMotive": {
+    "dropDownText": "Motiv de perturbare",
+    "canceled": "Anulat",
+    "deniedBoarding": "Refuz de îmbarcare",
+    "delayed": "Întârziat",
+    "numberOfDaysLong": "Cu câte zile înainte de anulare ați fost informat de companie",
+    "numberOfDays": "Număr de zile",
+    "arrivedQuestion": "A ajuns zborul la destinație?",
+    "lateArrival": "Cât de mult a întârziat zborul?",
+    "seatGaveQuestion": "V-ați cedat locul în mod voluntar?",
+    "reasonDeniedBoarding": "Motivul refuzului de îmbarcare",
+    "airlineMotiveIsMentioned": "A menționat compania motivul de perturbare?",
+    "communicatedMotive": "Care este motivul comunicat de companie?",
+    "tehnicalProblems": "Probleme tehnice",
+    "meteorologicalConditions": "Condiții meteorologice",
+    "strikeProblemsWithAirport": "Grevă la aeroport",
+    "crewProblems": "Problemă cu echipajul",
+    "otherMotives": "Alte motive",
+    "flightOverbooked": "Zbor suprarezervat",
+    "aggressiveBehaviorWithStaff": "Comportament agresiv față de personal",
+    "intoxication": "Intoxicație",
+    "unspecifiedReason": "Motiv nespecificat",
+    "eligible": "Eligibil",
+    "notEligible": "Ineligibil"
+  },
+  "yes": "Da",
+  "no": "Nu"
 }
