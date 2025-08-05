@@ -1,10 +1,17 @@
 import { Component, inject, Input, OnDestroy, OnInit, output, signal } from '@angular/core';
-import { FormControl, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import type { FlightDetailsForm } from '../../../../shared/types';
-import { TranslocoPipe } from '@jsverse/transloco';
+import { translate, TranslocoPipe } from '@jsverse/transloco';
 import { AirportAttributes, AirportService } from '../service/airport.service';
 import { NgForOf } from '@angular/common';
-import { MatFormField, MatHint, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
+import {
+  MatError,
+  MatFormField,
+  MatHint,
+  MatInput,
+  MatLabel,
+  MatSuffix,
+} from '@angular/material/input';
 import { MatOption } from '@angular/material/core';
 import {
   MatDatepicker,
@@ -42,6 +49,7 @@ import { AirlineAttributes, AirlineService } from '../service/airline.service';
     MatTimepickerInput,
     MatAutocomplete,
     MatAutocompleteTrigger,
+    MatError,
   ],
 })
 export class FlightDetailsFormComponent implements OnInit, OnDestroy {
@@ -99,7 +107,7 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
     if (airlineList) {
       airlineList.subscribe((data: AirlineAttributes[]) => {
         const seenNames = new Set<string>();
-        this.airlines = data.filter(a => {
+        this.airlines = data.filter((a) => {
           if (seenNames.has(a.name)) return false;
           seenNames.add(a.name);
           return true;
@@ -121,4 +129,6 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
         }
       });
   }
+
+  protected readonly translate = translate;
 }

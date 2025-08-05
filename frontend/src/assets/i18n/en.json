@@ -35,7 +35,34 @@
     "plannedArrivalDateError": "Planned arrival date is required!",
     "plannedArrivalTimeError": "Planned arrival time is required!",
     "next": "Next",
-    "rewardMessage": "You can receive up to {{reward}} EUROS for this flight!"
+    "rewardMessage": "You can receive up to {{reward}} EUROS for this flight!",
+    "error": {
+      "flightNumber": {
+        "required": "Flight number is required!",
+        "pattern": "Flight number must be 2 letters followed by 1-4 digits (e.g., AB123)!"
+      },
+      "airline": {
+        "required": "Airline is required!"
+      },
+      "departingAirport": {
+        "required": "Departing airport is required!"
+      },
+      "destinationAirport": {
+        "required": "Destination airport is required!"
+      },
+      "plannedDepartureDate": {
+        "required": "Planned departure date is required!"
+      },
+      "plannedDepartureTime": {
+        "required": "Planned departure time is required!"
+      },
+      "plannedArrivalDate": {
+        "required": "Planned arrival date is required!"
+      },
+      "plannedArrivalTime": {
+        "required": "Planned arrival time is required!"
+      }
+    }
   },
   "passenger-details": {
     "title": "Passenger Details",

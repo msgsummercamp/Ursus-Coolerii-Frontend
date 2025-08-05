@@ -35,7 +35,34 @@
     "plannedArrivalDateError": "Data planificată de sosire este obligatorie!",
     "plannedArrivalTimeError": "Ora planificată de sosire este obligatorie!",
     "next": "Mai Departe",
-    "rewardMessage": "Puteți primi până la {{reward}} EURO pentru acest zbor!"
+    "rewardMessage": "Puteți primi până la {{reward}} EURO pentru acest zbor!",
+    "error": {
+      "flightNumber": {
+        "required": "Numărul zborului este obligatoriu!",
+        "pattern": "Numărul zborului trebuie să fie format din 2 litere urmate de 1-4 cifre (ex. AB123)!"
+      },
+      "airline": {
+        "required": "Compania aeriană este obligatorie!"
+      },
+      "departingAirport": {
+        "required": "Aeroportul de plecare este obligatoriu!"
+      },
+      "destinationAirport": {
+        "required": "Aeroportul de destinație este obligatoriu!"
+      },
+      "plannedDepartureDate": {
+        "required": "Data planificată de plecare este obligatorie!"
+      },
+      "plannedDepartureTime": {
+        "required": "Ora planificată de plecare este obligatorie!"
+      },
+      "plannedArrivalDate": {
+        "required": "Data planificată de sosire este obligatorie!"
+      },
+      "plannedArrivalTime": {
+        "required": "Ora planificată de sosire este obligatorie!"
+      }
+    }
   },
   "passenger-details": {
     "title": "Detalii Pasager",
