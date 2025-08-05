@@ -33,7 +33,7 @@ import { DisruptiveFormComponent } from '../../disruptive-form/disruptive-form.c
 export class StepperComponent {
   private disruptiveFormComponent = viewChild(DisruptiveFormComponent);
   protected disruptiveFormCompleted: Signal<boolean | undefined> = computed(
-    () => this.disruptiveFormComponent()?.formDisruption.valid
+    () => this.disruptiveFormComponent()?.isEligibile()
   );
   private flightDetailsWrapComponent = viewChild(FlightDetailsWrapComponent);
   protected flightDetailsFormCompleted: Signal<boolean | undefined> = computed(() =>
