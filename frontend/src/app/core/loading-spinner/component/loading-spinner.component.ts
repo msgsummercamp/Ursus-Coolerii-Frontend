@@ -15,8 +15,4 @@ export class LoadingSpinnerComponent {
       this.hideSpinner.set(false);
     }, 300);
   }
-
-  public stopSpinner() {
-    this.hideSpinner.set(true);
-  }
 }
