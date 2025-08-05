@@ -2,7 +2,6 @@ import { Component, inject, Input, OnDestroy, OnInit, output, signal } from '@an
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AirportService } from '../service/airport.service';
 import { TranslocoPipe } from '@jsverse/transloco';
-
 import { NgForOf } from '@angular/common';
 import {
   MatError,
