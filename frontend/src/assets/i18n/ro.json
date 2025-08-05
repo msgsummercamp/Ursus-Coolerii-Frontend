@@ -106,9 +106,7 @@
   "documents": {
     "title": "Încărcare Documente",
     "chooseFile": "Alegeți Fișier(e)",
-    "chooseFileError": "Vă rog, alegeți măcar un fișier!",
-    "next": "Mai Departe",
-    "back": "Înapoi"
+    "chooseFileError": "Vă rog, alegeți măcar un fișier!"
   },
   "connecting-flight": {
     "title": "Zbor de Legătură"

@@ -16,6 +16,13 @@ import {
 import { MatButton } from '@angular/material/button';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { PassengerDetailsForm } from '../../shared/types/form.types';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardTitle,
+} from '@angular/material/card';
 
 @Component({
   selector: 'app-passenger-details-form',
@@ -32,6 +39,11 @@ import { PassengerDetailsForm } from '../../shared/types/form.types';
     MatSuffix,
     MatButton,
     TranslocoDirective,
+    MatCard,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardContent,
+    MatCardActions,
   ],
   templateUrl: './passenger-details-form.component.html',
   styleUrl: './passenger-details-form.component.scss',
