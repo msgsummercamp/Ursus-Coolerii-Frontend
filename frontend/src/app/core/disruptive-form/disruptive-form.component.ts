@@ -43,7 +43,7 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
   private onDestroy$ = new Subject<void>();
   public readonly next = output<void>();
   protected readonly DisruptiveMotiveLabels = DisruptiveMotiveLabels;
-  public isEligibile = signal<Boolean>(false);
+  public isEligibile = signal<boolean>(false);
   public eligibleText = computed(() => this.isEligibile() ? 'Eligible' : 'Not eligible')
 
   constructor() {
