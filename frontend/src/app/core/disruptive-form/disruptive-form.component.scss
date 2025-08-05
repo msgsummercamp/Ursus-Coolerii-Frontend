@@ -1,56 +1,46 @@
-.disruptive-form-wrapper {
-  margin-top: 5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-  min-height: 100vh;
-  padding: 0 1rem;
-}
-
-button {
-  &:hover {
-    background-color: var(--mat-sys-secondary-container);
-    transform: scale(1.075);
-  }
-
-  &:disabled {
-    background: var(--mat-sys-error-container);
-    cursor: not-allowed;
-  }
-}
-.form-fields {
-  min-width: 30vw;
-  display: flex;
-  flex-direction: column;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  max-width: 56.25rem;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: var(--mat-sys-primary-container);
-  border-radius: 0.75rem;
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+.disruption-form-container {
   width: 100%;
-  max-width: 30rem;
-}
-
-.form-actions{
-  max-width: 5vw;
-  display: flex;
-  align-self: flex-end;
-}
-
-.eligiblity-message {
-  color: var(--mat-sys-primary);
-  font-weight: bold;
-  font-size: 1.2em;
+  height: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  .disruptive-form-card {
+    max-height: calc(100vh - 64px - 72px - 1.5em);
+    width: clamp(400px, 35%, 100%);
+    padding: 1.5rem;
+    background: var(--mat-sys-tertiary-container);
+
+    .mat-mdc-card-header {
+      padding: 1rem;
+      justify-content: center;
+    }
+
+    .mat-mdc-card-content {
+      overflow: auto;
+      padding: 0.5rem;
+    }
+
+    .form-actions {
+      justify-content: flex-end;
+    }
+
+    form {
+      width: 100%;
+      overflow: auto;
+
+      .mat-mdc-form-field {
+        width: 100%;
+      }
+    }
+
+    .eligibility-message {
+      display: flex;
+      justify-content: center;
+      color: var(--mat-sys-primary);
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+  }
 }

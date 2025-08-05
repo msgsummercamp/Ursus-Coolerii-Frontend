@@ -1,17 +1,22 @@
-import { Component, computed, inject, OnDestroy, OnInit, output, signal, Signal } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, computed, inject, OnDestroy, OnInit, output, signal } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatInput, MatInputModule, MatLabel } from '@angular/material/input';
 import { MatAutocomplete, MatAutocompleteTrigger, MatOption } from '@angular/material/autocomplete';
 import { toCamelCase, TranslocoPipe } from '@jsverse/transloco';
-import { DisruptiveMotiveLabels,
-} from '../../shared/types/types';
+import { DisruptiveMotiveLabels } from '../../shared/types/types';
 import { CommonModule } from '@angular/common';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { MatButton } from '@angular/material/button';
 import { DisruptiveFormService } from './service/disruptive-form.service';
-import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { AirlineMotives, DeniedBoardingMotive, DisruptiveMotive } from '../../shared/enums';
-
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardTitle,
+} from '@angular/material/card';
 
 @Component({
   selector: 'app-diruptive-form',
@@ -30,7 +35,11 @@ import { AirlineMotives, DeniedBoardingMotive, DisruptiveMotive } from '../../sh
     MatSelectModule,
     MatInputModule,
     FormsModule,
-
+    MatCard,
+    MatCardTitle,
+    MatCardHeader,
+    MatCardContent,
+    MatCardActions,
   ],
   templateUrl: './disruptive-form.component.html',
   styleUrl: './disruptive-form.component.scss',
@@ -38,13 +47,13 @@ import { AirlineMotives, DeniedBoardingMotive, DisruptiveMotive } from '../../sh
 export class DisruptiveFormComponent implements OnInit, OnDestroy {
   public motives: string[];
   public reasons: DeniedBoardingMotive[] = Object.values(DeniedBoardingMotive);
-  public airlineDeniedMotives : AirlineMotives[] = Object.values(AirlineMotives);
+  public airlineDeniedMotives: AirlineMotives[] = Object.values(AirlineMotives);
   private service = inject(DisruptiveFormService);
   private onDestroy$ = new Subject<void>();
   public readonly next = output<void>();
   protected readonly DisruptiveMotiveLabels = DisruptiveMotiveLabels;
   public isEligibile = signal<boolean>(false);
-  public eligibleText = computed(() => this.isEligibile() ? 'Eligible' : 'Not eligible')
+  public eligibleText = computed(() => (this.isEligibile() ? 'Eligible' : 'Not eligible'));
 
   constructor() {
     this.motives = Object.values(DisruptiveMotiveLabels);
@@ -68,7 +77,7 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
           this.isEligibile.set(false);
         },
       });
-    })
+    });
   }
 
   ngOnDestroy(): void {
