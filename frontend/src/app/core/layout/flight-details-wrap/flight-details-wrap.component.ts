@@ -1,19 +1,24 @@
-import { Component, computed, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, output, signal } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { output, inject } from '@angular/core';
 import { AirportService } from '../flight-details-form/service/airport.service';
 import { MatButtonModule } from '@angular/material/button';
 import { FlightDetailsFormComponent } from '../flight-details-form/component/flight-details-form.component';
-import { signal } from '@angular/core';
-import { NgForOf, NgIf } from '@angular/common';
+import { NgForOf } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CaseFileService } from '../services/case-file.service';
 import { FlightDetailsForm } from '../../../shared/types/form.types';
+import { LoadingSpinnerComponent } from '../../loading-spinner/component/loading-spinner.component';
 
 @Component({
   selector: 'app-flight-details-wrap',
-  imports: [TranslocoPipe, MatButtonModule, FlightDetailsFormComponent, NgForOf],
+  imports: [
+    TranslocoPipe,
+    MatButtonModule,
+    FlightDetailsFormComponent,
+    NgForOf,
+    LoadingSpinnerComponent,
+  ],
   templateUrl: './flight-details-wrap.component.html',
   styleUrl: './flight-details-wrap.component.scss',
 })
@@ -24,6 +29,7 @@ export class FlightDetailsWrapComponent implements OnInit {
   private subscriptions: Subscription[] = [];
   reward: number | null = null;
   private caseFileService = inject(CaseFileService);
+  protected isDoneFetchingAirports = this.airportService.isDoneFetchingAirports;
 
   protected continue() {
     this.next.emit();
@@ -101,5 +107,4 @@ export class FlightDetailsWrapComponent implements OnInit {
     this.connectingFlights.pop();
     this.updateValidity();
   }
-
 }

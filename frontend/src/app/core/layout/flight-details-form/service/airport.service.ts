@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, shareReplay } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
@@ -17,15 +17,24 @@ import { FlightDetailsForm } from '../../../../shared/types/form.types';
 export class AirportService {
   private httpClient = inject(HttpClient);
   private fb = inject(NonNullableFormBuilder);
-  private _airportList: Observable<AirportAttributes[]> | undefined;
+  private readonly _airportList: Observable<AirportAttributes[]> | undefined;
+  private readonly _isDoneFetchingAirports = signal(false);
 
   constructor() {
     this._airportList = this.httpClient
       .get<AirportAttributes[]>(environment.apiURL + '/airports')
       .pipe(shareReplay(1));
+    setTimeout(() => {
+      this._isDoneFetchingAirports.set(true);
+    }, 10000);
+    // this._isDoneFetchingAirports.set(true);
   }
 
-  get airportList(): Observable<AirportAttributes[]> | undefined {
+  public get isDoneFetchingAirports() {
+    return this._isDoneFetchingAirports.asReadonly();
+  }
+
+  public get airportList(): Observable<AirportAttributes[]> | undefined {
     return this._airportList;
   }
 
