@@ -93,6 +93,7 @@
     }
   },
   "stepper": {
+    "disruption-motives": "Disruption motives",
     "flight-details": "Flight Details",
     "passenger-details": "Passenger Details",
     "documents": "Documents",
@@ -111,5 +112,32 @@
   },
   "connecting-flight": {
     "title": "Connecting Flight"
-  }
+  },
+  "disruptiveMotive": {
+    "dropDownText": "Disruption motive",
+    "canceled": "Canceled",
+    "deniedBoarding": "Denied Boarding",
+    "delayed": "Delayed",
+    "numberOfDaysLong": "How many days before cancellation has the airline informed?",
+    "numberOfDays": "Number of days",
+    "arrivedQuestion": "Has the flight arrived?",
+    "lateArrival": "How late arrived to final destination?",
+    "seatGaveQuestion": "Did you give up your seat voluntarily?",
+    "reasonDeniedBoarding": "Reason behind denial of boarding",
+    "airlineMotiveIsMentioned": "Did the airline mention disruption motive?",
+    "communicatedMotive": "What was the motive communicated by the airline?",
+    "tehnicalProblems": "Tehnical problems",
+    "meteorologicalConditions": "Meteorological conditions",
+    "strikeProblemsWithAirport": "Strike problems with airport",
+    "crewProblems": "Crew problem",
+    "otherMotives": "Other motives",
+    "flightOverbooked": "Flight overbooked",
+    "aggressiveBehaviorWithStaff": "Aggressive behavior with Staff",
+    "intoxication": "Intoxication",
+    "unspecifiedReason": "Unspecified reason",
+    "eligible": "Eligible",
+    "notEligible": "Not eligible"
+  },
+  "yes" : "Yes",
+  "no": "No"
 }

@@ -6,20 +6,10 @@ import { AbstractControl, NonNullableFormBuilder, Validators } from '@angular/fo
 import { ValidatorFn } from '@angular/forms';
 import { ValidationErrors } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
-import { FlightDetailsForm } from '../../../../shared/types';
+import { AirportAttributes } from '../../../../shared/types/types';
 import { inject } from '@angular/core';
+import { FlightDetailsForm } from '../../../../shared/types/form.types';
 
-export interface AirportAttributes {
-  name: string;
-  city: string;
-  country: string;
-  iata: string;
-  icao: string;
-  latitude: string;
-  longitude: string;
-  altitude: number;
-  timezone: string;
-}
 
 @Injectable({ providedIn: 'root' })
 export class AirportService {
@@ -51,7 +41,6 @@ export class AirportService {
       if (depDateStr === arrDateStr) {
         const [depHour, depMin] = depTime.split(':').map(Number);
         const [arrHour, arrMin] = arrTime.split(':').map(Number);
-
         const depTotal = depHour * 60 + depMin;
         const arrTotal = arrHour * 60 + arrMin;
 

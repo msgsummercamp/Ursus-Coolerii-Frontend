@@ -3,6 +3,8 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import type { FlightDetailsForm } from '../../../../shared/types';
 import { translate, TranslocoPipe } from '@jsverse/transloco';
 import { AirportAttributes, AirportService } from '../service/airport.service';
+import { TranslocoPipe } from '@jsverse/transloco';
+import { AirportService } from '../service/airport.service';
 import { NgForOf } from '@angular/common';
 import {
   MatError,
@@ -26,6 +28,9 @@ import {
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { startWith, Subject, takeUntil } from 'rxjs';
 import { AirlineAttributes, AirlineService } from '../service/airline.service';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AirportAttributes } from '../../../../shared/types/types';
+import { FlightDetailsForm } from '../../../../shared/types/form.types';
 
 @Component({
   selector: 'app-flight-details-form',
@@ -107,7 +112,7 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
     if (airlineList) {
       airlineList.subscribe((data: AirlineAttributes[]) => {
         const seenNames = new Set<string>();
-        this.airlines = data.filter((a) => {
+        this.airlines = data.filter(a => {
           if (seenNames.has(a.name)) return false;
           seenNames.add(a.name);
           return true;
@@ -129,6 +134,4 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
         }
       });
   }
-
-  protected readonly translate = translate;
 }

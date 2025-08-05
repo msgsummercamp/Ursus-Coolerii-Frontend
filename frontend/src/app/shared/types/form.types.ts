@@ -19,3 +19,14 @@ export type PassengerDetailsForm = {
   address: FormControl<string>;
   postalCode: FormControl<string>;
 };
+
+export type DisruptiveMotiveForm = {
+  disruptionMotive:  FormControl<string | null>;
+  daysBeforeCancelation:FormControl<number | null>;
+  hasArrived:FormControl<boolean | null>;
+  hoursLateArrival: FormControl<number | null>;
+  gaveSeatVoluntarly: FormControl<string | null>;
+  deniedBoardingMotive: FormControl<string | null>;
+  airlineMentionedMotive: FormControl<boolean | null>;
+  communicatedMotive: FormControl<string | null>;
+}
