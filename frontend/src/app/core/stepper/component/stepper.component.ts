@@ -98,7 +98,7 @@ export class StepperComponent implements AfterViewInit {
   }
 
   cacheStepHeaderPositions() {
-    const headers = document.querySelectorAll('.mat-step-header .mat-step-text-label');
+    const headers = document.querySelectorAll('.mat-step-text-label');
     this.stepHeaderPositions = Array.from(headers).map((el) => {
       const rect = (el as HTMLElement).getBoundingClientRect();
       return {
@@ -109,7 +109,7 @@ export class StepperComponent implements AfterViewInit {
   }
 
   setInitialAirplanePosition() {
-    const headers = document.querySelectorAll('.mat-step-header .mat-step-text-label');
+    const headers = document.querySelectorAll('.mat-step-text-label');
     if (headers.length > 0) {
       const firstLabel = headers[0] as HTMLElement;
       const rect = firstLabel.getBoundingClientRect();
@@ -133,7 +133,7 @@ export class StepperComponent implements AfterViewInit {
   }
 
   setAnimationParams(from: number, to: number) {
-    const headers = document.querySelectorAll('.mat-step-header .mat-step-text-label');
+    const headers = document.querySelectorAll('.mat-step-text-label');
 
     if (headers.length > from && headers.length > to) {
       const fromLabel = headers[from] as HTMLElement;
@@ -163,17 +163,6 @@ export class StepperComponent implements AfterViewInit {
         };
       }
       return;
-    }
-
-    if (this.stepHeaderPositions.length > from && this.stepHeaderPositions.length > to) {
-      const start = this.stepHeaderPositions[from];
-      const end = this.stepHeaderPositions[to];
-      this.animationParams = {
-        fromLeft: start.left,
-        fromTop: start.top,
-        toLeft: end.left,
-        toTop: end.top,
-      };
     }
   }
 
