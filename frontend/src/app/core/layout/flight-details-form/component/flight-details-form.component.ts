@@ -10,9 +10,6 @@ import {
   signal,
 } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Component, inject, Input, OnDestroy, OnInit, output, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import type { FlightDetailsForm } from '../../../../shared/types';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgForOf } from '@angular/common';
 import {
@@ -120,7 +117,7 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
     if (airlineList) {
       airlineList.subscribe((data: AirlineAttributes[]) => {
         const seenNames = new Set<string>();
-        this.airlines = data.filter(a => {
+        this.airlines = data.filter((a) => {
           if (seenNames.has(a.name)) return false;
           seenNames.add(a.name);
           return true;

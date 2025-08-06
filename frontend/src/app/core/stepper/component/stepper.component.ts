@@ -2,14 +2,13 @@ import {
   AfterViewInit,
   Component,
   computed,
+  inject,
   Signal,
   ViewChild,
   viewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
-import { Component, computed, inject, Signal, viewChild, ViewEncapsulation } from '@angular/core';
-import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -20,8 +19,8 @@ import { DocumentsFormComponent } from '../../documents-form/documents-form.comp
 import { FlightDetailsWrapComponent } from '../../layout/flight-details-wrap/flight-details-wrap.component';
 import { DisruptiveFormComponent } from '../../disruptive-form/disruptive-form.component';
 import { AirportsService } from '../../layout/flight-details-form/service/airport.service';
-import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility/confirmation-eligibility.component';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility/confirmation-eligibility.component';
 
 const AIRPLANE_WIDTH = 40;
 const VERTICAL_OFFSET = -19;
@@ -137,6 +136,9 @@ export class StepperComponent implements AfterViewInit {
   }
 
   onStepChange(event: any) {
+    if (event.selectedIndex === 1) {
+      this.airportService.fetchAirports();
+    }
     const prevStep = this.activeStep;
     this.activeStep = event.selectedIndex;
     this.setAnimationParams(prevStep, this.activeStep);
@@ -181,11 +183,5 @@ export class StepperComponent implements AfterViewInit {
   onAnimationDone() {
     this.airplaneLeft = this.animationParams.toLeft;
     this.airplaneTop = this.animationParams.toTop;
-  }
-
-  onStepChange(event: any) {
-    if (event.selectedIndex === 1) {
-      this.airportService.fetchAirports();
-    }
   }
 }
