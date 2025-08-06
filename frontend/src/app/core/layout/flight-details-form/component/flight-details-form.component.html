@@ -45,16 +45,30 @@
         type="text"
         matInput
         formControlName="departingAirport"
-        [matAutocomplete]="autoDepart"
+        (focus)="showDepartDropdown = true"
+        (input)="onDepartInput($any($event.target).value)"
+        (blur)="hideDropdownWithDelay()"
+        autocomplete="on"
         placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
       />
-      <mat-autocomplete #autoDepart="matAutocomplete">
-        <mat-option *ngFor="let airport of filteredAirports()" [value]="airport.name">
-          {{ airport.name }}
-        </mat-option>
-      </mat-autocomplete>
-      @if (flightForm.controls.departingAirport.errors?.['required']) {
-        <mat-error>{{ 'flightDetails.error.departingAirport.required' | transloco }}</mat-error>
+      @if (showDepartDropdown && filteredDepartAirports.length) {
+        <div class="custom-dropdown" (mousedown)="$event.preventDefault()">
+          <cdk-virtual-scroll-viewport
+            itemSize="48"
+            class="airport-list"
+            [style.height.px]="
+              filteredDepartAirports.length > 5 ? 240 : filteredDepartAirports.length * 48
+            "
+          >
+            <div
+              class="dropdown-option"
+              *cdkVirtualFor="let airport of filteredDepartAirports"
+              (mousedown)="selectDepartAirport(airport.name)"
+            >
+              {{ airport.name }}
+            </div>
+          </cdk-virtual-scroll-viewport>
+        </div>
       }
     </mat-form-field>
 
@@ -64,16 +78,30 @@
         type="text"
         matInput
         formControlName="destinationAirport"
-        [matAutocomplete]="autoDest"
+        (focus)="showDestDropdown = true"
+        (input)="onDestInput($any($event.target).value)"
+        (blur)="hideDestDropdownWithDelay()"
+        autocomplete="on"
         placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
       />
-      <mat-autocomplete #autoDest="matAutocomplete">
-        <mat-option *ngFor="let airport of filteredAirports()" [value]="airport.name">
-          {{ airport.name }}
-        </mat-option>
-      </mat-autocomplete>
-      @if (flightForm.controls.destinationAirport.errors?.['required']) {
-        <mat-error>{{ 'flightDetails.error.destinationAirport.required' | transloco }}</mat-error>
+      @if (showDestDropdown && filteredDestAirports.length) {
+        <div class="custom-dropdown" (mousedown)="$event.preventDefault()">
+          <cdk-virtual-scroll-viewport
+            itemSize="48"
+            class="airport-list"
+            [style.height.px]="
+              filteredDestAirports.length > 5 ? 240 : filteredDestAirports.length * 48
+            "
+          >
+            <div
+              class="dropdown-option"
+              *cdkVirtualFor="let airport of filteredDestAirports"
+              (mousedown)="selectDestAirport(airport.name)"
+            >
+              {{ airport.name }}
+            </div>
+          </cdk-virtual-scroll-viewport>
+        </div>
       }
     </mat-form-field>
   </div>
