@@ -8,6 +8,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
+import { Component, computed, inject, Signal, viewChild, ViewEncapsulation } from '@angular/core';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -16,6 +18,9 @@ import { TranslocoDirective } from '@jsverse/transloco';
 import { PassengerDetailsFormComponent } from '../../passenger-details-form/passenger-details-form.component';
 import { DocumentsFormComponent } from '../../documents-form/documents-form.component';
 import { FlightDetailsWrapComponent } from '../../layout/flight-details-wrap/flight-details-wrap.component';
+import { DisruptiveFormComponent } from '../../disruptive-form/disruptive-form.component';
+import { AirportsService } from '../../layout/flight-details-form/service/airport.service';
+import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility/confirmation-eligibility.component';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 const AIRPLANE_WIDTH = 40;
@@ -35,6 +40,8 @@ const VERTICAL_OFFSET = -19;
     FlightDetailsWrapComponent,
     DocumentsFormComponent,
     FlightDetailsWrapComponent,
+    DisruptiveFormComponent,
+    ConfirmationEligibilityComponent,
   ],
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss',
@@ -62,8 +69,13 @@ const VERTICAL_OFFSET = -19;
   ],
 })
 export class StepperComponent implements AfterViewInit {
+  protected airportService = inject(AirportsService);
+
+  private disruptiveFormComponent = viewChild(DisruptiveFormComponent);
+  protected disruptiveFormCompleted: Signal<boolean | undefined> = computed(() =>
+    this.disruptiveFormComponent()?.isEligibile()
+  );
   private flightDetailsWrapComponent = viewChild(FlightDetailsWrapComponent);
-  private flightDetailsForm = this.flightDetailsWrapComponent()?.form;
   protected flightDetailsFormCompleted: Signal<boolean | undefined> = computed(() =>
     this.flightDetailsWrapComponent()?.validForms()
   );
@@ -169,5 +181,11 @@ export class StepperComponent implements AfterViewInit {
   onAnimationDone() {
     this.airplaneLeft = this.animationParams.toLeft;
     this.airplaneTop = this.animationParams.toTop;
+  }
+
+  onStepChange(event: any) {
+    if (event.selectedIndex === 1) {
+      this.airportService.fetchAirports();
+    }
   }
 }

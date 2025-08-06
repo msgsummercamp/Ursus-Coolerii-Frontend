@@ -24,18 +24,35 @@
     "searchConnectingFlights": "Search Connecting Flights...",
     "add": "Add Connecting Flight",
     "deleteConnectingFlight": "Delete Connecting Flight",
-    "flightNrError": "Flight number is required!",
-    "flightDateError": "Flight date is required!",
-    "airlineError": "Airline is required!",
-    "reservationNumberError": "Reservation number is required!",
-    "departingAirportError": "Departing airport is required!",
-    "destinationAirportError": "Destination airport is required!",
-    "plannedDepartureDateError": "Planned departure date is required!",
-    "plannedDepartureTimeError": "Planned departure time is required!",
-    "plannedArrivalDateError": "Planned arrival date is required!",
-    "plannedArrivalTimeError": "Planned arrival time is required!",
     "next": "Next",
-    "rewardMessage": "You can receive up to {{reward}} EUROS for this flight!"
+    "rewardMessage": "You can receive up to {{reward}} EUROS for this flight!",
+    "error": {
+      "flightNumber": {
+        "required": "Flight number is required!",
+        "pattern": "Flight number must be 2 letters followed by 1-4 digits (e.g., AB123)!"
+      },
+      "airline": {
+        "required": "Airline is required!"
+      },
+      "departingAirport": {
+        "required": "Departing airport is required!"
+      },
+      "destinationAirport": {
+        "required": "Destination airport is required!"
+      },
+      "plannedDepartureDate": {
+        "required": "Planned departure date is required!"
+      },
+      "plannedDepartureTime": {
+        "required": "Planned departure time is required!"
+      },
+      "plannedArrivalDate": {
+        "required": "Planned arrival date is required!"
+      },
+      "plannedArrivalTime": {
+        "required": "Planned arrival time is required!"
+      }
+    }
   },
   "passenger-details": {
     "title": "Passenger Details",
@@ -76,6 +93,7 @@
     }
   },
   "stepper": {
+    "disruption-motives": "Disruption motives",
     "flight-details": "Flight Details",
     "passenger-details": "Passenger Details",
     "documents": "Documents",
@@ -94,5 +112,32 @@
   },
   "connecting-flight": {
     "title": "Connecting Flight"
-  }
+  },
+  "disruptiveMotive": {
+    "dropDownText": "Disruption motive",
+    "canceled": "Canceled",
+    "deniedBoarding": "Denied Boarding",
+    "delayed": "Delayed",
+    "numberOfDaysLong": "How many days before cancellation has the airline informed?",
+    "numberOfDays": "Number of days",
+    "arrivedQuestion": "Has the flight arrived?",
+    "lateArrival": "How late arrived to final destination?",
+    "seatGaveQuestion": "Did you give up your seat voluntarily?",
+    "reasonDeniedBoarding": "Reason behind denial of boarding",
+    "airlineMotiveIsMentioned": "Did the airline mention disruption motive?",
+    "communicatedMotive": "What was the motive communicated by the airline?",
+    "tehnicalProblems": "Tehnical problems",
+    "meteorologicalConditions": "Meteorological conditions",
+    "strikeProblemsWithAirport": "Strike problems with airport",
+    "crewProblems": "Crew problem",
+    "otherMotives": "Other motives",
+    "flightOverbooked": "Flight overbooked",
+    "aggressiveBehaviorWithStaff": "Aggressive behavior with Staff",
+    "intoxication": "Intoxication",
+    "unspecifiedReason": "Unspecified reason",
+    "eligible": "Eligible",
+    "notEligible": "Not eligible"
+  },
+  "yes" : "Yes",
+  "no": "No"
 }

@@ -24,18 +24,35 @@
     "searchConnectingFlights": "Caută Zboruri de Legătură...",
     "add": "Adaugă Zbor de Legătură",
     "deleteConnectingFlight": "Șterge Zbor de Legătură",
-    "flightNrError": "Numărul zborului este obligatoriu!",
-    "flightDateError": "Data zborului este obligatorie!",
-    "airlineError": "Compania aeriană este obligatorie!",
-    "reservationNumberError": "Numărul de rezervare este obligatoriu!",
-    "departingAirportError": "Aeroportul de plecare este obligatoriu!",
-    "destinationAirportError": "Aeroportul de destinație este obligatoriu!",
-    "plannedDepartureDateError": "Data planificată de plecare este obligatorie!",
-    "plannedDepartureTimeError": "Ora planificată de plecare este obligatorie!",
-    "plannedArrivalDateError": "Data planificată de sosire este obligatorie!",
-    "plannedArrivalTimeError": "Ora planificată de sosire este obligatorie!",
     "next": "Mai Departe",
-    "rewardMessage": "Puteți primi până la {{reward}} EURO pentru acest zbor!"
+    "rewardMessage": "Puteți primi până la {{reward}} EURO pentru acest zbor!",
+    "error": {
+      "flightNumber": {
+        "required": "Numărul zborului este obligatoriu!",
+        "pattern": "Numărul zborului trebuie să fie format din 2 litere urmate de 1-4 cifre (ex. AB123)!"
+      },
+      "airline": {
+        "required": "Compania aeriană este obligatorie!"
+      },
+      "departingAirport": {
+        "required": "Aeroportul de plecare este obligatoriu!"
+      },
+      "destinationAirport": {
+        "required": "Aeroportul de destinație este obligatoriu!"
+      },
+      "plannedDepartureDate": {
+        "required": "Data planificată de plecare este obligatorie!"
+      },
+      "plannedDepartureTime": {
+        "required": "Ora planificată de plecare este obligatorie!"
+      },
+      "plannedArrivalDate": {
+        "required": "Data planificată de sosire este obligatorie!"
+      },
+      "plannedArrivalTime": {
+        "required": "Ora planificată de sosire este obligatorie!"
+      }
+    }
   },
   "passenger-details": {
     "title": "Detalii Pasager",
@@ -76,6 +93,7 @@
     }
   },
   "stepper": {
+    "disruption-motives": "Motiv de perturbare",
     "flight-details": "Detalii Zbor",
     "passenger-details": "Detalii Pasager",
     "documents": "Documente",
@@ -94,5 +112,32 @@
   },
   "connecting-flight": {
     "title": "Zbor de Legătură"
-  }
+  },
+  "disruptiveMotive": {
+    "dropDownText": "Motiv de perturbare",
+    "canceled": "Anulat",
+    "deniedBoarding": "Refuz de îmbarcare",
+    "delayed": "Întârziat",
+    "numberOfDaysLong": "Cu câte zile înainte de anulare ați fost informat de companie",
+    "numberOfDays": "Număr de zile",
+    "arrivedQuestion": "A ajuns zborul la destinație?",
+    "lateArrival": "Cât de mult a întârziat zborul?",
+    "seatGaveQuestion": "V-ați cedat locul în mod voluntar?",
+    "reasonDeniedBoarding": "Motivul refuzului de îmbarcare",
+    "airlineMotiveIsMentioned": "A menționat compania motivul de perturbare?",
+    "communicatedMotive": "Care este motivul comunicat de companie?",
+    "tehnicalProblems": "Probleme tehnice",
+    "meteorologicalConditions": "Condiții meteorologice",
+    "strikeProblemsWithAirport": "Grevă la aeroport",
+    "crewProblems": "Problemă cu echipajul",
+    "otherMotives": "Alte motive",
+    "flightOverbooked": "Zbor suprarezervat",
+    "aggressiveBehaviorWithStaff": "Comportament agresiv față de personal",
+    "intoxication": "Intoxicație",
+    "unspecifiedReason": "Motiv nespecificat",
+    "eligible": "Eligibil",
+    "notEligible": "Ineligibil"
+  },
+  "yes": "Da",
+  "no": "Nu"
 }

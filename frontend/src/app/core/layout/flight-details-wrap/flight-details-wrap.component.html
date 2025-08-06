@@ -1,3 +1,6 @@
+@if (this.isLoading()) {
+  <app-loading-spinner />
+}
 <div class="flight-form-wrapper">
   <app-flight-details-form [flightForm]="form" />
   <div *ngFor="let flight of connectingFlights; let i = index">
