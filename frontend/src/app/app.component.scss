@@ -1,6 +1,4 @@
 main {
-  padding-top: 0;
-  height: calc(100% - 4rem);
-  overflow: auto;
+  height: calc(100% - var(--mat-toolbar-standard-height));
   background-color: var(--mat-sys-background);
 }

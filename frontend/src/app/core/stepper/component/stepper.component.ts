@@ -7,8 +7,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { PassengerDetailsFormComponent } from '../../passenger-details-form/passenger-details-form.component';
 import { DocumentsFormComponent } from '../../documents-form/documents-form.component';
-import { FlightDetailsWrapComponent } from '../../layout/flight-details-wrap/flight-details-wrap.component';
+import { FlightDetailsWrapComponent } from '../../flight-details-wrap/flight-details-wrap.component';
 import { DisruptiveFormComponent } from '../../disruptive-form/disruptive-form.component';
+import { FlightDetailsFormComponent } from '../../flight-details-form/component/flight-details-form.component';
 
 @Component({
   selector: 'app-stepper',
@@ -25,6 +26,7 @@ import { DisruptiveFormComponent } from '../../disruptive-form/disruptive-form.c
     DocumentsFormComponent,
     FlightDetailsWrapComponent,
     DisruptiveFormComponent,
+    FlightDetailsFormComponent,
   ],
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss',
@@ -32,8 +34,8 @@ import { DisruptiveFormComponent } from '../../disruptive-form/disruptive-form.c
 })
 export class StepperComponent {
   private disruptiveFormComponent = viewChild(DisruptiveFormComponent);
-  protected disruptiveFormCompleted: Signal<boolean | undefined> = computed(
-    () => this.disruptiveFormComponent()?.isEligibile()
+  protected disruptiveFormCompleted: Signal<boolean | undefined> = computed(() =>
+    this.disruptiveFormComponent()?.isEligibile()
   );
   private flightDetailsWrapComponent = viewChild(FlightDetailsWrapComponent);
   protected flightDetailsFormCompleted: Signal<boolean | undefined> = computed(() =>

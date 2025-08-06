@@ -1,24 +1,43 @@
 import { Component, computed, OnInit } from '@angular/core';
-import { TranslocoPipe } from '@jsverse/transloco';
+import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
 import { output, inject } from '@angular/core';
 import { AirportService } from '../flight-details-form/service/airport.service';
 import { MatButtonModule } from '@angular/material/button';
 import { FlightDetailsFormComponent } from '../flight-details-form/component/flight-details-form.component';
 import { signal } from '@angular/core';
-import { NgForOf, NgIf } from '@angular/common';
+import { NgForOf } from '@angular/common';
 import { FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { CaseFileService } from '../services/case-file.service';
-import { FlightDetailsForm } from '../../../shared/types/form.types';
+import { bindCallback, Subscription } from 'rxjs';
+import { CaseFileService } from '../layout/services/case-file.service';
+import { FlightDetailsForm } from '../../shared/types/form.types';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardTitle,
+} from '@angular/material/card';
 
 @Component({
   selector: 'app-flight-details-wrap',
-  imports: [TranslocoPipe, MatButtonModule, FlightDetailsFormComponent, NgForOf],
+  imports: [
+    TranslocoPipe,
+    MatButtonModule,
+    FlightDetailsFormComponent,
+    NgForOf,
+    MatCardActions,
+    TranslocoDirective,
+    MatCard,
+    MatCardContent,
+    MatCardHeader,
+    MatCardTitle,
+  ],
   templateUrl: './flight-details-wrap.component.html',
   styleUrl: './flight-details-wrap.component.scss',
 })
 export class FlightDetailsWrapComponent implements OnInit {
-  public readonly next = output<void>();
+  protected readonly next = output<void>();
+  protected readonly previous = output<void>();
   private airportService = inject(AirportService);
   private _isValid = signal(false);
   private subscriptions: Subscription[] = [];
@@ -27,6 +46,10 @@ export class FlightDetailsWrapComponent implements OnInit {
 
   protected continue() {
     this.next.emit();
+  }
+
+  protected back() {
+    this.previous.emit();
   }
 
   ///TODO : unsubscribes
@@ -56,7 +79,6 @@ export class FlightDetailsWrapComponent implements OnInit {
     const airports: FormGroup<FlightDetailsForm>[] = allFlightForms.filter(
       (f, index) => index === 0 || index === allFlightForms.length - 1
     );
-    console.log(airports[airports.length - 1].controls.destinationAirport.value);
     return {
       departureAirport: airports[0].controls.departingAirport.value,
       destinationAirport: airports[airports.length - 1].controls.destinationAirport.value,
@@ -87,10 +109,11 @@ export class FlightDetailsWrapComponent implements OnInit {
   }
 
   public addConnectingFlight() {
-    if (!this.validForms()) return;
+    // if (!this.validForms()) return;
 
     const newForm = this.airportService.createForm();
     this.subscribeToNewForm(newForm);
+    this.subscribeToForms();
     newForm.statusChanges.subscribe(() => this.checkAndFetchReward());
     this.connectingFlights.push(newForm);
   }
@@ -101,5 +124,5 @@ export class FlightDetailsWrapComponent implements OnInit {
     this.connectingFlights.pop();
     this.updateValidity();
   }
-
+  protected readonly bindCallback = bindCallback;
 }

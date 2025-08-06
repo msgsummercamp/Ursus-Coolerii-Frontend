@@ -2,6 +2,8 @@
 // For more information: https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 @use './styles/_theme-colors.scss' as theme-colors;
+@import 'styles/layout';
+@import 'styles/case-entry';
 
 html {
   @include mat.theme(

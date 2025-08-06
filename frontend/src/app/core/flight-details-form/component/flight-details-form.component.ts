@@ -1,7 +1,16 @@
-import { Component, inject, Input, OnDestroy, OnInit, output, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  output,
+  signal,
+} from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AirportService } from '../service/airport.service';
-import { TranslocoPipe } from '@jsverse/transloco';
+import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
 import { NgForOf } from '@angular/common';
 import {
   MatError,
@@ -23,10 +32,19 @@ import {
   MatTimepickerToggle,
 } from '@angular/material/timepicker';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { startWith, Subject, takeUntil } from 'rxjs';
+import { startWith, Subject, Subscription, takeUntil } from 'rxjs';
 import { AirlineAttributes, AirlineService } from '../service/airline.service';
-import { AirportAttributes } from '../../../../shared/types/types';
-import { FlightDetailsForm } from '../../../../shared/types/form.types';
+import { AirportAttributes } from '../../../shared/types/types';
+import { FlightDetailsForm } from '../../../shared/types/form.types';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardTitle,
+} from '@angular/material/card';
+import { MatButton } from '@angular/material/button';
+import { CaseFileService } from '../../layout/services/case-file.service';
 
 @Component({
   selector: 'app-flight-details-form',
@@ -51,22 +69,35 @@ import { FlightDetailsForm } from '../../../../shared/types/form.types';
     MatAutocomplete,
     MatAutocompleteTrigger,
     MatError,
+    MatCard,
+    MatCardContent,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardActions,
+    MatButton,
+    TranslocoDirective,
   ],
 })
 export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   private readonly _isValid = signal(false);
-  public readonly isValid = this._isValid.asReadonly();
   private airportService = inject(AirportService);
   private airports: AirportAttributes[] = [];
   private airlineService = inject(AirlineService);
   private airlines: AirlineAttributes[] = [];
   protected filteredAirlines: AirlineAttributes[] = [];
   public readonly next = output<void>();
+  public readonly previous = output<void>();
   private onDestroy$ = new Subject<void>();
   public filteredAirports: AirportAttributes[] = [];
   @Input() flightForm!: FormGroup<FlightDetailsForm>;
+  public validForms = computed(() => this._isValid());
+  private caseFileService = inject(CaseFileService);
+  reward: number | null = null;
+  private subscriptions: Subscription[] = [];
 
+  public connectingFlights: FormGroup<FlightDetailsForm>[] = [];
   ngOnInit(): void {
+    this.subscribeToForms();
     this.subscribeToFetchAirports();
     this.subscribeAllFormElements();
     this.subscribeToFetchAirlines();
@@ -75,6 +106,7 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
       this._isValid.set(status === 'VALID');
     });
   }
+
   ngOnDestroy(): void {
     this.onDestroy$.next();
     this.onDestroy$.complete();
@@ -129,5 +161,73 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
           this.filteredAirlines = [];
         }
       });
+  }
+
+  protected continue() {
+    this.next.emit();
+  }
+
+  protected back() {
+    this.previous.emit();
+  }
+
+  public addConnectingFlight(): void {
+    // if (!this.validForms()) return;
+    const newForm = this.airportService.createForm();
+    this.connectingFlights.push(newForm);
+
+    newForm.statusChanges.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+      this.updateValidity();
+    });
+
+    newForm.statusChanges.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+      this.checkAndFetchReward();
+    });
+
+    this.subscribeAirportFieldToFilterAirports(newForm.controls.departingAirport);
+    this.subscribeAirportFieldToFilterAirports(newForm.controls.destinationAirport);
+  }
+
+  private checkAndFetchReward(): void {
+    if (this.validForms()) {
+      const caseFile = this.buildCaseFileFromForms();
+      this.caseFileService.calculateReward(caseFile).subscribe((reward) => {
+        this.reward = reward;
+      });
+    } else {
+      this.reward = null;
+    }
+  }
+
+  private buildCaseFileFromForms() {
+    const allFlightForms = [this.flightForm, ...this.connectingFlights];
+
+    const airports: FormGroup<FlightDetailsForm>[] = allFlightForms.filter(
+      (f, index) => index === 0 || index === allFlightForms.length - 1
+    );
+
+    return {
+      departureAirport: airports[0].controls.departingAirport.value,
+      destinationAirport: airports[airports.length - 1].controls.destinationAirport.value,
+    };
+  }
+
+  private updateValidity() {
+    // const allValid = this.flightForm.valid && this.connectingFlights.every((f) => f.valid);
+    // this._isValid.set(allValid);
+  }
+
+  private subscribeToForms() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+    this.subscriptions = [];
+    this.subscribeToNewForm(this.flightForm);
+    this.connectingFlights.forEach((f) => {
+      this.subscribeToNewForm(f);
+    });
+    this.updateValidity();
+  }
+
+  private subscribeToNewForm(formToSub: FormGroup<FlightDetailsForm>): void {
+    // this.subscriptions.push(formToSub.statusChanges.subscribe(() => this.updateValidity()));
   }
 }

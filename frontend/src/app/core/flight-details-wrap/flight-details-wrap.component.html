@@ -1,0 +1,25 @@
+<div class="flight-form-wrapper-container">
+  <mat-card class="flight-form-wrapper-card special-mat-card">
+    <mat-card-header class="special-mat-header">
+      <mat-card-title class="special-mat-title">{{
+        'flightDetails.title' | transloco
+      }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <app-flight-details-form [flightForm]="form" (next)="continue()" (previous)="back()" />
+      <div *ngFor="let flight of connectingFlights; let i = index">
+        <h2 class="mat-headline-5">{{ 'connecting-flight.title' | transloco }} #{{ i + 1 }}</h2>
+        <app-flight-details-form [flightForm]="flight" />
+      </div>
+    </mat-card-content>
+    <mat-card-actions *transloco="let translate" class="form-actions">
+      <button mat-flat-button (click)="back()">{{ translate('stepper.back') }}</button>
+      <button mat-flat-button (click)="addConnectingFlight()"
+        >{{ translate('flightDetails.connectingFlightPlaceholder') }}
+      </button>
+      <button mat-flat-button [disabled]="form.invalid" (click)="continue()"
+        >{{ translate('stepper.next') }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

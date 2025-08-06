@@ -26,6 +26,7 @@
     "deleteConnectingFlight": "Delete Connecting Flight",
     "next": "Next",
     "rewardMessage": "You can receive up to {{reward}} EUROS for this flight!",
+    "connectingFlightPlaceholder": "Type connecting flight...",
     "error": {
       "flightNumber": {
         "required": "Flight number is required!",

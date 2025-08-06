@@ -1,0 +1,45 @@
+.special-mat-card {
+  margin: 0.75rem auto;
+  padding: 1.5rem;
+  width: clamp(400px, 40%, 100%);
+  max-height: calc(100vh - 64px - 72px - 1.5em);
+
+  .special-mat-header {
+    padding: 0.5rem;
+    justify-content: center;
+
+    .special-mat-title {
+      font-weight: bold;
+    }
+  }
+}
+
+//
+//// Center card title
+//mat-card-title {
+//  display: flex;
+//  justify-content: center;
+//  align-items: center;
+//  width: 100%;
+//  font-weight: bold;
+//  font-size: x-large;
+//}
+//
+//// Form field styling
+//mat-form-field {
+//  width: 100%;
+//  min-width: 20em;
+//  max-width: 40em;
+//}
+//
+//// Button group styling
+//.form-actions {
+//  display: flex;
+//  justify-content: space-between;
+//  margin-top: 2em;
+//
+//  button {
+//    min-width: 8em;
+//    margin: 0 0.5em;
+//  }
+//}

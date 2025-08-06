@@ -26,6 +26,7 @@
     "deleteConnectingFlight": "Șterge Zbor de Legătură",
     "next": "Mai Departe",
     "rewardMessage": "Puteți primi până la {{reward}} EURO pentru acest zbor!",
+    "connectingFlightPlaceholder": "Introduceți zborul de legătură...",
     "error": {
       "flightNumber": {
         "required": "Numărul zborului este obligatoriu!",
