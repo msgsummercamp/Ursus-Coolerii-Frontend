@@ -1,7 +1,7 @@
+@if (this.airportService.isLoading()) {
+  <app-loading-spinner />
+}
 <div class="flight-form-wrapper">
-  @if (this.airportService.isLoading()) {
-    <app-loading-spinner />
-  }
   <app-flight-details-form [flightForm]="form" />
   <div *ngFor="let flight of connectingFlights; let i = index">
     <h2 class="mat-headline-5">{{ 'connecting-flight.title' | transloco }} #{{ i + 1 }}</h2>
