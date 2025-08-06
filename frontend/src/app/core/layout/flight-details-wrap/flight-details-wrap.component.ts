@@ -11,11 +11,12 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { delay, iif, of, Subscription, switchMap } from 'rxjs';
 import { CaseFileService } from '../services/case-file.service';
 import { FlightDetailsForm } from '../../../shared/types/form.types';
 import { LoadingSpinnerComponent } from '../../loading-spinner/component/loading-spinner.component';
 import { AirportsService } from '../flight-details-form/service/airport.service';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-flight-details-wrap',
@@ -30,9 +31,21 @@ import { AirportsService } from '../flight-details-form/service/airport.service'
   styleUrl: './flight-details-wrap.component.scss',
 })
 export class FlightDetailsWrapComponent implements OnInit {
+  public readonly next = output<void>();
+
   protected airportService = inject(AirportsService);
 
-  public readonly next = output<void>();
+  protected isLoading = signal(true);
+  private isLoading$ = toObservable(this.airportService.isLoading);
+  private delayedLoading$ = this.isLoading$.pipe(
+    switchMap((loading) => iif(() => loading, of(loading).pipe(delay(300)), of(loading)))
+  );
+
+  constructor() {
+    this.delayedLoading$.subscribe((loading) => {
+      this.isLoading.set(loading);
+    });
+  }
 
   private _isValid = signal(false);
   private subscriptions: Subscription[] = [];
