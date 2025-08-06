@@ -1,5 +1,5 @@
 .overlay {
-  position: fixed;
+  position: absolute;
   z-index: 999;
   background-color: rgba(0, 0, 0, 0.2);
   height: 100vh;
@@ -13,4 +13,6 @@ mat-spinner {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  height: 3rem;
+  width: 3rem;
 }

@@ -1,6 +1,7 @@
 import {
   Component,
   computed,
+  effect,
   inject,
   Input,
   OnDestroy,
@@ -82,6 +83,18 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   });
 
   public readonly next = output<void>();
+
+  constructor() {
+    effect(() => {
+      if (this.airportService.isLoading()) {
+        this.flightForm?.controls.departingAirport.disable();
+        this.flightForm?.controls.destinationAirport.disable();
+      } else {
+        this.flightForm?.controls.departingAirport.enable();
+        this.flightForm?.controls.destinationAirport.enable();
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.flightForm.controls.departingAirport.valueChanges
