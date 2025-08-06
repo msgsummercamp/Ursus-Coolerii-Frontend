@@ -1,4 +1,4 @@
-import { Component, computed, Signal, viewChild, ViewEncapsulation } from '@angular/core';
+import { Component, computed, inject, Signal, viewChild, ViewEncapsulation } from '@angular/core';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -9,6 +9,7 @@ import { PassengerDetailsFormComponent } from '../../passenger-details-form/pass
 import { DocumentsFormComponent } from '../../documents-form/documents-form.component';
 import { FlightDetailsWrapComponent } from '../../layout/flight-details-wrap/flight-details-wrap.component';
 import { DisruptiveFormComponent } from '../../disruptive-form/disruptive-form.component';
+import { AirportsService } from '../../layout/flight-details-form/service/airport.service';
 import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility/confirmation-eligibility.component';
 
 @Component({
@@ -33,9 +34,11 @@ import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility
   encapsulation: ViewEncapsulation.None,
 })
 export class StepperComponent {
+  protected airportService = inject(AirportsService);
+
   private disruptiveFormComponent = viewChild(DisruptiveFormComponent);
-  protected disruptiveFormCompleted: Signal<boolean | undefined> = computed(
-    () => this.disruptiveFormComponent()?.isEligibile()
+  protected disruptiveFormCompleted: Signal<boolean | undefined> = computed(() =>
+    this.disruptiveFormComponent()?.isEligibile()
   );
   private flightDetailsWrapComponent = viewChild(FlightDetailsWrapComponent);
   protected flightDetailsFormCompleted: Signal<boolean | undefined> = computed(() =>
@@ -50,4 +53,10 @@ export class StepperComponent {
   protected documentsFormCompleted: Signal<boolean | undefined> = computed(() =>
     this.documentsForm()?.isValid()
   );
+
+  onStepChange(event: any) {
+    if (event.selectedIndex === 1) {
+      this.airportService.fetchAirports();
+    }
+  }
 }

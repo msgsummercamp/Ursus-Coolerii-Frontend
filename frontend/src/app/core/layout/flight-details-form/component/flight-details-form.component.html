@@ -49,7 +49,7 @@
         placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
       />
       <mat-autocomplete #autoDepart="matAutocomplete">
-        <mat-option *ngFor="let airport of filteredAirports" [value]="airport.name">
+        <mat-option *ngFor="let airport of filteredAirports()" [value]="airport.name">
           {{ airport.name }}
         </mat-option>
       </mat-autocomplete>
@@ -68,7 +68,7 @@
         placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
       />
       <mat-autocomplete #autoDest="matAutocomplete">
-        <mat-option *ngFor="let airport of filteredAirports" [value]="airport.name">
+        <mat-option *ngFor="let airport of filteredAirports()" [value]="airport.name">
           {{ airport.name }}
         </mat-option>
       </mat-autocomplete>

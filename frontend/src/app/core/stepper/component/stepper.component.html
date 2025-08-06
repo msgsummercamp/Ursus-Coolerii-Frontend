@@ -1,4 +1,10 @@
-<mat-stepper #stepper *transloco="let translate; prefix: 'stepper'" linear>
+<mat-stepper
+  #stepper
+  *transloco="let translate; prefix: 'stepper'"
+  linear
+  animationDuration="300"
+  (selectionChange)="onStepChange($event)"
+>
   <mat-step [completed]="disruptiveFormCompleted()">
     <ng-template matStepLabel>{{ translate('disruption-motives') }}</ng-template>
     <app-diruptive-form (next)="stepper.next()" />
