@@ -1,5 +1,5 @@
 <div class="flight-form-wrapper">
-  @if (!this.isDoneFetchingAirports()) {
+  @if (this.airportService.isLoading()) {
     <app-loading-spinner />
   }
   <app-flight-details-form [flightForm]="form" />
