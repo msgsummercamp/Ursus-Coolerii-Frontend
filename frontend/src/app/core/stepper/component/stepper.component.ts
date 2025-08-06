@@ -1,4 +1,4 @@
-import { Component, computed, inject, Signal, viewChild, ViewEncapsulation } from '@angular/core';
+import { Component, computed, Signal, viewChild, ViewEncapsulation } from '@angular/core';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -10,6 +10,7 @@ import { DocumentsFormComponent } from '../../documents-form/documents-form.comp
 import { FlightDetailsWrapComponent } from '../../layout/flight-details-wrap/flight-details-wrap.component';
 import { DisruptiveFormComponent } from '../../disruptive-form/disruptive-form.component';
 import { AirportsService } from '../../layout/flight-details-form/service/airport.service';
+import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility/confirmation-eligibility.component';
 
 @Component({
   selector: 'app-stepper',
@@ -26,6 +27,7 @@ import { AirportsService } from '../../layout/flight-details-form/service/airpor
     DocumentsFormComponent,
     FlightDetailsWrapComponent,
     DisruptiveFormComponent,
+    ConfirmationEligibilityComponent,
   ],
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss',
