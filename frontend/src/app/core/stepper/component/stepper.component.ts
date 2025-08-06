@@ -1,4 +1,4 @@
-import { Component, computed, Signal, viewChild, ViewEncapsulation } from '@angular/core';
+import { Component, computed, inject, Signal, viewChild, ViewEncapsulation } from '@angular/core';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
