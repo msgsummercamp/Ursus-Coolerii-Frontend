@@ -1,15 +1,17 @@
-import { Injectable, OnInit, Signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, shareReplay } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
-import { AbstractControl, NonNullableFormBuilder, Validators } from '@angular/forms';
-import { ValidatorFn } from '@angular/forms';
-import { ValidationErrors } from '@angular/forms';
-import { FormGroup } from '@angular/forms';
+import {
+  AbstractControl,
+  FormGroup,
+  NonNullableFormBuilder,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { AirportAttributes } from '../../../../shared/types/types';
-import { inject } from '@angular/core';
 import { FlightDetailsForm } from '../../../../shared/types/form.types';
-
 
 @Injectable({ providedIn: 'root' })
 export class AirportService {
@@ -55,7 +57,10 @@ export class AirportService {
   public createForm() {
     return this.fb.group<FlightDetailsForm>(
       {
-        flightNr: this.fb.control('', Validators.required),
+        flightNr: this.fb.control('', [
+          Validators.required,
+          Validators.pattern('^[a-zA-Z]{2}[0-9]{1,4}$'),
+        ]),
         airline: this.fb.control('', Validators.required),
         departingAirport: this.fb.control('', Validators.required),
         destinationAirport: this.fb.control('', Validators.required),

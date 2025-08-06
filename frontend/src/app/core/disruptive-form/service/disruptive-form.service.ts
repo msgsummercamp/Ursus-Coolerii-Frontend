@@ -50,8 +50,8 @@ export class DisruptiveFormService {
     };
   }
 
-  public checkEligibility(form: FormGroup<DisruptiveMotiveForm>): Observable<Boolean> {
-    return this.httpClient.post<Boolean>(
+  public checkEligibility(form: FormGroup<DisruptiveMotiveForm>): Observable<boolean> {
+    return this.httpClient.post<boolean>(
       environment.apiURL + '/case-files/eligibility',
       this.buildEligibilityRequest(form)
     );
