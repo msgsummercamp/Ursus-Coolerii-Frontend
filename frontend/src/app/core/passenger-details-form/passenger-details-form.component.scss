@@ -1,98 +1,28 @@
-.passenger-form {
+.passenger-details-form-container {
+  width: 100%;
+  height: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 2em;
-  max-width: 50vw;
-  margin: 4vh auto;
-  padding: 4em;
-  background: var(--mat-sys-primary-container);
-  border-radius: 1em;
-  box-shadow: 0 0.5em 2em rgba(0, 0, 0, 0.15);
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 
-  label {
+  .passenger-details-form-card {
+    background: var(--mat-sys-tertiary-container);
+  }
+
+  form {
     display: flex;
     flex-direction: column;
-    font-weight: 500;
+    gap: 1rem;
+    width: 100%;
+    overflow: hidden;
 
-    input {
-      margin-top: 1em;
-      padding: 1em;
-      font-size: 1em;
-    }
-  }
-
-  .form-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
-
-    button {
-
-      &:hover {
-        background-color: var(--mat-sys-secondary-container);
-        transform: scale(1.075);
-      }
-      &:disabled {
-        background: var(--mat-sys-error-container);
-        cursor: not-allowed;
+    & > div {
+      display: flex;
+      gap: 2rem;
+      > * {
+        flex: 1;
       }
     }
   }
-
-  .names {
-    display: flex;
-    justify-content: space-between;
-
-    .first {
-      flex: 1;
-      margin-right: 1em;
-    }
-
-    .last {
-      flex: 1;
-      margin-left: 1em;
-    }
-  }
-
-  .data {
-    display: flex;
-    justify-content: space-between;
-
-    .dob {
-      flex: 1;
-      margin-right: 1em;
-    }
-
-    .phone {
-      flex: 1;
-      margin-left: 1em;
-    }
-  }
-
-  .location {
-    display: flex;
-    justify-content: space-between;
-
-    .adr {
-      flex: 1.25;
-      margin-right: 1em;
-    }
-
-    .plz {
-        flex: 0.75;
-        margin-left: 1em;
-    }
-  }
-}
-
-.buttons-div {
-  display: flex;
-  flex-direction: row;
-  gap: 45rem;
-}
-
-button[mat-raised-button]:enabled {
-  background-color: var(--mat-sys-secondary-container);
-  color: var(--mat-sys-secondary-on-container);
-  align-self: flex-end;
 }

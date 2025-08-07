@@ -1,8 +1,17 @@
 import { Component, computed, inject, OnInit, output, signal } from '@angular/core';
-import { TranslocoPipe } from '@jsverse/transloco';
+import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
+import { AirportsService } from '../flight-details-form/service/airport.service';
 import { MatButtonModule } from '@angular/material/button';
 import { FlightDetailsFormComponent } from '../flight-details-form/component/flight-details-form.component';
 import { NgForOf } from '@angular/common';
+import { FlightDetailsForm } from '../../shared/types/form.types';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardTitle,
+} from '@angular/material/card';
 import {
   AbstractControl,
   FormGroup,
@@ -11,12 +20,10 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { delay, iif, of, Subscription, switchMap } from 'rxjs';
-import { CaseFileService } from '../services/case-file.service';
-import { FlightDetailsForm } from '../../../shared/types/form.types';
-import { LoadingSpinnerComponent } from '../../loading-spinner/component/loading-spinner.component';
-import { AirportsService } from '../flight-details-form/service/airport.service';
+import { bindCallback, delay, iif, of, Subscription, switchMap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { CaseFileService } from '../layout/services/case-file.service';
+import { LoadingSpinnerComponent } from '../loading-spinner/component/loading-spinner.component';
 
 @Component({
   selector: 'app-flight-details-wrap',
@@ -25,15 +32,22 @@ import { toObservable } from '@angular/core/rxjs-interop';
     MatButtonModule,
     FlightDetailsFormComponent,
     NgForOf,
+    MatCardActions,
+    MatCard,
+    MatCardContent,
+    MatCardHeader,
+    MatCardTitle,
     LoadingSpinnerComponent,
+    LoadingSpinnerComponent,
+    TranslocoDirective,
   ],
   templateUrl: './flight-details-wrap.component.html',
   styleUrl: './flight-details-wrap.component.scss',
 })
 export class FlightDetailsWrapComponent implements OnInit {
-  public readonly next = output<void>();
-
-  protected airportService = inject(AirportsService);
+  protected readonly next = output<void>();
+  protected readonly previous = output<void>();
+  private airportService = inject(AirportsService);
 
   protected isLoading = signal(false);
   private isLoading$ = toObservable(this.airportService.isLoading);
@@ -55,6 +69,10 @@ export class FlightDetailsWrapComponent implements OnInit {
 
   protected continue() {
     this.next.emit();
+  }
+
+  protected back() {
+    this.previous.emit();
   }
 
   ///TODO : unsubscribes
@@ -84,7 +102,6 @@ export class FlightDetailsWrapComponent implements OnInit {
     const airports: FormGroup<FlightDetailsForm>[] = allFlightForms.filter(
       (f, index) => index === 0 || index === allFlightForms.length - 1
     );
-    console.log(airports[airports.length - 1].controls.destinationAirport.value);
     return {
       departureAirport: airports[0].controls.departingAirport.value,
       destinationAirport: airports[airports.length - 1].controls.destinationAirport.value,
@@ -115,10 +132,11 @@ export class FlightDetailsWrapComponent implements OnInit {
   }
 
   public addConnectingFlight() {
-    if (!this.validForms()) return;
+    // if (!this.validForms()) return;
 
     const newForm = this.createForm();
     this.subscribeToNewForm(newForm);
+    this.subscribeToForms();
     newForm.statusChanges.subscribe(() => this.checkAndFetchReward());
     this.connectingFlights.push(newForm);
   }
@@ -129,6 +147,8 @@ export class FlightDetailsWrapComponent implements OnInit {
     this.connectingFlights.pop();
     this.updateValidity();
   }
+  protected readonly bindCallback = bindCallback;
+
   private createForm() {
     return this.fb.group<FlightDetailsForm>(
       {
