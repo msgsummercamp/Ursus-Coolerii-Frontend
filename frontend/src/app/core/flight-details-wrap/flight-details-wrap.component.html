@@ -4,16 +4,9 @@
 <div class="flight-form-wrapper-container">
   <mat-card class="flight-form-wrapper-card special-mat-card">
     <mat-card-header class="special-mat-header">
-      <mat-card-title class="special-mat-title">{{
-        'flightDetails.title' | transloco
-      }}</mat-card-title>
+      <mat-card-title class="special-mat-title">Flight Details</mat-card-title>
     </mat-card-header>
     <mat-card-content class="special-mat-content">
-      <app-reservation-details
-        [reservationForm]="mainForm"
-        (next)="continue()"
-        (previous)="back()"
-      />
       <div *ngFor="let flight of connectingFlights; let i = index">
         <h2 class="mat-headline-5">{{ 'connecting-flight.title' | transloco }} #{{ i + 1 }}</h2>
         <app-flight-details-form [flightForm]="flight" />

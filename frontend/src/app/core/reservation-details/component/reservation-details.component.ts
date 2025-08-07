@@ -1,6 +1,6 @@
-import { Component, effect, inject, Input, OnDestroy, OnInit, output, signal } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { TranslocoPipe } from '@jsverse/transloco';
+import { Component, effect, inject, OnDestroy, OnInit, output, signal } from '@angular/core';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { translate, TranslocoPipe } from '@jsverse/transloco';
 import {
   MatError,
   MatFormField,
@@ -19,7 +19,7 @@ import {
   MatTimepickerInput,
   MatTimepickerToggle,
 } from '@angular/material/timepicker';
-import { Subject, takeUntil } from 'rxjs';
+import { delay, iif, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { ReservationDetailsForm } from '../../../shared/types/form.types';
 import { AirportAttributes } from '../../../shared/types/types';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -27,6 +27,15 @@ import { AirportsService } from '../../flight-details-form/service/airport.servi
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { StopoverService } from '../../../shared/services/stopover.service';
+import { LoadingSpinnerComponent } from '../../loading-spinner/component/loading-spinner.component';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardTitle,
+} from '@angular/material/card';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-reservation-details',
@@ -51,6 +60,12 @@ import { StopoverService } from '../../../shared/services/stopover.service';
     MatButton,
     MatIconButton,
     MatIcon,
+    LoadingSpinnerComponent,
+    MatCard,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardContent,
+    MatCardActions,
   ],
 })
 export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
@@ -66,16 +81,40 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
   public filteredDestAirports: AirportAttributes[] = [];
   public filteredStopoverAirports: AirportAttributes[] = [];
 
-  @Input() reservationForm!: FormGroup<ReservationDetailsForm>;
+  private fb = inject(NonNullableFormBuilder);
+
+  public reservationForm = this.fb.group<ReservationDetailsForm>({
+    reservationNumber: this.fb.control('', Validators.required),
+    departingAirport: this.fb.control('', Validators.required),
+    destinationAirport: this.fb.control('', Validators.required),
+    plannedDepartureDate: this.fb.control(null, Validators.required),
+    plannedArrivalDate: this.fb.control(null, Validators.required),
+    plannedDepartureTime: this.fb.control('', Validators.required),
+    plannedArrivalTime: this.fb.control('', Validators.required),
+    stopover: this.fb.control(''),
+  });
+
+  private readonly _isValid = signal(false);
+  public readonly isValid = this._isValid.asReadonly();
 
   public readonly airportsSignal = this.airportService.airportsSignal;
 
   public searchValue = signal('');
 
+  private isLoading$ = toObservable(this.airportService.isLoading);
+  private delayedLoading$ = this.isLoading$.pipe(
+    switchMap((loading) => iif(() => loading, of(loading).pipe(delay(500)), of(loading)))
+  );
+
   public readonly next = output<void>();
   public readonly previous = output<void>();
+  protected isLoading = signal(false);
 
   constructor() {
+    this.delayedLoading$.subscribe((loading) => {
+      this.isLoading.set(loading);
+    });
+
     effect(() => {
       if (this.airportService.isLoading()) {
         this.reservationForm?.controls.departingAirport.disable();
@@ -88,6 +127,10 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.reservationForm.statusChanges.subscribe((status) => {
+      this._isValid.set(status === 'VALID');
+    });
+
     this.reservationForm.controls.departingAirport.valueChanges
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((value: string) => {
@@ -98,6 +141,13 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.onDestroy$.next();
     this.onDestroy$.complete();
+  }
+
+  protected continue() {
+    this.next.emit();
+  }
+  protected back() {
+    this.previous.emit();
   }
 
   private filterAirports(value: string): AirportAttributes[] {
@@ -170,4 +220,6 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
   protected get stopovers() {
     return this.stopoverService.stopoverList;
   }
+
+  protected readonly translate = translate;
 }
