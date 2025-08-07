@@ -138,6 +138,14 @@
     "eligible": "Eligible",
     "notEligible": "Not eligible"
   },
-  "yes": "Yes",
-  "no": "No"
+  "yes" : "Yes",
+  "no": "No",
+  "caseList": {
+    "caseDate": "Case Date",
+    "flightNr": "Flight Nr.",
+    "flightDepartureDate": "Flight Departure Date",
+    "flightArrivalDate": "Flight Arrival Date",
+    "passengerName": "Passenger Name",
+    "colleague": "Employee"
+  }
 }

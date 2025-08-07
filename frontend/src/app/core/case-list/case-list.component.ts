@@ -14,6 +14,7 @@ import {
 // import { Case } from '../../shared/types/types';
 import { DatePipe } from '@angular/common';
 import { CaseService } from './service/case.service';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-case-list',
@@ -29,6 +30,7 @@ import { CaseService } from './service/case.service';
     MatHeaderRowDef,
     MatRowDef,
     DatePipe,
+    TranslocoPipe,
   ],
   templateUrl: './case-list.component.html',
   styleUrl: './case-list.component.scss',
