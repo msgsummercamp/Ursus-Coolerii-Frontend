@@ -4,19 +4,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 
   .disruptive-form-card {
-    background: var(--mat-sys-tertiary-container);
-
-    .mat-mdc-card-content {
-      overflow: auto;
-      padding: 0.5rem;
-    }
-
-    .form-actions {
-      justify-content: flex-end;
-    }
-
     form {
       width: 100%;
       overflow: auto;

@@ -9,15 +9,4 @@
   .flight-form-wrapper-card {
     background: var(--mat-sys-tertiary-container);
   }
-
-  .mat-mdc-card-content {
-    overflow: auto;
-    padding: 0.5rem;
-  }
-
-  .form-actions {
-    justify-content: flex-end;
-    gap: 0.5rem;
-    padding: 1rem 0.5rem;
-  }
 }

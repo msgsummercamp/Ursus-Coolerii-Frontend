@@ -4,7 +4,7 @@
       <mat-card-header class="special-mat-header">
         <mat-card-title class="special-mat-title">{{ translate('title') }}</mat-card-title>
       </mat-card-header>
-      <mat-card-content>
+      <mat-card-content class="special-mat-content">
         <form [formGroup]="passengerDetailsForm">
           <div class="names">
             <mat-form-field appearance="fill" class="first">
@@ -107,7 +107,7 @@
           </div>
         </form>
       </mat-card-content>
-      <mat-card-actions *transloco="let translate; prefix: 'stepper'" class="form-actions">
+      <mat-card-actions *transloco="let translate; prefix: 'stepper'" class="special-form-actions">
         <button mat-flat-button (click)="back()">{{ translate('back') }}</button>
         <button mat-flat-button [disabled]="passengerDetailsForm.invalid" (click)="continue()">{{
           translate('next')

@@ -1,12 +1,9 @@
 import { Component, computed, inject, OnInit, output, signal } from '@angular/core';
-import { TranslocoPipe } from '@jsverse/transloco';
-import { output, inject } from '@angular/core';
-import { AirportService } from '../flight-details-form/service/airport.service';
+import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
+import { AirportsService } from '../flight-details-form/service/airport.service';
 import { MatButtonModule } from '@angular/material/button';
 import { FlightDetailsFormComponent } from '../flight-details-form/component/flight-details-form.component';
 import { NgForOf } from '@angular/common';
-import { bindCallback, Subscription } from 'rxjs';
-import { CaseFileService } from '../layout/services/case-file.service';
 import { FlightDetailsForm } from '../../shared/types/form.types';
 import {
   MatCard,
@@ -23,12 +20,10 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { delay, iif, of, Subscription, switchMap } from 'rxjs';
-import { CaseFileService } from '../services/case-file.service';
-import { FlightDetailsForm } from '../../../shared/types/form.types';
-import { LoadingSpinnerComponent } from '../../loading-spinner/component/loading-spinner.component';
-import { AirportsService } from '../flight-details-form/service/airport.service';
+import { bindCallback, delay, iif, of, Subscription, switchMap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { CaseFileService } from '../layout/services/case-file.service';
+import { LoadingSpinnerComponent } from '../loading-spinner/component/loading-spinner.component';
 
 @Component({
   selector: 'app-flight-details-wrap',
@@ -38,12 +33,13 @@ import { toObservable } from '@angular/core/rxjs-interop';
     FlightDetailsFormComponent,
     NgForOf,
     MatCardActions,
-    TranslocoDirective,
     MatCard,
     MatCardContent,
     MatCardHeader,
     MatCardTitle,
     LoadingSpinnerComponent,
+    LoadingSpinnerComponent,
+    TranslocoDirective,
   ],
   templateUrl: './flight-details-wrap.component.html',
   styleUrl: './flight-details-wrap.component.scss',
@@ -51,7 +47,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
 export class FlightDetailsWrapComponent implements OnInit {
   protected readonly next = output<void>();
   protected readonly previous = output<void>();
-  private airportService = inject(AirportService);
+  private airportService = inject(AirportsService);
 
   protected isLoading = signal(false);
   private isLoading$ = toObservable(this.airportService.isLoading);

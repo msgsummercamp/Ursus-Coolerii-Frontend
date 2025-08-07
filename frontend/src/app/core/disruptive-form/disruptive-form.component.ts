@@ -53,9 +53,8 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
   private onDestroy$ = new Subject<void>();
   public readonly next = output<void>();
   protected readonly DisruptiveMotiveLabels = DisruptiveMotiveLabels;
-  public isEligibile = signal<boolean>(false);
-  public eligibleText = computed(() => (this.isEligibile() ? 'Eligible' : 'Not eligible'));
-  public eligibleText = computed(() => (this.isEligibile() ? 'Eligible' : 'Not eligible'));
+  public isEligible = signal<boolean>(false);
+  public eligibleText = computed(() => (this.isEligible() ? 'Eligible' : 'Not eligible'));
   private eligibilityService = inject(EligibilityService);
 
   constructor() {
@@ -74,11 +73,11 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
       console.log(this.service.buildEligibilityRequest(this.formDisruption));
       this.service.checkEligibility(this.formDisruption).subscribe({
         next: (result) => {
-          this.isEligibile.set(result.valueOf());
+          this.isEligible.set(result.valueOf());
           this.eligibilityService.setEligibility(result.valueOf());
         },
         error: (err) => {
-          this.isEligibile.set(false);
+          this.isEligible.set(false);
           this.eligibilityService.setEligibility(false);
         },
       });

@@ -35,16 +35,7 @@ import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autoc
 import { startWith, Subject, Subscription, takeUntil } from 'rxjs';
 import { AirlineAttributes, AirlineService } from '../service/airline.service';
 import { AirportsService } from '../service/airport.service';
-import { AirportAttributes } from '../../../shared/types/types';
 import { FlightDetailsForm } from '../../../shared/types/form.types';
-import {
-  MatCard,
-  MatCardActions,
-  MatCardContent,
-  MatCardHeader,
-  MatCardTitle,
-} from '@angular/material/card';
-import { MatButton } from '@angular/material/button';
 import { CaseFileService } from '../../layout/services/case-file.service';
 
 @Component({
@@ -70,19 +61,11 @@ import { CaseFileService } from '../../layout/services/case-file.service';
     MatAutocomplete,
     MatAutocompleteTrigger,
     MatError,
-    MatCard,
-    MatCardContent,
-    MatCardHeader,
-    MatCardTitle,
-    MatCardActions,
-    MatButton,
-    TranslocoDirective,
   ],
 })
 export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   private readonly _isValid = signal(false);
-  private airportService = inject(AirportService);
-  private airports: AirportAttributes[] = [];
+  private airportService = inject(AirportsService);
   private airlineService = inject(AirlineService);
   private airlines: AirlineAttributes[] = [];
   private onDestroy$ = new Subject<void>();
@@ -90,7 +73,6 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   protected filteredAirlines: AirlineAttributes[] = [];
 
   @Input() flightForm!: FormGroup<FlightDetailsForm>;
-  private airportService = inject(AirportsService);
 
   public readonly airportsSignal = this.airportService.airportsSignal;
 
@@ -104,9 +86,6 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
 
   public readonly next = output<void>();
   public readonly previous = output<void>();
-  private onDestroy$ = new Subject<void>();
-  public filteredAirports: AirportAttributes[] = [];
-  @Input() flightForm!: FormGroup<FlightDetailsForm>;
   public validForms = computed(() => this._isValid());
   private caseFileService = inject(CaseFileService);
   reward: number | null = null;
@@ -127,8 +106,8 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   public connectingFlights: FormGroup<FlightDetailsForm>[] = [];
   ngOnInit(): void {
     this.subscribeToForms();
-    this.subscribeToFetchAirports();
-    this.subscribeAllFormElements();
+    // this.subscribeToFetchAirports();
+    // this.subscribeAllFormElements();
     this.flightForm.controls.departingAirport.valueChanges
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((value: string) => {
@@ -178,23 +157,6 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
 
   protected back() {
     this.previous.emit();
-  }
-
-  public addConnectingFlight(): void {
-    // if (!this.validForms()) return;
-    const newForm = this.airportService.createForm();
-    this.connectingFlights.push(newForm);
-
-    newForm.statusChanges.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
-      this.updateValidity();
-    });
-
-    newForm.statusChanges.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
-      this.checkAndFetchReward();
-    });
-
-    this.subscribeAirportFieldToFilterAirports(newForm.controls.departingAirport);
-    this.subscribeAirportFieldToFilterAirports(newForm.controls.destinationAirport);
   }
 
   private checkAndFetchReward(): void {
