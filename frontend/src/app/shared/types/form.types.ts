@@ -13,7 +13,6 @@ export type FlightDetailsForm = {
 
 export type UserDetailsForm = {
   email: FormControl<string | null>;
-  password: FormControl<string | null>
 }
 
 export type PassengerDetailsForm = {

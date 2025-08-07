@@ -2,6 +2,6 @@
   <div class="message-box">
     <app-diruptive-form class="child-comp"></app-diruptive-form>
     <p>{{ eligibleMessage() }}</p>
-    <button mat-button (click)="saveCase()" [disabled]="!isEligible()">Submit</button>
+    <button mat-button (click)="submit()" [disabled]="!isEligible()">Submit</button>
   </div>
 </div>

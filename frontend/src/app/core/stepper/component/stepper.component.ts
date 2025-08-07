@@ -11,8 +11,15 @@ import { FlightDetailsWrapComponent } from '../../layout/flight-details-wrap/fli
 import { DisruptiveFormComponent } from '../../disruptive-form/disruptive-form.component';
 import { AirportsService } from '../../layout/flight-details-form/service/airport.service';
 import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility/confirmation-eligibility.component';
-import { CaseData, CaseDataWithFiles, DisruptionDetails, Flight, Passenger } from '../../../shared/types/types';
+import {
+  CaseData,
+  CaseDataWithFiles,
+  DisruptionDetails,
+  Flight,
+  Passenger, SignupRequest,
+} from '../../../shared/types/types';
 import { SaveService } from '../../../shared/services/save.service';
+import { UserDetailsComponent } from '../../user-details/user-details.component';
 
 @Component({
   selector: 'app-stepper',
@@ -30,6 +37,7 @@ import { SaveService } from '../../../shared/services/save.service';
     FlightDetailsWrapComponent,
     DisruptiveFormComponent,
     ConfirmationEligibilityComponent,
+    UserDetailsComponent,
   ],
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss',
@@ -56,7 +64,12 @@ export class StepperComponent {
   protected documentsFormCompleted: Signal<boolean | undefined> = computed(() =>
     this.documentsForm()?.isValid()
   );
-  
+
+  private userForm = viewChild(UserDetailsComponent);
+  protected userFormCompleted: Signal<boolean | undefined> = computed(() =>
+    this.userForm()?.isValid()
+  );
+
   private disruptionDetails: DisruptionDetails | undefined;
   public receiveDisruptionDetails($event: DisruptionDetails) {
     this.disruptionDetails = $event;
@@ -69,7 +82,7 @@ export class StepperComponent {
 
   private passenger: Passenger | undefined;
   public receivdePassenger($event: Passenger) {
-    this.passenger= $event;
+    this.passenger = $event;
   }
 
   public documents: File[] | undefined;
@@ -77,21 +90,43 @@ export class StepperComponent {
     this.documents = $event;
   }
 
+  public userDetails: { email: string } | undefined;
+  receiveUserDetails($event: {email: string }) {
+    this.userDetails = $event;
+  }
+
+  public buildUserDetails(): SignupRequest | undefined {
+    if (!this.userDetails || !this.passenger || !this.passenger.firstName || !this.passenger.lastName) return;
+    const usr = {
+      email: this.userDetails.email,
+      firstName: this.passenger.firstName,
+      lastName: this.passenger.lastName,
+    };
+    console.log("DATA" + usr);
+    return usr;
+  }
+
   public buildCaseFile(): CaseDataWithFiles | undefined {
-    if(!this.disruptionDetails || !this.flight || !this.passenger || !this.documents)
+    console.log(this.userDetails);
+    if (
+      !this.disruptionDetails ||
+      !this.flight ||
+      !this.passenger ||
+      !this.documents ||
+      !this.userDetails
+    )
       return;
     return {
       caseData: {
         disruptionDetails: this.disruptionDetails,
-        reservationNumber: "mockReservation",
+        reservationNumber: 'mockReservation',
         flights: [this.flight],
         passenger: this.passenger,
-        userEmail: "email@gmail.com",
+        userEmail: this.userDetails.email,
       },
-      files: this.documents
-    }
+      files: this.documents,
+    };
   }
-
 
   onStepChange(event: any) {
     if (event.selectedIndex === 1) {

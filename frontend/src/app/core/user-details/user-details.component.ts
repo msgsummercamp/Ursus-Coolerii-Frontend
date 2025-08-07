@@ -1,4 +1,4 @@
-import { Component, computed, EventEmitter, inject, Output, signal } from '@angular/core';
+import { Component, computed, EventEmitter, inject, OnInit, output, Output, signal } from '@angular/core';
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { FormBuilder, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserDetailsForm } from '../../shared/types/form.types';
@@ -22,48 +22,51 @@ import { Passenger } from '../../shared/types/types';
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.scss',
 })
-export class UserDetailsComponent {
+export class UserDetailsComponent implements OnInit {
   private fb = inject(FormBuilder);
+  public readonly next = output<void>();
 
+  public isValid = signal(false);
 
   private messages = [
-    "Already have an account? Click here to sign in",
-    "Don't have an account? Click here to sign up"
-  ]
+    'Already have an account? Click here to sign in',
+    "Don't have an account? Click here to sign up",
+  ];
 
   protected togglePageSignal = signal(false);
-  protected togglePageMessage = signal(this.messages.at(0))
+  protected togglePageMessage = signal(this.messages.at(0));
 
   public form = this.fb.group<UserDetailsForm>({
     email: this.fb.control('', Validators.required),
-    password: this.fb.control('')
   });
 
-  @Output() receiveMessage = new EventEmitter<{email: string}>();
+  @Output() receiveMessage = new EventEmitter<{ email: string }>();
+
+  ngOnInit() {
+    this.form.statusChanges.subscribe((status) => {
+      this.isValid.set(status === 'VALID');
+    });
+  }
 
   passDataToParent() {
     const data = this.formRawValue;
-    if (!data.email) return;
-    this.receiveMessage.emit({email: data.email });
+    if (!data?.email) return;
+
+    this.receiveMessage.emit(data);
   }
 
-  public get formRawValue() {
-    return this.form.getRawValue();
+  public get formRawValue(): {email: string} | undefined {
+    const raw = this.form.getRawValue();
+    if (!raw.email) return;
+
+    return {
+      email: raw.email,
+    };
   }
 
-  public toggleAuthPage() {
-    const currentValue = this.togglePageSignal();
-    this.togglePageSignal.set(!currentValue);
 
-    if(!currentValue) {
-      this.form.controls.password.setValidators([Validators.required]);
-    }
-    else {
-      this.form.controls.password.clearValidators();
-      this.form.controls.password.setValue('');
-    }
-
-    this.form.controls.password.updateValueAndValidity();
-
+  protected continue() {
+    this.passDataToParent();
+    this.next.emit();
   }
 }

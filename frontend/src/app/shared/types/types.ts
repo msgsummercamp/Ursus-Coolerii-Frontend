@@ -49,6 +49,17 @@ export type CaseDataWithFiles = {
   files: File[]
 }
 
+export type SignupRequest = {
+  email: string,
+  firstName: string,
+  lastName: string
+}
+
+export type SaveRequest = {
+  caseRequest: CaseData,
+  signupRequest: SignupRequest
+}
+
 export type EligibilityRequest= {
   disruption: DisruptiveMotive | null,
   noticeDays: number | null,

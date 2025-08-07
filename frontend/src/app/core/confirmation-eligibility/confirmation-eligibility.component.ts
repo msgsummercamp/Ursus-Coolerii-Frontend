@@ -2,7 +2,7 @@ import { Component, computed, inject, Input } from '@angular/core';
 import { DisruptiveFormComponent } from '../disruptive-form/disruptive-form.component';
 import { EligibilityService } from '../../shared/services/eligibility.service';
 import { MatButtonModule } from '@angular/material/button';
-import { CaseData, CaseDataWithFiles } from '../../shared/types/types';
+import { CaseData, CaseDataWithFiles, SaveRequest, SignupRequest } from '../../shared/types/types';
 import { SaveService } from '../../shared/services/save.service';
 
 @Component({
@@ -16,6 +16,7 @@ export class ConfirmationEligibilityComponent {
   private saveService = inject(SaveService)
 
   @Input() buildCaseFileFn!: () => CaseDataWithFiles | undefined;
+  @Input() buildUserDetails!: () => SignupRequest | undefined;
   public eligibleMessage = computed(() => {
     const isEligible = this.eligibilityService.eligibility();
     if (isEligible === null) return 'Checking...';
@@ -26,11 +27,21 @@ export class ConfirmationEligibilityComponent {
     return this.eligibilityService.eligibility() === true;
   });
 
-  public saveCase() {
+  public submit() {
+    const userDetails = this.buildUserDetails();
     const createdCase = this.buildCaseFileFn();
-    if(createdCase)
-      this.saveService.saveCase(createdCase.caseData, createdCase.files);
-    else
-      console.log("eroare");
+
+    console.log(userDetails);
+    console.log(createdCase);
+    if(!createdCase || !userDetails)
+      return;
+
+    const saveRequest : SaveRequest = {
+      signupRequest: userDetails,
+      caseRequest: createdCase.caseData
+    }
+
+    this.saveService.saveCase(saveRequest, createdCase.files);
+
   }
 }

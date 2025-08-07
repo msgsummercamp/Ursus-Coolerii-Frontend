@@ -14,22 +14,7 @@
           email
         />
         </mat-form-field>
-      <button mat-button type="button" (click)="toggleAuthPage()">
-        {{ togglePageMessage() }}
-      </button>
-      @if( togglePageSignal() ) {
-        <mat-form-field>
-            <mat-label>Password</mat-label>
-            <input
-              matInput
-              formControlName="password"
-              type="password"
-              id="password"
-
-            />
-        </mat-form-field>
-      }
-      <button mat-flat-button>
+      <button (click)="continue()" mat-flat-button [disabled]="!form.valid">
         Next
       </button>
     </form>
