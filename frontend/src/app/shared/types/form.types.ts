@@ -21,12 +21,11 @@ export type PassengerDetailsForm = {
 };
 
 export type DisruptiveMotiveForm = {
-  disruptionMotive:  FormControl<string | null>;
-  daysBeforeCancelation:FormControl<number | null>;
-  hasArrived:FormControl<boolean | null>;
+  disruptionMotive: FormControl<string | null>;
+  daysBeforeCancelation: FormControl<number | null>;
   hoursLateArrival: FormControl<number | null>;
   gaveSeatVoluntarly: FormControl<string | null>;
   deniedBoardingMotive: FormControl<string | null>;
   airlineMentionedMotive: FormControl<boolean | null>;
   communicatedMotive: FormControl<string | null>;
-}
+};
