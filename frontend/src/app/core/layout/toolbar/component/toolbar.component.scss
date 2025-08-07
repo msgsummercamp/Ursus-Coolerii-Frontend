@@ -8,3 +8,12 @@ mat-toolbar {
   height: 45px;
   background-color: var(--mat-sys-secondary-container);
 }
+
+.home-icon-btn {
+  margin-right: 3rem;
+  color: var(--mat-sys-on-primary);
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
