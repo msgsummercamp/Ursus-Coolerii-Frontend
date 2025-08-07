@@ -1,17 +1,12 @@
 <div class="stepper-header-container">
-  <mat-stepper
-    #stepper
-    *transloco="let translate; prefix: 'stepper'"
-    linear
-    (selectionChange)="onStepChange($event)"
-  >
+  <mat-stepper #stepper *transloco="let translate; prefix: 'stepper'" linear (selectionChange)="onStepChange($event)">
     <mat-step [completed]="disruptiveFormCompleted()">
       <ng-template matStepLabel>{{ translate('disruption-motives') }}</ng-template>
       <app-disruptive-form (next)="stepper.next()" />
     </mat-step>
     <mat-step [completed]="flightDetailsFormCompleted()">
       <ng-template matStepLabel>{{ translate('flight-details') }}</ng-template>
-      <app-flight-details-wrap (next)="stepper.next()" />
+      <app-flight-details-wrap (next)="stepper.next()" (previous)="stepper.previous()" />
     </mat-step>
     <mat-step [completed]="passengerDetailsFormCompleted()">
       <ng-template matStepLabel>{{ translate('passenger-details') }}</ng-template>
@@ -23,11 +18,12 @@
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>{{ translate('done') }}</ng-template>
-      <app-confirmation-eligibility-form />
+      <p>{{ translate('finish-message') }}</p>
       <button mat-raised-button (click)="stepper.previous()">{{ translate('back') }}</button>
       <button mat-raised-button (click)="stepper.reset()">{{ translate('reset') }}</button>
     </mat-step>
   </mat-stepper>
+
   <svg
     class="airplane"
     viewBox="0 0 1080 1080"
@@ -48,3 +44,4 @@
     </g>
   </svg>
 </div>
+
