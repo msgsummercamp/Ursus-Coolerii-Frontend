@@ -1,40 +1,50 @@
-<ng-container *transloco="let translate; prefix: 'documents'">
-  <form [formGroup]="documentsFormGroup">
-    <h1 class="mat-headline-5">{{ translate('title') }}</h1>
+<div class="document-form-container">
+  <ng-container *transloco="let translate; prefix: 'documents'">
+    <mat-card class="document-form-card special-mat-card">
+      <mat-card-header class="special-mat-header">
+        <mat-card-title class="special-mat-title">{{ translate('title') }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="special-mat-content">
+        <form [formGroup]="documentsFormGroup">
+          <button mat-flat-button (click)="fileInput.click()" class="button-upload">
+            <mat-icon>upload</mat-icon> {{ translate('chooseFile') }}</button
+          >
+          <input
+            #fileInput
+            type="file"
+            (change)="onFileSelected($event)"
+            multiple
+            hidden
+            accept=".jpg,.jpeg,.png,.pdf"
+          />
 
-    <button mat-raised-button (click)="fileInput.click()" class="button-upload">
-      <mat-icon>upload</mat-icon> {{ translate('chooseFile') }}</button>
-
-    <input
-      #fileInput
-      type="file"
-      (change)="onFileSelected($event)"
-      multiple
-      hidden
-      accept=".jpg,.jpeg,.png,.pdf"
-    />
-
-    @if (documentsFormGroup.get('files')?.value?.length) {
-      <mat-list>
-        @for (file of documentsFormGroup.get('files')?.value; track file) {
-          <mat-list-item class="file-list-item">
-            <mat-icon matListIcon>insert_drive_file</mat-icon>
-            <span matLine>{{ file.name }}</span>
-            <span class="spacer"></span>
-            <button mat-icon-button color="warn" (click)="removeFile(file)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </mat-list-item>
-        }
-      </mat-list>
-    }
-    @if (documentsFormGroup.controls.files.invalid && documentsFormGroup.controls.files.touched) {
-      <mat-error>{{ translate('chooseFileError') }}</mat-error>
-    }
-
-    <div *transloco="let translate; prefix: 'documents'" class="form-actions">
-      <button mat-raised-button (click)="back()">{{ translate('back') }}</button>
-      <button mat-raised-button [disabled]="documentsFormGroup.invalid" (click)="continue()">{{ translate('next') }}</button>
-    </div>
-  </form>
-</ng-container>
+          @if (documentsFormGroup.get('files')?.value?.length) {
+            <mat-list>
+              @for (file of documentsFormGroup.get('files')?.value; track file) {
+                <mat-list-item class="file-list-item">
+                  <mat-icon matListIcon>insert_drive_file</mat-icon>
+                  <span matLine>{{ file.name }}</span>
+                  <span class="spacer"></span>
+                  <button mat-icon-button color="warn" (click)="removeFile(file)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </mat-list-item>
+              }
+            </mat-list>
+          }
+          @if (
+            documentsFormGroup.controls.files.invalid && documentsFormGroup.controls.files.touched
+          ) {
+            <mat-error>{{ translate('chooseFileError') }}</mat-error>
+          }
+        </form>
+      </mat-card-content>
+      <mat-card-actions *transloco="let translate; prefix: 'stepper'" class="special-form-actions">
+        <button mat-flat-button (click)="back()">{{ translate('back') }}</button>
+        <button mat-flat-button [disabled]="documentsFormGroup.invalid" (click)="continue()">{{
+          translate('next')
+        }}</button>
+      </mat-card-actions>
+    </mat-card>
+  </ng-container>
+</div>

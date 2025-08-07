@@ -5,14 +5,6 @@ export type AirportAttributes = {
   iata: string;
 };
 
-export type EligibilityRequest = {
-  disruption: DisruptiveMotive | null;
-  noticeDays: number | null;
-  arrived: boolean | null;
-  delayHours: number | null;
-  isVoluntarilyGivenUp: boolean | null;
-};
-
 export type Case = {
   caseId: string;
   caseDate: Date | string;
@@ -22,6 +14,12 @@ export type Case = {
   passengerName: string;
   status: CaseStatus;
   colleague?: string;
+
+export type EligibilityRequest = {
+  disruption: DisruptiveMotive | null;
+  noticeDays: number | null;
+  delayHours: number | null;
+  isVoluntarilyGivenUp: boolean | null;
 };
 
 export const DisruptiveMotiveLabels: Record<DisruptiveMotive, string> = {

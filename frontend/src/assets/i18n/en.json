@@ -26,6 +26,7 @@
     "deleteConnectingFlight": "Delete Connecting Flight",
     "next": "Next",
     "rewardMessage": "You can receive up to {{reward}} EUROS for this flight!",
+    "connectingFlightPlaceholder": "Type connecting flight...",
     "error": {
       "flightNumber": {
         "required": "Flight number is required!",
@@ -88,7 +89,7 @@
       },
       "phoneNumber": {
         "required": "Phone number is required!",
-        "pattern": "Phone number should contain only digits!"
+        "pattern": "Phone number should have the format [+4]0xxxxxxxxx!"
       }
     }
   },
@@ -106,14 +107,13 @@
   "documents": {
     "title": "Upload Documents",
     "chooseFile": "Choose File(s)",
-    "chooseFileError": "Please choose at least one file!",
-    "next": "Next",
-    "back": "Back"
+    "chooseFileError": "Please choose at least one file!"
   },
   "connecting-flight": {
     "title": "Connecting Flight"
   },
   "disruptiveMotive": {
+    "title": "Disruptive Motive",
     "dropDownText": "Disruption motive",
     "canceled": "Canceled",
     "deniedBoarding": "Denied Boarding",
@@ -121,7 +121,7 @@
     "numberOfDaysLong": "How many days before cancellation has the airline informed?",
     "numberOfDays": "Number of days",
     "arrivedQuestion": "Has the flight arrived?",
-    "lateArrival": "How late arrived to final destination?",
+    "delayedHours": "How many hours was the flight delayed?",
     "seatGaveQuestion": "Did you give up your seat voluntarily?",
     "reasonDeniedBoarding": "Reason behind denial of boarding",
     "airlineMotiveIsMentioned": "Did the airline mention disruption motive?",
@@ -138,6 +138,6 @@
     "eligible": "Eligible",
     "notEligible": "Not eligible"
   },
-  "yes" : "Yes",
+  "yes": "Yes",
   "no": "No"
 }

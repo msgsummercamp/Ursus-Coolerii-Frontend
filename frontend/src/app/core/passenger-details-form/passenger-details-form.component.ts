@@ -16,6 +16,13 @@ import {
 import { MatButton } from '@angular/material/button';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { PassengerDetailsForm } from '../../shared/types/form.types';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardTitle,
+} from '@angular/material/card';
 
 @Component({
   selector: 'app-passenger-details-form',
@@ -32,6 +39,11 @@ import { PassengerDetailsForm } from '../../shared/types/form.types';
     MatSuffix,
     MatButton,
     TranslocoDirective,
+    MatCard,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardContent,
+    MatCardActions,
   ],
   templateUrl: './passenger-details-form.component.html',
   styleUrl: './passenger-details-form.component.scss',
@@ -46,7 +58,10 @@ export class PassengerDetailsFormComponent implements OnInit {
     firstName: this.formBuilder.control('', Validators.required),
     lastName: this.formBuilder.control('', Validators.required),
     dateOfBirth: this.formBuilder.control(null, Validators.required),
-    phoneNumber: this.formBuilder.control('', [Validators.required, Validators.pattern('^[0-9]*')]),
+    phoneNumber: this.formBuilder.control('', [
+      Validators.required,
+      Validators.pattern('^(\\+40|0040|0)?[0-9]{9}$'),
+    ]),
     address: this.formBuilder.control('', Validators.required),
     postalCode: this.formBuilder.control('', [Validators.required, Validators.pattern('^[0-9]*')]),
   });
