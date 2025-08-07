@@ -9,7 +9,11 @@
       }}</mat-card-title>
     </mat-card-header>
     <mat-card-content class="special-mat-content">
-      <app-flight-details-form [flightForm]="form" (next)="continue()" (previous)="back()" />
+      <app-reservation-details
+        [reservationForm]="mainForm"
+        (next)="continue()"
+        (previous)="back()"
+      />
       <div *ngFor="let flight of connectingFlights; let i = index">
         <h2 class="mat-headline-5">{{ 'connecting-flight.title' | transloco }} #{{ i + 1 }}</h2>
         <app-flight-details-form [flightForm]="flight" />
@@ -20,7 +24,7 @@
       <button mat-flat-button (click)="addConnectingFlight()"
         >{{ translate('flightDetails.connectingFlightPlaceholder') }}
       </button>
-      <button mat-flat-button [disabled]="form.invalid" (click)="continue()"
+      <button mat-flat-button [disabled]="!this.validForms()" (click)="continue()"
         >{{ translate('stepper.next') }}
       </button>
     </mat-card-actions>

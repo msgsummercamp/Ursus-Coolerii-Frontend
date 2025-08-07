@@ -4,7 +4,7 @@ import { AirportsService } from '../flight-details-form/service/airport.service'
 import { MatButtonModule } from '@angular/material/button';
 import { FlightDetailsFormComponent } from '../flight-details-form/component/flight-details-form.component';
 import { NgForOf } from '@angular/common';
-import { FlightDetailsForm } from '../../shared/types/form.types';
+import { FlightDetailsForm, ReservationDetailsForm } from '../../shared/types/form.types';
 import {
   MatCard,
   MatCardActions,
@@ -20,10 +20,11 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { bindCallback, delay, iif, of, Subscription, switchMap } from 'rxjs';
+import { delay, iif, of, Subscription, switchMap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { CaseFileService } from '../layout/services/case-file.service';
 import { LoadingSpinnerComponent } from '../loading-spinner/component/loading-spinner.component';
+import { ReservationDetailsFormComponent } from '../reservation-details/component/reservation-details.component';
 
 @Component({
   selector: 'app-flight-details-wrap',
@@ -40,6 +41,11 @@ import { LoadingSpinnerComponent } from '../loading-spinner/component/loading-sp
     LoadingSpinnerComponent,
     LoadingSpinnerComponent,
     TranslocoDirective,
+    FlightDetailsFormComponent,
+    FlightDetailsFormComponent,
+    FlightDetailsFormComponent,
+    FlightDetailsFormComponent,
+    ReservationDetailsFormComponent,
   ],
   templateUrl: './flight-details-wrap.component.html',
   styleUrl: './flight-details-wrap.component.scss',
@@ -55,27 +61,46 @@ export class FlightDetailsWrapComponent implements OnInit {
     switchMap((loading) => iif(() => loading, of(loading).pipe(delay(500)), of(loading)))
   );
 
+  protected _isValid = signal(false);
+  private subscriptions: Subscription[] = [];
+  private caseFileService = inject(CaseFileService);
+  private fb = inject(NonNullableFormBuilder);
+  protected reward: number | null = null;
+
+  public connectingFlights: FormGroup<FlightDetailsForm>[] = [];
+
+  public validForms = computed(() => this._isValid());
+
+  public mainForm = this.fb.group<ReservationDetailsForm>(
+    {
+      reservationNumber: this.fb.control('', Validators.required),
+      departingAirport: this.fb.control('', Validators.required),
+      destinationAirport: this.fb.control('', Validators.required),
+      plannedDepartureDate: this.fb.control(null, Validators.required),
+      plannedArrivalDate: this.fb.control(null, Validators.required),
+      plannedDepartureTime: this.fb.control('', Validators.required),
+      plannedArrivalTime: this.fb.control('', Validators.required),
+    },
+    { validators: this.departureBeforeArrivalValidator() }
+  );
+
+  public form = this.createForm();
+
   constructor() {
     this.delayedLoading$.subscribe((loading) => {
       this.isLoading.set(loading);
     });
   }
 
-  private _isValid = signal(false);
-  private subscriptions: Subscription[] = [];
-  private caseFileService = inject(CaseFileService);
-  private fb = inject(NonNullableFormBuilder);
-  protected reward: number | null = null;
-
   protected continue() {
     this.next.emit();
   }
-
   protected back() {
     this.previous.emit();
   }
 
   ///TODO : unsubscribes
+
   ngOnInit(): void {
     this.subscribeToForms();
     this.form.statusChanges.subscribe(() => this.checkAndFetchReward());
@@ -84,7 +109,6 @@ export class FlightDetailsWrapComponent implements OnInit {
       f.statusChanges.subscribe(() => this.checkAndFetchReward())
     );
   }
-
   private checkAndFetchReward() {
     if (this.validForms()) {
       const caseFile = this.buildCaseFileFromForms();
@@ -110,7 +134,7 @@ export class FlightDetailsWrapComponent implements OnInit {
   private subscribeToForms() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
     this.subscriptions = [];
-    this.subscribeToNewForm(this.form);
+    this.subscribeToNewForm(this.mainForm);
     this.connectingFlights.forEach((f) => {
       this.subscribeToNewForm(f);
     });
@@ -118,16 +142,13 @@ export class FlightDetailsWrapComponent implements OnInit {
   }
 
   private updateValidity() {
-    const allValid = this.form.valid && this.connectingFlights.every((f) => f.valid);
+    const allValid = this.mainForm.valid && this.connectingFlights.every((f) => f.valid);
     this._isValid.set(allValid);
   }
-  public form = this.createForm();
 
-  public connectingFlights: FormGroup<FlightDetailsForm>[] = [];
-
-  public validForms = computed(() => this._isValid());
-
-  private subscribeToNewForm(formToSub: FormGroup<FlightDetailsForm>): void {
+  private subscribeToNewForm(
+    formToSub: FormGroup<FlightDetailsForm> | FormGroup<ReservationDetailsForm>
+  ): void {
     this.subscriptions.push(formToSub.statusChanges.subscribe(() => this.updateValidity()));
   }
 
@@ -147,7 +168,6 @@ export class FlightDetailsWrapComponent implements OnInit {
     this.connectingFlights.pop();
     this.updateValidity();
   }
-  protected readonly bindCallback = bindCallback;
 
   private createForm() {
     return this.fb.group<FlightDetailsForm>(
