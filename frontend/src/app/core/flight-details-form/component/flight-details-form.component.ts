@@ -1,4 +1,14 @@
-import { Component, effect, inject, Input, OnDestroy, OnInit, output, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  output,
+  signal,
+} from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgForOf } from '@angular/common';
@@ -27,7 +37,7 @@ import { AirlineAttributes, AirlineService } from '../service/airline.service';
 import { AirportsService } from '../service/airport.service';
 import { FlightDetailsForm } from '../../../shared/types/form.types';
 import { CaseFileService } from '../../layout/services/case-file.service';
-import { AirportAttributes } from '../../../../shared/types/types'; // <-- Add this import
+import { AirportAttributes } from '../../../shared/types/types';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
@@ -96,9 +106,6 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
 
   public connectingFlights: FormGroup<FlightDetailsForm>[] = [];
   ngOnInit(): void {
-    this.subscribeToForms();
-    // this.subscribeToFetchAirports();
-    // this.subscribeAllFormElements();
     this.flightForm.controls.departingAirport.valueChanges
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((value: string) => {
@@ -172,25 +179,6 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
       departureAirport: airports[0].controls.departingAirport.value,
       destinationAirport: airports[airports.length - 1].controls.destinationAirport.value,
     };
-  }
-
-  private updateValidity() {
-    // const allValid = this.flightForm.valid && this.connectingFlights.every((f) => f.valid);
-    // this._isValid.set(allValid);
-  }
-
-  private subscribeToForms() {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
-    this.subscriptions = [];
-    this.subscribeToNewForm(this.flightForm);
-    this.connectingFlights.forEach((f) => {
-      this.subscribeToNewForm(f);
-    });
-    this.updateValidity();
-  }
-
-  private subscribeToNewForm(formToSub: FormGroup<FlightDetailsForm>): void {
-    // this.subscriptions.push(formToSub.statusChanges.subscribe(() => this.updateValidity()));
   }
 
   private filterAirports(value: string): AirportAttributes[] {

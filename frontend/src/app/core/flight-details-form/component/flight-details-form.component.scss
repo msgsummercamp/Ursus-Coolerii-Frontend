@@ -19,5 +19,38 @@
         flex: 1;
       }
     }
+
+    .depart-wrapper,
+    .dest-wrapper {
+      max-width: 320px;
+      position: relative;
+    }
+
+    .depart,
+    .dest {
+      width: 100%;
+    }
+
+    .custom-dropdown.absolute {
+      position: absolute;
+      top: calc(100% - 20px);
+      left: 0;
+      width: 100%;
+      background: white;
+      z-index: 1000;
+    }
+
+    .dropdown-option {
+      cursor: pointer;
+      &:hover {
+        background: #f0f0f0;
+      }
+
+      .list-item {
+        height: auto;
+        padding: 0.5rem;
+        display: flex;
+      }
+    }
   }
 }

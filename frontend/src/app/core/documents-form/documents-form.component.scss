@@ -9,17 +9,6 @@
   .document-form-card {
     background: var(--mat-sys-tertiary-container);
 
-    .mat-mdc-card-content {
-      overflow: auto;
-      padding: 0.5rem;
-    }
-
-    .form-actions {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 2rem;
-    }
-
     form {
       width: 100%;
       overflow: auto;
