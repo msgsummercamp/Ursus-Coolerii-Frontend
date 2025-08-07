@@ -1,7 +1,7 @@
 import { Component, computed, inject, OnDestroy, OnInit, output, signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatInput, MatInputModule, MatLabel } from '@angular/material/input';
-import { MatAutocomplete, MatAutocompleteTrigger, MatOption } from '@angular/material/autocomplete';
+import { MatOption } from '@angular/material/autocomplete';
 import { toCamelCase, translate, TranslocoPipe } from '@jsverse/transloco';
 import { DisruptiveMotiveLabels } from '../../shared/types/types';
 import { CommonModule } from '@angular/common';
@@ -12,8 +12,10 @@ import { MatSelectModule } from '@angular/material/select';
 import {
   AirlineMotives,
   CancellationNotice,
+  DelayNotice,
   DeniedBoardingMotive,
   DisruptiveMotive,
+  IsMotiveSpecified,
 } from '../../shared/enums';
 import { EligibilityService } from '../../shared/services/eligibility.service';
 import {
@@ -28,10 +30,8 @@ import {
   selector: 'app-disruptive-form',
   imports: [
     MatLabel,
-    MatAutocomplete,
     MatOption,
     MatFormField,
-    MatAutocompleteTrigger,
     CommonModule,
     TranslocoPipe,
     MatOption,
@@ -55,16 +55,20 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
   public reasons: DeniedBoardingMotive[] = Object.values(DeniedBoardingMotive);
   public airlineDeniedMotives: AirlineMotives[] = Object.values(AirlineMotives);
   public cancellationNotice: CancellationNotice[] = Object.values(CancellationNotice);
+  public delayNotice: DelayNotice[] = Object.values(DelayNotice);
+  public isMotiveSpecified: string[];
   private service = inject(DisruptiveFormService);
   private onDestroy$ = new Subject<void>();
   public readonly next = output<void>();
   protected readonly DisruptiveMotiveLabels = DisruptiveMotiveLabels;
+  protected readonly IsMotiveSpecified = IsMotiveSpecified;
   public isEligible = signal<boolean>(false);
   public eligibleText = computed(() => (this.isEligible() ? 'Eligible' : 'Not eligible'));
   private eligibilityService = inject(EligibilityService);
 
   constructor() {
     this.motives = Object.values(DisruptiveMotiveLabels);
+    this.isMotiveSpecified = Object.values(IsMotiveSpecified);
   }
 
   public formDisruption = this.service.createForm();

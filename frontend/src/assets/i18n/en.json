@@ -136,8 +136,17 @@
     "intoxication": "Intoxication",
     "unspecifiedReason": "Unspecified reason",
     "optionalComments": "Describe the situation in more detail",
-    "eligible": "Eligible",
-    "notEligible": "Not eligible"
+    "lessThan14Days": "Less than 14 days",
+    "moreThan14Days": "More than 14 days",
+    "onFlightDay": "On flight day",
+    "lessThan3Hours": "Less than 3 hours",
+    "moreThan3Hours": "More than 3 hours",
+    "lostConnection": "Lost connection flight",
+    "notSpecified": "Not specified",
+    "yes": "Yes",
+    "no": "No",
+    "eligible": "Your flight is eligible for compensation",
+    "notEligible": "Your flight is not eligible for compensation"
   },
   "yes": "Yes",
   "no": "No"

@@ -24,3 +24,15 @@ export enum CancellationNotice {
   moreThan14Days = 'More than 14 days',
   onFlightDay = 'On flight day',
 }
+
+export enum DelayNotice {
+  lessThan3Hours = 'Less than 3 hours',
+  moreThan3Hours = 'More than 3 hours',
+  lostConnection = 'Lost connection',
+}
+
+export enum IsMotiveSpecified {
+  yes = 'Yes',
+  no = 'No',
+  notSpecified = 'Not specified',
+}

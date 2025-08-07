@@ -23,7 +23,13 @@
         ) {
           <mat-form-field appearance="fill">
             <mat-label>{{ 'disruptiveMotive.numberOfDaysLong' | transloco }}</mat-label>
-            <input type="number" matInput min="0" formControlName="daysBeforeCancelation" />
+            <mat-select formControlName="daysBeforeCancelation">
+              @for (option of cancellationNotice; track $index) {
+                <mat-option [value]="option">
+                  {{ "disruptiveMotive." + toCamelCase(option) | transloco }}
+                </mat-option>
+              }
+            </mat-select>
           </mat-form-field>
         } @else if (
           formDisruption.controls.disruptionMotive.value ===
@@ -31,7 +37,11 @@
         ) {
           <mat-form-field appearance="fill">
             <mat-label>{{ 'disruptiveMotive.delayedHours' | transloco }}</mat-label>
-            <input type="number" matInput min="0" formControlName="hoursLateArrival" />
+            <mat-select formControlName="hoursLateArrival">
+              @for (option of delayNotice; track $index) {
+                <mat-option [value]="option">{{ "disruptiveMotive." + toCamelCase(option) | transloco }}</mat-option>
+              }
+            </mat-select>
           </mat-form-field>
         } @else if (
           formDisruption.controls.disruptionMotive.value ===
@@ -39,32 +49,20 @@
         ) {
           <mat-form-field appearance="fill">
             <mat-label>{{ 'disruptiveMotive.seatGaveQuestion' | transloco }}</mat-label>
-            <input
-              type="text"
-              matInput
-              formControlName="gaveSeatVoluntarly"
-              [matAutocomplete]="autoComplete"
-            />
-            <mat-autocomplete #autoComplete="matAutocomplete">
+            <mat-select formControlName="gaveSeatVoluntarly">
               <mat-option *ngFor="let option of [true, false]" [value]="option ? 'Yes' : 'No'">
                 {{ option ? ('yes' | transloco) : ('no' | transloco) }}
               </mat-option>
-            </mat-autocomplete>
+            </mat-select>
           </mat-form-field>
           @if (formDisruption.controls.gaveSeatVoluntarly.value === 'No') {
             <mat-form-field appearance="fill">
               <mat-label>{{ 'disruptiveMotive.reasonDeniedBoarding' | transloco }}</mat-label>
-              <input
-                type="text"
-                matInput
-                formControlName="deniedBoardingMotive"
-                [matAutocomplete]="autoReasonMotive"
-              />
-              <mat-autocomplete #autoReasonMotive="matAutocomplete">
+            <mat-select formControlName="deniedBoardingMotive">
                 <mat-option *ngFor="let option of reasons" [value]="option">
                   {{ 'disruptiveMotive.' + toCamelCase(option) | transloco }}
                 </mat-option>
-              </mat-autocomplete>
+            </mat-select>
             </mat-form-field>
           }
         }
@@ -77,14 +75,12 @@
           <mat-form-field appearance="fill">
             <mat-label>{{ 'disruptiveMotive.airlineMotiveIsMentioned' | transloco }}</mat-label>
             <mat-select formControlName="airlineMentionedMotive">
-              @for (motive of [true, false]; track $index) {
-                <mat-option [value]="motive">
-                  {{ motive ? ('yes' | transloco) : ('no' | transloco) }}
-                </mat-option>
+              @for (option of isMotiveSpecified; track $index){
+                <mat-option [value]="option">{{"disruptiveMotive." + toCamelCase(option) | transloco}}</mat-option>
               }
             </mat-select>
           </mat-form-field>
-          @if (formDisruption.controls.airlineMentionedMotive.value === true) {
+          @if (formDisruption.controls.airlineMentionedMotive.value === IsMotiveSpecified.yes) {
             <mat-form-field appearance="fill">
               <mat-label>{{ 'disruptiveMotive.communicatedMotive' | transloco }}</mat-label>
               <mat-select formControlName="communicatedMotive">
@@ -96,6 +92,14 @@
               </mat-select>
             </mat-form-field>
           }
+        }
+        @if(formDisruption.controls.disruptionMotive.value === DisruptiveMotiveLabels[DisruptiveMotive.delay] ||
+        formDisruption.controls.disruptionMotive.value === DisruptiveMotiveLabels[DisruptiveMotive.cancelation] ||
+        formDisruption.controls.disruptionMotive.value === DisruptiveMotiveLabels[DisruptiveMotive.deniedBoarding]) {
+          <mat-form-field>
+            <mat-label>{{translate('disruptiveMotive.optionalComments')}}</mat-label>
+            <textarea matInput></textarea>
+          </mat-form-field>
         }
       </form>
     </mat-card-content>

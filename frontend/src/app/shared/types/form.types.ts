@@ -26,7 +26,7 @@ export type DisruptiveMotiveForm = {
   hoursLateArrival: FormControl<number | null>;
   gaveSeatVoluntarly: FormControl<string | null>;
   deniedBoardingMotive: FormControl<string | null>;
-  airlineMentionedMotive: FormControl<boolean | null>;
+  airlineMentionedMotive: FormControl<string | null>;
   communicatedMotive: FormControl<string | null>;
   optionalComments: FormControl<string | null>;
 };
