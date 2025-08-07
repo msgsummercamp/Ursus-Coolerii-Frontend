@@ -38,7 +38,7 @@ export class FlightDetailsWrapComponent implements OnInit {
   protected isLoading = signal(false);
   private isLoading$ = toObservable(this.airportService.isLoading);
   private delayedLoading$ = this.isLoading$.pipe(
-    switchMap((loading) => iif(() => loading, of(loading).pipe(delay(1000)), of(loading)))
+    switchMap((loading) => iif(() => loading, of(loading).pipe(delay(500)), of(loading)))
   );
 
   constructor() {
