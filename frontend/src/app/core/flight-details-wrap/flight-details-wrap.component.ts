@@ -61,7 +61,7 @@ export class FlightDetailsWrapComponent implements OnInit {
   protected _isValid = signal(false);
 
   protected connectingFlights = computed(() => {
-    const stopovers = this.stopoverService.stopoverList();
+    const stopovers = this.stopoverService.stopoverState().stopovers;
 
     const forms: FormGroup<FlightDetailsForm>[] = [];
 

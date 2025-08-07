@@ -199,7 +199,7 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
   }
 
   protected addStopover() {
-    if (this.stopoverService.stopoverList().length < 3) {
+    if (this.stopoverService.stopoverState().stopovers.length < 3) {
       let airportToAdd = this.getStopoverAirport();
       if (airportToAdd) {
         this.stopoverService.addStopover(airportToAdd);
@@ -218,7 +218,7 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
   }
 
   protected get stopovers() {
-    return this.stopoverService.stopoverList;
+    return this.stopoverService.stopoverState().stopovers;
   }
 
   protected readonly translate = translate;
