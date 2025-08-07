@@ -1,10 +1,16 @@
-import { Component, computed, EventEmitter, inject, OnInit, output, Output, signal } from '@angular/core';
-import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
-import { FormBuilder, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, EventEmitter, inject, OnInit, output, Output, signal } from '@angular/core';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardTitle,
+} from '@angular/material/card';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserDetailsForm } from '../../shared/types/form.types';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
-import { Passenger } from '../../shared/types/types';
+import { translate } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-user-details',
@@ -18,13 +24,15 @@ import { Passenger } from '../../shared/types/types';
     MatLabel,
     MatInput,
     MatButton,
+    MatCardActions,
   ],
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.scss',
 })
 export class UserDetailsComponent implements OnInit {
   private fb = inject(FormBuilder);
-  public readonly next = output<void>();
+  protected readonly next = output<void>();
+  protected readonly previous = output<void>();
 
   public isValid = signal(false);
 
@@ -55,7 +63,7 @@ export class UserDetailsComponent implements OnInit {
     this.receiveMessage.emit(data);
   }
 
-  public get formRawValue(): {email: string} | undefined {
+  public get formRawValue(): { email: string } | undefined {
     const raw = this.form.getRawValue();
     if (!raw.email) return;
 
@@ -64,9 +72,14 @@ export class UserDetailsComponent implements OnInit {
     };
   }
 
-
   protected continue() {
     this.passDataToParent();
     this.next.emit();
   }
+
+  protected back() {
+    this.previous.emit();
+  }
+
+  protected readonly translate = translate;
 }

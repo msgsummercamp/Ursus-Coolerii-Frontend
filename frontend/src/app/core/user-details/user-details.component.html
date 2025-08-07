@@ -1,8 +1,8 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>User details</mat-card-title>
+<mat-card class="special-mat-card">
+  <mat-card-header class="special-mat-header">
+    <mat-card-title class="special-mat-title">{{ translate('userDetails.title') }}</mat-card-title>
   </mat-card-header>
-  <mat-card-content>
+  <mat-card-content class="special-mat-content">
     <form [formGroup]="form">
         <mat-form-field>
           <mat-label>Email</mat-label>
@@ -14,9 +14,14 @@
           email
         />
         </mat-form-field>
-      <button (click)="continue()" mat-flat-button [disabled]="!form.valid">
-        Next
-      </button>
+      <mat-card-actions class="special-form-actions">
+        <button (click)="back()" mat-flat-button>
+          {{ translate('stepper.back')}}
+        </button>
+        <button (click)="continue()" mat-flat-button [disabled]="!form.valid">
+          {{ translate('stepper.next') }}
+        </button>
+      </mat-card-actions>
     </form>
   </mat-card-content>
 </mat-card>

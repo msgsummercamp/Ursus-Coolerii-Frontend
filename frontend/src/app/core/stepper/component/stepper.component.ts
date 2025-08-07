@@ -20,13 +20,12 @@ import { FlightDetailsWrapComponent } from '../../flight-details-wrap/flight-det
 import { DisruptiveFormComponent } from '../../disruptive-form/disruptive-form.component';
 import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility/confirmation-eligibility.component';
 import {
-  CaseData,
   CaseDataWithFiles,
   DisruptionDetails,
   Flight,
-  Passenger, SignupRequest,
+  Passenger,
+  SignupRequest,
 } from '../../../shared/types/types';
-import { SaveService } from '../../../shared/services/save.service';
 import { UserDetailsComponent } from '../../user-details/user-details.component';
 import { AirportsService } from '../../flight-details-form/service/airport.service';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -79,7 +78,6 @@ const VERTICAL_OFFSET = -19;
 })
 export class StepperComponent implements AfterViewInit {
   protected airportService = inject(AirportsService);
-  protected saveCaseService = inject(SaveService);
 
   private disruptiveFormComponent = viewChild(DisruptiveFormComponent);
   protected disruptiveFormCompleted: Signal<boolean | undefined> = computed(() =>
@@ -125,18 +123,24 @@ export class StepperComponent implements AfterViewInit {
   }
 
   public userDetails: { email: string } | undefined;
-  receiveUserDetails($event: {email: string }) {
+  receiveUserDetails($event: { email: string }) {
     this.userDetails = $event;
   }
 
   public buildUserDetails(): SignupRequest | undefined {
-    if (!this.userDetails || !this.passenger || !this.passenger.firstName || !this.passenger.lastName) return;
+    if (
+      !this.userDetails ||
+      !this.passenger ||
+      !this.passenger.firstName ||
+      !this.passenger.lastName
+    )
+      return;
     const usr = {
       email: this.userDetails.email,
       firstName: this.passenger.firstName,
       lastName: this.passenger.lastName,
     };
-    console.log("DATA" + usr);
+    console.log('DATA' + usr);
     return usr;
   }
 
