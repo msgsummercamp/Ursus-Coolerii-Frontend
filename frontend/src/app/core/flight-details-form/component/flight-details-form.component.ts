@@ -1,14 +1,4 @@
-import {
-  Component,
-  computed,
-  effect,
-  inject,
-  Input,
-  OnDestroy,
-  OnInit,
-  output,
-  signal,
-} from '@angular/core';
+import { Component, effect, inject, Input, OnDestroy, OnInit, output, signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgForOf } from '@angular/common';
@@ -37,6 +27,8 @@ import { AirlineAttributes, AirlineService } from '../service/airline.service';
 import { AirportsService } from '../service/airport.service';
 import { FlightDetailsForm } from '../../../shared/types/form.types';
 import { CaseFileService } from '../../layout/services/case-file.service';
+import { AirportAttributes } from '../../../../shared/types/types'; // <-- Add this import
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-flight-details-form',
@@ -61,6 +53,7 @@ import { CaseFileService } from '../../layout/services/case-file.service';
     MatAutocomplete,
     MatAutocompleteTrigger,
     MatError,
+    ScrollingModule,
   ],
 })
 export class FlightDetailsFormComponent implements OnInit, OnDestroy {
@@ -70,19 +63,17 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   private airlines: AirlineAttributes[] = [];
   private onDestroy$ = new Subject<void>();
 
+  public showDepartDropdown = false;
+  public showDestDropdown = false;
   protected filteredAirlines: AirlineAttributes[] = [];
+  public filteredDepartAirports: AirportAttributes[] = [];
+  public filteredDestAirports: AirportAttributes[] = [];
 
   @Input() flightForm!: FormGroup<FlightDetailsForm>;
 
   public readonly airportsSignal = this.airportService.airportsSignal;
 
   public searchValue = signal('');
-
-  public filteredAirports = computed(() => {
-    const val = this.searchValue().toLowerCase();
-    const airports = this.airportsSignal();
-    return airports.filter((airport) => airport.name?.toLowerCase().includes(val));
-  });
 
   public readonly next = output<void>();
   public readonly previous = output<void>();
@@ -200,5 +191,39 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
 
   private subscribeToNewForm(formToSub: FormGroup<FlightDetailsForm>): void {
     // this.subscriptions.push(formToSub.statusChanges.subscribe(() => this.updateValidity()));
+  }
+
+  private filterAirports(value: string): AirportAttributes[] {
+    const val = value.toLowerCase();
+    const airports = this.airportsSignal();
+    return airports.filter((airport) => airport.name?.toLowerCase().includes(val));
+  }
+
+  public onDepartInput(value: string) {
+    this.filteredDepartAirports = this.filterAirports(value);
+    this.showDepartDropdown = true;
+  }
+
+  public onDestInput(value: string) {
+    this.filteredDestAirports = this.filterAirports(value);
+    this.showDestDropdown = true;
+  }
+
+  public hideDropdownWithDelay() {
+    setTimeout(() => (this.showDepartDropdown = false), 200);
+  }
+
+  public hideDestDropdownWithDelay() {
+    setTimeout(() => (this.showDestDropdown = false), 200);
+  }
+
+  public selectDepartAirport(name: string) {
+    this.flightForm.controls.departingAirport.setValue(name);
+    this.showDepartDropdown = false;
+  }
+
+  public selectDestAirport(name: string) {
+    this.flightForm.controls.destinationAirport.setValue(name);
+    this.showDestDropdown = false;
   }
 }

@@ -20,7 +20,7 @@ import {
 } from '@angular/material/card';
 
 @Component({
-  selector: 'app-diruptive-form',
+  selector: 'app-disruptive-form',
   imports: [
     MatLabel,
     MatAutocomplete,

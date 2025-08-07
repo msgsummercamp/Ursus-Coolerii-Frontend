@@ -89,7 +89,7 @@
       },
       "phoneNumber": {
         "required": "Phone number is required!",
-        "pattern": "Phone number should contain only digits!"
+        "pattern": "Phone number should have the format [+4]0xxxxxxxxx!"
       }
     }
   },
@@ -138,6 +138,6 @@
     "eligible": "Eligible",
     "notEligible": "Not eligible"
   },
-  "yes" : "Yes",
+  "yes": "Yes",
   "no": "No"
 }
