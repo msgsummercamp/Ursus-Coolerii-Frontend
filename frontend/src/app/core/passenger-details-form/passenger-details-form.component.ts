@@ -46,7 +46,10 @@ export class PassengerDetailsFormComponent implements OnInit {
     firstName: this.formBuilder.control('', Validators.required),
     lastName: this.formBuilder.control('', Validators.required),
     dateOfBirth: this.formBuilder.control(null, Validators.required),
-    phoneNumber: this.formBuilder.control('', [Validators.required, Validators.pattern('^[0-9]*')]),
+    phoneNumber: this.formBuilder.control('', [
+      Validators.required,
+      Validators.pattern('^(\\+4)?0[0-9]{9}'),
+    ]),
     address: this.formBuilder.control('', Validators.required),
     postalCode: this.formBuilder.control('', [Validators.required, Validators.pattern('^[0-9]*')]),
   });

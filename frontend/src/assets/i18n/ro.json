@@ -88,7 +88,7 @@
       },
       "phoneNumber": {
         "required": "Numărul de telefon este obligatoriu!",
-        "pattern": "Numărul de telefon ar trebui să conțină doar cifre!"
+        "pattern": "Numărul de telefon ar trebui să aibă forma [+4]0xxxxxxxxx!"
       }
     }
   },
