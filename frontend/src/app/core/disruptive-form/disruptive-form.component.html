@@ -24,17 +24,6 @@
     </mat-form-field>
   }
   @else if(formDisruption.controls.disruptionMotive.value === DisruptiveMotiveLabels[DisruptiveMotive.delay]){
-    <mat-form-field>
-      <mat-label>{{ 'disruptiveMotive.arrivedQuestion' | transloco  }}</mat-label>
-      <mat-select formControlName="hasArrived">
-        @for(motive of [true, false]; track $index) {
-          <mat-option [value]="motive">
-            {{ motive ? ('yes' | transloco) : ('no' | transloco) }}
-          </mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-    @if(formDisruption.controls.hasArrived.value === true){
       <mat-label>{{ 'disruptiveMotive.lateArrival' | transloco  }}</mat-label>
       <mat-form-field appearance="fill">
         <mat-label>Number of hours</mat-label>
@@ -45,7 +34,6 @@
           formControlName="hoursLateArrival"
         />
       </mat-form-field>
-    }
   }
   @else if(formDisruption.controls.disruptionMotive.value ===  DisruptiveMotiveLabels[DisruptiveMotive.deniedBoarding]) {
     <mat-form-field appearance="fill">

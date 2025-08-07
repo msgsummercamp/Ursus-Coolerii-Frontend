@@ -13,7 +13,7 @@ import { AirlineMotives, DeniedBoardingMotive, DisruptiveMotive } from '../../sh
 import { EligibilityService } from '../../shared/services/eligibility.service';
 
 @Component({
-  selector: 'app-diruptive-form',
+  selector: 'app-disruptive-form',
   imports: [
     MatLabel,
     MatAutocomplete,

@@ -18,7 +18,6 @@ export class DisruptiveFormService {
     return this.fb.group<DisruptiveMotiveForm>({
       disruptionMotive: this.fb.control(''),
       daysBeforeCancelation: this.fb.control(null),
-      hasArrived: this.fb.control(null),
       hoursLateArrival: this.fb.control(null),
       gaveSeatVoluntarly: this.fb.control(''),
       deniedBoardingMotive: this.fb.control(''),
@@ -43,7 +42,6 @@ export class DisruptiveFormService {
     return {
       disruption: this.getDisruptionMotive(form),
       noticeDays: form.controls.daysBeforeCancelation.value ?? null,
-      arrived: form.controls.hasArrived.value,
       delayHours: form.controls.hoursLateArrival.value ?? null,
       isVoluntarilyGivenUp: form.controls.gaveSeatVoluntarly.value !== 'No',
     };

@@ -14,12 +14,12 @@
     justify-content: space-between;
 
     .flight {
-      flex: 0.75;
+      flex: 1;
       margin-right: 1em;
     }
 
     .airline {
-      flex: 1.25;
+      flex: 1;
       margin-left: 1em;
     }
   }
@@ -27,15 +27,39 @@
   .airports {
     display: flex;
     justify-content: space-between;
+    position: relative;
+    gap: 2em;
 
-    .depart {
+    .depart-wrapper,
+    .dest-wrapper {
       flex: 1;
-      margin-right: 1em;
+      max-width: 320px;
+      width: 100%;
+      position: relative;
     }
 
+    .depart,
     .dest {
-      flex: 1;
-      margin-left: 1em;
+      width: 100%;
+    }
+
+    .custom-dropdown.absolute {
+      position: absolute;
+      top: calc(100% - 19px);
+      left: 0;
+      width: 100%;
+      background: var(--mat-sys-tertiary-container);
+      z-index: 1000;
+    }
+
+    .airport-list {
+      width: 100%;
+    }
+
+    .dropdown-option {
+      height: 3rem;
+      padding: 0 1em;
+      cursor: pointer;
     }
   }
 
