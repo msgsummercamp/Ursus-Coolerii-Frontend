@@ -11,6 +11,8 @@ import { FlightDetailsWrapComponent } from '../../layout/flight-details-wrap/fli
 import { DisruptiveFormComponent } from '../../disruptive-form/disruptive-form.component';
 import { AirportsService } from '../../layout/flight-details-form/service/airport.service';
 import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility/confirmation-eligibility.component';
+import { CaseData, CaseDataWithFiles, DisruptionDetails, Flight, Passenger } from '../../../shared/types/types';
+import { SaveService } from '../../../shared/services/save.service';
 
 @Component({
   selector: 'app-stepper',
@@ -35,6 +37,7 @@ import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility
 })
 export class StepperComponent {
   protected airportService = inject(AirportsService);
+  protected saveCaseService = inject(SaveService);
 
   private disruptiveFormComponent = viewChild(DisruptiveFormComponent);
   protected disruptiveFormCompleted: Signal<boolean | undefined> = computed(() =>
@@ -53,6 +56,42 @@ export class StepperComponent {
   protected documentsFormCompleted: Signal<boolean | undefined> = computed(() =>
     this.documentsForm()?.isValid()
   );
+  
+  private disruptionDetails: DisruptionDetails | undefined;
+  public receiveDisruptionDetails($event: DisruptionDetails) {
+    this.disruptionDetails = $event;
+  }
+
+  private flight: Flight | undefined;
+  public receiveFlight($event: Flight) {
+    this.flight = $event;
+  }
+
+  private passenger: Passenger | undefined;
+  public receivdePassenger($event: Passenger) {
+    this.passenger= $event;
+  }
+
+  public documents: File[] | undefined;
+  receiveDocuments($event: File[]) {
+    this.documents = $event;
+  }
+
+  public buildCaseFile(): CaseDataWithFiles | undefined {
+    if(!this.disruptionDetails || !this.flight || !this.passenger || !this.documents)
+      return;
+    return {
+      caseData: {
+        disruptionDetails: this.disruptionDetails,
+        reservationNumber: "mockReservation",
+        flights: [this.flight],
+        passenger: this.passenger,
+        userEmail: "email@gmail.com",
+      },
+      files: this.documents
+    }
+  }
+
 
   onStepChange(event: any) {
     if (event.selectedIndex === 1) {

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
-import { FlightDetailsWrapComponent } from './core/layout/flight-details-wrap/flight-details-wrap.component';
+import { UserDetailsComponent } from './core/user-details/user-details.component';
 
 
 export const routes: Routes = [
@@ -10,5 +10,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./core/stepper/component/stepper.component').then((m) => m.StepperComponent),
   },
+  {path: 'user-details', component: UserDetailsComponent},
   { path: '**', component: NotFoundComponent },
 ];

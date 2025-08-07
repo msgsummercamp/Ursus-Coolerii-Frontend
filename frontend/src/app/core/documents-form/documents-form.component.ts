@@ -1,16 +1,12 @@
-import { Component, inject, OnInit, output, signal } from '@angular/core';
-import {
-  FormControl,
-  NonNullableFormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { Component, EventEmitter, inject, OnInit, Output, output, signal } from '@angular/core';
+import { FormControl, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatError } from '@angular/material/input';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatList, MatListItem } from '@angular/material/list';
 import { MatLine } from '@angular/material/core';
 import { TranslocoDirective } from '@jsverse/transloco';
+import { Passenger } from '../../shared/types/types';
 
 type DocumentsForm = {
   files: FormControl<File[]>;
@@ -42,6 +38,19 @@ export class DocumentsFormComponent implements OnInit {
   public readonly isValid = this._isValid.asReadonly();
   public readonly next = output<void>();
   public readonly previous = output<void>();
+
+  @Output() receiveMessage = new EventEmitter<File[]>();
+
+  passDataToParent()   {
+    const data = this.getFormRaw;
+    if (!data) return;
+    this.receiveMessage.emit(data);
+  }
+
+
+  public get getFormRaw() {
+    return this.documentsFormGroup.getRawValue().files;
+  }
 
   ngOnInit() {
     this.documentsFormGroup.statusChanges.subscribe((status) => {
@@ -80,6 +89,7 @@ export class DocumentsFormComponent implements OnInit {
   }
 
   protected continue() {
+    this.passDataToParent();
     this.next.emit();
   }
 

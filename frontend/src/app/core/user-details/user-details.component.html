@@ -1,0 +1,37 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>User details</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="form">
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          type="text"
+          id="firstName"
+          email
+        />
+        </mat-form-field>
+      <button mat-button type="button" (click)="toggleAuthPage()">
+        {{ togglePageMessage() }}
+      </button>
+      @if( togglePageSignal() ) {
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              formControlName="password"
+              type="password"
+              id="password"
+
+            />
+        </mat-form-field>
+      }
+      <button mat-flat-button>
+        Next
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

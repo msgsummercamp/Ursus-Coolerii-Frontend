@@ -1,11 +1,11 @@
 import {
   Component,
   computed,
-  effect,
+  effect, EventEmitter,
   inject,
   Input,
   OnDestroy,
-  OnInit,
+  OnInit, Output,
   output,
   signal,
 } from '@angular/core';
@@ -36,6 +36,7 @@ import { startWith, Subject, takeUntil } from 'rxjs';
 import { AirlineAttributes, AirlineService } from '../service/airline.service';
 import { FlightDetailsForm } from '../../../../shared/types/form.types';
 import { AirportsService } from '../service/airport.service';
+import { DisruptionDetails } from '../../../../shared/types/types';
 
 @Component({
   selector: 'app-flight-details-form',
@@ -68,6 +69,7 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   private onDestroy$ = new Subject<void>();
 
   protected filteredAirlines: AirlineAttributes[] = [];
+
 
   @Input() flightForm!: FormGroup<FlightDetailsForm>;
   private airportService = inject(AirportsService);

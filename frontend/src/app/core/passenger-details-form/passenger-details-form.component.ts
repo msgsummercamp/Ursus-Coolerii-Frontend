@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, output, signal } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output, output, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   MatError,
@@ -16,6 +16,7 @@ import {
 import { MatButton } from '@angular/material/button';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { PassengerDetailsForm } from '../../shared/types/form.types';
+import { Flight, Passenger } from '../../shared/types/types';
 
 @Component({
   selector: 'app-passenger-details-form',
@@ -42,7 +43,7 @@ export class PassengerDetailsFormComponent implements OnInit {
 
   protected readonly currentDate = new Date();
 
-  protected readonly passengerDetailsForm = this.formBuilder.group<PassengerDetailsForm>({
+  public readonly passengerDetailsForm = this.formBuilder.group<PassengerDetailsForm>({
     firstName: this.formBuilder.control('', Validators.required),
     lastName: this.formBuilder.control('', Validators.required),
     dateOfBirth: this.formBuilder.control(null, Validators.required),
@@ -54,6 +55,13 @@ export class PassengerDetailsFormComponent implements OnInit {
   public readonly isValid = this._isValid.asReadonly();
   public readonly next = output<void>();
   public readonly previous = output<void>();
+  @Output() receiveMessage = new EventEmitter<Passenger>();
+
+  passDataToParent() {
+    const data = this.getFormRaw;
+    if (!data) return;
+    this.receiveMessage.emit(data);
+  }
 
   ngOnInit() {
     this.passengerDetailsForm.statusChanges.subscribe((status) => {
@@ -61,7 +69,24 @@ export class PassengerDetailsFormComponent implements OnInit {
     });
   }
 
+  public get getFormRaw(): Passenger | null {
+    const raw = this.passengerDetailsForm.getRawValue();
+
+    if(!raw.dateOfBirth)
+      return null;
+
+    return {
+      firstName: raw.firstName,
+      lastName: raw.lastName,
+      dateOfBirth: raw.dateOfBirth,
+      phoneNumber: raw.phoneNumber,
+      address: raw.address,
+      postalCode: raw.postalCode,
+    }
+  }
+
   protected continue() {
+    this.passDataToParent();
     this.next.emit();
   }
 
