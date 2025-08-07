@@ -1,4 +1,5 @@
 main {
   height: calc(100% - var(--mat-toolbar-standard-height));
   background-color: var(--mat-sys-background);
+  position: relative;
 }

@@ -1,0 +1,7 @@
+<div class="center-container">
+  <div class="message-box">
+    <app-diruptive-form class="child-comp"></app-diruptive-form>
+    <p>{{ eligibleMessage() }}</p>
+    <button mat-button [disabled]="!isEligible()">Submit</button>
+  </div>
+</div>

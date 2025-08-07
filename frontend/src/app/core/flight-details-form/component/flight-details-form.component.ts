@@ -1,6 +1,7 @@
 import {
   Component,
   computed,
+  effect,
   inject,
   Input,
   OnDestroy,
@@ -8,9 +9,8 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { AirportService } from '../service/airport.service';
-import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { NgForOf } from '@angular/common';
 import {
   MatError,
@@ -34,6 +34,7 @@ import {
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { startWith, Subject, Subscription, takeUntil } from 'rxjs';
 import { AirlineAttributes, AirlineService } from '../service/airline.service';
+import { AirportsService } from '../service/airport.service';
 import { AirportAttributes } from '../../../shared/types/types';
 import { FlightDetailsForm } from '../../../shared/types/form.types';
 import {
@@ -84,7 +85,23 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   private airports: AirportAttributes[] = [];
   private airlineService = inject(AirlineService);
   private airlines: AirlineAttributes[] = [];
+  private onDestroy$ = new Subject<void>();
+
   protected filteredAirlines: AirlineAttributes[] = [];
+
+  @Input() flightForm!: FormGroup<FlightDetailsForm>;
+  private airportService = inject(AirportsService);
+
+  public readonly airportsSignal = this.airportService.airportsSignal;
+
+  public searchValue = signal('');
+
+  public filteredAirports = computed(() => {
+    const val = this.searchValue().toLowerCase();
+    const airports = this.airportsSignal();
+    return airports.filter((airport) => airport.name?.toLowerCase().includes(val));
+  });
+
   public readonly next = output<void>();
   public readonly previous = output<void>();
   private onDestroy$ = new Subject<void>();
@@ -95,44 +112,36 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   reward: number | null = null;
   private subscriptions: Subscription[] = [];
 
+  constructor() {
+    effect(() => {
+      if (this.airportService.isLoading()) {
+        this.flightForm?.controls.departingAirport.disable();
+        this.flightForm?.controls.destinationAirport.disable();
+      } else {
+        this.flightForm?.controls.departingAirport.enable();
+        this.flightForm?.controls.destinationAirport.enable();
+      }
+    });
+  }
+
   public connectingFlights: FormGroup<FlightDetailsForm>[] = [];
   ngOnInit(): void {
     this.subscribeToForms();
     this.subscribeToFetchAirports();
     this.subscribeAllFormElements();
+    this.flightForm.controls.departingAirport.valueChanges
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((value: string) => {
+        this.searchValue.set(value || '');
+      });
+
     this.subscribeToFetchAirlines();
     this.subscribeToAirlineAutocomplete();
-    this.flightForm.statusChanges.subscribe((status) => {
-      this._isValid.set(status === 'VALID');
-    });
   }
 
   ngOnDestroy(): void {
     this.onDestroy$.next();
     this.onDestroy$.complete();
-  }
-
-  private subscribeToFetchAirports() {
-    this.airportService.airportList?.subscribe((data) => {
-      this.airports = data;
-      this.filteredAirports = this.filterAirports(this.flightForm.controls.departingAirport.value);
-    });
-  }
-
-  private subscribeAllFormElements() {
-    this.subscribeAirportFieldToFilterAirports(this.flightForm.controls.departingAirport);
-    this.subscribeAirportFieldToFilterAirports(this.flightForm.controls.destinationAirport);
-  }
-
-  private filterAirports(value: string): AirportAttributes[] {
-    const filterValue = (value || '').toLowerCase();
-    return this.airports.filter((airport) => airport.name.toLowerCase().includes(filterValue));
-  }
-
-  private subscribeAirportFieldToFilterAirports(control: FormControl<string> | null): void {
-    control?.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((val) => {
-      this.filteredAirports = this.filterAirports(val);
-    });
   }
 
   private subscribeToFetchAirlines() {

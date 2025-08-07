@@ -10,6 +10,7 @@ import { MatButton } from '@angular/material/button';
 import { DisruptiveFormService } from './service/disruptive-form.service';
 import { MatSelectModule } from '@angular/material/select';
 import { AirlineMotives, DeniedBoardingMotive, DisruptiveMotive } from '../../shared/enums';
+import { EligibilityService } from '../../shared/services/eligibility.service';
 import {
   MatCard,
   MatCardActions,
@@ -54,6 +55,8 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
   protected readonly DisruptiveMotiveLabels = DisruptiveMotiveLabels;
   public isEligibile = signal<boolean>(false);
   public eligibleText = computed(() => (this.isEligibile() ? 'Eligible' : 'Not eligible'));
+  public eligibleText = computed(() => (this.isEligibile() ? 'Eligible' : 'Not eligible'));
+  private eligibilityService = inject(EligibilityService);
 
   constructor() {
     this.motives = Object.values(DisruptiveMotiveLabels);
@@ -71,10 +74,12 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
       console.log(this.service.buildEligibilityRequest(this.formDisruption));
       this.service.checkEligibility(this.formDisruption).subscribe({
         next: (result) => {
-          this.isEligibile.set(result);
+          this.isEligibile.set(result.valueOf());
+          this.eligibilityService.setEligibility(result.valueOf());
         },
         error: (err) => {
           this.isEligibile.set(false);
+          this.eligibilityService.setEligibility(false);
         },
       });
     });

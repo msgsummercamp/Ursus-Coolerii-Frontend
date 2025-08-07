@@ -1,7 +1,10 @@
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { AirportAttributes } from '../../../../shared/types/types';
+import { finalize, retry, Subject, switchMap } from 'rxjs';
+import { environment } from '../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Observable, shareReplay } from 'rxjs';
-import { environment } from '../../../../environments/environment';
 import {
   AbstractControl,
   FormGroup,
@@ -12,64 +15,47 @@ import {
 } from '@angular/forms';
 import { AirportAttributes } from '../../../shared/types/types';
 import { FlightDetailsForm } from '../../../shared/types/form.types';
+type AirportsState = {
+  airportList: AirportAttributes[];
+  isLoading: boolean;
+};
 
-@Injectable({ providedIn: 'root' })
-export class AirportService {
+const initialState: AirportsState = {
+  airportList: [],
+  isLoading: false,
+};
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AirportsService {
+  public isLoading = computed(() => this.airportState().isLoading);
+
+  private _fetchAirport$ = new Subject<void>();
+
+  private readonly airportState = signal(initialState);
+
   private httpClient = inject(HttpClient);
   private fb = inject(NonNullableFormBuilder);
   private readonly _airportList: Observable<AirportAttributes[]> | undefined;
 
-  constructor() {
-    this._airportList = this.httpClient
-      .get<AirportAttributes[]>(environment.apiURL + '/airports')
-      .pipe(shareReplay(1));
+  private airports$ = this._fetchAirport$.pipe(
+    switchMap(() => this.fetchAirportsFromApi().pipe(finalize(() => this.setIsLoading(false)))),
+    retry(3)
+  );
+
+  public airportsSignal = toSignal(this.airports$, { initialValue: [] });
+
+  public fetchAirports() {
+    this.setIsLoading(true);
+    this._fetchAirport$.next();
   }
 
-  get airportList(): Observable<AirportAttributes[]> | undefined {
-    return this._airportList;
+  private setIsLoading(isLoading: boolean) {
+    this.airportState.update((state) => ({ ...state, isLoading }));
   }
 
-  public departureBeforeArrivalValidator(): ValidatorFn {
-    return (group: AbstractControl): ValidationErrors | null => {
-      const actualGroup = group as FormGroup<FlightDetailsForm>;
-
-      const depDate = actualGroup.controls.plannedDepartureDate.value;
-      const arrDate = actualGroup.controls.plannedArrivalDate.value;
-      const depTime = actualGroup.controls.plannedDepartureTime.value;
-      const arrTime = actualGroup.controls.plannedArrivalTime.value;
-      const depDateStr = depDate?.toISOString().split('T')[0];
-      const arrDateStr = arrDate?.toISOString().split('T')[0];
-
-      if (depDateStr === arrDateStr) {
-        const [depHour, depMin] = depTime.split(':').map(Number);
-        const [arrHour, arrMin] = arrTime.split(':').map(Number);
-        const depTotal = depHour * 60 + depMin;
-        const arrTotal = arrHour * 60 + arrMin;
-
-        if (depTotal >= arrTotal) {
-          return { departureAfterArrival: true };
-        }
-      }
-      return null;
-    };
-  }
-
-  public createForm() {
-    return this.fb.group<FlightDetailsForm>(
-      {
-        flightNr: this.fb.control('', [
-          Validators.required,
-          Validators.pattern('^[a-zA-Z]{2}[0-9]{1,4}$'),
-        ]),
-        airline: this.fb.control('', Validators.required),
-        departingAirport: this.fb.control('', Validators.required),
-        destinationAirport: this.fb.control('', Validators.required),
-        plannedDepartureDate: this.fb.control(null, Validators.required),
-        plannedArrivalDate: this.fb.control(null, Validators.required),
-        plannedDepartureTime: this.fb.control('', Validators.required),
-        plannedArrivalTime: this.fb.control('', Validators.required),
-      },
-      { validators: this.departureBeforeArrivalValidator() }
-    );
+  private fetchAirportsFromApi() {
+    return this.httpClient.get<AirportAttributes[]>(environment.apiURL + '/airports').pipe();
   }
 }
