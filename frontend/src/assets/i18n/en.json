@@ -148,4 +148,9 @@
     "passengerName": "Passenger Name",
     "colleague": "Employee"
   }
+  "home": {
+    "title": "Air Assist",
+    "subtitle": "Fill in the form to claim your compensation",
+    "startButton": "Start"
+  }
 }

@@ -3,7 +3,12 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { FlightDetailsWrapComponent } from './core/layout/flight-details-wrap/flight-details-wrap.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/form', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  {
+    path: 'home',
+    loadComponent: () =>
+      import('./core/home-page/home-page.component').then((m) => m.HomePageComponent),
+  },
   {
     path: 'form',
     loadComponent: () =>

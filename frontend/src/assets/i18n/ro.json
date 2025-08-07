@@ -138,6 +138,11 @@
     "eligible": "Eligibil",
     "notEligible": "Ineligibil"
   },
+  "home": {
+    "title": "Air Assist",
+    "subtitle": "Completați formularul pentru a solicita despăgubirea",
+    "startButton": "Start"
+  },
   "yes": "Da",
   "no": "Nu",
   "caseList": {
