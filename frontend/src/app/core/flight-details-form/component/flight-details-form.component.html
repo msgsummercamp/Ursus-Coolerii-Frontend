@@ -1,6 +1,9 @@
 <div class="flight-details-form-container">
   <form [formGroup]="flightForm">
-    <h2 class="mat-headline-5">{{ 'flightDetails.title' | transloco }}</h2>
+    <h2 class="mat-headline-5">
+      {{ flightForm.controls.departingAirport.value }} -
+      {{ flightForm.controls.destinationAirport.value }}
+    </h2>
     <div>
       <mat-form-field appearance="fill">
         <mat-label>{{ 'flightDetails.flightNr' | transloco }}</mat-label>
