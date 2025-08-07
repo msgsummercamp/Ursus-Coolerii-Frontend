@@ -39,20 +39,22 @@
   </div>
 
   <div class="airports">
-    <mat-form-field appearance="fill" class="depart">
-      <mat-label>{{ 'flightDetails.departingAirport' | transloco }}</mat-label>
-      <input
-        type="text"
-        matInput
-        formControlName="departingAirport"
-        (focus)="showDepartDropdown = true"
-        (input)="onDepartInput($any($event.target).value)"
-        (blur)="hideDropdownWithDelay()"
-        autocomplete="on"
-        placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
-      />
+    <div class="depart-wrapper">
+      <mat-form-field appearance="fill" class="depart">
+        <mat-label>{{ 'flightDetails.departingAirport' | transloco }}</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="departingAirport"
+          (focus)="showDepartDropdown = true"
+          (input)="onDepartInput($any($event.target).value)"
+          (blur)="hideDropdownWithDelay()"
+          autocomplete="on"
+          placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
+        />
+      </mat-form-field>
       @if (showDepartDropdown && filteredDepartAirports.length) {
-        <div class="custom-dropdown" (mousedown)="$event.preventDefault()">
+        <div class="custom-dropdown absolute" (mousedown)="$event.preventDefault()">
           <cdk-virtual-scroll-viewport
             itemSize="48"
             class="airport-list"
@@ -70,22 +72,24 @@
           </cdk-virtual-scroll-viewport>
         </div>
       }
-    </mat-form-field>
+    </div>
 
-    <mat-form-field appearance="fill" class="dest">
-      <mat-label>{{ 'flightDetails.destinationAirport' | transloco }}</mat-label>
-      <input
-        type="text"
-        matInput
-        formControlName="destinationAirport"
-        (focus)="showDestDropdown = true"
-        (input)="onDestInput($any($event.target).value)"
-        (blur)="hideDestDropdownWithDelay()"
-        autocomplete="on"
-        placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
-      />
+    <div class="dest-wrapper">
+      <mat-form-field appearance="fill" class="dest">
+        <mat-label>{{ 'flightDetails.destinationAirport' | transloco }}</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="destinationAirport"
+          (focus)="showDestDropdown = true"
+          (input)="onDestInput($any($event.target).value)"
+          (blur)="hideDestDropdownWithDelay()"
+          autocomplete="on"
+          placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
+        />
+      </mat-form-field>
       @if (showDestDropdown && filteredDestAirports.length) {
-        <div class="custom-dropdown" (mousedown)="$event.preventDefault()">
+        <div class="custom-dropdown absolute" (mousedown)="$event.preventDefault()">
           <cdk-virtual-scroll-viewport
             itemSize="48"
             class="airport-list"
@@ -103,7 +107,7 @@
           </cdk-virtual-scroll-viewport>
         </div>
       }
-    </mat-form-field>
+    </div>
   </div>
 
   <div class="depDate">

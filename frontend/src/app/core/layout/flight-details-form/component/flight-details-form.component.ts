@@ -1,14 +1,4 @@
-import {
-  Component,
-  computed,
-  effect,
-  inject,
-  Input,
-  OnDestroy,
-  OnInit,
-  output,
-  signal,
-} from '@angular/core';
+import { Component, effect, inject, Input, OnDestroy, OnInit, output, signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgForOf } from '@angular/common';
@@ -83,12 +73,6 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
 
   public searchValue = signal('');
 
-  public filteredAirports = computed(() => {
-    const val = this.searchValue().toLowerCase();
-    const airports = this.airportsSignal();
-    return airports.filter((airport) => airport.name?.toLowerCase().includes(val));
-  });
-
   public readonly next = output<void>();
 
   constructor() {
@@ -147,14 +131,12 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
       });
   }
 
-  // Filtering method
   private filterAirports(value: string): AirportAttributes[] {
     const val = value.toLowerCase();
     const airports = this.airportsSignal();
     return airports.filter((airport) => airport.name?.toLowerCase().includes(val));
   }
 
-  // Usage in handlers
   public onDepartInput(value: string) {
     this.filteredDepartAirports = this.filterAirports(value);
     this.showDepartDropdown = true;
