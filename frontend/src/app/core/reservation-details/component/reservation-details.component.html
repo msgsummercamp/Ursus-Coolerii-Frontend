@@ -143,5 +143,49 @@
         }
       </mat-form-field>
     </div>
+
+    @for (stopover of stopovers; track stopover) {
+      <p>{{ stopover.name }}</p>
+    }
+    <div>
+      <div class="dest-wrapper">
+        <mat-form-field appearance="fill" class="dest">
+          <mat-label>Stopover</mat-label>
+          <input
+            type="text"
+            matInput
+            (focus)="showStopoverDropdown = true"
+            (input)="onStopoverInput($any($event.target).value)"
+            (blur)="hideStopoverDropdownWithDelay()"
+            formControlName="stopover"
+            autocomplete="on"
+            placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
+          />
+        </mat-form-field>
+        @if (showStopoverDropdown && filteredStopoverAirports.length) {
+          <div class="custom-dropdown absolute" (mousedown)="$event.preventDefault()">
+            <cdk-virtual-scroll-viewport
+              itemSize="32"
+              class="airport-list"
+              [style.height.px]="
+                filteredStopoverAirports.length > 4 ? 192 : filteredStopoverAirports.length * 32
+              "
+            >
+              <div
+                class="dropdown-option"
+                *cdkVirtualFor="let airport of filteredStopoverAirports"
+                (mousedown)="selectStopoverAirport(airport.name)"
+              >
+                <div class="list-item">
+                  {{ airport.name }}
+                </div>
+              </div>
+            </cdk-virtual-scroll-viewport>
+          </div>
+        }
+      </div>
+    </div>
+
+    <button mat-flat-button (click)="addStopover()">Add stopover</button>
   </form>
 </div>

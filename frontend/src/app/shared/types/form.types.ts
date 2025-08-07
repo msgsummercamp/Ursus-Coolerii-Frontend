@@ -8,6 +8,7 @@ export type ReservationDetailsForm = {
   plannedArrivalDate: FormControl<Date | null>;
   plannedDepartureTime: FormControl<string>;
   plannedArrivalTime: FormControl<string>;
+  stopover: FormControl<string>;
 };
 
 export type FlightDetailsForm = {

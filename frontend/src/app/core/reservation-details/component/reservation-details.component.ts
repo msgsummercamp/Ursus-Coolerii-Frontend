@@ -24,6 +24,7 @@ import { ReservationDetailsForm } from '../../../shared/types/form.types';
 import { AirportAttributes } from '../../../shared/types/types';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AirportsService } from '../../flight-details-form/service/airport.service';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-reservation-details',
@@ -45,6 +46,7 @@ import { AirportsService } from '../../flight-details-form/service/airport.servi
     MatTimepickerInput,
     MatError,
     ScrollingModule,
+    MatButton,
   ],
 })
 export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
@@ -53,8 +55,10 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
 
   public showDepartDropdown = false;
   public showDestDropdown = false;
+  public showStopoverDropdown = false;
   public filteredDepartAirports: AirportAttributes[] = [];
   public filteredDestAirports: AirportAttributes[] = [];
+  public filteredStopoverAirports: AirportAttributes[] = [];
 
   @Input() reservationForm!: FormGroup<ReservationDetailsForm>;
 
@@ -64,6 +68,8 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
 
   public readonly next = output<void>();
   public readonly previous = output<void>();
+
+  public stopovers: AirportAttributes[] = [];
 
   constructor() {
     effect(() => {
@@ -106,12 +112,21 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
     this.showDestDropdown = true;
   }
 
+  public onStopoverInput(value: string) {
+    this.filteredStopoverAirports = this.filterAirports(value);
+    this.showStopoverDropdown = true;
+  }
+
   public hideDropdownWithDelay() {
     setTimeout(() => (this.showDepartDropdown = false), 200);
   }
 
   public hideDestDropdownWithDelay() {
     setTimeout(() => (this.showDestDropdown = false), 200);
+  }
+
+  public hideStopoverDropdownWithDelay() {
+    setTimeout(() => (this.showStopoverDropdown = false), 200);
   }
 
   public selectDepartAirport(name: string) {
@@ -122,5 +137,20 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
   public selectDestAirport(name: string) {
     this.reservationForm.controls.destinationAirport.setValue(name);
     this.showDestDropdown = false;
+  }
+
+  public selectStopoverAirport(name: string) {
+    this.reservationForm.controls.stopover.setValue(name);
+    this.showStopoverDropdown = false;
+  }
+
+  public addStopover() {
+    let airportToAdd = this.filteredStopoverAirports.find(
+      (airport) => airport.name === this.reservationForm.controls.stopover.value
+    );
+
+    if (airportToAdd) {
+      this.stopovers.push({ name: this.reservationForm.controls.stopover.value, iata: '' });
+    }
   }
 }

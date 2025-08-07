@@ -1,21 +1,16 @@
 import { Component, computed, inject, OnInit, output, signal } from '@angular/core';
-import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { AirportsService } from '../flight-details-form/service/airport.service';
 import { MatButtonModule } from '@angular/material/button';
 import { FlightDetailsFormComponent } from '../flight-details-form/component/flight-details-form.component';
 import { NgForOf } from '@angular/common';
 import { FlightDetailsForm, ReservationDetailsForm } from '../../shared/types/form.types';
-import {
-  MatCard,
-  MatCardActions,
-  MatCardContent,
-  MatCardHeader,
-  MatCardTitle,
-} from '@angular/material/card';
+import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import {
   AbstractControl,
   FormGroup,
   NonNullableFormBuilder,
+  ReactiveFormsModule,
   ValidationErrors,
   ValidatorFn,
   Validators,
@@ -33,38 +28,39 @@ import { ReservationDetailsFormComponent } from '../reservation-details/componen
     MatButtonModule,
     FlightDetailsFormComponent,
     NgForOf,
-    MatCardActions,
     MatCard,
     MatCardContent,
     MatCardHeader,
     MatCardTitle,
     LoadingSpinnerComponent,
     LoadingSpinnerComponent,
-    TranslocoDirective,
     FlightDetailsFormComponent,
     FlightDetailsFormComponent,
     FlightDetailsFormComponent,
     FlightDetailsFormComponent,
     ReservationDetailsFormComponent,
+    ReactiveFormsModule,
   ],
   templateUrl: './flight-details-wrap.component.html',
   styleUrl: './flight-details-wrap.component.scss',
 })
 export class FlightDetailsWrapComponent implements OnInit {
-  protected readonly next = output<void>();
-  protected readonly previous = output<void>();
   private airportService = inject(AirportsService);
+  private caseFileService = inject(CaseFileService);
 
-  protected isLoading = signal(false);
   private isLoading$ = toObservable(this.airportService.isLoading);
   private delayedLoading$ = this.isLoading$.pipe(
     switchMap((loading) => iif(() => loading, of(loading).pipe(delay(500)), of(loading)))
   );
 
-  protected _isValid = signal(false);
-  private subscriptions: Subscription[] = [];
-  private caseFileService = inject(CaseFileService);
   private fb = inject(NonNullableFormBuilder);
+  private subscriptions: Subscription[] = [];
+
+  protected readonly next = output<void>();
+  protected readonly previous = output<void>();
+  protected isLoading = signal(false);
+
+  protected _isValid = signal(false);
   protected reward: number | null = null;
 
   public connectingFlights: FormGroup<FlightDetailsForm>[] = [];
@@ -80,6 +76,7 @@ export class FlightDetailsWrapComponent implements OnInit {
       plannedArrivalDate: this.fb.control(null, Validators.required),
       plannedDepartureTime: this.fb.control('', Validators.required),
       plannedArrivalTime: this.fb.control('', Validators.required),
+      stopover: this.fb.control(''),
     },
     { validators: this.departureBeforeArrivalValidator() }
   );
