@@ -26,6 +26,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AirportsService } from '../../flight-details-form/service/airport.service';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { StopoverService } from '../../../shared/services/stopover.service';
 
 @Component({
   selector: 'app-reservation-details',
@@ -54,6 +55,8 @@ import { MatIcon } from '@angular/material/icon';
 })
 export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
   private airportService = inject(AirportsService);
+  private stopoverService = inject(StopoverService);
+
   private onDestroy$ = new Subject<void>();
 
   public showDepartDropdown = false;
@@ -71,8 +74,6 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
 
   public readonly next = output<void>();
   public readonly previous = output<void>();
-
-  public stopovers: AirportAttributes[] = [];
 
   constructor() {
     effect(() => {
@@ -147,11 +148,11 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
     this.showStopoverDropdown = false;
   }
 
-  public addStopover() {
-    if (this.stopovers.length < 3) {
+  protected addStopover() {
+    if (this.stopoverService.stopoverList().length < 3) {
       let airportToAdd = this.getStopoverAirport();
       if (airportToAdd) {
-        this.stopovers.push({ name: this.reservationForm.controls.stopover.value, iata: '' });
+        this.stopoverService.addStopover(airportToAdd);
       }
     }
   }
@@ -162,8 +163,11 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
     );
   }
 
-  public removeStopover(stopoverIndex: number) {
-    this.stopovers.splice(stopoverIndex, 1);
-    console.log(this.stopovers);
+  protected removeStopover(stopoverIndex: number) {
+    this.stopoverService.removeStopover(stopoverIndex);
+  }
+
+  protected get stopovers() {
+    return this.stopoverService.stopoverList;
   }
 }

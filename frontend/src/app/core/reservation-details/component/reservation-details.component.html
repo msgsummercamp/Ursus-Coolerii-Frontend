@@ -184,7 +184,7 @@
       <button mat-flat-button (click)="addStopover()">Add stopover</button>
     </div>
 
-    @for (stopover of stopovers; track $index) {
+    @for (stopover of stopovers(); track $index) {
       <div class="stopover">
         <p>{{ stopover.name }}</p>
         <button mat-icon-button (click)="removeStopover($index)"

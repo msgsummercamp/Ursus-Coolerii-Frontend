@@ -1,14 +1,4 @@
-import {
-  Component,
-  computed,
-  effect,
-  inject,
-  Input,
-  OnDestroy,
-  OnInit,
-  output,
-  signal,
-} from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit, output, signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgForOf } from '@angular/common';
@@ -32,12 +22,9 @@ import {
   MatTimepickerToggle,
 } from '@angular/material/timepicker';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { startWith, Subject, Subscription, takeUntil } from 'rxjs';
+import { startWith, Subject, takeUntil } from 'rxjs';
 import { AirlineAttributes, AirlineService } from '../service/airline.service';
-import { AirportsService } from '../service/airport.service';
 import { FlightDetailsForm } from '../../../shared/types/form.types';
-import { CaseFileService } from '../../layout/services/case-file.service';
-import { AirportAttributes } from '../../../shared/types/types';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
@@ -67,44 +54,20 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
   ],
 })
 export class FlightDetailsFormComponent implements OnInit, OnDestroy {
-  private readonly _isValid = signal(false);
-  private airportService = inject(AirportsService);
   private airlineService = inject(AirlineService);
+
   private airlines: AirlineAttributes[] = [];
+
   private onDestroy$ = new Subject<void>();
 
-  public showDepartDropdown = false;
-  public showDestDropdown = false;
   protected filteredAirlines: AirlineAttributes[] = [];
-  public filteredDepartAirports: AirportAttributes[] = [];
-  public filteredDestAirports: AirportAttributes[] = [];
 
   @Input() flightForm!: FormGroup<FlightDetailsForm>;
 
-  public readonly airportsSignal = this.airportService.airportsSignal;
-
   public searchValue = signal('');
-
   public readonly next = output<void>();
   public readonly previous = output<void>();
-  public validForms = computed(() => this._isValid());
-  private caseFileService = inject(CaseFileService);
-  reward: number | null = null;
-  private subscriptions: Subscription[] = [];
 
-  constructor() {
-    effect(() => {
-      if (this.airportService.isLoading()) {
-        this.flightForm?.controls.departingAirport.disable();
-        this.flightForm?.controls.destinationAirport.disable();
-      } else {
-        this.flightForm?.controls.departingAirport.enable();
-        this.flightForm?.controls.destinationAirport.enable();
-      }
-    });
-  }
-
-  public connectingFlights: FormGroup<FlightDetailsForm>[] = [];
   ngOnInit(): void {
     this.flightForm.controls.departingAirport.valueChanges
       .pipe(takeUntil(this.onDestroy$))
@@ -147,71 +110,5 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
           this.filteredAirlines = [];
         }
       });
-  }
-
-  protected continue() {
-    this.next.emit();
-  }
-
-  protected back() {
-    this.previous.emit();
-  }
-
-  private checkAndFetchReward(): void {
-    if (this.validForms()) {
-      const caseFile = this.buildCaseFileFromForms();
-      this.caseFileService.calculateReward(caseFile).subscribe((reward) => {
-        this.reward = reward;
-      });
-    } else {
-      this.reward = null;
-    }
-  }
-
-  private buildCaseFileFromForms() {
-    const allFlightForms = [this.flightForm, ...this.connectingFlights];
-
-    const airports: FormGroup<FlightDetailsForm>[] = allFlightForms.filter(
-      (f, index) => index === 0 || index === allFlightForms.length - 1
-    );
-
-    return {
-      departureAirport: airports[0].controls.departingAirport.value,
-      destinationAirport: airports[airports.length - 1].controls.destinationAirport.value,
-    };
-  }
-
-  private filterAirports(value: string): AirportAttributes[] {
-    const val = value.toLowerCase();
-    const airports = this.airportsSignal();
-    return airports.filter((airport) => airport.name?.toLowerCase().includes(val));
-  }
-
-  public onDepartInput(value: string) {
-    this.filteredDepartAirports = this.filterAirports(value);
-    this.showDepartDropdown = true;
-  }
-
-  public onDestInput(value: string) {
-    this.filteredDestAirports = this.filterAirports(value);
-    this.showDestDropdown = true;
-  }
-
-  public hideDropdownWithDelay() {
-    setTimeout(() => (this.showDepartDropdown = false), 200);
-  }
-
-  public hideDestDropdownWithDelay() {
-    setTimeout(() => (this.showDestDropdown = false), 200);
-  }
-
-  public selectDepartAirport(name: string) {
-    this.flightForm.controls.departingAirport.setValue(name);
-    this.showDepartDropdown = false;
-  }
-
-  public selectDestAirport(name: string) {
-    this.flightForm.controls.destinationAirport.setValue(name);
-    this.showDestDropdown = false;
   }
 }
