@@ -138,6 +138,11 @@
     "eligible": "Eligible",
     "notEligible": "Not eligible"
   },
+  "home": {
+    "title": "Air Assist",
+    "subtitle": "Fill in the form to claim your compensation",
+    "startButton": "Start"
+  },
   "yes": "Yes",
   "no": "No"
 }
