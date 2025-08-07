@@ -26,6 +26,7 @@
     "deleteConnectingFlight": "Șterge Zbor de Legătură",
     "next": "Mai Departe",
     "rewardMessage": "Puteți primi până la {{reward}} EURO pentru acest zbor!",
+    "connectingFlightPlaceholder": "Introduceți zborul de legătură...",
     "error": {
       "flightNumber": {
         "required": "Numărul zborului este obligatoriu!",
@@ -88,7 +89,7 @@
       },
       "phoneNumber": {
         "required": "Numărul de telefon este obligatoriu!",
-        "pattern": "Numărul de telefon ar trebui să conțină doar cifre!"
+        "pattern": "Numărul de telefon ar trebui să aibă forma [+4]0xxxxxxxxx!"
       }
     }
   },
@@ -106,14 +107,13 @@
   "documents": {
     "title": "Încărcare Documente",
     "chooseFile": "Alegeți Fișier(e)",
-    "chooseFileError": "Vă rog, alegeți măcar un fișier!",
-    "next": "Mai Departe",
-    "back": "Înapoi"
+    "chooseFileError": "Vă rog, alegeți măcar un fișier!"
   },
   "connecting-flight": {
     "title": "Zbor de Legătură"
   },
   "disruptiveMotive": {
+    "title": "Motiv de Perturbare",
     "dropDownText": "Motiv de perturbare",
     "canceled": "Anulat",
     "deniedBoarding": "Refuz de îmbarcare",
@@ -121,7 +121,7 @@
     "numberOfDaysLong": "Cu câte zile înainte de anulare ați fost informat de companie",
     "numberOfDays": "Număr de zile",
     "arrivedQuestion": "A ajuns zborul la destinație?",
-    "lateArrival": "Cât de mult a întârziat zborul?",
+    "delayedHours": "Câte ore a fost întârziat zborul?",
     "seatGaveQuestion": "V-ați cedat locul în mod voluntar?",
     "reasonDeniedBoarding": "Motivul refuzului de îmbarcare",
     "airlineMotiveIsMentioned": "A menționat compania motivul de perturbare?",

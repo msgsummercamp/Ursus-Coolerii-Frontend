@@ -5,3 +5,15 @@
   z-index: 20;
   background: white;
 }
+
+.stepper-header-container {
+  position: relative;
+  min-height: 4rem;
+}
+
+.airplane {
+  position: fixed;
+  width: 2.5rem;
+  height: 2.5rem;
+  z-index: 300;
+}

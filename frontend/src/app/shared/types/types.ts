@@ -1,9 +1,9 @@
 import { DisruptiveMotive } from '../enums';
 
-export type AirportAttributes ={
+export type AirportAttributes = {
   name: string;
   iata: string;
-}
+};
 
 export type Flight = {
   flightNumber: string;
@@ -60,18 +60,17 @@ export type SaveRequest = {
   signupRequest: SignupRequest
 }
 
-export type EligibilityRequest= {
-  disruption: DisruptiveMotive | null,
-  noticeDays: number | null,
-  arrived: boolean | null,
-  delayHours: number | null,
-  isVoluntarilyGivenUp: boolean | null
-}
 
 
-export const DisruptiveMotiveLabels: Record<DisruptiveMotive, string> = {
-  [DisruptiveMotive.cancelation]: "Canceled",
-  [DisruptiveMotive.deniedBoarding]: "Denied Boarding",
-  [DisruptiveMotive.delay]: "Delayed"
+export type EligibilityRequest = {
+  disruption: DisruptiveMotive | null;
+  noticeDays: number | null;
+  delayHours: number | null;
+  isVoluntarilyGivenUp: boolean | null;
 };
 
+export const DisruptiveMotiveLabels: Record<DisruptiveMotive, string> = {
+  [DisruptiveMotive.cancelation]: 'Canceled',
+  [DisruptiveMotive.deniedBoarding]: 'Denied Boarding',
+  [DisruptiveMotive.delay]: 'Delayed',
+};

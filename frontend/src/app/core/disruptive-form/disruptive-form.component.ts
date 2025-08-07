@@ -11,9 +11,16 @@ import { DisruptiveFormService } from './service/disruptive-form.service';
 import { MatSelectModule } from '@angular/material/select';
 import { AirlineMotives, DeniedBoardingMotive, DisruptiveMotive } from '../../shared/enums';
 import { EligibilityService } from '../../shared/services/eligibility.service';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardTitle,
+} from '@angular/material/card';
 
 @Component({
-  selector: 'app-diruptive-form',
+  selector: 'app-disruptive-form',
   imports: [
     MatLabel,
     MatAutocomplete,
@@ -29,6 +36,11 @@ import { EligibilityService } from '../../shared/services/eligibility.service';
     MatSelectModule,
     MatInputModule,
     FormsModule,
+    MatCard,
+    MatCardTitle,
+    MatCardHeader,
+    MatCardContent,
+    MatCardActions,
   ],
   templateUrl: './disruptive-form.component.html',
   styleUrl: './disruptive-form.component.scss',
@@ -50,8 +62,8 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
   private onDestroy$ = new Subject<void>();
   public readonly next = output<void>();
   protected readonly DisruptiveMotiveLabels = DisruptiveMotiveLabels;
-  public isEligibile = signal<boolean>(false);
-  public eligibleText = computed(() => (this.isEligibile() ? 'Eligible' : 'Not eligible'));
+  public isEligible = signal<boolean>(false);
+  public eligibleText = computed(() => (this.isEligible() ? 'Eligible' : 'Not eligible'));
   private eligibilityService = inject(EligibilityService);
 
   constructor() {
@@ -87,11 +99,11 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
     this.formDisruption.statusChanges.subscribe(() => {
       this.service.checkEligibility(this.formDisruption).subscribe({
         next: (result) => {
-          this.isEligibile.set(result.valueOf());
+          this.isEligible.set(result.valueOf());
           this.eligibilityService.setEligibility(result.valueOf());
         },
         error: (err) => {
-          this.isEligibile.set(false);
+          this.isEligible.set(false);
           this.eligibilityService.setEligibility(false);
         },
       });

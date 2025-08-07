@@ -7,6 +7,14 @@ import { MatList, MatListItem } from '@angular/material/list';
 import { MatLine } from '@angular/material/core';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { Passenger } from '../../shared/types/types';
+import { translate, TranslocoDirective } from '@jsverse/transloco';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardTitle,
+} from '@angular/material/card';
 
 type DocumentsForm = {
   files: FormControl<File[]>;
@@ -24,6 +32,11 @@ type DocumentsForm = {
     MatLine,
     MatIconButton,
     TranslocoDirective,
+    MatCard,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardContent,
+    MatCardActions,
   ],
   templateUrl: './documents-form.component.html',
   styleUrls: ['./documents-form.component.scss'],
@@ -96,4 +109,6 @@ export class DocumentsFormComponent implements OnInit {
   protected back() {
     this.previous.emit();
   }
+
+  protected readonly translate = translate;
 }
