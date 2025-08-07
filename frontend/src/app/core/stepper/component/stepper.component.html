@@ -7,7 +7,7 @@
   >
     <mat-step [completed]="disruptiveFormCompleted()">
       <ng-template matStepLabel>{{ translate('disruption-motives') }}</ng-template>
-      <app-diruptive-form (next)="stepper.next()" />
+      <app-disruptive-form (next)="stepper.next()" />
     </mat-step>
     <mat-step [completed]="flightDetailsFormCompleted()">
       <ng-template matStepLabel>{{ translate('flight-details') }}</ng-template>
