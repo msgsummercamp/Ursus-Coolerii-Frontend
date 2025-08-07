@@ -93,11 +93,15 @@
         </mat-select>
       </mat-form-field>
     }
-    <mat-form-field>
-      <mat-label>{{translate('disruptiveMotive.optionalComments')}}</mat-label>
-      <textarea matInput></textarea>
-    </mat-form-field>
   }
+    @if(formDisruption.controls.disruptionMotive.value === DisruptiveMotiveLabels[DisruptiveMotive.delay] ||
+        formDisruption.controls.disruptionMotive.value === DisruptiveMotiveLabels[DisruptiveMotive.cancelation] ||
+        formDisruption.controls.disruptionMotive.value === DisruptiveMotiveLabels[DisruptiveMotive.deniedBoarding]) {
+      <mat-form-field>
+        <mat-label>{{translate('disruptiveMotive.optionalComments')}}</mat-label>
+        <textarea matInput></textarea>
+      </mat-form-field>
+    }
   </div>
     <button class="form-actions" mat-raised-button [disabled]="!isEligibile()" (click)="continue()">
       {{ 'flightDetails.next' | transloco }}

@@ -9,7 +9,12 @@ import { Subject } from 'rxjs';
 import { MatButton } from '@angular/material/button';
 import { DisruptiveFormService } from './service/disruptive-form.service';
 import { MatSelectModule } from '@angular/material/select';
-import { AirlineMotives, DeniedBoardingMotive, DisruptiveMotive } from '../../shared/enums';
+import {
+  AirlineMotives,
+  CancellationNotice,
+  DeniedBoardingMotive,
+  DisruptiveMotive,
+} from '../../shared/enums';
 import { EligibilityService } from '../../shared/services/eligibility.service';
 
 @Component({
@@ -37,6 +42,7 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
   public motives: string[];
   public reasons: DeniedBoardingMotive[] = Object.values(DeniedBoardingMotive);
   public airlineDeniedMotives: AirlineMotives[] = Object.values(AirlineMotives);
+  public cancellationNotice: CancellationNotice[] = Object.values(CancellationNotice);
   private service = inject(DisruptiveFormService);
   private onDestroy$ = new Subject<void>();
   public readonly next = output<void>();
