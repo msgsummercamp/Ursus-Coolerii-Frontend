@@ -48,7 +48,7 @@
       top: calc(100% - 19px);
       left: 0;
       width: 100%;
-      background: #f0f0f0;
+      background: var(--mat-sys-tertiary-container);
       z-index: 1000;
     }
 
@@ -57,7 +57,7 @@
     }
 
     .dropdown-option {
-      height: 48px;
+      height: 3rem;
       padding: 0 1em;
       cursor: pointer;
     }
