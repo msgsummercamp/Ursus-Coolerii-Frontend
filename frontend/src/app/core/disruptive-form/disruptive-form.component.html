@@ -104,8 +104,15 @@
           }
         </mat-select>
       </mat-form-field>
-
     }
+    <mat-form-field>
+      <mat-label>{{translate('disruptiveMotive.optionalComments')}}</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="optionalComments"
+        [placeholder]="translate('disruptiveMotive.optionalComments')"/>
+    </mat-form-field>
   }
   </div>
     <button class="form-actions" mat-raised-button [disabled]="!isEligibile()" (click)="continue()">

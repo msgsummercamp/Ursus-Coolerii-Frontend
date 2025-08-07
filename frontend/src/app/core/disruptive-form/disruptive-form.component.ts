@@ -2,7 +2,7 @@ import { Component, computed, inject, OnDestroy, OnInit, output, signal } from '
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatInput, MatInputModule, MatLabel } from '@angular/material/input';
 import { MatAutocomplete, MatAutocompleteTrigger, MatOption } from '@angular/material/autocomplete';
-import { toCamelCase, TranslocoPipe } from '@jsverse/transloco';
+import { toCamelCase, translate, TranslocoPipe } from '@jsverse/transloco';
 import { DisruptiveMotiveLabels } from '../../shared/types/types';
 import { CommonModule } from '@angular/common';
 import { Subject } from 'rxjs';
@@ -79,4 +79,5 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
 
   protected readonly toCamelCase = toCamelCase;
   protected readonly DisruptiveMotive = DisruptiveMotive;
+  protected readonly translate = translate;
 }

@@ -135,6 +135,7 @@
     "aggressiveBehaviorWithStaff": "Aggressive behavior with Staff",
     "intoxication": "Intoxication",
     "unspecifiedReason": "Unspecified reason",
+    "optionalComments": "Describe the situation in more detail",
     "eligible": "Eligible",
     "notEligible": "Not eligible"
   },
