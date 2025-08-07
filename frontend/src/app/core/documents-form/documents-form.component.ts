@@ -5,7 +5,6 @@ import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatList, MatListItem } from '@angular/material/list';
 import { MatLine } from '@angular/material/core';
-import { TranslocoDirective } from '@jsverse/transloco';
 import { Passenger } from '../../shared/types/types';
 import { translate, TranslocoDirective } from '@jsverse/transloco';
 import {

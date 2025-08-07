@@ -35,7 +35,6 @@ import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autoc
 import { startWith, Subject, Subscription, takeUntil } from 'rxjs';
 import { AirlineAttributes, AirlineService } from '../service/airline.service';
 import { AirportsService } from '../service/airport.service';
-import { DisruptionDetails } from '../../../../shared/types/types';
 import { FlightDetailsForm } from '../../../shared/types/form.types';
 import { CaseFileService } from '../../layout/services/case-file.service';
 import { AirportAttributes } from '../../../shared/types/types';

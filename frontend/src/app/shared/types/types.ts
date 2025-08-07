@@ -30,7 +30,6 @@ export type Passenger = {
 export type DisruptionDetails = {
   disruption: DisruptiveMotive | null;
   noticeDays: number | null;
-  arrived: boolean | null;
   delayHours: number | null;
   isVoluntarilyGivenUp: boolean | null;
 }

@@ -18,7 +18,6 @@ import { PassengerDetailsFormComponent } from '../../passenger-details-form/pass
 import { DocumentsFormComponent } from '../../documents-form/documents-form.component';
 import { FlightDetailsWrapComponent } from '../../flight-details-wrap/flight-details-wrap.component';
 import { DisruptiveFormComponent } from '../../disruptive-form/disruptive-form.component';
-import { AirportsService } from '../../layout/flight-details-form/service/airport.service';
 import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility/confirmation-eligibility.component';
 import {
   CaseData,

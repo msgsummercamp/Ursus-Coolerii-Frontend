@@ -83,7 +83,6 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
     return {
       disruption: disruptiveMotive,
       noticeDays: raw.daysBeforeCancelation,
-      arrived: raw.hasArrived,
       delayHours: raw.hoursLateArrival,
       isVoluntarilyGivenUp: raw.gaveSeatVoluntarly !== 'No',
     }

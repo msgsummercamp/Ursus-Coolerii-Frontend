@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, output, signal } from '@angular/core';
+import { Component, computed, EventEmitter, inject, OnInit, Output, output, signal } from '@angular/core';
 import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
 import { AirportsService } from '../flight-details-form/service/airport.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,9 +22,9 @@ import {
 } from '@angular/forms';
 import { bindCallback, delay, iif, of, Subscription, switchMap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { Flight } from '../../../shared/types/types';
 import { CaseFileService } from '../layout/services/case-file.service';
 import { LoadingSpinnerComponent } from '../loading-spinner/component/loading-spinner.component';
+import { Flight } from '../../shared/types/types';
 
 @Component({
   selector: 'app-flight-details-wrap',
