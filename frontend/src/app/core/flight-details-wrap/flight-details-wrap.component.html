@@ -19,5 +19,14 @@
         <app-flight-details-form [flightForm]="flight" />
       </div>
     </mat-card-content>
+    <mat-card-actions *transloco="let translate" class="special-form-actions">
+      <button mat-flat-button (click)="back()">{{ translate('stepper.back') }}</button>
+      <button mat-flat-button (click)="addConnectingFlight()"
+        >{{ translate('flightDetails.connectingFlightPlaceholder') }}
+      </button>
+      <button mat-flat-button [disabled]="!this.validForms()" (click)="continue()"
+        >{{ translate('stepper.next') }}
+      </button>
+    </mat-card-actions>
   </mat-card>
 </div>

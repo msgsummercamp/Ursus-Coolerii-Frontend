@@ -24,7 +24,8 @@ import { ReservationDetailsForm } from '../../../shared/types/form.types';
 import { AirportAttributes } from '../../../shared/types/types';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AirportsService } from '../../flight-details-form/service/airport.service';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-reservation-details',
@@ -47,6 +48,8 @@ import { MatButton } from '@angular/material/button';
     MatError,
     ScrollingModule,
     MatButton,
+    MatIconButton,
+    MatIcon,
   ],
 })
 export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
@@ -145,12 +148,22 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
   }
 
   public addStopover() {
-    let airportToAdd = this.filteredStopoverAirports.find(
+    if (this.stopovers.length < 3) {
+      let airportToAdd = this.getStopoverAirport();
+      if (airportToAdd) {
+        this.stopovers.push({ name: this.reservationForm.controls.stopover.value, iata: '' });
+      }
+    }
+  }
+
+  private getStopoverAirport() {
+    return this.filteredStopoverAirports.find(
       (airport) => airport.name === this.reservationForm.controls.stopover.value
     );
+  }
 
-    if (airportToAdd) {
-      this.stopovers.push({ name: this.reservationForm.controls.stopover.value, iata: '' });
-    }
+  public removeStopover(stopoverIndex: number) {
+    this.stopovers.splice(stopoverIndex, 1);
+    console.log(this.stopovers);
   }
 }

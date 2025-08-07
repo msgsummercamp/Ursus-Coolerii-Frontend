@@ -1,11 +1,17 @@
 import { Component, computed, inject, OnInit, output, signal } from '@angular/core';
-import { TranslocoPipe } from '@jsverse/transloco';
+import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
 import { AirportsService } from '../flight-details-form/service/airport.service';
 import { MatButtonModule } from '@angular/material/button';
 import { FlightDetailsFormComponent } from '../flight-details-form/component/flight-details-form.component';
 import { NgForOf } from '@angular/common';
 import { FlightDetailsForm, ReservationDetailsForm } from '../../shared/types/form.types';
-import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardTitle,
+} from '@angular/material/card';
 import {
   AbstractControl,
   FormGroup,
@@ -40,6 +46,8 @@ import { ReservationDetailsFormComponent } from '../reservation-details/componen
     FlightDetailsFormComponent,
     ReservationDetailsFormComponent,
     ReactiveFormsModule,
+    MatCardActions,
+    TranslocoDirective,
   ],
   templateUrl: './flight-details-wrap.component.html',
   styleUrl: './flight-details-wrap.component.scss',

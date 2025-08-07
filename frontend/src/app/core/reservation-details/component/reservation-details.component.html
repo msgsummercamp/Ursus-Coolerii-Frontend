@@ -144,9 +144,6 @@
       </mat-form-field>
     </div>
 
-    @for (stopover of stopovers; track stopover) {
-      <p>{{ stopover.name }}</p>
-    }
     <div>
       <div class="dest-wrapper">
         <mat-form-field appearance="fill" class="dest">
@@ -184,8 +181,16 @@
           </div>
         }
       </div>
+      <button mat-flat-button (click)="addStopover()">Add stopover</button>
     </div>
 
-    <button mat-flat-button (click)="addStopover()">Add stopover</button>
+    @for (stopover of stopovers; track $index) {
+      <div class="stopover">
+        <p>{{ stopover.name }}</p>
+        <button mat-icon-button (click)="removeStopover($index)"
+          ><mat-icon>delete</mat-icon></button
+        >
+      </div>
+    }
   </form>
 </div>
