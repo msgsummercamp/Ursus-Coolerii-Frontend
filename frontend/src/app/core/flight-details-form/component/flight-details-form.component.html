@@ -59,50 +59,6 @@
           }}</mat-error>
         }
       </mat-form-field>
-
-      <mat-form-field class="time">
-        <mat-label>{{ 'flightDetails.plannedDepartureTime' | transloco }}</mat-label>
-        <input
-          matInput
-          [matTimepicker]="departureTimePicker"
-          formControlName="plannedDepartureTime"
-        />
-        <mat-timepicker-toggle matIconSuffix [for]="departureTimePicker" />
-        <mat-timepicker #departureTimePicker />
-        @if (flightForm.controls.plannedDepartureTime.errors?.['required']) {
-          <mat-error>{{
-            'flightDetails.error.plannedDepartureTime.required' | transloco
-          }}</mat-error>
-        }
-      </mat-form-field>
-    </div>
-
-    <div class="destDate">
-      <mat-form-field class="date">
-        <mat-label>{{ 'flightDetails.plannedArrivalDate' | transloco }}</mat-label>
-        <input
-          matInput
-          [matDatepicker]="arrivalDatePicker"
-          formControlName="plannedArrivalDate"
-          [min]="flightForm.get('plannedDepartureDate')?.value"
-        />
-        <mat-hint>DD/MM/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="arrivalDatePicker" />
-        <mat-datepicker #arrivalDatePicker />
-        @if (flightForm.controls.plannedArrivalDate.errors?.['required']) {
-          <mat-error>{{ 'flightDetails.error.plannedArrivalDate.required' | transloco }}</mat-error>
-        }
-      </mat-form-field>
-
-      <mat-form-field class="time">
-        <mat-label>{{ 'flightDetails.plannedArrivalTime' | transloco }}</mat-label>
-        <input matInput [matTimepicker]="arrivalTimePicker" formControlName="plannedArrivalTime" />
-        <mat-timepicker-toggle matIconSuffix [for]="arrivalTimePicker" />
-        <mat-timepicker #arrivalTimePicker />
-        @if (flightForm.controls.plannedArrivalTime.errors?.['required']) {
-          <mat-error>{{ 'flightDetails.error.plannedArrivalTime.required' | transloco }}</mat-error>
-        }
-      </mat-form-field>
     </div>
   </form>
 </div>

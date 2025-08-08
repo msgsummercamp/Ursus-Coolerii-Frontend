@@ -16,11 +16,6 @@ import {
   MatDatepickerInput,
   MatDatepickerToggle,
 } from '@angular/material/datepicker';
-import {
-  MatTimepicker,
-  MatTimepickerInput,
-  MatTimepickerToggle,
-} from '@angular/material/timepicker';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { startWith, Subject, takeUntil } from 'rxjs';
 import { AirlineAttributes, AirlineService } from '../service/airline.service';
@@ -44,9 +39,6 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatDatepickerToggle,
     MatDatepicker,
     MatSuffix,
-    MatTimepickerToggle,
-    MatTimepicker,
-    MatTimepickerInput,
     MatAutocomplete,
     MatAutocompleteTrigger,
     MatError,

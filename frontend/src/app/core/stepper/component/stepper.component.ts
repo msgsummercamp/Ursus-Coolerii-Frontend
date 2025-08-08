@@ -20,7 +20,7 @@ import { FlightDetailsWrapComponent } from '../../flight-details-wrap/flight-det
 import { DisruptiveFormComponent } from '../../disruptive-form/disruptive-form.component';
 import { AirportsService } from '../../flight-details-form/service/airport.service';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { ReservationDetailsFormComponent } from '../../reservation-details/component/reservation-details.component';
+import { ItineraryFormComponent } from '../../reservation-details/component/itinerary.component';
 
 const AIRPLANE_WIDTH = 40;
 const VERTICAL_OFFSET = -19;
@@ -40,7 +40,7 @@ const VERTICAL_OFFSET = -19;
     DocumentsFormComponent,
     FlightDetailsWrapComponent,
     DisruptiveFormComponent,
-    ReservationDetailsFormComponent,
+    ItineraryFormComponent,
   ],
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss',
@@ -74,7 +74,7 @@ export class StepperComponent implements AfterViewInit {
   protected disruptiveFormCompleted: Signal<boolean | undefined> = computed(() =>
     this.disruptiveFormComponent()?.isEligible()
   );
-  private reservationDetailsWrapComponent = viewChild(ReservationDetailsFormComponent);
+  private reservationDetailsWrapComponent = viewChild(ItineraryFormComponent);
   protected reservationDetailsFormCompleted: Signal<boolean | undefined> = computed(() =>
     this.reservationDetailsWrapComponent()?.isValid()
   );

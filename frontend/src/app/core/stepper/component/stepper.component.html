@@ -10,7 +10,7 @@
       <app-disruptive-form (next)="stepper.next()" />
     </mat-step>
     <mat-step [completed]="reservationDetailsFormCompleted()">
-      <ng-template matStepLabel>Reservation Details</ng-template>
+      <ng-template matStepLabel>Itinerary</ng-template>
       <app-reservation-details (next)="stepper.next()" (previous)="stepper.previous()" />
     </mat-step>
     <mat-step [completed]="flightDetailsFormCompleted()">

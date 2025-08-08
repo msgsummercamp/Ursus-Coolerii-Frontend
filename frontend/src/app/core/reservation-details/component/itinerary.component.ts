@@ -14,11 +14,6 @@ import {
   MatDatepickerInput,
   MatDatepickerToggle,
 } from '@angular/material/datepicker';
-import {
-  MatTimepicker,
-  MatTimepickerInput,
-  MatTimepickerToggle,
-} from '@angular/material/timepicker';
 import { delay, iif, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { ReservationDetailsForm } from '../../../shared/types/form.types';
 import { AirportAttributes } from '../../../shared/types/types';
@@ -44,8 +39,8 @@ const emptyAirport: AirportAttributes = {
 
 @Component({
   selector: 'app-reservation-details',
-  templateUrl: './reservation-details.component.html',
-  styleUrl: './reservation-details.component.scss',
+  templateUrl: './itinerary.component.html',
+  styleUrl: './itinerary.component.scss',
   imports: [
     ReactiveFormsModule,
     TranslocoPipe,
@@ -57,9 +52,6 @@ const emptyAirport: AirportAttributes = {
     MatDatepickerToggle,
     MatDatepicker,
     MatSuffix,
-    MatTimepickerToggle,
-    MatTimepicker,
-    MatTimepickerInput,
     MatError,
     ScrollingModule,
     MatButton,
@@ -73,7 +65,7 @@ const emptyAirport: AirportAttributes = {
     MatCardActions,
   ],
 })
-export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
+export class ItineraryFormComponent implements OnInit, OnDestroy {
   private airportService = inject(AirportsService);
   private stopoverService = inject(StopoverService);
 
@@ -91,13 +83,10 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
   private fb = inject(NonNullableFormBuilder);
 
   public reservationForm = this.fb.group<ReservationDetailsForm>({
-    reservationNumber: this.fb.control('', Validators.required),
     departingAirport: this.fb.control('', Validators.required),
     destinationAirport: this.fb.control('', Validators.required),
     plannedDepartureDate: this.fb.control(null, Validators.required),
     plannedArrivalDate: this.fb.control(null, Validators.required),
-    plannedDepartureTime: this.fb.control('', Validators.required),
-    plannedArrivalTime: this.fb.control('', Validators.required),
     stopover: this.fb.control(emptyAirport),
   });
 
@@ -151,6 +140,8 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
   }
 
   protected continue() {
+    this.stopoverService.setDepartureDate(this.reservationForm.controls.plannedDepartureDate.value);
+    this.stopoverService.setDestinationDate(this.reservationForm.controls.plannedArrivalDate.value);
     this.next.emit();
   }
   protected back() {

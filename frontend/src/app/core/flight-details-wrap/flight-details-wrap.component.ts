@@ -11,15 +11,7 @@ import {
   MatCardHeader,
   MatCardTitle,
 } from '@angular/material/card';
-import {
-  AbstractControl,
-  FormGroup,
-  NonNullableFormBuilder,
-  ReactiveFormsModule,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoadingSpinnerComponent } from '../loading-spinner/component/loading-spinner.component';
 import { StopoverService } from '../../shared/services/stopover.service';
 import { AirportAttributes } from '../../shared/types/types';
@@ -95,46 +87,15 @@ export class FlightDetailsWrapComponent {
     departingAirport: AirportAttributes,
     destinationAirport: AirportAttributes
   ): FormGroup<FlightDetailsForm> {
-    return this.fb.group<FlightDetailsForm>(
-      {
-        flightNr: this.fb.control('', [
-          Validators.required,
-          Validators.pattern('^[a-zA-Z]{2}[0-9]{1,4}$'),
-        ]),
-        airline: this.fb.control('', Validators.required),
-        departingAirport: this.fb.control(departingAirport),
-        destinationAirport: this.fb.control(destinationAirport),
-        plannedDepartureDate: this.fb.control(null, Validators.required),
-        plannedArrivalDate: this.fb.control(null, Validators.required),
-        plannedDepartureTime: this.fb.control('', Validators.required),
-        plannedArrivalTime: this.fb.control('', Validators.required),
-      },
-      { validators: this.departureBeforeArrivalValidator() }
-    );
-  }
-
-  private departureBeforeArrivalValidator(): ValidatorFn {
-    return (group: AbstractControl): ValidationErrors | null => {
-      const actualGroup = group as FormGroup<FlightDetailsForm>;
-
-      const depDate = actualGroup.controls.plannedDepartureDate.value;
-      const arrDate = actualGroup.controls.plannedArrivalDate.value;
-      const depTime = actualGroup.controls.plannedDepartureTime.value;
-      const arrTime = actualGroup.controls.plannedArrivalTime.value;
-      const depDateStr = depDate?.toISOString().split('T')[0];
-      const arrDateStr = arrDate?.toISOString().split('T')[0];
-
-      if (depDateStr === arrDateStr) {
-        const [depHour, depMin] = depTime.split(':').map(Number);
-        const [arrHour, arrMin] = arrTime.split(':').map(Number);
-        const depTotal = depHour * 60 + depMin;
-        const arrTotal = arrHour * 60 + arrMin;
-
-        if (depTotal >= arrTotal) {
-          return { departureAfterArrival: true };
-        }
-      }
-      return null;
-    };
+    return this.fb.group<FlightDetailsForm>({
+      flightNr: this.fb.control('', [
+        Validators.required,
+        Validators.pattern('^[a-zA-Z]{2}[0-9]{1,4}$'),
+      ]),
+      airline: this.fb.control('', Validators.required),
+      departingAirport: this.fb.control(departingAirport),
+      destinationAirport: this.fb.control(destinationAirport),
+      plannedDepartureDate: this.fb.control(null, Validators.required),
+    });
   }
 }

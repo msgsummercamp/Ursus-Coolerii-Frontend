@@ -5,12 +5,21 @@ type StopoverState = {
   departureAirport: AirportAttributes;
   destinationAirport: AirportAttributes;
   stopovers: AirportAttributes[];
+  departureDate: Date | null;
+  destinationDate: Date | null;
+};
+
+const emptyAirport: AirportAttributes = {
+  name: '',
+  iata: '',
 };
 
 const initialState: StopoverState = {
-  departureAirport: { name: '', iata: '' },
-  destinationAirport: { name: '', iata: '' },
+  departureAirport: emptyAirport,
+  destinationAirport: emptyAirport,
   stopovers: [],
+  departureDate: null,
+  destinationDate: null,
 };
 
 @Injectable({
@@ -52,6 +61,20 @@ export class StopoverService {
     this.stopoverSignal.update((stopoverState) => ({
       ...stopoverState,
       destinationAirport: airport,
+    }));
+  }
+
+  public setDepartureDate(date: Date | null) {
+    this.stopoverSignal.update((stopoverState) => ({
+      ...stopoverState,
+      departureDate: date,
+    }));
+  }
+
+  public setDestinationDate(date: Date | null) {
+    this.stopoverSignal.update((stopoverState) => ({
+      ...stopoverState,
+      destinationDate: date,
     }));
   }
 }
