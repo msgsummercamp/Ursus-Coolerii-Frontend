@@ -17,6 +17,10 @@ export type FlightDetailsForm = {
   plannedDepartureDate: FormControl<Date | null>;
 };
 
+export type UserDetailsForm = {
+  email: FormControl<string | null>;
+}
+
 export type PassengerDetailsForm = {
   firstName: FormControl<string>;
   lastName: FormControl<string>;

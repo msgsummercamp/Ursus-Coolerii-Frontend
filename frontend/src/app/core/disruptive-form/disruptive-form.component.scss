@@ -6,22 +6,11 @@
   align-items: center;
   overflow: hidden;
 
-  .disruptive-form-card {
-    form {
-      width: 100%;
-      overflow: auto;
-
-      .mat-mdc-form-field {
-        width: 100%;
-      }
-    }
-
-    .eligibility-message {
-      display: flex;
-      justify-content: center;
-      color: var(--mat-sys-primary);
-      font-weight: bold;
-      font-size: 1.2em;
-    }
+  .eligibility-message {
+    display: flex;
+    justify-content: center;
+    color: var(--mat-sys-primary);
+    font-weight: bold;
+    font-size: 1.2em;
   }
 }

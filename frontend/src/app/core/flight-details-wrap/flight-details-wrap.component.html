@@ -2,7 +2,7 @@
   <app-loading-spinner />
 }
 <div class="flight-form-wrapper-container">
-  <mat-card class="flight-form-wrapper-card special-mat-card">
+  <mat-card class="special-mat-card">
     <mat-card-header class="special-mat-header">
       <mat-card-title class="special-mat-title">Flight Details</mat-card-title>
     </mat-card-header>
@@ -16,8 +16,8 @@
       </div>
     </mat-card-content>
     <mat-card-actions *transloco="let translate" class="special-form-actions">
-      <button mat-flat-button (click)="back()">{{ translate('stepper.back') }}</button>
-      <button mat-flat-button [disabled]="!this.validForms()" (click)="continue()">
+      <button mat-stroked-button class="special-mat-sec-button" (click)="back()">{{ translate('stepper.back') }}</button>
+      <button mat-flat-button class="special-mat-prim-button" [disabled]="!this.validForms()" (click)="continue()">
         {{ translate('stepper.next') }}
       </button>
     </mat-card-actions>
