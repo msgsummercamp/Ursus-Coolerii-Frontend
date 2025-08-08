@@ -148,5 +148,19 @@
     "startButton": "Start"
   },
   "yes": "Da",
-  "no": "Nu"
+  "no": "Nu",
+  "caseList": {
+    "caseDate": "Data Cazului",
+    "flightNr": "Nr. Zbor",
+    "flightDepartureDate": "Data Plecării Zborului",
+    "flightArrivalDate": "Data Sosirii Zborului",
+    "passengerName": "Numele Pasagerului",
+    "colleague": "Angajat",
+    "status": {
+      "NOT_ASSIGNED": "Neatribuit",
+      "ASSIGNED": "Atribuit",
+      "ELIGIBLE": "Eligibil",
+      "NOT_ELIGIBLE": "Ineligibil"
+    }
+  }
 }
