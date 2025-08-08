@@ -18,7 +18,6 @@ import { PassengerDetailsFormComponent } from '../../passenger-details-form/pass
 import { DocumentsFormComponent } from '../../documents-form/documents-form.component';
 import { FlightDetailsWrapComponent } from '../../flight-details-wrap/flight-details-wrap.component';
 import { DisruptiveFormComponent } from '../../disruptive-form/disruptive-form.component';
-import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility/confirmation-eligibility.component';
 import {
   CaseDataWithFiles,
   DisruptionDetails,
@@ -29,6 +28,7 @@ import {
 import { UserDetailsComponent } from '../../user-details/user-details.component';
 import { AirportsService } from '../../flight-details-form/service/airport.service';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { ItineraryFormComponent } from '../../reservation-details/component/itinerary.component';
 
 const AIRPLANE_WIDTH = 40;
 const VERTICAL_OFFSET = -19;
@@ -48,8 +48,7 @@ const VERTICAL_OFFSET = -19;
     DocumentsFormComponent,
     FlightDetailsWrapComponent,
     DisruptiveFormComponent,
-    ConfirmationEligibilityComponent,
-    UserDetailsComponent,
+    ItineraryFormComponent,
   ],
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss',
@@ -82,6 +81,10 @@ export class StepperComponent implements AfterViewInit {
   private disruptiveFormComponent = viewChild(DisruptiveFormComponent);
   protected disruptiveFormCompleted: Signal<boolean | undefined> = computed(() =>
     this.disruptiveFormComponent()?.isEligible()
+  );
+  private reservationDetailsWrapComponent = viewChild(ItineraryFormComponent);
+  protected reservationDetailsFormCompleted: Signal<boolean | undefined> = computed(() =>
+    this.reservationDetailsWrapComponent()?.isValid()
   );
   private flightDetailsWrapComponent = viewChild(FlightDetailsWrapComponent);
   protected flightDetailsFormCompleted: Signal<boolean | undefined> = computed(() =>

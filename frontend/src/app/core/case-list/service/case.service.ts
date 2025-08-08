@@ -1,6 +1,6 @@
-import { computed, inject, Injectable, signal, Signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { finalize, Observable, retry, Subject, switchMap } from 'rxjs';
+import { finalize, retry, Subject, switchMap } from 'rxjs';
 import { Case } from '../../../shared/types/types';
 import { environment } from '../../../../environments/environment';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -17,7 +17,6 @@ const initialState: CaseState = {
 
 @Injectable({ providedIn: 'root' })
 export class CaseService {
-  public isLoading = computed(() => this.casesState().isLoading);
   private _fetchCases$ = new Subject<void>();
   private readonly casesState = signal(initialState);
   private httpClient = inject(HttpClient);

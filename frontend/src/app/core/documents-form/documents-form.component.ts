@@ -1,11 +1,15 @@
 import { Component, EventEmitter, inject, OnInit, Output, output, signal } from '@angular/core';
-import { FormControl, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatError } from '@angular/material/input';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatList, MatListItem } from '@angular/material/list';
 import { MatLine } from '@angular/material/core';
-import { Passenger } from '../../shared/types/types';
 import { translate, TranslocoDirective } from '@jsverse/transloco';
 import {
   MatCard,
@@ -53,12 +57,11 @@ export class DocumentsFormComponent implements OnInit {
 
   @Output() receiveMessage = new EventEmitter<File[]>();
 
-  passDataToParent()   {
+  passDataToParent() {
     const data = this.getFormRaw;
     if (!data) return;
     this.receiveMessage.emit(data);
   }
-
 
   public get getFormRaw() {
     return this.documentsFormGroup.getRawValue().files;

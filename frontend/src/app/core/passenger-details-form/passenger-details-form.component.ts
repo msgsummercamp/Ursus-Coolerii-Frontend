@@ -16,7 +16,7 @@ import {
 import { MatButton } from '@angular/material/button';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { PassengerDetailsForm } from '../../shared/types/form.types';
-import { Flight, Passenger } from '../../shared/types/types';
+import { Passenger } from '../../shared/types/types';
 import {
   MatCard,
   MatCardActions,
@@ -87,8 +87,7 @@ export class PassengerDetailsFormComponent implements OnInit {
   public get getFormRaw(): Passenger | null {
     const raw = this.passengerDetailsForm.getRawValue();
 
-    if(!raw.dateOfBirth)
-      return null;
+    if (!raw.dateOfBirth) return null;
 
     return {
       firstName: raw.firstName,
@@ -97,7 +96,7 @@ export class PassengerDetailsFormComponent implements OnInit {
       phoneNumber: raw.phoneNumber,
       address: raw.address,
       postalCode: raw.postalCode,
-    }
+    };
   }
 
   protected continue() {
