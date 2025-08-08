@@ -1,13 +1,13 @@
 <div class="disruptive-form-container">
-  <mat-card class="disruptive-form-card special-mat-card">
+  <mat-card class="special-mat-card">
     <mat-card-header class="special-mat-header">
       <mat-card-title class="special-mat-title">{{
         'disruptiveMotive.title' | transloco
       }}</mat-card-title>
     </mat-card-header>
     <mat-card-content class="special-mat-content">
-      <form [formGroup]="formDisruption">
-        <mat-form-field appearance="fill">
+      <form [formGroup]="formDisruption" class="special-form">
+        <mat-form-field appearance="fill" class="special-form-field">
           <mat-label>{{ 'disruptiveMotive.dropDownText' | transloco }}</mat-label>
           <mat-select formControlName="disruptionMotive">
             @for (motive of motives; track $index) {
@@ -21,7 +21,7 @@
           formDisruption.controls.disruptionMotive.value ===
           DisruptiveMotiveLabels[DisruptiveMotive.cancelation]
         ) {
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="fill" class="special-form-field">
             <mat-label>{{ 'disruptiveMotive.numberOfDaysLong' | transloco }}</mat-label>
             <input type="number" matInput min="0" formControlName="daysBeforeCancelation" />
           </mat-form-field>
@@ -29,7 +29,7 @@
           formDisruption.controls.disruptionMotive.value ===
           DisruptiveMotiveLabels[DisruptiveMotive.delay]
         ) {
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="fill" class="special-form-field">
             <mat-label>{{ 'disruptiveMotive.delayedHours' | transloco }}</mat-label>
             <input type="number" matInput min="0" formControlName="hoursLateArrival" />
           </mat-form-field>
@@ -37,7 +37,7 @@
           formDisruption.controls.disruptionMotive.value ===
           DisruptiveMotiveLabels[DisruptiveMotive.deniedBoarding]
         ) {
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="fill" class="special-form-field">
             <mat-label>{{ 'disruptiveMotive.seatGaveQuestion' | transloco }}</mat-label>
             <input
               type="text"
@@ -52,7 +52,7 @@
             </mat-autocomplete>
           </mat-form-field>
           @if (formDisruption.controls.gaveSeatVoluntarly.value === 'No') {
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="fill" class="special-form-field">
               <mat-label>{{ 'disruptiveMotive.reasonDeniedBoarding' | transloco }}</mat-label>
               <input
                 type="text"
@@ -74,7 +74,7 @@
           formDisruption.controls.disruptionMotive.value ===
             DisruptiveMotiveLabels[DisruptiveMotive.cancelation]
         ) {
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="fill" class="special-form-field">
             <mat-label>{{ 'disruptiveMotive.airlineMotiveIsMentioned' | transloco }}</mat-label>
             <mat-select formControlName="airlineMentionedMotive">
               @for (motive of [true, false]; track $index) {
@@ -85,7 +85,7 @@
             </mat-select>
           </mat-form-field>
           @if (formDisruption.controls.airlineMentionedMotive.value === true) {
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="fill" class="special-form-field">
               <mat-label>{{ 'disruptiveMotive.communicatedMotive' | transloco }}</mat-label>
               <mat-select formControlName="communicatedMotive">
                 @for (motive of airlineDeniedMotives; track $index) {
@@ -100,7 +100,12 @@
       </form>
     </mat-card-content>
     <mat-card-actions class="special-form-actions">
-      <button mat-flat-button [disabled]="!isEligible()" (click)="continue()">
+      <button
+        mat-flat-button
+        class="special-mat-prim-button"
+        [disabled]="!isEligible()"
+        (click)="continue()"
+      >
         {{ 'flightDetails.next' | transloco }}</button
       >
     </mat-card-actions>
