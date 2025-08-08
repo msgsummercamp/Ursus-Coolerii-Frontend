@@ -14,6 +14,7 @@ export type Case = {
   passengerName: string;
   status: CaseStatus;
   colleague?: string;
+};
 
 export type EligibilityRequest = {
   disruption: DisruptiveMotive | null;
@@ -26,4 +27,11 @@ export const DisruptiveMotiveLabels: Record<DisruptiveMotive, string> = {
   [DisruptiveMotive.cancelation]: 'Canceled',
   [DisruptiveMotive.deniedBoarding]: 'Denied Boarding',
   [DisruptiveMotive.delay]: 'Delayed',
+};
+
+export const CaseStatusLabels: Record<CaseStatus, string> = {
+  [CaseStatus.notAssigned]: 'Not Assigned',
+  [CaseStatus.assigned]: 'Assigned',
+  [CaseStatus.eligible]: 'Eligible',
+  [CaseStatus.notEligible]: 'Not Eligible',
 };

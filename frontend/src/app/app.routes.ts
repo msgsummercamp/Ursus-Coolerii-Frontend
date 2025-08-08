@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
-import { FlightDetailsWrapComponent } from './core/layout/flight-details-wrap/flight-details-wrap.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },

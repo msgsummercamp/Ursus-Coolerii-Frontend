@@ -151,6 +151,12 @@
     "flightDepartureDate": "Data Plecării Zborului",
     "flightArrivalDate": "Data Sosirii Zborului",
     "passengerName": "Numele Pasagerului",
-    "colleague": "Angajat"
+    "colleague": "Angajat",
+    "status": {
+      "NOT_ASSIGNED": "Neatribuit",
+      "ASSIGNED": "Atribuit",
+      "ELIGIBLE": "Eligibil",
+      "NOT_ELIGIBLE": "Ineligibil"
+    }
   }
 }

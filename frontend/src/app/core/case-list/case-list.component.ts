@@ -11,10 +11,10 @@ import {
   MatRowDef,
   MatTable,
 } from '@angular/material/table';
-// import { Case } from '../../shared/types/types';
 import { DatePipe } from '@angular/common';
 import { CaseService } from './service/case.service';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { CaseStatusLabels } from '../../shared/types/types';
 
 @Component({
   selector: 'app-case-list',
@@ -37,6 +37,8 @@ import { TranslocoPipe } from '@jsverse/transloco';
 })
 export class CaseListComponent implements OnInit {
   cases;
+  public statusList: string[];
+  protected readonly CaseStatusLabels = CaseStatusLabels;
 
   displayedColumns: string[] = [
     'caseId',
@@ -51,10 +53,11 @@ export class CaseListComponent implements OnInit {
 
   constructor(private caseService: CaseService) {
     this.cases = this.caseService.casesSignal;
+    this.statusList = Object.values(CaseStatusLabels);
   }
 
   ngOnInit() {
     this.caseService.fetchCases();
-    console.log('Cases loaded:', this.cases);
+    this.statusList = Object.values(CaseStatusLabels);
   }
 }

@@ -146,8 +146,14 @@
     "flightDepartureDate": "Flight Departure Date",
     "flightArrivalDate": "Flight Arrival Date",
     "passengerName": "Passenger Name",
-    "colleague": "Employee"
-  }
+    "colleague": "Employee",
+    "status": {
+      "NOT_ASSIGNED": "Not Assigned",
+      "ASSIGNED": "Assigned",
+      "ELIGIBLE": "Eligible",
+      "NOT_ELIGIBLE": "Not Eligible"
+    }
+  },
   "home": {
     "title": "Air Assist",
     "subtitle": "Fill in the form to claim your compensation",
