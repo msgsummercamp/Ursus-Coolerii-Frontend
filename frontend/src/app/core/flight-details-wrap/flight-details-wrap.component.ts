@@ -61,14 +61,21 @@ export class FlightDetailsWrapComponent implements OnInit {
   protected _isValid = signal(false);
 
   protected connectingFlights = computed(() => {
-    const stopovers = this.stopoverService.stopoverState().stopovers;
+    const airports = [
+      this.stopoverService.stopoverState().departureAirport,
+      ...this.stopoverService.stopoverState().stopovers,
+      this.stopoverService.stopoverState().destinationAirport,
+    ];
 
     const forms: FormGroup<FlightDetailsForm>[] = [];
 
-    stopovers.forEach((airport) => {
-      let newForm = this.createForm(airport.name, airport.name);
+    for (let i = 0; i < airports.length - 1; i += 1) {
+      let currentAirport = airports[i];
+      let nextAirport = airports[i + 1];
+      let newForm = this.createForm(currentAirport.name, nextAirport.name);
       forms.push(newForm);
-    });
+    }
+
     return forms;
   });
 

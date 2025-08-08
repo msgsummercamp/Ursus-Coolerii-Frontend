@@ -30,10 +30,16 @@
             @if (showDepartDropdown && filteredDepartAirports.length) {
               <div class="custom-dropdown absolute" (mousedown)="$event.preventDefault()">
                 <cdk-virtual-scroll-viewport
-                  itemSize="32"
+                  itemSize="filteredDepartAirports.length === 1 && isLongAirportName(filteredDepartAirports[0].name) ? 64 : 32"
                   class="airport-list"
                   [style.height.px]="
-                    filteredDepartAirports.length > 4 ? 192 : filteredDepartAirports.length * 32
+                    filteredDepartAirports.length > 4
+                      ? 192
+                      : filteredDepartAirports.length *
+                        (filteredDepartAirports.length === 1 &&
+                        isLongAirportName(filteredDepartAirports[0].name)
+                          ? 64
+                          : 32)
                   "
                 >
                   <div
@@ -67,10 +73,18 @@
             @if (showDestDropdown && filteredDestAirports.length) {
               <div class="custom-dropdown absolute" (mousedown)="$event.preventDefault()">
                 <cdk-virtual-scroll-viewport
-                  itemSize="32"
+                  itemSize="filteredDestAirports.length === 1 && isLongAirportName(filteredDestAirports[0].name)
+        ? 64
+        : 32"
                   class="airport-list"
                   [style.height.px]="
-                    filteredDestAirports.length > 4 ? 192 : filteredDestAirports.length * 32
+                    filteredDestAirports.length > 4
+                      ? 192
+                      : filteredDestAirports.length *
+                        (filteredDestAirports.length === 1 &&
+                        isLongAirportName(filteredDestAirports[0].name)
+                          ? 64
+                          : 32)
                   "
                 >
                   <div
@@ -177,10 +191,18 @@
             @if (showStopoverDropdown && filteredStopoverAirports.length) {
               <div class="custom-dropdown absolute" (mousedown)="$event.preventDefault()">
                 <cdk-virtual-scroll-viewport
-                  itemSize="32"
+                  itemSize="filteredStopoverAirports.length === 1 && isLongAirportName(filteredStopoverAirports[0].name)
+        ? 64
+        : 32"
                   class="airport-list"
                   [style.height.px]="
-                    filteredStopoverAirports.length > 4 ? 192 : filteredStopoverAirports.length * 32
+                    filteredStopoverAirports.length > 4
+                      ? 192
+                      : filteredStopoverAirports.length *
+                        (filteredStopoverAirports.length === 1 &&
+                        isLongAirportName(filteredStopoverAirports[0].name)
+                          ? 64
+                          : 32)
                   "
                 >
                   <div

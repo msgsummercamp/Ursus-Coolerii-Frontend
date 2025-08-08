@@ -186,11 +186,13 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
   public selectDepartAirport(name: string) {
     this.reservationForm.controls.departingAirport.setValue(name);
     this.showDepartDropdown = false;
+    this.stopoverService.setDepartureAirport({ name: name, iata: '' });
   }
 
   public selectDestAirport(name: string) {
     this.reservationForm.controls.destinationAirport.setValue(name);
     this.showDestDropdown = false;
+    this.stopoverService.setDestinationAirport({ name: name, iata: '' });
   }
 
   public selectStopoverAirport(name: string) {
@@ -222,4 +224,8 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
   }
 
   protected readonly translate = translate;
+
+  public isLongAirportName(name: string): boolean {
+    return name.length > 35 || name.includes('\n');
+  }
 }

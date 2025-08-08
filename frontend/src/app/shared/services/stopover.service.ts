@@ -2,14 +2,14 @@ import { Injectable, signal } from '@angular/core';
 import { AirportAttributes } from '../types/types';
 
 type StopoverState = {
-  departureAirport: AirportAttributes | null;
-  arrivalAirport: AirportAttributes | null;
+  departureAirport: AirportAttributes;
+  destinationAirport: AirportAttributes;
   stopovers: AirportAttributes[];
 };
 
 const initialState: StopoverState = {
-  departureAirport: null,
-  arrivalAirport: null,
+  departureAirport: { name: '', iata: '' },
+  destinationAirport: { name: '', iata: '' },
   stopovers: [],
 };
 
@@ -39,5 +39,19 @@ export class StopoverService {
 
   private filteredStopovers(stopoverIndex: number) {
     return this.stopoverSignal().stopovers.filter((_, index) => index !== stopoverIndex);
+  }
+
+  public setDepartureAirport(airport: AirportAttributes) {
+    this.stopoverSignal.update((stopoverState) => ({
+      ...stopoverState,
+      departureAirport: airport,
+    }));
+  }
+
+  public setDestinationAirport(airport: AirportAttributes) {
+    this.stopoverSignal.update((stopoverState) => ({
+      ...stopoverState,
+      destinationAirport: airport,
+    }));
   }
 }
