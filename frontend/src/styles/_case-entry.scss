@@ -17,11 +17,36 @@
   .special-mat-content {
     overflow: auto;
     padding: 0.75rem;
+
+    .special-mat-sec-button {
+      background: var(--mat-sys-primary-container);
+    }
   }
 
   .special-form-actions {
     justify-content: flex-end;
     gap: 0.5rem;
     padding: 1rem 0.5rem;
+
+    .special-mat-prim-button {
+      background: var(--mat-sys-primary);
+
+      &[disabled] {
+        opacity: 0.3;
+      }
+    }
+
+    .special-mat-sec-button {
+      background: var(--mat-sys-primary-container);
+    }
+  }
+
+  .special-form {
+    width: 100%;
+    overflow: auto;
+
+    .special-form-field {
+      width: 100%;
+    }
   }
 }

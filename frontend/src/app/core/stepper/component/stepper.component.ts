@@ -20,6 +20,7 @@ import { FlightDetailsWrapComponent } from '../../flight-details-wrap/flight-det
 import { DisruptiveFormComponent } from '../../disruptive-form/disruptive-form.component';
 import { AirportsService } from '../../flight-details-form/service/airport.service';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility/confirmation-eligibility.component';
 
 const AIRPLANE_WIDTH = 40;
 const VERTICAL_OFFSET = -19;
@@ -39,6 +40,7 @@ const VERTICAL_OFFSET = -19;
     DocumentsFormComponent,
     FlightDetailsWrapComponent,
     DisruptiveFormComponent,
+    ConfirmationEligibilityComponent,
   ],
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss',

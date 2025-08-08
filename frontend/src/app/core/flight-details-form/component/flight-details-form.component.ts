@@ -214,4 +214,8 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
     this.flightForm.controls.destinationAirport.setValue(name);
     this.showDestDropdown = false;
   }
+
+  public isLongAirportName(name: string): boolean {
+    return name.length > 35 || name.includes('\n');
+  }
 }
