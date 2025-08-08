@@ -159,11 +159,8 @@
     "title": "Air Assist",
     "subtitle": "Fill in the form to claim your compensation",
     "startButton": "Start"
-  }
   },
   "userDetails": {
     "title": "User details"
-  },
-  "yes": "Yes",
-  "no": "No"
+  }
 }
