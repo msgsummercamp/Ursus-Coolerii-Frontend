@@ -4,6 +4,13 @@ export enum DisruptiveMotive {
   delay = 'DELAY',
 }
 
+export enum CaseStatus {
+  notAssigned = 'NOT_ASSIGNED',
+  assigned = 'ASSIGNED',
+  eligible = 'ELIGIBLE',
+  notEligible = 'NOT_ELIGIBLE',
+}
+
 export enum DeniedBoardingMotive {
   overBooked = 'Flight overbooked',
   aggresive = 'Aggressive behavior with staff',

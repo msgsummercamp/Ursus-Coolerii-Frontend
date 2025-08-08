@@ -29,7 +29,7 @@ export class DisruptiveFormService {
     });
   }
 
-  private getDisruptionMotive(form: FormGroup<DisruptiveMotiveForm>): DisruptiveMotive | null {
+  public getDisruptionMotive(form: FormGroup<DisruptiveMotiveForm>): DisruptiveMotive | null {
     const motiveLabel = form.controls.disruptionMotive.value;
     const entry = Object.entries(DisruptiveMotiveLabels).find(
       ([key, label]) => label === motiveLabel
