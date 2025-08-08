@@ -101,6 +101,11 @@
             <textarea matInput></textarea>
           </mat-form-field>
         }
+        @if(formDisruption.controls.disruptionMotive.value !== null && formDisruption.controls.disruptionMotive.value !== '') {
+            <p class="eligibility-message">{{
+                'disruptiveMotive.' + toCamelCase(eligibleText()) | transloco
+              }}</p>
+        }
       </form>
     </mat-card-content>
     <mat-card-actions class="special-form-actions">
@@ -108,8 +113,5 @@
         {{ 'flightDetails.next' | transloco }}</button
       >
     </mat-card-actions>
-    <p class="eligibility-message">{{
-      'disruptiveMotive.' + toCamelCase(eligibleText()) | transloco
-    }}</p>
   </mat-card>
 </div>
