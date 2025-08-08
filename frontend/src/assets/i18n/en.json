@@ -98,7 +98,8 @@
     "flight-details": "Flight Details",
     "passenger-details": "Passenger Details",
     "documents": "Documents",
-    "done": "Done",
+    "userDetails": "User Details",
+    "done": "Submit",
     "next": "Next",
     "back": "Back",
     "reset": "Reset",
@@ -142,6 +143,9 @@
     "title": "Air Assist",
     "subtitle": "Fill in the form to claim your compensation",
     "startButton": "Start"
+  },
+  "userDetails": {
+    "title": "User details"
   },
   "yes": "Yes",
   "no": "No"

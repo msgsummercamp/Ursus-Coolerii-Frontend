@@ -1,0 +1,30 @@
+<mat-card class="special-mat-card">
+  <mat-card-header class="special-mat-header">
+    <mat-card-title class="special-mat-title">{{ translate('userDetails.title') }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="special-mat-content">
+    <form [formGroup]="form">
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          type="text"
+          id="firstName"
+          email
+        />
+        </mat-form-field>
+      @if(emailExists()){
+        <mat-error>Email already exists!</mat-error>
+      }
+      <mat-card-actions class="special-form-actions">
+      <button (click)="back()" mat-flat-button>
+        {{ translate('stepper.back')}}
+      </button>
+      <button (click)="continue()" mat-flat-button [disabled]="!isValid()">
+        {{ translate('stepper.next') }}
+      </button>
+    </mat-card-actions>
+    </form>
+  </mat-card-content>
+</mat-card>

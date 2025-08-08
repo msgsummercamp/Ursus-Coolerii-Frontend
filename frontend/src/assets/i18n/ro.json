@@ -98,7 +98,8 @@
     "flight-details": "Detalii Zbor",
     "passenger-details": "Detalii Pasager",
     "documents": "Documente",
-    "done": "Gata",
+    "userDetails": "Detaliile utilizatorului",
+    "done": "Trimite",
     "next": "Mai departe",
     "back": "Înapoi",
     "reset": "Resetează",
@@ -137,6 +138,9 @@
     "unspecifiedReason": "Motiv nespecificat",
     "eligible": "Eligibil",
     "notEligible": "Ineligibil"
+  },
+  "userDetails": {
+    "title": "Detaliile utilizatorului"
   },
   "home": {
     "title": "Air Assist",

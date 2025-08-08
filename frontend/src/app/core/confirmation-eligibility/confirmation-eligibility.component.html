@@ -1,7 +1,43 @@
-<div class="center-container">
-  <div class="message-box">
-    <app-disruptive-form class="child-comp"></app-disruptive-form>
-    <p>{{ eligibleMessage() }}</p>
-    <button mat-button [disabled]="!isEligible()">Submit</button>
-  </div>
-</div>
+<mat-card class="special-mat-card">
+  @if(!saved()){
+    <mat-card-header class="special-mat-header">
+    <mat-card-title  class="special-mat-title">Almost done</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="special-mat-content">
+      <p>{{ eligibleMessage() }}</p>
+      <a mat-raised-button color="primary" href="assets/UrsusCooleriiGDPR.pdf" download>
+        Download GDPR file
+      </a>
+      <mat-checkbox [(ngModel)]="agreed" class="checkbox">
+        I agree to the terms in the GDPR file
+      </mat-checkbox>
+        <mat-error>
+          {{ this.saveError()}}
+        </mat-error>
+        <mat-card-actions class="special-form-actions">
+          <button mat-flat-button (click)="back()">
+            {{ translate('stepper.back') }}
+          </button>
+          <button
+            mat-flat-button
+            color="primary"
+            (click)="submit()"
+            [disabled]="!isEligible() || !agreed">
+            {{ translate('stepper.done') }}
+          </button>
+        </mat-card-actions>
+      </mat-card-content>
+      <mat-label>{{ rewardMessage }}</mat-label>
+
+  } @else {
+      <mat-card-header class="special-mat-header">
+        <mat-card-title  class="special-mat-title">Your case has been submited</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="special-mat-content">
+          <mat-card class="special-mat-card">
+              <mat-card-subtitle>Your case has been registered and is currently under review</mat-card-subtitle>
+              <mat-label>A mail has been sent with to your associated email account with your password, and case info</mat-label>
+          </mat-card>
+      </mat-card-content>
+    }
+</mat-card>
