@@ -15,6 +15,7 @@ import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } fr
 import { LoadingSpinnerComponent } from '../loading-spinner/component/loading-spinner.component';
 import { StopoverService } from '../../shared/services/stopover.service';
 import { AirportAttributes } from '../../shared/types/types';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-flight-details-wrap',
@@ -36,6 +37,7 @@ import { AirportAttributes } from '../../shared/types/types';
     ReactiveFormsModule,
     MatCardActions,
     TranslocoDirective,
+    MatCheckbox,
   ],
   templateUrl: './flight-details-wrap.component.html',
   styleUrl: './flight-details-wrap.component.scss',
@@ -97,5 +99,15 @@ export class FlightDetailsWrapComponent {
       destinationAirport: this.fb.control(destinationAirport),
       plannedDepartureDate: this.fb.control(null, Validators.required),
     });
+  }
+
+  protected updateProblemFlight(index?: number) {
+    if (index != undefined) {
+      this.stopoverService.setProblemFlight(index);
+    }
+  }
+
+  protected get problemFlightIndex() {
+    return this.stopoverService.stopoverState().problemFlightIndex;
   }
 }

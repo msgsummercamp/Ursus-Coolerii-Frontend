@@ -7,6 +7,7 @@ type StopoverState = {
   stopovers: AirportAttributes[];
   departureDate: Date | null;
   destinationDate: Date | null;
+  problemFlightIndex: number;
 };
 
 const emptyAirport: AirportAttributes = {
@@ -20,6 +21,7 @@ const initialState: StopoverState = {
   stopovers: [],
   departureDate: null,
   destinationDate: null,
+  problemFlightIndex: 0,
 };
 
 @Injectable({
@@ -75,6 +77,13 @@ export class StopoverService {
     this.stopoverSignal.update((stopoverState) => ({
       ...stopoverState,
       destinationDate: date,
+    }));
+  }
+
+  public setProblemFlight(index: number) {
+    this.stopoverSignal.update((stopoverState) => ({
+      ...stopoverState,
+      problemFlightIndex: index,
     }));
   }
 }

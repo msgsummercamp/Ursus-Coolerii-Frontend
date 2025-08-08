@@ -10,6 +10,9 @@
       <div *ngFor="let flight of connectingFlights(); let i = index">
         <h2 class="mat-headline-5">{{ 'connecting-flight.title' | transloco }} #{{ i + 1 }}</h2>
         <app-flight-details-form [flightForm]="flight" />
+        <mat-checkbox [checked]="problemFlightIndex === i" (change)="updateProblemFlight(i)"
+          >Problem flight?</mat-checkbox
+        >
       </div>
     </mat-card-content>
     <mat-card-actions *transloco="let translate" class="special-form-actions">
