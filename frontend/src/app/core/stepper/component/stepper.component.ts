@@ -176,6 +176,7 @@ export class StepperComponent implements AfterViewInit {
   airplaneTop = 0;
   activeStep = 0;
   isBackward = false;
+  airplaneReady = false;
   animationParams = {
     fromLeft: 0,
     fromTop: 0,
@@ -188,6 +189,7 @@ export class StepperComponent implements AfterViewInit {
     setTimeout(() => {
       this.cacheStepHeaderPositions();
       this.setInitialAirplanePosition();
+      this.airplaneReady = true;
     });
   }
 
