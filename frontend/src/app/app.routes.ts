@@ -3,7 +3,12 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { ConfirmationEligibilityComponent } from './core/confirmation-eligibility/confirmation-eligibility.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/form', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  {
+    path: 'home',
+    loadComponent: () =>
+      import('./core/home-page/home-page.component').then((m) => m.HomePageComponent),
+  },
   {
     path: 'form',
     loadComponent: () =>
