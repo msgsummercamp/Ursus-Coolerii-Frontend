@@ -45,7 +45,7 @@
                   <div
                     class="dropdown-option"
                     *cdkVirtualFor="let airport of filteredDepartAirports"
-                    (mousedown)="selectDepartAirport(airport.name)"
+                    (mousedown)="selectDepartAirport(airport)"
                   >
                     <div class="list-item">
                       {{ airport.name }}
@@ -90,7 +90,7 @@
                   <div
                     class="dropdown-option"
                     *cdkVirtualFor="let airport of filteredDestAirports"
-                    (mousedown)="selectDestAirport(airport.name)"
+                    (mousedown)="selectDestAirport(airport)"
                   >
                     <div class="list-item">
                       {{ airport.name }}
@@ -183,7 +183,7 @@
                 (focus)="showStopoverDropdown = true"
                 (input)="onStopoverInput($any($event.target).value)"
                 (blur)="hideStopoverDropdownWithDelay()"
-                formControlName="stopover"
+                [value]="stopoverDisplayValue()"
                 autocomplete="on"
                 placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
               />
@@ -208,7 +208,7 @@
                   <div
                     class="dropdown-option"
                     *cdkVirtualFor="let airport of filteredStopoverAirports"
-                    (mousedown)="selectStopoverAirport(airport.name)"
+                    (mousedown)="selectStopoverAirport(airport)"
                   >
                     <div class="list-item">
                       {{ airport.name }}

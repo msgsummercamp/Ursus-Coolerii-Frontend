@@ -72,6 +72,8 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
   private airportService = inject(AirportsService);
   private stopoverService = inject(StopoverService);
 
+  protected stopoverDisplayValue = signal('');
+
   private onDestroy$ = new Subject<void>();
 
   public showDepartDropdown = false;
@@ -91,7 +93,7 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
     plannedArrivalDate: this.fb.control(null, Validators.required),
     plannedDepartureTime: this.fb.control('', Validators.required),
     plannedArrivalTime: this.fb.control('', Validators.required),
-    stopover: this.fb.control(''),
+    stopover: this.fb.control({ name: '', iata: '' }),
   });
 
   private readonly _isValid = signal(false);
@@ -130,6 +132,8 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
     this.reservationForm.statusChanges.subscribe((status) => {
       this._isValid.set(status === 'VALID');
     });
+
+    this.reservationForm.controls.stopover.setValue({ name: '', iata: '' });
 
     this.reservationForm.controls.departingAirport.valueChanges
       .pipe(takeUntil(this.onDestroy$))
@@ -183,37 +187,39 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
     setTimeout(() => (this.showStopoverDropdown = false), 200);
   }
 
-  public selectDepartAirport(name: string) {
-    this.reservationForm.controls.departingAirport.setValue(name);
+  public selectDepartAirport(airport: AirportAttributes) {
+    this.reservationForm.controls.departingAirport.setValue(airport.name);
     this.showDepartDropdown = false;
-    this.stopoverService.setDepartureAirport({ name: name, iata: '' });
+    this.stopoverService.setDepartureAirport(airport);
   }
 
-  public selectDestAirport(name: string) {
-    this.reservationForm.controls.destinationAirport.setValue(name);
+  public selectDestAirport(airport: AirportAttributes) {
+    this.reservationForm.controls.destinationAirport.setValue(airport.name);
     this.showDestDropdown = false;
-    this.stopoverService.setDestinationAirport({ name: name, iata: '' });
+    this.stopoverService.setDestinationAirport(airport);
   }
 
-  public selectStopoverAirport(name: string) {
-    this.reservationForm.controls.stopover.setValue(name);
+  public selectStopoverAirport(airport: AirportAttributes) {
+    this.reservationForm.controls.stopover.setValue(airport);
+    this.stopoverDisplayValue.set(airport.name);
     this.showStopoverDropdown = false;
   }
 
   protected addStopover() {
     if (this.stopoverService.stopoverState().stopovers.length < 3) {
-      let airportToAdd = this.getStopoverAirport();
-      if (airportToAdd) {
-        this.stopoverService.addStopover(airportToAdd);
-      }
+      // let airportToAdd = this.getStopoverAirport();
+      // if (airportToAdd) {
+      //   this.stopoverService.addStopover(airportToAdd);
+      // }
+      this.stopoverService.addStopover(this.reservationForm.controls.stopover.value);
     }
   }
 
-  private getStopoverAirport() {
-    return this.filteredStopoverAirports.find(
-      (airport) => airport.name === this.reservationForm.controls.stopover.value
-    );
-  }
+  // private getStopoverAirport() {
+  //   return this.filteredStopoverAirports.find(
+  //     (airport) => airport.name === this.reservationForm.controls.stopover.value
+  //   );
+  // }
 
   protected removeStopover(stopoverIndex: number) {
     this.stopoverService.removeStopover(stopoverIndex);
