@@ -148,6 +148,11 @@
     "eligible": "Your flight is eligible for compensation",
     "notEligible": "Your flight is not eligible for compensation"
   },
+  "home": {
+    "title": "Air Assist",
+    "subtitle": "Fill in the form to claim your compensation",
+    "startButton": "Start"
+  },
   "yes": "Yes",
   "no": "No"
 }

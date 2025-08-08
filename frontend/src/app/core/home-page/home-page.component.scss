@@ -1,0 +1,32 @@
+.home-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: var(--mat-sys-tertiary-container);
+}
+
+.home-card {
+  width: 100%;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1a3547;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: #1a3547;
+  text-align: center;
+}
+
+.special-form-actions {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
