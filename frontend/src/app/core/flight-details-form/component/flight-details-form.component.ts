@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnDestroy, OnInit, output, signal } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit, output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgForOf } from '@angular/common';
@@ -64,17 +64,10 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
 
   @Input() flightForm!: FormGroup<FlightDetailsForm>;
 
-  public searchValue = signal('');
   public readonly next = output<void>();
   public readonly previous = output<void>();
 
   ngOnInit(): void {
-    this.flightForm.controls.departingAirport.valueChanges
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe((value: string) => {
-        this.searchValue.set(value || '');
-      });
-
     this.subscribeToFetchAirlines();
     this.subscribeToAirlineAutocomplete();
   }

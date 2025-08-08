@@ -133,8 +133,6 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
       this._isValid.set(status === 'VALID');
     });
 
-    this.reservationForm.controls.stopover.setValue({ name: '', iata: '' });
-
     this.reservationForm.controls.departingAirport.valueChanges
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((value: string) => {
@@ -207,19 +205,9 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
 
   protected addStopover() {
     if (this.stopoverService.stopoverState().stopovers.length < 3) {
-      // let airportToAdd = this.getStopoverAirport();
-      // if (airportToAdd) {
-      //   this.stopoverService.addStopover(airportToAdd);
-      // }
       this.stopoverService.addStopover(this.reservationForm.controls.stopover.value);
     }
   }
-
-  // private getStopoverAirport() {
-  //   return this.filteredStopoverAirports.find(
-  //     (airport) => airport.name === this.reservationForm.controls.stopover.value
-  //   );
-  // }
 
   protected removeStopover(stopoverIndex: number) {
     this.stopoverService.removeStopover(stopoverIndex);

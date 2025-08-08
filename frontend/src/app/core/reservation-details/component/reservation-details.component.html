@@ -191,9 +191,7 @@
             @if (showStopoverDropdown && filteredStopoverAirports.length) {
               <div class="custom-dropdown absolute" (mousedown)="$event.preventDefault()">
                 <cdk-virtual-scroll-viewport
-                  itemSize="filteredStopoverAirports.length === 1 && isLongAirportName(filteredStopoverAirports[0].name)
-        ? 64
-        : 32"
+                  itemSize="filteredStopoverAirports.length === 1 && isLongAirportName(filteredStopoverAirports[0].name) ? 64 : 32"
                   class="airport-list"
                   [style.height.px]="
                     filteredStopoverAirports.length > 4

@@ -23,6 +23,7 @@ import {
 import { Subscription } from 'rxjs';
 import { LoadingSpinnerComponent } from '../loading-spinner/component/loading-spinner.component';
 import { StopoverService } from '../../shared/services/stopover.service';
+import { AirportAttributes } from '../../shared/types/types';
 
 @Component({
   selector: 'app-flight-details-wrap',
@@ -72,7 +73,7 @@ export class FlightDetailsWrapComponent implements OnInit {
     for (let i = 0; i < airports.length - 1; i += 1) {
       let currentAirport = airports[i];
       let nextAirport = airports[i + 1];
-      let newForm = this.createForm(currentAirport.name, nextAirport.name);
+      let newForm = this.createForm(currentAirport, nextAirport);
       forms.push(newForm);
     }
 
@@ -111,11 +112,9 @@ export class FlightDetailsWrapComponent implements OnInit {
 
   private updateValidity() {
     let allValid: boolean;
-    if (this.connectingFlights.length < 1) {
-      allValid = false;
-    } else {
-      allValid = this.connectingFlights().every((f) => f.valid);
-    }
+
+    allValid = this.connectingFlights().every((f) => f.valid);
+
     this._isValid.set(allValid);
   }
 
@@ -126,8 +125,8 @@ export class FlightDetailsWrapComponent implements OnInit {
   }
 
   private createForm(
-    departingAirport: string,
-    destinationAirport: string
+    departingAirport: AirportAttributes,
+    destinationAirport: AirportAttributes
   ): FormGroup<FlightDetailsForm> {
     return this.fb.group<FlightDetailsForm>(
       {
