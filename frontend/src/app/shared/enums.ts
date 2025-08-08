@@ -15,6 +15,7 @@ export enum AirlineMotives {
   tehnical = 'Tehnical Problems',
   meteorological = 'Meteorological conditions',
   strike = 'Strike problems with airport',
+  airportProb = 'Airport problems',
   crew = 'Crew problems',
   other = 'Other motives',
 }
