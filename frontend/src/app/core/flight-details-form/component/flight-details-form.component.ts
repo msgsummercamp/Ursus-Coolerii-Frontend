@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnDestroy, OnInit, output } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit, output, signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgForOf } from '@angular/common';
@@ -56,6 +56,9 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   private airlineService = inject(AirlineService);
 
+  private readonly _isValid = signal(false);
+  public isValid = this._isValid.asReadonly();
+
   private airlines: AirlineAttributes[] = [];
 
   private onDestroy$ = new Subject<void>();
@@ -68,6 +71,9 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   public readonly previous = output<void>();
 
   ngOnInit(): void {
+    this.flightForm.statusChanges.subscribe((status) => {
+      this._isValid.set(status === 'VALID');
+    });
     this.subscribeToFetchAirlines();
     this.subscribeToAirlineAutocomplete();
   }

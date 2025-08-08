@@ -1,9 +1,9 @@
-import { Component, computed, inject, OnInit, output, signal } from '@angular/core';
+import { Component, computed, inject, output, signal, viewChildren } from '@angular/core';
 import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { FlightDetailsFormComponent } from '../flight-details-form/component/flight-details-form.component';
 import { NgForOf } from '@angular/common';
-import { FlightDetailsForm, ReservationDetailsForm } from '../../shared/types/form.types';
+import { FlightDetailsForm } from '../../shared/types/form.types';
 import {
   MatCard,
   MatCardActions,
@@ -20,7 +20,6 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { LoadingSpinnerComponent } from '../loading-spinner/component/loading-spinner.component';
 import { StopoverService } from '../../shared/services/stopover.service';
 import { AirportAttributes } from '../../shared/types/types';
@@ -49,17 +48,22 @@ import { AirportAttributes } from '../../shared/types/types';
   templateUrl: './flight-details-wrap.component.html',
   styleUrl: './flight-details-wrap.component.scss',
 })
-export class FlightDetailsWrapComponent implements OnInit {
+export class FlightDetailsWrapComponent {
   private stopoverService = inject(StopoverService);
-
   private fb = inject(NonNullableFormBuilder);
-  private subscriptions: Subscription[] = [];
+
+  private flightFormComponents = viewChildren(FlightDetailsFormComponent);
 
   protected readonly next = output<void>();
   protected readonly previous = output<void>();
+
   protected isLoading = signal(false);
 
-  protected _isValid = signal(false);
+  public validForms = computed(() =>
+    this.flightFormComponents()
+      .map((form) => form.isValid())
+      .every((value) => value)
+  );
 
   protected connectingFlights = computed(() => {
     const airports = [
@@ -80,48 +84,11 @@ export class FlightDetailsWrapComponent implements OnInit {
     return forms;
   });
 
-  public validForms = computed(() => this._isValid());
-
   protected continue() {
     this.next.emit();
   }
   protected back() {
     this.previous.emit();
-  }
-
-  constructor() {
-    this.connectingFlights().forEach((form) => {
-      this.subscribeToNewForm(form);
-      this.subscribeToForms();
-    });
-  }
-
-  ///TODO : unsubscribes
-  ngOnInit(): void {
-    this.subscribeToForms();
-  }
-
-  private subscribeToForms() {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
-    this.subscriptions = [];
-    this.connectingFlights().forEach((f) => {
-      this.subscribeToNewForm(f);
-    });
-    this.updateValidity();
-  }
-
-  private updateValidity() {
-    let allValid: boolean;
-
-    allValid = this.connectingFlights().every((f) => f.valid);
-
-    this._isValid.set(allValid);
-  }
-
-  private subscribeToNewForm(
-    formToSub: FormGroup<FlightDetailsForm> | FormGroup<ReservationDetailsForm>
-  ): void {
-    this.subscriptions.push(formToSub.statusChanges.subscribe(() => this.updateValidity()));
   }
 
   private createForm(
