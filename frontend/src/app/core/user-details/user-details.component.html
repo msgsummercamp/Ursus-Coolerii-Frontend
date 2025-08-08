@@ -14,14 +14,17 @@
           email
         />
         </mat-form-field>
+      @if(emailExists()){
+        <mat-error>Email already exists!</mat-error>
+      }
       <mat-card-actions class="special-form-actions">
-        <button (click)="back()" mat-flat-button>
-          {{ translate('stepper.back')}}
-        </button>
-        <button (click)="continue()" mat-flat-button [disabled]="!form.valid">
-          {{ translate('stepper.next') }}
-        </button>
-      </mat-card-actions>
+      <button (click)="back()" mat-flat-button>
+        {{ translate('stepper.back')}}
+      </button>
+      <button (click)="continue()" mat-flat-button [disabled]="!isValid()">
+        {{ translate('stepper.next') }}
+      </button>
+    </mat-card-actions>
     </form>
   </mat-card-content>
 </mat-card>

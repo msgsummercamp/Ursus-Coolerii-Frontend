@@ -1,4 +1,4 @@
-import { Component, computed, inject, Input, output } from '@angular/core';
+import { Component, computed, inject, Input, output, signal } from '@angular/core';
 import { EligibilityService } from '../../shared/services/eligibility.service';
 import { MatButtonModule } from '@angular/material/button';
 import { CaseDataWithFiles, SaveRequest, SignupRequest } from '../../shared/types/types';
@@ -8,11 +8,13 @@ import {
   MatCardActions,
   MatCardContent,
   MatCardHeader,
+  MatCardSubtitle,
   MatCardTitle,
 } from '@angular/material/card';
 import { translate } from '@jsverse/transloco';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
+import { MatError, MatLabel } from '@angular/material/input';
 
 @Component({
   selector: 'app-confirmation-eligibility-form',
@@ -25,6 +27,9 @@ import { FormsModule } from '@angular/forms';
     MatCheckbox,
     MatCardTitle,
     FormsModule,
+    MatError,
+    MatCardSubtitle,
+    MatLabel,
   ],
   templateUrl: './confirmation-eligibility.component.html',
   styleUrl: './confirmation-eligibility.component.scss',
@@ -32,9 +37,11 @@ import { FormsModule } from '@angular/forms';
 export class ConfirmationEligibilityComponent {
   private eligibilityService = inject(EligibilityService);
   private saveService = inject(SaveService);
+  public saveError = signal('');
 
   @Input() buildCaseFileFn!: () => CaseDataWithFiles | undefined;
   @Input() buildUserDetails!: () => SignupRequest | undefined;
+  @Input() rewardMessage!: string | undefined;
   public eligibleMessage = computed(() => {
     const isEligible = this.eligibilityService.eligibility();
     if (isEligible === null) return 'Checking...';
@@ -42,6 +49,7 @@ export class ConfirmationEligibilityComponent {
   });
 
   public readonly previous = output<void>();
+  protected saved = signal(false);
 
   protected back() {
     this.previous.emit();
@@ -55,8 +63,6 @@ export class ConfirmationEligibilityComponent {
     const userDetails = this.buildUserDetails();
     const createdCase = this.buildCaseFileFn();
 
-    console.log(userDetails);
-    console.log(createdCase);
     if (!createdCase || !userDetails) return;
 
     const saveRequest: SaveRequest = {
@@ -64,14 +70,18 @@ export class ConfirmationEligibilityComponent {
       caseRequest: createdCase.caseData,
     };
 
-    this.saveService.saveCase(saveRequest, createdCase.files);
+    this.saveService.saveCase(saveRequest, createdCase.files).subscribe({
+      next: (response) => {
+        this.saveError.set('');
+        this.saved.set(true);
+      },
+      error: (err) => {
+        this.saveError.set('Error saving the case: ' + err.error);
+      },
+    });
   }
 
   protected readonly translate = translate;
 
   public agreed = false;
-
-  onCheckboxClicked() {
-    this.agreed = !this.agreed;
-  }
 }

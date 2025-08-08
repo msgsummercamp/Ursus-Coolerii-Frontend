@@ -1,11 +1,11 @@
 import {
   Component,
   computed,
-  effect, EventEmitter,
+  effect,
   inject,
   Input,
   OnDestroy,
-  OnInit, Output,
+  OnInit,
   output,
   signal,
 } from '@angular/core';
@@ -32,7 +32,7 @@ import {
   MatTimepickerToggle,
 } from '@angular/material/timepicker';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { startWith, Subject, Subscription, takeUntil } from 'rxjs';
+import { startWith, Subject, takeUntil } from 'rxjs';
 import { AirlineAttributes, AirlineService } from '../service/airline.service';
 import { AirportsService } from '../service/airport.service';
 import { FlightDetailsForm } from '../../../shared/types/form.types';
@@ -90,7 +90,6 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   public validForms = computed(() => this._isValid());
   private caseFileService = inject(CaseFileService);
   reward: number | null = null;
-  private subscriptions: Subscription[] = [];
 
   constructor() {
     effect(() => {

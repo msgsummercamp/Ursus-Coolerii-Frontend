@@ -1,4 +1,13 @@
-import { Component, computed, EventEmitter, inject, OnInit, Output, output, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  EventEmitter,
+  inject,
+  OnInit,
+  Output,
+  output,
+  signal,
+} from '@angular/core';
 import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
 import { AirportsService } from '../flight-details-form/service/airport.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -78,8 +87,9 @@ export class FlightDetailsWrapComponent implements OnInit {
   }
 
   @Output() receiveMessage = new EventEmitter<Flight>();
+  @Output() rewardValueSent = new EventEmitter<string>();
 
-  passDataToParent() {
+  public passDataToParent() {
     const data = this.getMainFormRaw;
     if (!data) return;
     this.receiveMessage.emit(data);
@@ -156,9 +166,11 @@ export class FlightDetailsWrapComponent implements OnInit {
       const caseFile = this.buildCaseFileFromForms();
       this.caseFileService.calculateReward(caseFile).subscribe((reward) => {
         this.reward = reward;
+        this.rewardValueSent.emit('You could received up to: ' + this.reward + '$');
       });
     } else {
       this.reward = null;
+      this.rewardValueSent.emit('You can not receive ny compensation');
     }
   }
 
