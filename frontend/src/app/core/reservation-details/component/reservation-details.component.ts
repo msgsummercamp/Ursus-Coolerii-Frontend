@@ -37,6 +37,11 @@ import {
 } from '@angular/material/card';
 import { toObservable } from '@angular/core/rxjs-interop';
 
+const emptyAirport: AirportAttributes = {
+  name: '',
+  iata: '',
+};
+
 @Component({
   selector: 'app-reservation-details',
   templateUrl: './reservation-details.component.html',
@@ -93,7 +98,7 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
     plannedArrivalDate: this.fb.control(null, Validators.required),
     plannedDepartureTime: this.fb.control('', Validators.required),
     plannedArrivalTime: this.fb.control('', Validators.required),
-    stopover: this.fb.control({ name: '', iata: '' }),
+    stopover: this.fb.control(emptyAirport),
   });
 
   private readonly _isValid = signal(false);
@@ -204,8 +209,15 @@ export class ReservationDetailsFormComponent implements OnInit, OnDestroy {
   }
 
   protected addStopover() {
-    if (this.stopoverService.stopoverState().stopovers.length < 3) {
+    const stopoverToAdd = this.reservationForm.controls.stopover.value;
+    const stopovers = this.stopoverService.stopoverState().stopovers;
+    if (
+      stopovers.length < 3 &&
+      !stopovers.includes(stopoverToAdd) &&
+      stopoverToAdd != emptyAirport
+    ) {
       this.stopoverService.addStopover(this.reservationForm.controls.stopover.value);
+      this.stopoverDisplayValue.set('');
     }
   }
 
