@@ -11,10 +11,11 @@ import {
   MatCardSubtitle,
   MatCardTitle,
 } from '@angular/material/card';
-import { translate } from '@jsverse/transloco';
-import { MatCheckbox } from '@angular/material/checkbox';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { FormsModule } from '@angular/forms';
 import { MatError, MatLabel } from '@angular/material/input';
+import { PopUpGdprComponent } from '../pop-up-gdpr/pop-up-gdpr.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-confirmation-eligibility-form',
@@ -24,12 +25,12 @@ import { MatError, MatLabel } from '@angular/material/input';
     MatCardHeader,
     MatCardContent,
     MatCardActions,
-    MatCheckbox,
     MatCardTitle,
     FormsModule,
     MatError,
     MatCardSubtitle,
     MatLabel,
+    TranslocoPipe,
   ],
   templateUrl: './confirmation-eligibility.component.html',
   styleUrl: './confirmation-eligibility.component.scss',
@@ -38,6 +39,9 @@ export class ConfirmationEligibilityComponent {
   private eligibilityService = inject(EligibilityService);
   private saveService = inject(SaveService);
   public saveError = signal('');
+  readonly dialog = inject(MatDialog);
+  protected notCheckedText = signal('');
+  public dialogResponse: { gdpr: boolean; terms: boolean; marketing: boolean } | undefined;
 
   @Input() buildCaseFileFn!: () => CaseDataWithFiles | undefined;
   @Input() buildUserDetails!: () => SignupRequest | undefined;
@@ -70,6 +74,14 @@ export class ConfirmationEligibilityComponent {
       caseRequest: createdCase.caseData,
     };
 
+    if (this.dialogResponse?.gdpr != true || this.dialogResponse?.terms != true) {
+      this.notCheckedText.set(
+        'You have to agree with the terms and GDPR in order to submit your case!'
+      );
+      return;
+    }
+    this.notCheckedText.set('');
+
     this.saveService.saveCase(saveRequest, createdCase.files).subscribe({
       next: (response) => {
         this.saveError.set('');
@@ -81,7 +93,12 @@ export class ConfirmationEligibilityComponent {
     });
   }
 
-  protected readonly translate = translate;
-
-  public agreed = false;
+  openDialog() {
+    const dialogRef = this.dialog.open(PopUpGdprComponent, { autoFocus: false });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.dialogResponse = result;
+      }
+    });
+  }
 }

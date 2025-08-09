@@ -5,25 +5,23 @@
   </mat-card-header>
   <mat-card-content class="special-mat-content">
       <p>{{ eligibleMessage() }}</p>
-      <a mat-raised-button color="primary" href="assets/UrsusCooleriiGDPR.pdf" download>
-        Download GDPR file
-      </a>
-      <mat-checkbox [(ngModel)]="agreed" class="checkbox">
-        I agree to the terms in the GDPR file
-      </mat-checkbox>
+      <button mat-button (click)="openDialog()">Open dialog</button>
         <mat-error>
-          {{ this.saveError()}}
+          {{ saveError()}}
+        </mat-error>
+        <mat-error>
+          {{ notCheckedText()}}
         </mat-error>
         <mat-card-actions class="special-form-actions">
           <button mat-flat-button (click)="back()">
-            {{ translate('stepper.back') }}
+            {{ 'stepper.back' | transloco }}
           </button>
           <button
             mat-flat-button
             color="primary"
             (click)="submit()"
-            [disabled]="!isEligible() || !agreed">
-            {{ translate('stepper.done') }}
+            [disabled]="!isEligible()">
+            {{ 'stepper.done' | transloco }}
           </button>
         </mat-card-actions>
       </mat-card-content>
