@@ -1,4 +1,13 @@
-import { Component, computed, inject, Input, output, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  output,
+  signal,
+} from '@angular/core';
 import { EligibilityService } from '../../shared/services/eligibility.service';
 import { MatButtonModule } from '@angular/material/button';
 import { CaseDataWithFiles, SaveRequest, SignupRequest } from '../../shared/types/types';
@@ -12,10 +21,20 @@ import {
   MatCardTitle,
 } from '@angular/material/card';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatError, MatLabel } from '@angular/material/input';
 import { PopUpGdprComponent } from '../pop-up-gdpr/pop-up-gdpr.component';
 import { MatDialog } from '@angular/material/dialog';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { LoadingSpinnerComponent } from '../loading-spinner/component/loading-spinner.component';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-confirmation-eligibility-form',
@@ -31,6 +50,9 @@ import { MatDialog } from '@angular/material/dialog';
     MatCardSubtitle,
     MatLabel,
     TranslocoPipe,
+    LoadingSpinnerComponent,
+    MatCheckbox,
+    ReactiveFormsModule,
   ],
   templateUrl: './confirmation-eligibility.component.html',
   styleUrl: './confirmation-eligibility.component.scss',
@@ -40,9 +62,39 @@ export class ConfirmationEligibilityComponent {
   private saveService = inject(SaveService);
   public saveError = signal('');
   readonly dialog = inject(MatDialog);
+  private fb = inject(FormBuilder);
+  gdprForm: FormGroup<{
+    gdpr: FormControl<boolean | null>;
+    terms: FormControl<boolean | null>;
+    marketing: FormControl<boolean | null>;
+  }>;
   protected notCheckedText = signal('');
   public dialogResponse: { gdpr: boolean; terms: boolean; marketing: boolean } | undefined;
 
+  protected isLoading = signal(false);
+  private isLoading$ = toObservable(this.saveService.isLoading);
+
+  constructor() {
+    this.isLoading$.subscribe((loading) => {
+      this.isLoading.set(loading);
+    });
+
+    this.gdprForm = this.fb.group<{
+      gdpr: FormControl<boolean | null>;
+      terms: FormControl<boolean | null>;
+      marketing: FormControl<boolean | null>;
+    }>({
+      gdpr: this.fb.control(false, Validators.required),
+      terms: this.fb.control(false, Validators.required),
+      marketing: this.fb.control(false),
+    });
+  }
+
+  @Output() disableStepper = new EventEmitter<void>();
+
+  disableStep() {
+    this.disableStepper.emit();
+  }
   @Input() buildCaseFileFn!: () => CaseDataWithFiles | undefined;
   @Input() buildUserDetails!: () => SignupRequest | undefined;
   @Input() rewardMessage!: string | undefined;
@@ -63,18 +115,21 @@ export class ConfirmationEligibilityComponent {
     return this.eligibilityService.eligibility() === true;
   });
 
+  public email: string | undefined;
   public submit() {
     const userDetails = this.buildUserDetails();
     const createdCase = this.buildCaseFileFn();
 
     if (!createdCase || !userDetails) return;
 
+    this.email = userDetails.email;
+
     const saveRequest: SaveRequest = {
       signupRequest: userDetails,
       caseRequest: createdCase.caseData,
     };
 
-    if (this.dialogResponse?.gdpr != true || this.dialogResponse?.terms != true) {
+    if (this.gdprForm.controls.gdpr.value != true || this.gdprForm.controls.terms.value != true) {
       this.notCheckedText.set(
         'You have to agree with the terms and GDPR in order to submit your case!'
       );
@@ -86,6 +141,7 @@ export class ConfirmationEligibilityComponent {
       next: (response) => {
         this.saveError.set('');
         this.saved.set(true);
+        this.disableStep();
       },
       error: (err) => {
         this.saveError.set('Error saving the case: ' + err.error);
@@ -95,10 +151,5 @@ export class ConfirmationEligibilityComponent {
 
   openDialog() {
     const dialogRef = this.dialog.open(PopUpGdprComponent, { autoFocus: false });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.dialogResponse = result;
-      }
-    });
   }
 }

@@ -6,29 +6,29 @@
     animationDuration="300"
     (selectionChange)="onStepChange($event)"
   >
-    <mat-step [completed]="disruptiveFormCompleted()">
+    <mat-step [completed]="disruptiveFormCompleted()"  [editable]="!disableStepper">
       <ng-template matStepLabel>{{ translate('disruption-motives') }}</ng-template>
-      <app-disruptive-form (receiveMessage)="receiveDisruptionDetails($event)" (next)="stepper.next()" />
+      <app-disruptive-form (receiveMessage)="receiveDisruptionDetails($event)" (next)="stepper.next()"  />
     </mat-step>
-    <mat-step [completed]="flightDetailsFormCompleted()">
+    <mat-step [completed]="flightDetailsFormCompleted()" [editable]="!disableStepper">
       <ng-template matStepLabel>{{ translate('flight-details') }}</ng-template>
       <app-flight-details-wrap (rewardValueSent)="receiveReward($event)" (receiveMessage)="receiveFlight($event)" (previous)="stepper.previous()" (next)="stepper.next()" />
     </mat-step>
-    <mat-step [completed]="passengerDetailsFormCompleted()">
+    <mat-step [completed]="passengerDetailsFormCompleted()" [editable]="!disableStepper">
       <ng-template matStepLabel>{{ translate('passenger-details') }}</ng-template>
       <app-passenger-details-form (receiveMessage)="receivdePassenger($event)" (next)="stepper.next()" (previous)="stepper.previous()" />
     </mat-step>
-    <mat-step [completed]="documentsFormCompleted()">
+    <mat-step [completed]="documentsFormCompleted()" [editable]="!disableStepper">
       <ng-template matStepLabel>{{ translate('documents') }}</ng-template>
       <app-documents-form (receiveMessage)="receiveDocuments($event)" (next)="stepper.next()" (previous)="stepper.previous()" />
-    </mat-step>
-  <mat-step [completed]="userFormCompleted()">
+    </mat-step >
+  <mat-step [completed]="userFormCompleted()" [editable]="!disableStepper">
     <ng-template matStepLabel> {{ translate('userDetails') }}</ng-template>
     <app-user-details (receiveMessage)="receiveUserDetails($event)" (next)="stepper.next()" (previous)="stepper.previous()"></app-user-details>
   </mat-step>
-  <mat-step>
+  <mat-step [editable]="!disableStepper">
     <ng-template matStepLabel>{{ translate('done') }}</ng-template>
-    <app-confirmation-eligibility-form [rewardMessage]="rewardMessage" [buildUserDetails]="buildUserDetails.bind(this)" (previous)="stepper.previous()"  [buildCaseFileFn]="buildCaseFile.bind(this)" />
+    <app-confirmation-eligibility-form (disableStepper)="onDisableStepper()" [rewardMessage]="rewardMessage" [buildUserDetails]="buildUserDetails.bind(this)" (previous)="stepper.previous()"  [buildCaseFileFn]="buildCaseFile.bind(this)" />
   </mat-step>
 </mat-stepper>
   @if (airplaneReady) {

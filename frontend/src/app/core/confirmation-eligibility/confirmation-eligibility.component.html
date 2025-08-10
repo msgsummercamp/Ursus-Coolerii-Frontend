@@ -1,41 +1,69 @@
-<mat-card class="special-mat-card">
+@if (this.isLoading()) {
+  <app-loading-spinner />
+}
   @if(!saved()){
+    <mat-card class="special-mat-card">
     <mat-card-header class="special-mat-header">
     <mat-card-title  class="special-mat-title">Almost done</mat-card-title>
   </mat-card-header>
   <mat-card-content class="special-mat-content">
-      <p>{{ eligibleMessage() }}</p>
-      <button mat-button (click)="openDialog()">Open dialog</button>
+
+      <mat-label class="centered-mat-label">{{ eligibleMessage() }}</mat-label>
+      <div class="info-content">
+        <p>General Info:</p>
+        <p>In case you are eligible, we first recommend you to read the GDPR and the terms</p>
+        <p>After carefully reading, you first have to check the GDPR and the terms boxes before submitting</p>
+        <p>Your password is automatically generated and sent to the specified email</p>
+        <p>Please don't forget that after the first login you have to change the password</p>
+      </div>
+      <button mat-button (click)="openDialog()">Click here to read GDPR and terms</button>
         <mat-error>
           {{ saveError()}}
         </mat-error>
-        <mat-error>
-          {{ notCheckedText()}}
-        </mat-error>
-        <mat-card-actions class="special-form-actions">
-          <button mat-flat-button (click)="back()">
-            {{ 'stepper.back' | transloco }}
-          </button>
-          <button
-            mat-flat-button
-            color="primary"
-            (click)="submit()"
-            [disabled]="!isEligible()">
-            {{ 'stepper.done' | transloco }}
-          </button>
-        </mat-card-actions>
+
+        <form [formGroup]="gdprForm" (ngSubmit)="submit()" class="gdpr-form">
+          <mat-checkbox formControlName="gdpr">I agree with the GDPR</mat-checkbox>
+          <mat-checkbox formControlName="terms">I agree with the terms</mat-checkbox>
+          <mat-checkbox formControlName="marketing">Yes, I'd like to receive emails</mat-checkbox>
+        </form>
       </mat-card-content>
-      <mat-label>{{ rewardMessage }}</mat-label>
+      <mat-error class="not-checked-error">
+        {{ notCheckedText()}}
+      </mat-error>
+
+      <mat-label class="reward-label">{{ rewardMessage }}</mat-label>
+    <mat-card-actions class="special-form-actions">
+        <button mat-flat-button (click)="back()">
+          {{ 'stepper.back' | transloco }}
+        </button>
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="submit()"
+          [disabled]="!isEligible()">
+          {{ 'stepper.done' | transloco }}
+        </button>
+      </mat-card-actions>
+
+    </mat-card>
 
   } @else {
-      <mat-card-header class="special-mat-header">
-        <mat-card-title  class="special-mat-title">Your case has been submited</mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="special-mat-content">
-          <mat-card class="special-mat-card">
-              <mat-card-subtitle>Your case has been registered and is currently under review</mat-card-subtitle>
-              <mat-label>A mail has been sent with to your associated email account with your password, and case info</mat-label>
-          </mat-card>
-      </mat-card-content>
+      <mat-card class="special-mat-card">
+        <mat-card-header class="special-mat-header">
+          <mat-card-title  class="special-mat-title">Your case has been submited</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="special-mat-content">
+            <mat-card-subtitle class="confirmation-sub-title">General Info</mat-card-subtitle>
+            <div class="info-content">
+                <p>An email with your generated password has been sent to: {{email}}</p>
+                <p>Your case has been successfully created and you have received an email containing the case ID.</p>
+            </div>
+          <mat-card-subtitle class="confirmation-sub-title">What happens next?</mat-card-subtitle>
+          <div class="info-content">
+                <p>1. We will assign a dedicated colleague to your case.</p>
+                <p>2. Our colleague will carefully review all the details of your claim.</p>
+                <p>3. Once we have a resolution, we will contact you to discuss the outcome.</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
     }
-</mat-card>
