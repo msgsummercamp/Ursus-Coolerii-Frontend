@@ -69,7 +69,6 @@ export class ConfirmationEligibilityComponent {
     marketing: FormControl<boolean | null>;
   }>;
   protected notCheckedText = signal('');
-  public dialogResponse: { gdpr: boolean; terms: boolean; marketing: boolean } | undefined;
 
   protected isLoading = signal(false);
   private isLoading$ = toObservable(this.saveService.isLoading);
