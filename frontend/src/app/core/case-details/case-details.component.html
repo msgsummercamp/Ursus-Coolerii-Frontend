@@ -1,58 +1,103 @@
-<div *ngIf="caseDetails">
-  <h2>{{ 'caseDetails.title' | transloco: { contractId: caseDetails.contractId } }}</h2>
+<div class="caseDetails">
+  <h2 class="case-title">
+    {{ 'caseDetails.title' | transloco: { contractId: caseDetails.contractId } }}
+  </h2>
 
-  <h3>{{ 'flightDetails.title' | transloco }}</h3>
-  <div *ngFor="let flight of caseDetails.flights">
-    <div>
-      {{ 'flightDetails.flightDate' | transloco }}:
-      {{ flight.plannedDepartureTime | date }}
-    </div>
-    <div>{{ 'flightDetails.flightNr' | transloco }}: {{ flight.flightNumber }}</div>
-    <div>{{ 'flightDetails.airline' | transloco }}: {{ flight.airline }}</div>
-    <div>{{ 'flightDetails.reservationNumber' | transloco }}: {{ flight.reservationNumber }}</div>
-    <div>{{ 'flightDetails.departingAirport' | transloco }}: {{ flight.departureAirport }}</div>
-    <div>{{ 'flightDetails.destinationAirport' | transloco }}: {{ flight.destinationAirport }}</div>
-    <div>
-      {{ 'flightDetails.connectingFlight' | transloco }}:
-      {{ flight.connectingFlight ? ('yes' | transloco) : ('no' | transloco) }}
-    </div>
-    <div>
-      {{ 'flightDetails.plannedDepartureTime' | transloco }}:
-      {{ flight.plannedDepartureTime | date }}
-    </div>
-    <div>
-      {{ 'flightDetails.plannedArrivalTime' | transloco }}:
-      {{ flight.plannedArrivalTime | date }}
-    </div>
-    <hr />
-  </div>
+  <mat-card class="special-mat-card">
+    <mat-card-header class="special-mat-header">
+      <mat-card-title class="special-mat-title">{{
+        'flightDetails.title' | transloco
+      }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="special-mat-content">
+      <div *ngFor="let flight of caseDetails.flights">
+        <div
+          >{{ 'flightDetails.flightDate' | transloco }}:
+          {{ flight.plannedDepartureTime | date }}</div
+        >
+        <div>{{ 'flightDetails.flightNr' | transloco }}: {{ flight.flightNumber }}</div>
+        <div>{{ 'flightDetails.airline' | transloco }}: {{ flight.airline }}</div>
+        <div
+          >{{ 'flightDetails.reservationNumber' | transloco }}: {{ flight.reservationNumber }}</div
+        >
+        <div>{{ 'flightDetails.departingAirport' | transloco }}: {{ flight.departureAirport }}</div>
+        <div
+          >{{ 'flightDetails.destinationAirport' | transloco }}:
+          {{ flight.destinationAirport }}</div
+        >
+        <div>
+          {{ 'flightDetails.connectingFlight' | transloco }}:
+          {{ flight.connectingFlight ? ('yes' | transloco) : ('no' | transloco) }}
+        </div>
+        <div
+          >{{ 'flightDetails.plannedDepartureTime' | transloco }}:
+          {{ flight.plannedDepartureTime | date }}</div
+        >
+        <div
+          >{{ 'flightDetails.plannedArrivalTime' | transloco }}:
+          {{ flight.plannedArrivalTime | date }}</div
+        >
+        <hr />
+      </div>
+    </mat-card-content>
+  </mat-card>
 
-  <h3>{{ 'passenger-details.title' | transloco }}</h3>
-  <div>{{ 'passenger-details.firstName' | transloco }}: {{ caseDetails.passenger.firstName }}</div>
-  <div>{{ 'passenger-details.lastName' | transloco }}: {{ caseDetails.passenger.lastName }}</div>
-  <div>
-    {{ 'passenger-details.dateOfBirth' | transloco }}:
-    {{ caseDetails.passenger.dateOfBirth | date }}
-  </div>
-  <div>{{ 'userDetails.email' | transloco }}: {{ caseDetails.passenger.email }}</div>
-  <div>{{ 'passenger-details.phoneNumber' | transloco }}: {{ caseDetails.passenger.phone }}</div>
-  <div>{{ 'passenger-details.address' | transloco }}: {{ caseDetails.passenger.address }}</div>
-  <div>
-    {{ 'passenger-details.postalCode' | transloco }}: {{ caseDetails.passenger.postalCode }}
-  </div>
+  <mat-card class="special-mat-card">
+    <mat-card-header class="special-mat-header">
+      <mat-card-title class="special-mat-title">{{
+        'passenger-details.title' | transloco
+      }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="special-mat-content">
+      <div
+        >{{ 'passenger-details.firstName' | transloco }}: {{ caseDetails.passenger.firstName }}</div
+      >
+      <div
+        >{{ 'passenger-details.lastName' | transloco }}: {{ caseDetails.passenger.lastName }}</div
+      >
+      <div
+        >{{ 'passenger-details.dateOfBirth' | transloco }}:
+        {{ caseDetails.passenger.dateOfBirth | date }}</div
+      >
+      <div>{{ 'userDetails.email' | transloco }}: {{ caseDetails.passenger.email }}</div>
+      <div
+        >{{ 'passenger-details.phoneNumber' | transloco }}: {{ caseDetails.passenger.phone }}</div
+      >
+      <div>{{ 'passenger-details.address' | transloco }}: {{ caseDetails.passenger.address }}</div>
+      <div
+        >{{ 'passenger-details.postalCode' | transloco }}:
+        {{ caseDetails.passenger.postalCode }}</div
+      >
+    </mat-card-content>
+  </mat-card>
 
-  <h3>{{ 'documents.title' | transloco }}</h3>
-  <ul>
-    <li *ngFor="let doc of caseDetails.documents">
-      {{ doc.filename }} ({{ doc.uploadTimestamp | date }})
-    </li>
-  </ul>
+  <mat-card class="special-mat-card">
+    <mat-card-header class="special-mat-header">
+      <mat-card-title class="special-mat-title">{{ 'documents.title' | transloco }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="special-mat-content">
+      <ul>
+        <li *ngFor="let doc of caseDetails.documents">
+          {{ doc.filename }} ({{ doc.uploadTimestamp | date }})
+        </li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
 
-  <h3>Comments</h3>
-  <ul>
-    <li *ngFor="let comment of caseDetails.comments">
-      {{ comment.userEmail }} ({{ comment.userType }}) {{ 'at' | transloco }}
-      {{ comment.timestamp | date }}: {{ comment.content }}
-    </li>
-  </ul>
+  <mat-card class="special-mat-card">
+    <mat-card-header class="special-mat-header">
+      <mat-card-title class="special-mat-title">Comments</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="special-mat-content">
+      <ul *ngIf="caseDetails.comments?.length > 0; else noComments">
+        <li *ngFor="let comment of caseDetails.comments">
+          {{ comment.userEmail }} ({{ comment.userType }}) {{ 'at' | transloco }}
+          {{ comment.timestamp | date }}: {{ comment.content }}
+        </li>
+      </ul>
+      <ng-template #noComments>
+        <div>No comments yet</div>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
 </div>
