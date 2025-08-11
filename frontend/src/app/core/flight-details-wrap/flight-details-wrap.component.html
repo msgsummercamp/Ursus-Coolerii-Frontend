@@ -12,6 +12,7 @@
         <app-flight-details-form
           (airline)="selectAirline(i, $event)"
           (date)="selectDate(i, $event)"
+          (flightNr)="selectFlightNr(i, $event)"
           [flightForm]="flight"
         />
         <mat-checkbox [checked]="problemFlightIndex === i" (change)="updateProblemFlight(i)"

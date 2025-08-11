@@ -99,11 +99,11 @@ export class FlightDetailsWrapComponent {
     const departureDate = flight.departureTime ? new Date(flight.departureTime) : null;
 
     return this.fb.group<FlightDetailsForm>({
-      flightNr: this.fb.control('', [
+      flightNr: this.fb.control(flight.flightNumber, [
         Validators.required,
         Validators.pattern('^[a-zA-Z]{2}[0-9]{1,4}$'),
       ]),
-      airline: this.fb.control('', Validators.required),
+      airline: this.fb.control(flight.airlineName, Validators.required),
       departingAirport: this.fb.control(flight.departureAirport),
       destinationAirport: this.fb.control(flight.destinationAirport),
       plannedDepartureDate: this.fb.control(departureDate, Validators.required),
@@ -129,7 +129,7 @@ export class FlightDetailsWrapComponent {
     }
   }
 
-  saveFlightNr($event: string, index: number) {
+  selectFlightNr(index: number, $event: string) {
     this.stopoverService.setFlightNumber(index, $event);
   }
 

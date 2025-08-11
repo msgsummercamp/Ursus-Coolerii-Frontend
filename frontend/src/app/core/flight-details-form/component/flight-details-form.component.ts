@@ -60,20 +60,20 @@ import { StopoverService } from '../../../shared/services/stopover.service';
 export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   @Output() airline: EventEmitter<AirlineAttributes> = new EventEmitter<AirlineAttributes>();
   @Output() date: EventEmitter<Date> = new EventEmitter<Date>();
-
-  private airlineService = inject(AirlineService);
-  private stopoverService = inject(StopoverService);
-
-  private readonly _isValid = signal(false);
-  public isValid = this._isValid.asReadonly();
-
-  private airlines: AirlineAttributes[] = [];
-
-  private onDestroy$ = new Subject<void>();
-
-  protected filteredAirlines: AirlineAttributes[] = [];
+  @Output() flightNr: EventEmitter<string> = new EventEmitter<string>();
 
   @Input() flightForm!: FormGroup<FlightDetailsForm>;
+
+  private airlineService = inject(AirlineService);
+
+  private stopoverService = inject(StopoverService);
+  private readonly _isValid = signal(false);
+
+  private airlines: AirlineAttributes[] = [];
+  private onDestroy$ = new Subject<void>();
+  protected filteredAirlines: AirlineAttributes[] = [];
+
+  public isValid = this._isValid.asReadonly();
 
   public readonly next = output<void>();
   public readonly previous = output<void>();
@@ -102,6 +102,11 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   protected selectAirline(airline: AirlineAttributes) {
     this.flightForm.controls.airline.setValue(airline.name);
     this.airline.emit(airline);
+  }
+
+  selectFlightNr() {
+    const flightNumber = this.flightForm.controls.flightNr.value;
+    this.flightNr.emit(flightNumber);
   }
 
   protected selectDate(date: MatDatepickerInputEvent<Date>) {
