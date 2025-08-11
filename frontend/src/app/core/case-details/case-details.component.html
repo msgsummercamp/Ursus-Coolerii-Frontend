@@ -1,0 +1,58 @@
+<div *ngIf="caseDetails">
+  <h2>{{ 'caseDetails.title' | transloco: { contractId: caseDetails.contractId } }}</h2>
+
+  <h3>{{ 'flightDetails.title' | transloco }}</h3>
+  <div *ngFor="let flight of caseDetails.flights">
+    <div>
+      {{ 'flightDetails.flightDate' | transloco }}:
+      {{ flight.plannedDepartureTime | date }}
+    </div>
+    <div>{{ 'flightDetails.flightNr' | transloco }}: {{ flight.flightNumber }}</div>
+    <div>{{ 'flightDetails.airline' | transloco }}: {{ flight.airline }}</div>
+    <div>{{ 'flightDetails.reservationNumber' | transloco }}: {{ flight.reservationNumber }}</div>
+    <div>{{ 'flightDetails.departingAirport' | transloco }}: {{ flight.departureAirport }}</div>
+    <div>{{ 'flightDetails.destinationAirport' | transloco }}: {{ flight.destinationAirport }}</div>
+    <div>
+      {{ 'flightDetails.connectingFlight' | transloco }}:
+      {{ flight.connectingFlight ? ('yes' | transloco) : ('no' | transloco) }}
+    </div>
+    <div>
+      {{ 'flightDetails.plannedDepartureTime' | transloco }}:
+      {{ flight.plannedDepartureTime | date }}
+    </div>
+    <div>
+      {{ 'flightDetails.plannedArrivalTime' | transloco }}:
+      {{ flight.plannedArrivalTime | date }}
+    </div>
+    <hr />
+  </div>
+
+  <h3>{{ 'passenger-details.title' | transloco }}</h3>
+  <div>{{ 'passenger-details.firstName' | transloco }}: {{ caseDetails.passenger.firstName }}</div>
+  <div>{{ 'passenger-details.lastName' | transloco }}: {{ caseDetails.passenger.lastName }}</div>
+  <div>
+    {{ 'passenger-details.dateOfBirth' | transloco }}:
+    {{ caseDetails.passenger.dateOfBirth | date }}
+  </div>
+  <div>{{ 'userDetails.email' | transloco }}: {{ caseDetails.passenger.email }}</div>
+  <div>{{ 'passenger-details.phoneNumber' | transloco }}: {{ caseDetails.passenger.phone }}</div>
+  <div>{{ 'passenger-details.address' | transloco }}: {{ caseDetails.passenger.address }}</div>
+  <div>
+    {{ 'passenger-details.postalCode' | transloco }}: {{ caseDetails.passenger.postalCode }}
+  </div>
+
+  <h3>{{ 'documents.title' | transloco }}</h3>
+  <ul>
+    <li *ngFor="let doc of caseDetails.documents">
+      {{ doc.filename }} ({{ doc.uploadTimestamp | date }})
+    </li>
+  </ul>
+
+  <h3>Comments</h3>
+  <ul>
+    <li *ngFor="let comment of caseDetails.comments">
+      {{ comment.userEmail }} ({{ comment.userType }}) {{ 'at' | transloco }}
+      {{ comment.timestamp | date }}: {{ comment.content }}
+    </li>
+  </ul>
+</div>
