@@ -6,11 +6,12 @@ export type AirportAttributes = {
 };
 
 export type Case = {
-  caseId: string;
+  contractId: string;
   caseDate: Date | string;
   flightNr: string;
   flightDepartureDate: Date | string;
   flightArrivalDate: Date | string;
+  reservationNumber: string;
   passengerName: string;
   status: CaseStatus;
   colleague?: string;
@@ -25,8 +26,7 @@ export type Flight = {
   firstFlight: boolean;
   lastFlight: boolean;
   problemFlight: boolean;
-
-}
+};
 
 export type Passenger = {
   firstName: string;
@@ -35,15 +35,14 @@ export type Passenger = {
   phoneNumber: string;
   address: string;
   postalCode: string;
-}
+};
 
 export type DisruptionDetails = {
   disruption: DisruptiveMotive | null;
   noticeDays: number | null;
   delayHours: number | null;
   isVoluntarilyGivenUp: boolean | null;
-}
-
+};
 
 export type CaseData = {
   disruptionDetails: DisruptionDetails;
@@ -51,25 +50,23 @@ export type CaseData = {
   flights: Flight[];
   passenger: Passenger;
   userEmail: string;
-}
+};
 
 export type CaseDataWithFiles = {
-  caseData: CaseData,
-  files: File[]
-}
+  caseData: CaseData;
+  files: File[];
+};
 
 export type SignupRequest = {
-  email: string,
-  firstName: string,
-  lastName: string
-}
+  email: string;
+  firstName: string;
+  lastName: string;
+};
 
 export type SaveRequest = {
-  caseRequest: CaseData,
-  signupRequest: SignupRequest
-}
-
-
+  caseRequest: CaseData;
+  signupRequest: SignupRequest;
+};
 
 export type EligibilityRequest = {
   disruption: DisruptiveMotive | null;
@@ -87,6 +84,6 @@ export const DisruptiveMotiveLabels: Record<DisruptiveMotive, string> = {
 export const CaseStatusLabels: Record<CaseStatus, string> = {
   [CaseStatus.notAssigned]: 'Not Assigned',
   [CaseStatus.assigned]: 'Assigned',
-  [CaseStatus.eligible]: 'Eligible',
-  [CaseStatus.notEligible]: 'Not Eligible',
+  [CaseStatus.eligible]: 'Won',
+  [CaseStatus.notEligible]: 'Lost',
 };

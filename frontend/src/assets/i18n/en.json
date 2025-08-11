@@ -144,8 +144,9 @@
   "caseList": {
     "caseDate": "Case Date",
     "flightNr": "Flight Nr.",
-    "flightDepartureDate": "Flight Departure Date",
-    "flightArrivalDate": "Flight Arrival Date",
+    "flightDepartureDate": "Departure Date",
+    "flightArrivalDate": "Arrival Date",
+    "reservationNumber": "Reservation Number",
     "passengerName": "Passenger Name",
     "colleague": "Employee",
     "status": {
