@@ -19,6 +19,11 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./core/case-list/case-list.component').then((m) => m.CaseListComponent),
   },
+  {
+    path: 'cases/:contractId',
+    loadComponent: () =>
+      import('./core/case-details/case-details.component').then((m) => m.CaseDetailsComponent),
+  },
   { path: 'confirmation', component: ConfirmationEligibilityComponent },
   { path: '**', component: NotFoundComponent },
 ];

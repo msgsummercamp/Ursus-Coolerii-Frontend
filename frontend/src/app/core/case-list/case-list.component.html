@@ -1,7 +1,9 @@
 <table mat-table [dataSource]="cases()" class="mat-elevation-z8">
   <ng-container matColumnDef="contractId">
     <th mat-header-cell *matHeaderCellDef>ID</th>
-    <td mat-cell *matCellDef="let c">{{ c.contractId }}</td>
+    <td mat-cell *matCellDef="let c">
+      <a [routerLink]="['/cases', c.contractId]">{{ c.contractId }}</a>
+    </td>
   </ng-container>
   <ng-container matColumnDef="caseDate">
     <th mat-header-cell *matHeaderCellDef>{{ 'caseList.caseDate' | transloco }}</th>

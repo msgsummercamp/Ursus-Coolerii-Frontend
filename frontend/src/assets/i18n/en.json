@@ -139,7 +139,7 @@
     "eligible": "Eligible",
     "notEligible": "Not eligible"
   },
-  "yes" : "Yes",
+  "yes": "Yes",
   "no": "No",
   "caseList": {
     "caseDate": "Case Date",
@@ -162,6 +162,10 @@
     "startButton": "Start"
   },
   "userDetails": {
-    "title": "User details"
+    "title": "User details",
+    "email": "Email"
+  },
+  "caseDetails": {
+    "title": "Case {{contractId}}"
   }
 }

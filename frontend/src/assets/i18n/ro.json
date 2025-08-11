@@ -140,7 +140,8 @@
     "notEligible": "Ineligibil"
   },
   "userDetails": {
-    "title": "Detaliile utilizatorului"
+    "title": "Detaliile utilizatorului",
+    "email": "Email"
   },
   "home": {
     "title": "Air Assist",
@@ -163,5 +164,8 @@
       "ELIGIBLE": "Eligibil",
       "NOT_ELIGIBLE": "Ineligibil"
     }
+  },
+  "caseDetails": {
+    "title": "Caz {{contractId}}"
   }
 }

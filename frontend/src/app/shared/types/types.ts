@@ -87,3 +87,45 @@ export const CaseStatusLabels: Record<CaseStatus, string> = {
   [CaseStatus.eligible]: 'Won',
   [CaseStatus.notEligible]: 'Lost',
 };
+
+export interface FlightDetailsDTO {
+  flightNumber: string;
+  airline: string;
+  departureAirport: string;
+  destinationAirport: string;
+  plannedDepartureTime: string;
+  plannedArrivalTime: string;
+  reservationNumber: string;
+  connectingFlight: boolean;
+}
+
+export interface PassengerDTO {
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  phone: string;
+  address: string;
+  postalCode: string;
+  email: string;
+}
+
+export interface DocumentDTO {
+  filename: string;
+  uploadTimestamp: string;
+}
+
+export interface CommentDTO {
+  userEmail: string;
+  userType: string;
+  timestamp: string;
+  content: string;
+}
+
+export interface CaseDetailsDTO {
+  contractId: string;
+  reservationNumber: string;
+  flights: FlightDetailsDTO[];
+  passenger: PassengerDTO;
+  documents: DocumentDTO[];
+  comments: CommentDTO[];
+}
