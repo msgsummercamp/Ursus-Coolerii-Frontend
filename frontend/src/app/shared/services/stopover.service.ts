@@ -118,9 +118,13 @@ export class StopoverService {
 
   public setProblemFlightIndex(i: number) {
     this.problemFlightSignal.set(i);
-    this.stopoverSignal().flights.forEach((flight: Flight, index) => {
-      flight.problemFlight = i === index;
-    });
+    this.stopoverSignal.update((stopoverState: StopoverState) => ({
+      ...stopoverState,
+      flights: stopoverState.flights.map((flight, index) => ({
+        ...flight,
+        problemFlight: i === index,
+      })),
+    }));
   }
 
   public generateFlights() {
