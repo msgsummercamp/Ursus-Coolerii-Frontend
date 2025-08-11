@@ -263,5 +263,11 @@
     "changesTitle": "13. Modificări ale politicii",
     "changesText": "Ne rezervăm dreptul de a actualiza această politică de confidențialitate periodic. Vă vom informa despre modificările semnificative prin publicarea noii politici pe site.",
     "close": "Închide"
+  },
+  "login": {
+    "title": "Autentificare",
+    "email": "Email",
+    "password": "Parolă",
+    "button": "Autentificare"
   }
 }

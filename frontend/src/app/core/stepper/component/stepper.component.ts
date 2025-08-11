@@ -29,6 +29,7 @@ import {
 import { UserDetailsComponent } from '../../user-details/user-details.component';
 import { AirportsService } from '../../flight-details-form/service/airport.service';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { Roles } from '../../../shared/enums';
 
 const AIRPLANE_WIDTH = 40;
 const VERTICAL_OFFSET = -19;
@@ -150,8 +151,8 @@ export class StepperComponent implements AfterViewInit {
       email: this.userDetails.email,
       firstName: this.passenger.firstName,
       lastName: this.passenger.lastName,
+      role: Roles.passenger,
     };
-    console.log('DATA' + usr);
     return usr;
   }
 

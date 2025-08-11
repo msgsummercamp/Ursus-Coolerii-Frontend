@@ -179,6 +179,12 @@
   "userDetails": {
     "title": "User details"
   },
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "button": "Login"
+  },
   "confirmationEligibility": {
     "checking": "Checking...",
     "eligible": "Passenger is eligible",
