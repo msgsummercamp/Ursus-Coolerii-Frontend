@@ -24,6 +24,7 @@ export class DisruptiveFormService {
       airlineMentionedMotive: this.fb.control(null),
       communicatedMotive: this.fb.control(''),
       optionalComments: this.fb.control(''),
+      didArriveAtDestination: this.fb.control(''),
     });
   }
 

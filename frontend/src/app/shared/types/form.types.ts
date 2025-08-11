@@ -13,7 +13,7 @@ export type FlightDetailsForm = {
 
 export type UserDetailsForm = {
   email: FormControl<string | null>;
-}
+};
 
 export type PassengerDetailsForm = {
   firstName: FormControl<string>;
@@ -33,4 +33,5 @@ export type DisruptiveMotiveForm = {
   airlineMentionedMotive: FormControl<string | null>;
   communicatedMotive: FormControl<string | null>;
   optionalComments: FormControl<string | null>;
+  didArriveAtDestination: FormControl<string | null>;
 };

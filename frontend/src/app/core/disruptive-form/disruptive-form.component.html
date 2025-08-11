@@ -93,6 +93,18 @@
             </mat-form-field>
           }
         }
+        @if(formDisruption.controls.disruptionMotive.value === DisruptiveMotiveLabels[DisruptiveMotive.deniedBoarding]){
+          <mat-form-field appearance="fill" class="special-form-field">
+            <mat-label>{{ 'disruptiveMotive.didArriveAtDestination' | transloco }}</mat-label>
+            <mat-select formControlName="didArriveAtDestination">
+              @for (option of hasArrivedOrNot; track $index) {
+                <mat-option [value]="option">
+                  {{ 'disruptiveMotive.' + toCamelCase(option) | transloco }}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        }
         @if(formDisruption.controls.disruptionMotive.value === DisruptiveMotiveLabels[DisruptiveMotive.delay] ||
         formDisruption.controls.disruptionMotive.value === DisruptiveMotiveLabels[DisruptiveMotive.cancelation] ||
         formDisruption.controls.disruptionMotive.value === DisruptiveMotiveLabels[DisruptiveMotive.deniedBoarding]) {

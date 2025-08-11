@@ -25,6 +25,7 @@ import {
   DelayNotice,
   DeniedBoardingMotive,
   DisruptiveMotive,
+  HasArrivedOrNot,
   IsMotiveSpecified,
 } from '../../shared/enums';
 import { EligibilityService } from '../../shared/services/eligibility.service';
@@ -75,6 +76,7 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
   public cancellationNotice: CancellationNotice[] = Object.values(CancellationNotice);
   public delayNotice: DelayNotice[] = Object.values(DelayNotice);
   public isMotiveSpecified: string[];
+  public hasArrivedOrNot = Object.values(HasArrivedOrNot);
   private service = inject(DisruptiveFormService);
   private onDestroy$ = new Subject<void>();
   public readonly next = output<void>();
