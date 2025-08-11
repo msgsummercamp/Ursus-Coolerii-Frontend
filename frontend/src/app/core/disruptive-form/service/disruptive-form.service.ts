@@ -38,7 +38,7 @@ export class DisruptiveFormService {
     return null;
   }
 
-  private getCancellationNotice(form: FormGroup<DisruptiveMotiveForm>): CancellationNotice | null {
+  public getCancellationNotice(form: FormGroup<DisruptiveMotiveForm>): CancellationNotice | null {
     const noticeLabel = form.controls.daysBeforeCancellation.value;
     if (
       noticeLabel &&
@@ -49,7 +49,7 @@ export class DisruptiveFormService {
     return null;
   }
 
-  private getDelayNotice(form: FormGroup<DisruptiveMotiveForm>): DelayNotice | null {
+  public getDelayNotice(form: FormGroup<DisruptiveMotiveForm>): DelayNotice | null {
     const delayLabel = form.controls.hoursLateArrival.value;
     if (delayLabel && Object.values(DelayNotice).includes(delayLabel as DelayNotice)) {
       return delayLabel as DelayNotice;

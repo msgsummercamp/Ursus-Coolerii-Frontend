@@ -1,9 +1,19 @@
-import { Component, computed, EventEmitter, inject, OnDestroy, OnInit, Output, output, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  EventEmitter,
+  inject,
+  OnDestroy,
+  OnInit,
+  Output,
+  output,
+  signal,
+} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatInput, MatInputModule, MatLabel } from '@angular/material/input';
 import { MatOption } from '@angular/material/autocomplete';
 import { toCamelCase, translate, TranslocoPipe } from '@jsverse/transloco';
-import { DisruptiveMotiveLabels } from '../../shared/types/types';
+import { DisruptionDetails, DisruptiveMotiveLabels } from '../../shared/types/types';
 import { CommonModule } from '@angular/common';
 import { Subject } from 'rxjs';
 import { MatButton } from '@angular/material/button';
@@ -55,8 +65,7 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
 
   passDataToParent() {
     const data = this.getFormRaw;
-    if(!data)
-      return;
+    if (!data) return;
     this.receiveMessage.emit(data);
   }
 
@@ -86,16 +95,17 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
     const raw = this.formDisruption.getRawValue();
 
     const disruptiveMotive = this.service.getDisruptionMotive(this.formDisruption);
+    const cancellationNotice = this.service.getCancellationNotice(this.formDisruption);
+    const delayNotice = this.service.getDelayNotice(this.formDisruption);
 
-    if(!disruptiveMotive)
-      return null;
+    if (!disruptiveMotive) return null;
 
     return {
       disruption: disruptiveMotive,
-      noticeDays: raw.daysBeforeCancelation,
-      delayHours: raw.hoursLateArrival,
+      noticeDays: cancellationNotice,
+      delayHours: delayNotice,
       isVoluntarilyGivenUp: raw.gaveSeatVoluntarly !== 'No',
-    }
+    };
   }
 
   protected continue() {
