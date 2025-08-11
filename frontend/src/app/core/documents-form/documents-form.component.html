@@ -6,7 +6,7 @@
       </mat-card-header>
       <mat-card-content class="special-mat-content">
         <form [formGroup]="documentsFormGroup">
-          <button mat-flat-button (click)="fileInput.click()" class="button-upload">
+          <button mat-stroked-button (click)="fileInput.click()" class="special-mat-sec-button">
             <mat-icon>upload</mat-icon> {{ translate('chooseFile') }}</button
           >
           <input
@@ -40,10 +40,16 @@
         </form>
       </mat-card-content>
       <mat-card-actions *transloco="let translate; prefix: 'stepper'" class="special-form-actions">
-        <button mat-flat-button (click)="back()">{{ translate('back') }}</button>
-        <button mat-flat-button [disabled]="documentsFormGroup.invalid" (click)="continue()">{{
-          translate('next')
+        <button mat-stroked-button class="special-mat-sec-button" (click)="back()">{{
+          translate('back')
         }}</button>
+        <button
+          mat-flat-button
+          class="special-mat-prim-button"
+          [disabled]="documentsFormGroup.invalid"
+          (click)="continue()"
+          >{{ translate('next') }}</button
+        >
       </mat-card-actions>
     </mat-card>
   </ng-container>

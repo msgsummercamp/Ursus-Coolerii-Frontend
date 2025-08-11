@@ -1,7 +1,7 @@
 <table mat-table [dataSource]="cases()" class="mat-elevation-z8">
-  <ng-container matColumnDef="caseId">
+  <ng-container matColumnDef="contractId">
     <th mat-header-cell *matHeaderCellDef>ID</th>
-    <td mat-cell *matCellDef="let c">{{ c.caseId }}</td>
+    <td mat-cell *matCellDef="let c">{{ c.contractId }}</td>
   </ng-container>
   <ng-container matColumnDef="caseDate">
     <th mat-header-cell *matHeaderCellDef>{{ 'caseList.caseDate' | transloco }}</th>
@@ -18,6 +18,10 @@
   <ng-container matColumnDef="flightArrivalDate">
     <th mat-header-cell *matHeaderCellDef>{{ 'caseList.flightArrivalDate' | transloco }}</th>
     <td mat-cell *matCellDef="let c">{{ c.flightArrivalDate | date }}</td>
+  </ng-container>
+  <ng-container matColumnDef="reservationNumber">
+    <th mat-header-cell *matHeaderCellDef>{{ 'caseList.reservationNumber' | transloco }}</th>
+    <td mat-cell *matCellDef="let c">{{ c.reservationNumber }}</td>
   </ng-container>
   <ng-container matColumnDef="passengerName">
     <th mat-header-cell *matHeaderCellDef>{{ 'caseList.passengerName' | transloco }}</th>

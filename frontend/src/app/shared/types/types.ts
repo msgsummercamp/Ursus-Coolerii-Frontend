@@ -6,11 +6,12 @@ export type AirportAttributes = {
 };
 
 export type Case = {
-  caseId: string;
+  contractId: string;
   caseDate: Date | string;
   flightNr: string;
   flightDepartureDate: Date | string;
   flightArrivalDate: Date | string;
+  reservationNumber: string;
   passengerName: string;
   status: CaseStatus;
   colleague?: string;
@@ -95,6 +96,6 @@ export const DelayNoticeLabels: Record<DelayNotice, string> = {
 export const CaseStatusLabels: Record<CaseStatus, string> = {
   [CaseStatus.notAssigned]: 'Not Assigned',
   [CaseStatus.assigned]: 'Assigned',
-  [CaseStatus.eligible]: 'Eligible',
-  [CaseStatus.notEligible]: 'Not Eligible',
+  [CaseStatus.eligible]: 'Won',
+  [CaseStatus.notEligible]: 'Lost',
 };
