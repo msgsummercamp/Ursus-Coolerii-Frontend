@@ -55,6 +55,7 @@
           formControlName="plannedDepartureDate"
           [min]="minDate"
           [max]="maxDate"
+          (dateChange)="selectDate($event)"
         />
         <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="departureDatePicker" />

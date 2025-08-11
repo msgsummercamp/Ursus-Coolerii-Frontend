@@ -24,6 +24,7 @@ import { MatOption } from '@angular/material/core';
 import {
   MatDatepicker,
   MatDatepickerInput,
+  MatDatepickerInputEvent,
   MatDatepickerToggle,
 } from '@angular/material/datepicker';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
@@ -58,6 +59,7 @@ import { StopoverService } from '../../../shared/services/stopover.service';
 })
 export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   @Output() airline: EventEmitter<AirlineAttributes> = new EventEmitter<AirlineAttributes>();
+  @Output() date: EventEmitter<Date> = new EventEmitter<Date>();
 
   private airlineService = inject(AirlineService);
   private stopoverService = inject(StopoverService);
@@ -98,7 +100,13 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   }
 
   protected selectAirline(airline: AirlineAttributes) {
+    this.flightForm.controls.airline.setValue(airline.name);
     this.airline.emit(airline);
+  }
+
+  protected selectDate(date: MatDatepickerInputEvent<Date>) {
+    this.flightForm.controls.plannedDepartureDate.setValue(date.value);
+    this.date.emit(date.value || undefined);
   }
 
   private subscribeToFetchAirlines() {

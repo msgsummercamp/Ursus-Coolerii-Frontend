@@ -136,4 +136,9 @@ export class FlightDetailsWrapComponent {
   selectAirline(index: any, $event: AirlineAttributes) {
     this.stopoverService.setAirline(index, $event.name);
   }
+
+  selectDate(i: number, date: Date) {
+    this.stopoverService.setFlightDepartureDate(i, date);
+    this.stopoverService.setFlightArrivalDate(i - 1, date);
+  }
 }

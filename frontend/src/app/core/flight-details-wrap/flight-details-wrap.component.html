@@ -9,7 +9,11 @@
     <mat-card-content class="special-mat-content">
       <div *ngFor="let flight of connectingFlights(); let i = index">
         <h2 class="mat-headline-5">{{ 'connecting-flight.title' | transloco }} #{{ i + 1 }}</h2>
-        <app-flight-details-form (airline)="selectAirline(i, $event)" [flightForm]="flight" />
+        <app-flight-details-form
+          (airline)="selectAirline(i, $event)"
+          (date)="selectDate(i, $event)"
+          [flightForm]="flight"
+        />
         <mat-checkbox [checked]="problemFlightIndex === i" (change)="updateProblemFlight(i)"
           >Problem flight?</mat-checkbox
         >
