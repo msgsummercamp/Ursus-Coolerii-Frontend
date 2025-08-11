@@ -15,6 +15,20 @@ export type Case = {
   status: CaseStatus;
   colleague?: string;
 };
+
+export type Role = {
+  name: string;
+};
+
+export type User = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: Role[];
+  casesCount?: number;
+};
+
 export type Flight = {
   flightNumber: string;
   airlineName: string;
@@ -25,8 +39,7 @@ export type Flight = {
   firstFlight: boolean;
   lastFlight: boolean;
   problemFlight: boolean;
-
-}
+};
 
 export type Passenger = {
   firstName: string;
@@ -35,15 +48,14 @@ export type Passenger = {
   phoneNumber: string;
   address: string;
   postalCode: string;
-}
+};
 
 export type DisruptionDetails = {
   disruption: DisruptiveMotive | null;
   noticeDays: number | null;
   delayHours: number | null;
   isVoluntarilyGivenUp: boolean | null;
-}
-
+};
 
 export type CaseData = {
   disruptionDetails: DisruptionDetails;
@@ -51,25 +63,23 @@ export type CaseData = {
   flights: Flight[];
   passenger: Passenger;
   userEmail: string;
-}
+};
 
 export type CaseDataWithFiles = {
-  caseData: CaseData,
-  files: File[]
-}
+  caseData: CaseData;
+  files: File[];
+};
 
 export type SignupRequest = {
-  email: string,
-  firstName: string,
-  lastName: string
-}
+  email: string;
+  firstName: string;
+  lastName: string;
+};
 
 export type SaveRequest = {
-  caseRequest: CaseData,
-  signupRequest: SignupRequest
-}
-
-
+  caseRequest: CaseData;
+  signupRequest: SignupRequest;
+};
 
 export type EligibilityRequest = {
   disruption: DisruptiveMotive | null;

@@ -19,6 +19,11 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./core/case-list/case-list.component').then((m) => m.CaseListComponent),
   },
+  {
+    path: 'users',
+    loadComponent: () =>
+      import('./core/user-list/user-list.component').then((m) => m.UserListComponent),
+  },
   { path: 'confirmation', component: ConfirmationEligibilityComponent },
   { path: '**', component: NotFoundComponent },
 ];
