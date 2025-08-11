@@ -12,6 +12,7 @@ import {
 import {
   MatDatepicker,
   MatDatepickerInput,
+  MatDatepickerInputEvent,
   MatDatepickerToggle,
 } from '@angular/material/datepicker';
 import { delay, iif, of, Subject, switchMap, takeUntil } from 'rxjs';
@@ -140,8 +141,6 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   }
 
   protected continue() {
-    this.stopoverService.setDepartureDate(this.reservationForm.controls.plannedDepartureDate.value);
-    this.stopoverService.setDestinationDate(this.reservationForm.controls.plannedArrivalDate.value);
     this.next.emit();
   }
   protected back() {
@@ -224,5 +223,13 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
   public isLongAirportName(name: string): boolean {
     return name.length > 35 || name.includes('\n');
+  }
+
+  protected setDepartureDate($event: MatDatepickerInputEvent<Date>) {
+    this.stopoverService.setDepartureDate($event.value);
+  }
+
+  protected setDestinationDate($event: MatDatepickerInputEvent<Date>) {
+    this.stopoverService.setDestinationDate($event.value);
   }
 }

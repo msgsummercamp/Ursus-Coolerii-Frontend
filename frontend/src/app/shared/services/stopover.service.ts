@@ -142,17 +142,42 @@ export class StopoverService {
         problemFlight: this.problemFlightIndex() === i,
         flightNumber: '',
         airlineName: '',
-        departureTime: '',
-        arrivalTime: '',
+        departureTime: i === 0 ? this.stopoverSignal().departureDate?.toISOString() || '' : '',
+        arrivalTime:
+          i === airports.length - 2
+            ? this.stopoverSignal().destinationDate?.toISOString() || ''
+            : '',
       };
 
       flights.push(newFlight);
-
-      this.stopoverSignal.update((stopoverState) => ({ ...stopoverState, flights: flights }));
-
-      console.log(this.stopoverSignal().flights);
     }
 
     this.stopoverSignal.update((stopoverState) => ({ ...stopoverState, flights: flights }));
+  }
+
+  setFlightNumber(flightIndex: number, flightNumber: string) {
+    this.stopoverSignal.update((stopoverState: StopoverState) => {
+      const flights = [...stopoverState.flights];
+      if (flights[flightIndex]) {
+        flights[flightIndex] = {
+          ...flights[flightIndex],
+          flightNumber: flightNumber,
+        };
+      }
+      return { ...stopoverState, flights };
+    });
+  }
+
+  setAirline(flightIndex: number, airline: string) {
+    this.stopoverSignal.update((stopoverState: StopoverState) => {
+      const flights = [...stopoverState.flights];
+      if (flights[flightIndex]) {
+        flights[flightIndex] = {
+          ...flights[flightIndex],
+          airlineName: airline,
+        };
+      }
+      return { ...stopoverState, flights };
+    });
   }
 }

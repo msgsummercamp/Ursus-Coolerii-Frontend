@@ -31,6 +31,7 @@ import { startWith, Subject, takeUntil } from 'rxjs';
 import { AirlineAttributes, AirlineService } from '../service/airline.service';
 import { FlightDetailsForm } from '../../../shared/types/form.types';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { StopoverService } from '../../../shared/services/stopover.service';
 
 @Component({
   selector: 'app-flight-details-form',
@@ -56,9 +57,10 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
   ],
 })
 export class FlightDetailsFormComponent implements OnInit, OnDestroy {
-  @Output() date = new EventEmitter<Date | null>();
+  @Output() airline: EventEmitter<AirlineAttributes> = new EventEmitter<AirlineAttributes>();
 
   private airlineService = inject(AirlineService);
+  private stopoverService = inject(StopoverService);
 
   private readonly _isValid = signal(false);
   public isValid = this._isValid.asReadonly();
@@ -77,7 +79,6 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.flightForm.statusChanges.subscribe((status) => {
       this._isValid.set(status === 'VALID');
-      this.date.emit(this.flightForm.controls.plannedDepartureDate.value);
     });
     this.subscribeToFetchAirlines();
     this.subscribeToAirlineAutocomplete();
@@ -86,6 +87,18 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.onDestroy$.next();
     this.onDestroy$.complete();
+  }
+
+  protected get minDate() {
+    return this.stopoverService.stopoverState().departureDate;
+  }
+
+  protected get maxDate() {
+    return this.stopoverService.stopoverState().destinationDate;
+  }
+
+  protected selectAirline(airline: AirlineAttributes) {
+    this.airline.emit(airline);
   }
 
   private subscribeToFetchAirlines() {

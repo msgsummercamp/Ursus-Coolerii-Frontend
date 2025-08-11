@@ -25,6 +25,7 @@ import { LoadingSpinnerComponent } from '../loading-spinner/component/loading-sp
 import { StopoverService } from '../../shared/services/stopover.service';
 import { Flight } from '../../shared/types/types';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { AirlineAttributes } from '../flight-details-form/service/airline.service';
 
 @Component({
   selector: 'app-flight-details-wrap',
@@ -95,6 +96,8 @@ export class FlightDetailsWrapComponent {
   }
 
   private createForm(flight: Flight): FormGroup<FlightDetailsForm> {
+    const departureDate = flight.departureTime ? new Date(flight.departureTime) : null;
+
     return this.fb.group<FlightDetailsForm>({
       flightNr: this.fb.control('', [
         Validators.required,
@@ -103,7 +106,7 @@ export class FlightDetailsWrapComponent {
       airline: this.fb.control('', Validators.required),
       departingAirport: this.fb.control(flight.departureAirport),
       destinationAirport: this.fb.control(flight.destinationAirport),
-      plannedDepartureDate: this.fb.control(null, Validators.required),
+      plannedDepartureDate: this.fb.control(departureDate, Validators.required),
     });
   }
 
@@ -118,6 +121,19 @@ export class FlightDetailsWrapComponent {
   }
 
   protected saveDate($event: Date | null, index: number) {
-    console.log($event, index);
+    this.stopoverService.setFlightDepartureDate(index, $event);
+    this.stopoverService.setFlightArrivalDate(index - 1, $event);
+    const forms = this.connectingFlights();
+    if (forms[index]) {
+      forms[index].controls.plannedDepartureDate.setValue($event);
+    }
+  }
+
+  saveFlightNr($event: string, index: number) {
+    this.stopoverService.setFlightNumber(index, $event);
+  }
+
+  selectAirline(index: any, $event: AirlineAttributes) {
+    this.stopoverService.setAirline(index, $event.name);
   }
 }

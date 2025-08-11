@@ -42,6 +42,7 @@
                     class="dropdown-option"
                     *cdkVirtualFor="let airport of filteredDepartAirports"
                     (mousedown)="selectDepartAirport(airport)"
+                    (selectionchange)="selectDepartAirport(airport)"
                   >
                     <div class="list-item">
                       {{ airport.name }}
@@ -87,6 +88,7 @@
                     class="dropdown-option"
                     *cdkVirtualFor="let airport of filteredDestAirports"
                     (mousedown)="selectDestAirport(airport)"
+                    (selectionchange)="selectDepartAirport(airport)"
                   >
                     <div class="list-item">
                       {{ airport.name }}
@@ -106,6 +108,7 @@
                 matInput
                 [matDatepicker]="departureDatePicker"
                 formControlName="plannedDepartureDate"
+                (dateChange)="setDepartureDate($event)"
               />
               <mat-hint>DD/MM/YYYY</mat-hint>
               <mat-datepicker-toggle matIconSuffix [for]="departureDatePicker" />
@@ -125,6 +128,7 @@
                 matInput
                 [matDatepicker]="arrivalDatePicker"
                 formControlName="plannedArrivalDate"
+                (dateChange)="setDestinationDate($event)"
                 [min]="reservationForm.get('plannedDepartureDate')?.value"
               />
               <mat-hint>DD/MM/YYYY</mat-hint>

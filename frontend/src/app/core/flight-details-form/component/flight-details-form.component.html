@@ -31,7 +31,11 @@
           placeholder="{{ 'flightDetails.typeAirline' | transloco }}"
         />
         <mat-autocomplete #autoAirline="matAutocomplete">
-          <mat-option *ngFor="let airline of filteredAirlines" [value]="airline.name">
+          <mat-option
+            *ngFor="let airline of filteredAirlines"
+            [value]="airline.name"
+            (onSelectionChange)="selectAirline(airline)"
+          >
             {{ airline.name }}
           </mat-option>
         </mat-autocomplete>
@@ -49,6 +53,8 @@
           matInput
           [matDatepicker]="departureDatePicker"
           formControlName="plannedDepartureDate"
+          [min]="minDate"
+          [max]="maxDate"
         />
         <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="departureDatePicker" />
