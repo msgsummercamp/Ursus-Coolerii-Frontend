@@ -1,43 +1,63 @@
-<mat-card class="special-mat-card">
-  @if(!saved()){
+@if (this.isLoading()) {
+  <app-loading-spinner />
+}
+@if(!saved()){
+  <mat-card class="special-mat-card">
     <mat-card-header class="special-mat-header">
-    <mat-card-title  class="special-mat-title">Almost done</mat-card-title>
-  </mat-card-header>
-  <mat-card-content class="special-mat-content">
-      <p>{{ eligibleMessage() }}</p>
-      <a mat-raised-button color="primary" href="assets/UrsusCooleriiGDPR.pdf" download>
-        Download GDPR file
-      </a>
-      <mat-checkbox [(ngModel)]="agreed" class="checkbox">
-        I agree to the terms in the GDPR file
-      </mat-checkbox>
-        <mat-error>
-          {{ this.saveError()}}
-        </mat-error>
-        <mat-card-actions class="special-form-actions">
-          <button mat-flat-button (click)="back()">
-            {{ translate('stepper.back') }}
-          </button>
-          <button
-            mat-flat-button
-            color="primary"
-            (click)="submit()"
-            [disabled]="!isEligible() || !agreed">
-            {{ translate('stepper.done') }}
-          </button>
-        </mat-card-actions>
-      </mat-card-content>
-      <mat-label>{{ rewardMessage }}</mat-label>
-
-  } @else {
-      <mat-card-header class="special-mat-header">
-        <mat-card-title  class="special-mat-title">Your case has been submited</mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="special-mat-content">
-          <mat-card class="special-mat-card">
-              <mat-card-subtitle>Your case has been registered and is currently under review</mat-card-subtitle>
-              <mat-label>A mail has been sent with to your associated email account with your password, and case info</mat-label>
-          </mat-card>
-      </mat-card-content>
-    }
-</mat-card>
+      <mat-card-title class="special-mat-title">{{ 'confirmationEligibility.almostDone' | transloco }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="special-mat-content">
+      <div class="info-content">
+        <p>{{ 'confirmationEligibility.generalInfo' | transloco }}</p>
+        <p>{{ 'confirmationEligibility.readGdprTerms' | transloco }}</p>
+        <p>{{ 'confirmationEligibility.checkBoxes' | transloco }}</p>
+        <p>{{ 'confirmationEligibility.passwordGenerated' | transloco }}</p>
+        <p>{{ 'confirmationEligibility.changePassword' | transloco }}</p>
+      </div>
+      <button mat-button (click)="openDialog()">
+        {{ 'confirmationEligibility.readGdprTermsButton' | transloco }}
+      </button>
+      <p class="centered-mat-label">{{ 'confirmationEligibility.' + eligibleMessage() | transloco }}</p>
+      <form [formGroup]="gdprForm" (ngSubmit)="submit()" class="gdpr-form">
+        <mat-checkbox formControlName="gdpr">{{ 'confirmationEligibility.gdprCheckbox' | transloco }}</mat-checkbox>
+        <mat-checkbox formControlName="terms">{{ 'confirmationEligibility.termsCheckbox' | transloco }}</mat-checkbox>
+        <mat-checkbox formControlName="marketing">{{ 'confirmationEligibility.marketingCheckbox' | transloco }}</mat-checkbox>
+      </form>
+    </mat-card-content>
+    <mat-error class="not-checked-error">
+      {{ notCheckedText() || saveError()}}
+    </mat-error>
+    <mat-label class="reward-label">{{ rewardMessage }}</mat-label>
+    <mat-card-actions class="special-form-actions">
+      <button mat-flat-button (click)="back()">
+        {{ 'stepper.back' | transloco }}
+      </button>
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="submit()"
+        [disabled]="!isEligible()">
+        {{ 'stepper.done' | transloco }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+} @else {
+  <mat-card class="special-mat-card">
+    <mat-card-header class="special-mat-header">
+      <mat-card-title class="special-mat-title">{{ 'confirmationEligibility.submittedTitle' | transloco }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="special-mat-content">
+      <mat-card-subtitle class="confirmation-sub-title">{{ 'confirmationEligibility.generalInfoSubtitle' | transloco }}</mat-card-subtitle>
+      <div class="info-content">
+        <p>{{ 'confirmationEligibility.emailSent' | transloco }} {{email}}</p>
+        <p>{{ 'confirmationEligibility.caseCreated' | transloco }}</p>
+      </div>
+      <mat-card-subtitle class="confirmation-sub-title">{{ 'confirmationEligibility.nextSubtitle' | transloco }}</mat-card-subtitle>
+      <div class="info-content">
+        <p>{{ 'confirmationEligibility.nextStep1' | transloco }}</p>
+        <p>{{ 'confirmationEligibility.nextStep2' | transloco }}</p>
+        <p>{{ 'confirmationEligibility.nextStep3' | transloco }}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+}

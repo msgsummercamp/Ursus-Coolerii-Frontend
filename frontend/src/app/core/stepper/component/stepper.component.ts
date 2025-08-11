@@ -97,6 +97,12 @@ export class StepperComponent implements AfterViewInit {
     this.documentsForm()?.isValid()
   );
 
+  disableStepper = false;
+
+  onDisableStepper() {
+    this.disableStepper = true;
+  }
+
   private userForm = viewChild(UserDetailsComponent);
   protected userFormCompleted: Signal<boolean | undefined> = computed(() =>
     this.userForm()?.isValid()

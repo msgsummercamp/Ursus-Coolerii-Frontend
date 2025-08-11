@@ -15,10 +15,13 @@ export const routes: Routes = [
       import('./core/stepper/component/stepper.component').then((m) => m.StepperComponent),
   },
   {
+    path: 'confirmation',
+    component: ConfirmationEligibilityComponent,
+  },
+  {
     path: 'cases',
     loadComponent: () =>
       import('./core/case-list/case-list.component').then((m) => m.CaseListComponent),
   },
-  { path: 'confirmation', component: ConfirmationEligibilityComponent },
   { path: '**', component: NotFoundComponent },
 ];
