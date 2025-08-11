@@ -11,7 +11,7 @@
           matInput
           type="text"
           formControlName="flightNr"
-          (focusout)="selectFlightNr()"
+          (change)="selectFlightNr()"
           placeholder="{{ 'flightDetails.typeFlightNr' | transloco }}"
         />
         @if (flightForm.controls.flightNr.errors?.['required']) {

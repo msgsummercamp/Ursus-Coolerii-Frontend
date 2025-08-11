@@ -82,6 +82,7 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
     this.flightForm.statusChanges.subscribe((status) => {
       this._isValid.set(status === 'VALID');
     });
+
     this.subscribeToFetchAirlines();
     this.subscribeToAirlineAutocomplete();
   }

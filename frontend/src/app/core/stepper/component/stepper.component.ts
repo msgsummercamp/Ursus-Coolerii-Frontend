@@ -30,6 +30,7 @@ import { AirportsService } from '../../flight-details-form/service/airport.servi
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ItineraryFormComponent } from '../../reservation-details/component/itinerary.component';
 import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility/confirmation-eligibility.component';
+import { StopoverService } from '../../../shared/services/stopover.service';
 
 const AIRPLANE_WIDTH = 40;
 const VERTICAL_OFFSET = -19;
@@ -80,6 +81,7 @@ const VERTICAL_OFFSET = -19;
 })
 export class StepperComponent implements AfterViewInit {
   protected airportService = inject(AirportsService);
+  private stopoverService = inject(StopoverService);
 
   private disruptiveFormComponent = viewChild(DisruptiveFormComponent);
   protected disruptiveFormCompleted: Signal<boolean | undefined> = computed(() =>
@@ -113,10 +115,7 @@ export class StepperComponent implements AfterViewInit {
     this.disruptionDetails = $event;
   }
 
-  private flight: Flight | undefined;
-  public receiveFlight($event: Flight) {
-    this.flight = $event;
-  }
+  private flights: Flight[] = [];
 
   protected rewardMessage: string | undefined;
   public receiveReward($event: string) {
@@ -157,9 +156,10 @@ export class StepperComponent implements AfterViewInit {
 
   public buildCaseFile(): CaseDataWithFiles | undefined {
     console.log(this.userDetails);
+    this.flights = this.stopoverService.stopoverState().flights;
     if (
       !this.disruptionDetails ||
-      !this.flight ||
+      !this.flights ||
       !this.passenger ||
       !this.documents ||
       !this.userDetails
@@ -169,7 +169,7 @@ export class StepperComponent implements AfterViewInit {
       caseData: {
         disruptionDetails: this.disruptionDetails,
         reservationNumber: 'mockReservation',
-        flights: [this.flight],
+        flights: this.flights,
         passenger: this.passenger,
         userEmail: this.userDetails.email,
       },

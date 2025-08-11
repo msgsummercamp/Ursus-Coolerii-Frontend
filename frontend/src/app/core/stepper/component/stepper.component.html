@@ -21,7 +21,6 @@
       <ng-template matStepLabel>{{ translate('flight-details') }}</ng-template>
       <app-flight-details-wrap
         (rewardValueSent)="receiveReward($event)"
-        (receiveMessage)="receiveFlight($event)"
         (previous)="stepper.previous()"
         (next)="stepper.next()"
       />

@@ -68,20 +68,45 @@ export class FlightDetailsWrapComponent {
 
   public validForms = computed(() =>
     this.flightFormComponents()
-      .map((form) => form.isValid())
+      .map((form) => {
+        console.log(form.flightForm.getRawValue());
+        console.log(form.isValid());
+        return form.isValid();
+      })
       .every((value) => value)
   );
+
+  private existingForms = new Map<number, FormGroup<FlightDetailsForm>>();
 
   protected connectingFlights = computed(() => {
     const flights = this.stopoverService.stopoverState().flights;
 
-    console.log(flights);
-
     const forms: FormGroup<FlightDetailsForm>[] = [];
 
     for (let i = 0; i < flights.length; i += 1) {
-      let newForm = this.createForm(flights[i]);
-      forms.push(newForm);
+      if (this.existingForms.has(i)) {
+        const existingForm = this.existingForms.get(i)!;
+        existingForm.patchValue({
+          flightNr: flights[i].flightNumber || '',
+          airline: flights[i].airlineName || '',
+          departingAirport: flights[i].departureAirport,
+          destinationAirport: flights[i].destinationAirport,
+          plannedDepartureDate: flights[i].departureTime
+            ? new Date(flights[i].departureTime)
+            : null,
+        });
+        forms.push(existingForm);
+      } else {
+        const newForm = this.createForm(flights[i]);
+        this.existingForms.set(i, newForm);
+        forms.push(newForm);
+      }
+    }
+
+    for (const [index] of this.existingForms) {
+      if (index >= flights.length) {
+        this.existingForms.delete(index);
+      }
     }
 
     return forms;
@@ -97,7 +122,6 @@ export class FlightDetailsWrapComponent {
 
   private createForm(flight: Flight): FormGroup<FlightDetailsForm> {
     const departureDate = flight.departureTime ? new Date(flight.departureTime) : null;
-
     return this.fb.group<FlightDetailsForm>({
       flightNr: this.fb.control(flight.flightNumber, [
         Validators.required,
