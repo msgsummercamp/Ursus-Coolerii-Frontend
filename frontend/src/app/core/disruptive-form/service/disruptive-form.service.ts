@@ -13,14 +13,12 @@ import { CancellationNotice, DelayNotice, DisruptiveMotive } from '../../../shar
 export class DisruptiveFormService {
   private httpClient = inject(HttpClient);
   private fb = inject(FormBuilder);
-  private daysBeforeNotice = 100;
-  private hoursDelay = 0;
 
   public createForm(): FormGroup<DisruptiveMotiveForm> {
     return this.fb.group<DisruptiveMotiveForm>({
       disruptionMotive: this.fb.control(''),
-      daysBeforeCancelation: this.fb.control(null),
-      hoursLateArrival: this.fb.control(null),
+      daysBeforeCancellation: this.fb.control(''),
+      hoursLateArrival: this.fb.control(''),
       gaveSeatVoluntarly: this.fb.control(''),
       deniedBoardingMotive: this.fb.control(''),
       airlineMentionedMotive: this.fb.control(null),
@@ -40,27 +38,30 @@ export class DisruptiveFormService {
     return null;
   }
 
+  private getCancellationNotice(form: FormGroup<DisruptiveMotiveForm>): CancellationNotice | null {
+    const noticeLabel = form.controls.daysBeforeCancellation.value;
+    if (
+      noticeLabel &&
+      Object.values(CancellationNotice).includes(noticeLabel as CancellationNotice)
+    ) {
+      return noticeLabel as CancellationNotice;
+    }
+    return null;
+  }
+
+  private getDelayNotice(form: FormGroup<DisruptiveMotiveForm>): DelayNotice | null {
+    const delayLabel = form.controls.hoursLateArrival.value;
+    if (delayLabel && Object.values(DelayNotice).includes(delayLabel as DelayNotice)) {
+      return delayLabel as DelayNotice;
+    }
+    return null;
+  }
+
   public buildEligibilityRequest(form: FormGroup<DisruptiveMotiveForm>): EligibilityRequest {
-    if (
-      form.controls.daysBeforeCancelation.value === CancellationNotice.lessThan14Days ||
-      form.controls.daysBeforeCancelation.value === CancellationNotice.onFlightDay
-    ) {
-      this.daysBeforeNotice = 0;
-    } else if (form.controls.daysBeforeCancelation.value === CancellationNotice.moreThan14Days) {
-      this.daysBeforeNotice = 15;
-    }
-    if (
-      form.controls.hoursLateArrival.value === DelayNotice.moreThan3Hours ||
-      form.controls.hoursLateArrival.value === DelayNotice.lostConnection
-    ) {
-      this.hoursDelay = 4;
-    } else if (form.controls.hoursLateArrival.value === DelayNotice.lessThan3Hours) {
-      this.hoursDelay = 2;
-    }
     return {
       disruption: this.getDisruptionMotive(form),
-      noticeDays: this.daysBeforeNotice ?? null,
-      delayHours: this.hoursDelay ?? null,
+      noticeDays: this.getCancellationNotice(form),
+      delayHours: this.getDelayNotice(form),
       isVoluntarilyGivenUp: form.controls.gaveSeatVoluntarly.value !== 'No',
     };
   }

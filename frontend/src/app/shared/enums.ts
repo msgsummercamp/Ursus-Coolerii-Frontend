@@ -21,15 +21,15 @@ export enum AirlineMotives {
 }
 
 export enum CancellationNotice {
-  lessThan14Days = 'Less than 14 days',
-  moreThan14Days = 'More than 14 days',
-  onFlightDay = 'On flight day',
+  lessThan14Days = 'LESS_THAN_14',
+  moreThan14Days = 'MORE_THAN_14',
+  onFlightDay = 'ON_FLIGHT_DAY',
 }
 
 export enum DelayNotice {
-  lessThan3Hours = 'Less than 3 hours',
-  moreThan3Hours = 'More than 3 hours',
-  lostConnection = 'Lost connection',
+  lessThan3Hours = 'LESS_THAN_3',
+  moreThan3Hours = 'MORE_THAN_3',
+  lostConnection = 'LOST_CONNECTION',
 }
 
 export enum IsMotiveSpecified {

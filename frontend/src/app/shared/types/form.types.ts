@@ -22,7 +22,7 @@ export type PassengerDetailsForm = {
 
 export type DisruptiveMotiveForm = {
   disruptionMotive: FormControl<string | null>;
-  daysBeforeCancelation: FormControl<string | null>;
+  daysBeforeCancellation: FormControl<string | null>;
   hoursLateArrival: FormControl<string | null>;
   gaveSeatVoluntarly: FormControl<string | null>;
   deniedBoardingMotive: FormControl<string | null>;

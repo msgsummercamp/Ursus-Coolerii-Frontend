@@ -84,6 +84,7 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
       this.service.checkEligibility(this.formDisruption).subscribe({
         next: (result) => {
           this.isEligible.set(result.valueOf());
+          console.log('Eligibility result:', result);
           this.eligibilityService.setEligibility(result.valueOf());
         },
         error: (err) => {

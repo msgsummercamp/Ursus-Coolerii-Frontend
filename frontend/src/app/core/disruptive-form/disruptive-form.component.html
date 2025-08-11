@@ -23,7 +23,7 @@
         ) {
           <mat-form-field appearance="fill">
             <mat-label>{{ 'disruptiveMotive.numberOfDaysLong' | transloco }}</mat-label>
-            <mat-select formControlName="daysBeforeCancelation">
+            <mat-select formControlName="daysBeforeCancellation">
               @for (option of cancellationNotice; track $index) {
                 <mat-option [value]="option">
                   {{ "disruptiveMotive." + toCamelCase(option) | transloco }}
