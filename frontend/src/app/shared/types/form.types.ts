@@ -12,8 +12,8 @@ export type ReservationDetailsForm = {
 export type FlightDetailsForm = {
   flightNr: FormControl<string>;
   airline: FormControl<string>;
-  departingAirport: FormControl<AirportAttributes>;
-  destinationAirport: FormControl<AirportAttributes>;
+  departingAirport: FormControl<string>;
+  destinationAirport: FormControl<string>;
   plannedDepartureDate: FormControl<Date | null>;
 };
 

@@ -144,15 +144,6 @@ export class FlightDetailsWrapComponent {
     return this.stopoverService.problemFlightIndex();
   }
 
-  protected saveDate($event: Date | null, index: number) {
-    this.stopoverService.setFlightDepartureDate(index, $event);
-    this.stopoverService.setFlightArrivalDate(index - 1, $event);
-    const forms = this.connectingFlights();
-    if (forms[index]) {
-      forms[index].controls.plannedDepartureDate.setValue($event);
-    }
-  }
-
   selectFlightNr(index: number, $event: string) {
     this.stopoverService.setFlightNumber(index, $event);
   }

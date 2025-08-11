@@ -139,8 +139,8 @@ export class StopoverService {
       let currentAirport = airports[i];
       let nextAirport = airports[i + 1];
       let newFlight: Flight = {
-        departureAirport: currentAirport,
-        destinationAirport: nextAirport,
+        departureAirport: currentAirport.name,
+        destinationAirport: nextAirport.name,
         firstFlight: i === 0,
         lastFlight: i === airports.length - 2,
         problemFlight: this.problemFlightIndex() === i,
