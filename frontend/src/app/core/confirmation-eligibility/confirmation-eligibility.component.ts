@@ -102,12 +102,6 @@ export class ConfirmationEligibilityComponent {
     if (isEligible === null) return 'checking';
     return isEligible ? 'eligible' : 'notEligible';
   });
-  /*
-      if (isEligible === null) return 'Checking...';
-    return isEligible ? 'Passenger is eligible' : 'Passenger is not eligible';
-  });
-   */
-
   public readonly previous = output<void>();
   protected saved = signal(false);
 
@@ -154,6 +148,6 @@ export class ConfirmationEligibilityComponent {
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(PopUpGdprComponent, { autoFocus: false });
+    this.dialog.open(PopUpGdprComponent, { autoFocus: false });
   }
 }
