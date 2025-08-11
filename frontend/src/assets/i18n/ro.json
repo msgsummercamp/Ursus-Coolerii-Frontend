@@ -52,6 +52,9 @@
       },
       "plannedArrivalTime": {
         "required": "Ora planificată de sosire este obligatorie!"
+      },
+      "reservationNo": {
+        "required": "Numărul de rezervare este obligatoriu!"
       }
     }
   },
@@ -92,6 +95,9 @@
         "pattern": "Numărul de telefon ar trebui să aibă forma [+4]0xxxxxxxxx!"
       }
     }
+  },
+  "user-details": {
+    "registrationNo": "Număr Rezervare"
   },
   "stepper": {
     "disruption-motives": "Motiv de perturbare",

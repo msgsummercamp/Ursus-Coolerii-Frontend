@@ -52,6 +52,9 @@
       },
       "plannedArrivalTime": {
         "required": "Planned arrival time is required!"
+      },
+      "reservationNo": {
+        "required": "Reservation number is required!"
       }
     }
   },
@@ -92,6 +95,9 @@
         "pattern": "Phone number should have the format [+4]0xxxxxxxxx!"
       }
     }
+  },
+  "user-details": {
+    "registrationNo": "Reservation Number"
   },
   "stepper": {
     "disruption-motives": "Disruption motives",

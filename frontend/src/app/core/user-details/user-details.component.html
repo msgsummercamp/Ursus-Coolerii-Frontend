@@ -17,6 +17,21 @@
       @if(emailExists()){
         <mat-error>Email already exists!</mat-error>
       }
+
+      <mat-form-field appearance="fill" class="special-form-field">
+        <mat-label>{{ 'user-details.registrationNo' | transloco }}</mat-label>
+        <input
+          matInput
+          formControlName="registrationNo"
+          type="text"
+          id="registrationNo"
+          [placeholder]="translate('user-details.registrationNo')"
+        />
+      </mat-form-field>
+      @if(form.controls.registrationNo.errors?.['required']) {
+        <mat-error>{{ translate('error.reservationNo.required') }}</mat-error>
+      }
+
       <mat-card-actions class="special-form-actions">
       <button (click)="back()" mat-flat-button>
         {{ translate('stepper.back')}}
