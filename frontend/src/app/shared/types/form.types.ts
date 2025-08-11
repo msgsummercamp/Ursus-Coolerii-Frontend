@@ -33,5 +33,4 @@ export type DisruptiveMotiveForm = {
   airlineMentionedMotive: FormControl<string | null>;
   communicatedMotive: FormControl<string | null>;
   optionalComments: FormControl<string | null>;
-  didArriveAtDestination: FormControl<string | null>;
 };

@@ -44,9 +44,3 @@ export enum IsMotiveSpecified {
   no = 'No',
   notSpecified = 'Not specified',
 }
-
-export enum HasArrivedOrNot {
-  lessThan3Hours = 'Less than 3 hours',
-  moreThan3Hours = 'More than 3 hours',
-  notArrived = 'I did not arrive',
-}
