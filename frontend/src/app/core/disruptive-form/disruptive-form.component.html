@@ -80,7 +80,7 @@
               }
             </mat-select>
           </mat-form-field>
-          @if (formDisruption.controls.airlineMentionedMotive.value === true) {
+          @if (formDisruption.controls.airlineMentionedMotive.value === 'Yes') {
             <mat-form-field appearance="fill" class="special-form-field">
               <mat-label>{{ 'disruptiveMotive.communicatedMotive' | transloco }}</mat-label>
               <mat-select formControlName="communicatedMotive">
@@ -96,7 +96,7 @@
         @if(formDisruption.controls.disruptionMotive.value === DisruptiveMotiveLabels[DisruptiveMotive.delay] ||
         formDisruption.controls.disruptionMotive.value === DisruptiveMotiveLabels[DisruptiveMotive.cancelation] ||
         formDisruption.controls.disruptionMotive.value === DisruptiveMotiveLabels[DisruptiveMotive.deniedBoarding]) {
-          <mat-form-field>
+          <mat-form-field appearance="fill" class="special-form-field">
             <mat-label>{{translate('disruptiveMotive.optionalComments')}}</mat-label>
             <textarea matInput></textarea>
           </mat-form-field>
@@ -118,8 +118,8 @@
         {{ 'flightDetails.next' | transloco }}</button
       >
     </mat-card-actions>
-    <p class="eligibility-message">{{
-      'disruptiveMotive.' + toCamelCase(eligibleText()) | transloco
-    }}</p>
+<!--    <p class="eligibility-message">{{-->
+<!--      'disruptiveMotive.' + toCamelCase(eligibleText()) | transloco-->
+<!--    }}</p>-->
   </mat-card>
 </div>
