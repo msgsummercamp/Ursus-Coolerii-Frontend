@@ -18,6 +18,15 @@ import { PassengerDetailsFormComponent } from '../../passenger-details-form/pass
 import { DocumentsFormComponent } from '../../documents-form/documents-form.component';
 import { FlightDetailsWrapComponent } from '../../flight-details-wrap/flight-details-wrap.component';
 import { DisruptiveFormComponent } from '../../disruptive-form/disruptive-form.component';
+import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility/confirmation-eligibility.component';
+import {
+  CaseDataWithFiles,
+  DisruptionDetails,
+  Flight,
+  Passenger,
+  SignupRequest,
+} from '../../../shared/types/types';
+import { UserDetailsComponent } from '../../user-details/user-details.component';
 import { AirportsService } from '../../flight-details-form/service/airport.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 
@@ -39,6 +48,8 @@ const VERTICAL_OFFSET = -19;
     DocumentsFormComponent,
     FlightDetailsWrapComponent,
     DisruptiveFormComponent,
+    ConfirmationEligibilityComponent,
+    UserDetailsComponent,
   ],
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss',
@@ -85,6 +96,80 @@ export class StepperComponent implements AfterViewInit {
   protected documentsFormCompleted: Signal<boolean | undefined> = computed(() =>
     this.documentsForm()?.isValid()
   );
+
+  private userForm = viewChild(UserDetailsComponent);
+  protected userFormCompleted: Signal<boolean | undefined> = computed(() =>
+    this.userForm()?.isValid()
+  );
+
+  private disruptionDetails: DisruptionDetails | undefined;
+  public receiveDisruptionDetails($event: DisruptionDetails) {
+    this.disruptionDetails = $event;
+  }
+
+  private flight: Flight | undefined;
+  public receiveFlight($event: Flight) {
+    this.flight = $event;
+  }
+
+  protected rewardMessage: string | undefined;
+  public receiveReward($event: string) {
+    this.rewardMessage = $event;
+  }
+
+  private passenger: Passenger | undefined;
+  public receivdePassenger($event: Passenger) {
+    this.passenger = $event;
+  }
+
+  public documents: File[] | undefined;
+  receiveDocuments($event: File[]) {
+    this.documents = $event;
+  }
+
+  public userDetails: { email: string } | undefined;
+  receiveUserDetails($event: { email: string }) {
+    this.userDetails = $event;
+  }
+
+  public buildUserDetails(): SignupRequest | undefined {
+    if (
+      !this.userDetails ||
+      !this.passenger ||
+      !this.passenger.firstName ||
+      !this.passenger.lastName
+    )
+      return;
+    const usr = {
+      email: this.userDetails.email,
+      firstName: this.passenger.firstName,
+      lastName: this.passenger.lastName,
+    };
+    console.log('DATA' + usr);
+    return usr;
+  }
+
+  public buildCaseFile(): CaseDataWithFiles | undefined {
+    console.log(this.userDetails);
+    if (
+      !this.disruptionDetails ||
+      !this.flight ||
+      !this.passenger ||
+      !this.documents ||
+      !this.userDetails
+    )
+      return;
+    return {
+      caseData: {
+        disruptionDetails: this.disruptionDetails,
+        reservationNumber: 'mockReservation',
+        flights: [this.flight],
+        passenger: this.passenger,
+        userEmail: this.userDetails.email,
+      },
+      files: this.documents,
+    };
+  }
 
   @ViewChild('stepper', { static: true }) stepper!: MatStepper;
   airplaneLeft = 0;

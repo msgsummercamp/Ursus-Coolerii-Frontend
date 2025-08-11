@@ -6,7 +6,7 @@ import { Injectable, signal } from '@angular/core';
 export class EligibilityService {
   private _eligibility = signal<boolean | null>(null);
   readonly eligibility = this._eligibility.asReadonly();
-  setEligibility(value: boolean) {
+  public setEligibility(value: boolean) {
     this._eligibility.set(value);
   }
 }
