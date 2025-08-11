@@ -7,21 +7,19 @@
   overflow: hidden;
 
   .passenger-details-form-card {
-    background: var(--mat-sys-tertiary-container);
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
-    overflow: hidden;
-
-    & > div {
+    form {
       display: flex;
-      gap: 2rem;
-      > * {
-        flex: 1;
+      flex-direction: column;
+      gap: 1rem;
+      width: 100%;
+      overflow: hidden;
+
+      & > div {
+        display: flex;
+        gap: 2rem;
+        > * {
+          flex: 1;
+        }
       }
     }
   }

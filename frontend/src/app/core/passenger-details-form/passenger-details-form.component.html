@@ -108,10 +108,16 @@
         </form>
       </mat-card-content>
       <mat-card-actions *transloco="let translate; prefix: 'stepper'" class="special-form-actions">
-        <button mat-flat-button (click)="back()">{{ translate('back') }}</button>
-        <button mat-flat-button [disabled]="passengerDetailsForm.invalid" (click)="continue()">{{
-          translate('next')
+        <button mat-stroked-button class="special-mat-sec-button" (click)="back()">{{
+          translate('back')
         }}</button>
+        <button
+          mat-flat-button
+          class="special-mat-prim-button"
+          [disabled]="passengerDetailsForm.invalid"
+          (click)="continue()"
+          >{{ translate('next') }}</button
+        >
       </mat-card-actions>
     </mat-card>
   </ng-container>

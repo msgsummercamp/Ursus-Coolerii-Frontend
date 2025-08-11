@@ -23,10 +23,13 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'confirmation',
+    component: ConfirmationEligibilityComponent,
+  },
+  {
     path: 'cases',
     loadComponent: () =>
       import('./core/case-list/case-list.component').then((m) => m.CaseListComponent),
   },
-  { path: 'confirmation', component: ConfirmationEligibilityComponent },
   { path: '**', component: NotFoundComponent },
 ];
