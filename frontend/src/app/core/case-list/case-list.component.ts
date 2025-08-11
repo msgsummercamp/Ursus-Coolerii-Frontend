@@ -41,11 +41,12 @@ export class CaseListComponent implements OnInit {
   protected readonly CaseStatusLabels = CaseStatusLabels;
 
   displayedColumns: string[] = [
-    'caseId',
+    'contractId',
     'caseDate',
     'flightNr',
     'flightDepartureDate',
     'flightArrivalDate',
+    'reservationNumber',
     'passengerName',
     'status',
     'colleague',
