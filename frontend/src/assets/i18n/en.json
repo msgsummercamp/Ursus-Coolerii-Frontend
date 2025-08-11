@@ -162,5 +162,11 @@
   },
   "userDetails": {
     "title": "User details"
+  },
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "button": "Login"
   }
 }

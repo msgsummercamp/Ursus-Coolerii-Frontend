@@ -13,7 +13,12 @@ html {
         primary: theme-colors.$primary-palette,
         tertiary: theme-colors.$tertiary-palette,
       ),
-      typography: Roboto,
+      typography: (
+              plain-family: Roboto,
+              bold-weight: 800,
+              medium-weight: 500,
+              regular-weight: 300,
+      ),
       density: 0,
     )
   );

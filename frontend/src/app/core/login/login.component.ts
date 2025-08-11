@@ -11,6 +11,7 @@ import { LoginForm } from '../../shared/types/form.types';
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { AuthService } from '../../shared/services/auth.service';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +27,7 @@ import { AuthService } from '../../shared/services/auth.service';
     MatCardActions,
     MatButton,
     MatError,
+    TranslocoPipe,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',

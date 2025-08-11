@@ -1,35 +1,35 @@
 <div class="login-form-container">
   <mat-card class="special-mat-card">
     <mat-card-header class="special-mat-header">
-      <mat-card-title class="special-mat-title">Login</mat-card-title>
+      <mat-card-title class="special-mat-title">{{ 'login.title' | transloco }}</mat-card-title>
     </mat-card-header>
     <form [formGroup]="form">
       <mat-card-content>
-          <mat-form-field>
-            <mat-label>Email</mat-label>
-            <input
-              matInput
-              type="text"
-              email
-              formControlName="email"
-            />
-          </mat-form-field>
-          <mat-form-field>
-              <mat-label>Password</mat-label>
-              <input
-                matInput
-                type="password"
-                formControlName="password"
-              />
-          </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ 'login.email' | transloco }}</mat-label>
+          <input
+            matInput
+            type="text"
+            email
+            formControlName="email"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ 'login.password' | transloco }}</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="password"
+          />
+        </mat-form-field>
         <mat-error>
           {{ loginError()}}
         </mat-error>
       </mat-card-content>
       <mat-card-actions class="special-form-actions">
-          <button mat-flat-button [disabled]="form.invalid" (click)="login()">
-              Login
-          </button>
+        <button mat-flat-button [disabled]="form.invalid" (click)="login()">
+          {{ 'login.button' | transloco }}
+        </button>
       </mat-card-actions>
     </form>
   </mat-card>

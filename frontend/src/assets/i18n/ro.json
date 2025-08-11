@@ -162,5 +162,17 @@
       "ELIGIBLE": "Eligibil",
       "NOT_ELIGIBLE": "Ineligibil"
     }
+  },
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "button": "Login"
+  },
+  "login": {
+    "title": "Autentificare",
+    "email": "Email",
+    "password": "Parolă",
+    "button": "Autentificare"
   }
 }
