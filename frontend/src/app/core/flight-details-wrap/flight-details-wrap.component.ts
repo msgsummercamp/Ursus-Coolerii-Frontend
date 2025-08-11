@@ -69,8 +69,6 @@ export class FlightDetailsWrapComponent {
   public validForms = computed(() =>
     this.flightFormComponents()
       .map((form) => {
-        console.log(form.flightForm.getRawValue());
-        console.log(form.isValid());
         return form.isValid();
       })
       .every((value) => value)
