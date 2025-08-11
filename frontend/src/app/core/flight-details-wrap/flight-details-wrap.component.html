@@ -9,15 +9,22 @@
     <mat-card-content class="special-mat-content">
       <div *ngFor="let flight of connectingFlights(); let i = index">
         <h2 class="mat-headline-5">{{ 'connecting-flight.title' | transloco }} #{{ i + 1 }}</h2>
-        <app-flight-details-form [flightForm]="flight" />
+        <app-flight-details-form (date)="saveDate($event, i)" [flightForm]="flight" />
         <mat-checkbox [checked]="problemFlightIndex === i" (change)="updateProblemFlight(i)"
           >Problem flight?</mat-checkbox
         >
       </div>
     </mat-card-content>
     <mat-card-actions *transloco="let translate" class="special-form-actions">
-      <button mat-stroked-button class="special-mat-sec-button" (click)="back()">{{ translate('stepper.back') }}</button>
-      <button mat-flat-button class="special-mat-prim-button" [disabled]="!this.validForms()" (click)="continue()">
+      <button mat-stroked-button class="special-mat-sec-button" (click)="back()">{{
+        translate('stepper.back')
+      }}</button>
+      <button
+        mat-flat-button
+        class="special-mat-prim-button"
+        [disabled]="!this.validForms()"
+        (click)="continue()"
+      >
         {{ translate('stepper.next') }}
       </button>
     </mat-card-actions>

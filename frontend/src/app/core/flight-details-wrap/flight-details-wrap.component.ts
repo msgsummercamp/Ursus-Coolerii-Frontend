@@ -23,7 +23,7 @@ import {
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoadingSpinnerComponent } from '../loading-spinner/component/loading-spinner.component';
 import { StopoverService } from '../../shared/services/stopover.service';
-import { AirportAttributes, Flight } from '../../shared/types/types';
+import { Flight } from '../../shared/types/types';
 import { MatCheckbox } from '@angular/material/checkbox';
 
 @Component({
@@ -72,18 +72,14 @@ export class FlightDetailsWrapComponent {
   );
 
   protected connectingFlights = computed(() => {
-    const airports = [
-      this.stopoverService.stopoverState().departureAirport,
-      ...this.stopoverService.stopoverState().stopovers,
-      this.stopoverService.stopoverState().destinationAirport,
-    ];
+    const flights = this.stopoverService.stopoverState().flights;
+
+    console.log(flights);
 
     const forms: FormGroup<FlightDetailsForm>[] = [];
 
-    for (let i = 0; i < airports.length - 1; i += 1) {
-      let currentAirport = airports[i];
-      let nextAirport = airports[i + 1];
-      let newForm = this.createForm(currentAirport, nextAirport);
+    for (let i = 0; i < flights.length; i += 1) {
+      let newForm = this.createForm(flights[i]);
       forms.push(newForm);
     }
 
@@ -98,29 +94,30 @@ export class FlightDetailsWrapComponent {
     this.previous.emit();
   }
 
-  private createForm(
-    departingAirport: AirportAttributes,
-    destinationAirport: AirportAttributes
-  ): FormGroup<FlightDetailsForm> {
+  private createForm(flight: Flight): FormGroup<FlightDetailsForm> {
     return this.fb.group<FlightDetailsForm>({
       flightNr: this.fb.control('', [
         Validators.required,
         Validators.pattern('^[a-zA-Z]{2}[0-9]{1,4}$'),
       ]),
       airline: this.fb.control('', Validators.required),
-      departingAirport: this.fb.control(departingAirport),
-      destinationAirport: this.fb.control(destinationAirport),
+      departingAirport: this.fb.control(flight.departureAirport),
+      destinationAirport: this.fb.control(flight.destinationAirport),
       plannedDepartureDate: this.fb.control(null, Validators.required),
     });
   }
 
   protected updateProblemFlight(index?: number) {
     if (index != undefined) {
-      this.stopoverService.setProblemFlight(index);
+      this.stopoverService.setProblemFlightIndex(index);
     }
   }
 
   protected get problemFlightIndex() {
-    return this.stopoverService.stopoverState().problemFlightIndex;
+    return this.stopoverService.problemFlightIndex();
+  }
+
+  protected saveDate($event: Date | null, index: number) {
+    console.log($event, index);
   }
 }

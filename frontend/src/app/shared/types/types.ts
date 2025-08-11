@@ -19,8 +19,8 @@ export type Case = {
 export type Flight = {
   flightNumber: string;
   airlineName: string;
-  departureAirport: string;
-  destinationAirport: string;
+  departureAirport: AirportAttributes;
+  destinationAirport: AirportAttributes;
   departureTime: string;
   arrivalTime: string;
   firstFlight: boolean;

@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { AirportAttributes } from '../types/types';
+import { AirportAttributes, Flight } from '../types/types';
 
 type StopoverState = {
   departureAirport: AirportAttributes;
@@ -7,7 +7,7 @@ type StopoverState = {
   stopovers: AirportAttributes[];
   departureDate: Date | null;
   destinationDate: Date | null;
-  problemFlightIndex: number;
+  flights: Flight[];
 };
 
 const emptyAirport: AirportAttributes = {
@@ -21,7 +21,7 @@ const initialState: StopoverState = {
   stopovers: [],
   departureDate: null,
   destinationDate: null,
-  problemFlightIndex: 0,
+  flights: [],
 };
 
 @Injectable({
@@ -29,9 +29,14 @@ const initialState: StopoverState = {
 })
 export class StopoverService {
   private readonly stopoverSignal = signal<StopoverState>(initialState);
+  private readonly problemFlightSignal = signal<number>(0);
 
   public get stopoverState() {
     return this.stopoverSignal.asReadonly();
+  }
+
+  public get problemFlightIndex() {
+    return this.problemFlightSignal.asReadonly();
   }
 
   public addStopover(stopover: AirportAttributes) {
@@ -39,6 +44,7 @@ export class StopoverService {
       ...stopoverState,
       stopovers: [...stopoverState.stopovers, stopover],
     }));
+    this.generateFlights();
   }
 
   public removeStopover(stopoverIndex: number) {
@@ -57,6 +63,7 @@ export class StopoverService {
       ...stopoverState,
       departureAirport: airport,
     }));
+    this.generateFlights();
   }
 
   public setDestinationAirport(airport: AirportAttributes) {
@@ -64,6 +71,7 @@ export class StopoverService {
       ...stopoverState,
       destinationAirport: airport,
     }));
+    this.generateFlights();
   }
 
   public setDepartureDate(date: Date | null) {
@@ -71,6 +79,7 @@ export class StopoverService {
       ...stopoverState,
       departureDate: date,
     }));
+    this.setFlightDepartureDate(0, date);
   }
 
   public setDestinationDate(date: Date | null) {
@@ -78,12 +87,72 @@ export class StopoverService {
       ...stopoverState,
       destinationDate: date,
     }));
+    this.setFlightArrivalDate(this.stopoverSignal().flights.length - 1, date);
   }
 
-  public setProblemFlight(index: number) {
-    this.stopoverSignal.update((stopoverState) => ({
-      ...stopoverState,
-      problemFlightIndex: index,
-    }));
+  public setFlightDepartureDate(flightIndex: number, date: Date | null) {
+    this.stopoverSignal.update((stopoverState: StopoverState) => {
+      const flights = [...stopoverState.flights];
+      if (flights[flightIndex]) {
+        flights[flightIndex] = {
+          ...flights[flightIndex],
+          departureTime: date?.toISOString() || '',
+        };
+      }
+      return { ...stopoverState, flights };
+    });
+  }
+
+  public setFlightArrivalDate(flightIndex: number, date: Date | null) {
+    this.stopoverSignal.update((stopoverState: StopoverState) => {
+      const flights = [...stopoverState.flights];
+      if (flights[flightIndex]) {
+        flights[flightIndex] = {
+          ...flights[flightIndex],
+          arrivalTime: date?.toISOString() || '',
+        };
+      }
+      return { ...stopoverState, flights };
+    });
+  }
+
+  public setProblemFlightIndex(i: number) {
+    this.problemFlightSignal.set(i);
+    this.stopoverSignal().flights.forEach((flight: Flight, index) => {
+      flight.problemFlight = i === index;
+    });
+  }
+
+  public generateFlights() {
+    let flights: Flight[] = [];
+    const airports = [
+      this.stopoverSignal().departureAirport,
+      ...this.stopoverSignal().stopovers,
+      this.stopoverSignal().destinationAirport,
+    ];
+
+    for (let i = 0; i < airports.length - 1; i += 1) {
+      let currentAirport = airports[i];
+      let nextAirport = airports[i + 1];
+      let newFlight: Flight = {
+        departureAirport: currentAirport,
+        destinationAirport: nextAirport,
+        firstFlight: i === 0,
+        lastFlight: i === airports.length - 2,
+        problemFlight: this.problemFlightIndex() === i,
+        flightNumber: '',
+        airlineName: '',
+        departureTime: '',
+        arrivalTime: '',
+      };
+
+      flights.push(newFlight);
+
+      this.stopoverSignal.update((stopoverState) => ({ ...stopoverState, flights: flights }));
+
+      console.log(this.stopoverSignal().flights);
+    }
+
+    this.stopoverSignal.update((stopoverState) => ({ ...stopoverState, flights: flights }));
   }
 }

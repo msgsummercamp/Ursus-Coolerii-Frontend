@@ -1,4 +1,14 @@
-import { Component, inject, Input, OnDestroy, OnInit, output, signal } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  output,
+  signal,
+} from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgForOf } from '@angular/common';
@@ -46,6 +56,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
   ],
 })
 export class FlightDetailsFormComponent implements OnInit, OnDestroy {
+  @Output() date = new EventEmitter<Date | null>();
+
   private airlineService = inject(AirlineService);
 
   private readonly _isValid = signal(false);
@@ -65,6 +77,7 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.flightForm.statusChanges.subscribe((status) => {
       this._isValid.set(status === 'VALID');
+      this.date.emit(this.flightForm.controls.plannedDepartureDate.value);
     });
     this.subscribeToFetchAirlines();
     this.subscribeToAirlineAutocomplete();
