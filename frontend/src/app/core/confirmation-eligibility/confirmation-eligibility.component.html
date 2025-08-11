@@ -7,7 +7,6 @@
       <mat-card-title class="special-mat-title">{{ 'confirmationEligibility.almostDone' | transloco }}</mat-card-title>
     </mat-card-header>
     <mat-card-content class="special-mat-content">
-      <mat-label class="centered-mat-label">{{ eligibleMessage() }}</mat-label>
       <div class="info-content">
         <p>{{ 'confirmationEligibility.generalInfo' | transloco }}</p>
         <p>{{ 'confirmationEligibility.readGdprTerms' | transloco }}</p>
@@ -21,6 +20,7 @@
       <mat-error>
         {{ saveError() }}
       </mat-error>
+      <p class="centered-mat-label">{{ 'confirmationEligibility.' + eligibleMessage() | transloco }}</p>
       <form [formGroup]="gdprForm" (ngSubmit)="submit()" class="gdpr-form">
         <mat-checkbox formControlName="gdpr">{{ 'confirmationEligibility.gdprCheckbox' | transloco }}</mat-checkbox>
         <mat-checkbox formControlName="terms">{{ 'confirmationEligibility.termsCheckbox' | transloco }}</mat-checkbox>

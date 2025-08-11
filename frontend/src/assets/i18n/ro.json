@@ -165,6 +165,9 @@
     }
   },
   "confirmationEligibility": {
+    "checking": "Se verifică...",
+    "eligible": "Pasagerul este eligibil",
+    "notEligible": "Pasagerul nu este eligibil",
     "almostDone": "Aproape gata",
     "generalInfo": "Informații generale:",
     "readGdprTerms": "Dacă sunteți eligibil, vă recomandăm să citiți GDPR și termenii",

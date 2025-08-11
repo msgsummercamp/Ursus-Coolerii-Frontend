@@ -100,9 +100,14 @@ export class ConfirmationEligibilityComponent {
   @Input() rewardMessage!: string | undefined;
   public eligibleMessage = computed(() => {
     const isEligible = this.eligibilityService.eligibility();
-    if (isEligible === null) return 'Checking...';
+    if (isEligible === null) return 'checking';
+    return isEligible ? 'eligible' : 'notEligible';
+  });
+  /*
+      if (isEligible === null) return 'Checking...';
     return isEligible ? 'Passenger is eligible' : 'Passenger is not eligible';
   });
+   */
 
   public readonly previous = output<void>();
   protected saved = signal(false);

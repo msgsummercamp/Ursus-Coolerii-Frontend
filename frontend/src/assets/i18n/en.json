@@ -165,6 +165,9 @@
     "title": "User details"
   },
   "confirmationEligibility": {
+    "checking": "Checking...",
+    "eligible": "Passenger is eligible",
+    "notEligible": "Passenger is not eligible",
     "almostDone": "Almost done",
     "generalInfo": "General Info:",
     "readGdprTerms": "In case you are eligible, we first recommend you to read the GDPR and the terms",
