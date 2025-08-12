@@ -43,10 +43,10 @@
                   <div
                     class="dropdown-option"
                     *cdkVirtualFor="let airport of filteredDepartAirports"
-                    (mousedown)="selectDepartAirport(airport)"
-                    (selectionchange)="selectDepartAirport(airport)"
                   >
-                    <div class="list-item"> {{ airport.name }} - {{ airport.iata }} </div>
+                    <div class="list-item" (click)="selectDepartAirport(airport)">
+                      {{ airport.name }} - {{ airport.iata }}
+                    </div>
                   </div>
                 </cdk-virtual-scroll-viewport>
               </div>
@@ -84,13 +84,10 @@
                           : 32)
                   "
                 >
-                  <div
-                    class="dropdown-option"
-                    *cdkVirtualFor="let airport of filteredDestAirports"
-                    (mousedown)="selectDestAirport(airport)"
-                    (selectionchange)="selectDepartAirport(airport)"
-                  >
-                    <div class="list-item"> {{ airport.name }} - {{ airport.iata }} </div>
+                  <div class="dropdown-option" *cdkVirtualFor="let airport of filteredDestAirports">
+                    <div class="list-item" (click)="selectDestAirport(airport)">
+                      {{ airport.name }} - {{ airport.iata }}
+                    </div>
                   </div>
                 </cdk-virtual-scroll-viewport>
               </div>
@@ -174,9 +171,10 @@
                   <div
                     class="dropdown-option"
                     *cdkVirtualFor="let airport of filteredStopoverAirports"
-                    (mousedown)="selectStopoverAirport(airport)"
                   >
-                    <div class="list-item"> {{ airport.name }} - {{ airport.iata }} </div>
+                    <div class="list-item" (click)="selectStopoverAirport(airport)">
+                      {{ airport.name }} - {{ airport.iata }}
+                    </div>
                   </div>
                 </cdk-virtual-scroll-viewport>
               </div>
