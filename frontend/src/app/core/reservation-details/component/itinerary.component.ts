@@ -156,7 +156,10 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   private filterAirports(value: string): AirportAttributes[] {
     const val = value.toLowerCase();
     const airports = this.airportsSignal();
-    return airports.filter((airport) => airport.name?.toLowerCase().includes(val));
+    return airports.filter(
+      (airport) =>
+        airport.name?.toLowerCase().includes(val) || airport.iata?.toLowerCase().includes(val)
+    );
   }
 
   public onDepartInput(value: string) {

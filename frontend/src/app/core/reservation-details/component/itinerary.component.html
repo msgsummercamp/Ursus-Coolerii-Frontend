@@ -44,9 +44,7 @@
                     (mousedown)="selectDepartAirport(airport)"
                     (selectionchange)="selectDepartAirport(airport)"
                   >
-                    <div class="list-item">
-                      {{ airport.name }}
-                    </div>
+                    <div class="list-item"> {{ airport.name }} - {{ airport.iata }} </div>
                   </div>
                 </cdk-virtual-scroll-viewport>
               </div>
@@ -90,9 +88,7 @@
                     (mousedown)="selectDestAirport(airport)"
                     (selectionchange)="selectDepartAirport(airport)"
                   >
-                    <div class="list-item">
-                      {{ airport.name }}
-                    </div>
+                    <div class="list-item"> {{ airport.name }} - {{ airport.iata }} </div>
                   </div>
                 </cdk-virtual-scroll-viewport>
               </div>
@@ -178,9 +174,7 @@
                     *cdkVirtualFor="let airport of filteredStopoverAirports"
                     (mousedown)="selectStopoverAirport(airport)"
                   >
-                    <div class="list-item">
-                      {{ airport.name }}
-                    </div>
+                    <div class="list-item"> {{ airport.name }} - {{ airport.iata }} </div>
                   </div>
                 </cdk-virtual-scroll-viewport>
               </div>
