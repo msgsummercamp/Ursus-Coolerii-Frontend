@@ -200,7 +200,9 @@
     "email": "Email"
   },
   "caseDetails": {
-    "title": "Case {{contractId}}"
+    "title": "Case {{contractId}}",
+    "problemFlight": "Problematic Flight",
+    "noCommentsYet": "No comments yet"
   },
   "login": {
     "title": "Login",

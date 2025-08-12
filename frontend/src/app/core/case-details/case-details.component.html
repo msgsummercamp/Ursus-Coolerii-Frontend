@@ -1,6 +1,6 @@
 <div class="caseDetails">
   <h2 class="case-title">
-    {{ 'caseDetails.title' | transloco: { caseId: caseDetails?.caseId } }}
+    {{ 'caseDetails.title' | transloco: { contractId: caseDetails?.contractId } }}
   </h2>
 
   <mat-card class="special-mat-card">
@@ -26,15 +26,15 @@
           {{ flight.destinationAirport }}</div
         >
         <div>
-          {{ 'flightDetails.connectingFlight' | transloco }}:
-          {{ flight.connectingFlight ? ('yes' | transloco) : ('no' | transloco) }}
+          {{ 'caseDetails.problemFlight' | transloco }}:
+          {{ flight.problemFlight ? ('yes' | transloco) : ('no' | transloco) }}
         </div>
         <div
-          >{{ 'flightDetails.plannedDepartureTime' | transloco }}:
+          >{{ 'flightDetails.plannedDepartureDate' | transloco }}:
           {{ flight.plannedDepartureTime | date }}</div
         >
         <div
-          >{{ 'flightDetails.plannedArrivalTime' | transloco }}:
+          >{{ 'flightDetails.plannedArrivalDate' | transloco }}:
           {{ flight.plannedArrivalTime | date }}</div
         >
         <hr />
@@ -90,15 +90,16 @@
       <mat-card-title class="special-mat-title">Comments</mat-card-title>
     </mat-card-header>
     <mat-card-content class="special-mat-content">
-      <ul *ngIf="caseDetails?.comments?.length > 0; else noComments">
-        <li *ngFor="let comment of caseDetails?.comments">
-          {{ comment.userEmail }} ({{ comment.userType }}) {{ 'at' | transloco }}
-          {{ comment.timestamp | date }}: {{ comment.content }}
-        </li>
-      </ul>
-      <ng-template #noComments>
-        <div>No comments yet</div>
-      </ng-template>
+      @if (caseDetails?.comments?.length > 0) {
+        <ul>
+          <li *ngFor="let comment of caseDetails?.comments">
+            {{ comment.userEmail }} ({{ comment.userType }}) {{ 'at' | transloco }}
+            {{ comment.timestamp | date }}: {{ comment.content }}
+          </li>
+        </ul>
+      } @else {
+        <div>{{ 'caseDetails.noCommentsYet' | transloco }}</div>
+      }
     </mat-card-content>
   </mat-card>
 </div>

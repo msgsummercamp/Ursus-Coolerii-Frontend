@@ -288,6 +288,8 @@
     "button": "Autentificare"
   },
   "caseDetails": {
-    "title": "Caz {{contractId}}"
+    "title": "Caz {{contractId}}",
+    "problemFlight": "Zbor cu Problemă",
+    "noCommentsYet": "Nu există comentarii încă"
   }
 }

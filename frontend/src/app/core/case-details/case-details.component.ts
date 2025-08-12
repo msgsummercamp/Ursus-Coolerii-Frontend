@@ -4,6 +4,7 @@ import { CaseFileService } from '../layout/services/case-file.service';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { DatePipe, NgForOf, NgIf } from '@angular/common';
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-case-details',
@@ -18,6 +19,7 @@ import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/m
     MatCardHeader,
     MatCardTitle,
     MatCardContent,
+    FormsModule,
   ],
 })
 export class CaseDetailsComponent implements OnInit {
@@ -31,10 +33,11 @@ export class CaseDetailsComponent implements OnInit {
   ngOnInit() {
     const caseId = this.route.snapshot.paramMap.get('caseId');
     if (caseId) {
-      console.log(caseId);
       this.caseFileService.getCaseDetailsByCaseId(caseId).subscribe((data) => {
         this.caseDetails = data;
-        console.log(data);
+        if (this.caseDetails?.flights) {
+          this.caseDetails.flights = [...this.caseDetails.flights].reverse();
+        }
       });
     }
   }
