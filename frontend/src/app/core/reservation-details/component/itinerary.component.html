@@ -96,46 +96,42 @@
         </div>
 
         <div>
-          <div class="depDate">
-            <mat-form-field class="special-form-field">
-              <mat-label>{{ 'flightDetails.plannedDepartureDate' | transloco }}</mat-label>
-              <input
-                matInput
-                [matDatepicker]="departureDatePicker"
-                formControlName="plannedDepartureDate"
-                (dateChange)="setDepartureDate($event)"
-              />
-              <mat-hint>DD/MM/YYYY</mat-hint>
-              <mat-datepicker-toggle matIconSuffix [for]="departureDatePicker" />
-              <mat-datepicker #departureDatePicker />
-              @if (reservationForm.controls.plannedDepartureDate.errors?.['required']) {
-                <mat-error>{{
-                  'flightDetails.error.plannedDepartureDate.required' | transloco
-                }}</mat-error>
-              }
-            </mat-form-field>
-          </div>
+          <mat-form-field class="special-form-field">
+            <mat-label>{{ 'flightDetails.plannedDepartureDate' | transloco }}</mat-label>
+            <input
+              matInput
+              [matDatepicker]="departureDatePicker"
+              formControlName="plannedDepartureDate"
+              (dateChange)="setDepartureDate($event)"
+            />
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="departureDatePicker" />
+            <mat-datepicker #departureDatePicker />
+            @if (reservationForm.controls.plannedDepartureDate.errors?.['required']) {
+              <mat-error>{{
+                'flightDetails.error.plannedDepartureDate.required' | transloco
+              }}</mat-error>
+            }
+          </mat-form-field>
 
-          <div class="destDate">
-            <mat-form-field class="special-form-field">
-              <mat-label>{{ 'flightDetails.plannedArrivalDate' | transloco }}</mat-label>
-              <input
-                matInput
-                [matDatepicker]="arrivalDatePicker"
-                formControlName="plannedArrivalDate"
-                (dateChange)="setDestinationDate($event)"
-                [min]="reservationForm.get('plannedDepartureDate')?.value"
-              />
-              <mat-hint>DD/MM/YYYY</mat-hint>
-              <mat-datepicker-toggle matIconSuffix [for]="arrivalDatePicker" />
-              <mat-datepicker #arrivalDatePicker />
-              @if (reservationForm.controls.plannedArrivalDate.errors?.['required']) {
-                <mat-error>{{
-                  'flightDetails.error.plannedArrivalDate.required' | transloco
-                }}</mat-error>
-              }
-            </mat-form-field>
-          </div>
+          <mat-form-field class="special-form-field">
+            <mat-label>{{ 'flightDetails.plannedArrivalDate' | transloco }}</mat-label>
+            <input
+              matInput
+              [matDatepicker]="arrivalDatePicker"
+              formControlName="plannedArrivalDate"
+              (dateChange)="setDestinationDate($event)"
+              [min]="reservationForm.get('plannedDepartureDate')?.value"
+            />
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="arrivalDatePicker" />
+            <mat-datepicker #arrivalDatePicker />
+            @if (reservationForm.controls.plannedArrivalDate.errors?.['required']) {
+              <mat-error>{{
+                'flightDetails.error.plannedArrivalDate.required' | transloco
+              }}</mat-error>
+            }
+          </mat-form-field>
         </div>
 
         <div>
