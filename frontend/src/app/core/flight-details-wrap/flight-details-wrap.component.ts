@@ -3,13 +3,12 @@ import {
   computed,
   EventEmitter,
   inject,
-  OnInit,
   Output,
   output,
   signal,
+  viewChildren,
 } from '@angular/core';
 import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
-import { AirportsService } from '../flight-details-form/service/airport.service';
 import { MatButtonModule } from '@angular/material/button';
 import { FlightDetailsFormComponent } from '../flight-details-form/component/flight-details-form.component';
 import { NgForOf } from '@angular/common';
@@ -21,19 +20,12 @@ import {
   MatCardHeader,
   MatCardTitle,
 } from '@angular/material/card';
-import {
-  AbstractControl,
-  FormGroup,
-  NonNullableFormBuilder,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
-import { bindCallback, delay, iif, of, Subscription, switchMap } from 'rxjs';
-import { toObservable } from '@angular/core/rxjs-interop';
-import { CaseFileService } from '../layout/services/case-file.service';
+import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoadingSpinnerComponent } from '../loading-spinner/component/loading-spinner.component';
+import { StopoverService } from '../../shared/services/stopover.service';
 import { Flight } from '../../shared/types/types';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { AirlineAttributes } from '../flight-details-form/service/airline.service';
 
 @Component({
   selector: 'app-flight-details-wrap',
@@ -42,43 +34,85 @@ import { Flight } from '../../shared/types/types';
     MatButtonModule,
     FlightDetailsFormComponent,
     NgForOf,
-    MatCardActions,
     MatCard,
     MatCardContent,
     MatCardHeader,
     MatCardTitle,
     LoadingSpinnerComponent,
     LoadingSpinnerComponent,
+    FlightDetailsFormComponent,
+    FlightDetailsFormComponent,
+    FlightDetailsFormComponent,
+    FlightDetailsFormComponent,
+    ReactiveFormsModule,
+    MatCardActions,
     TranslocoDirective,
+    MatCheckbox,
   ],
   templateUrl: './flight-details-wrap.component.html',
   styleUrl: './flight-details-wrap.component.scss',
 })
-export class FlightDetailsWrapComponent implements OnInit {
+export class FlightDetailsWrapComponent {
+  private stopoverService = inject(StopoverService);
+  private fb = inject(NonNullableFormBuilder);
+
+  private flightFormComponents = viewChildren(FlightDetailsFormComponent);
+
   protected readonly next = output<void>();
   protected readonly previous = output<void>();
-  private airportService = inject(AirportsService);
-
   protected isLoading = signal(false);
-  private isLoading$ = toObservable(this.airportService.isLoading);
-  private delayedLoading$ = this.isLoading$.pipe(
-    switchMap((loading) => iif(() => loading, of(loading).pipe(delay(500)), of(loading)))
+
+  @Output() receiveMessage = new EventEmitter<Flight>();
+
+  public validForms = computed(() =>
+    this.flightFormComponents()
+      .map((form) => {
+        return form.isValid();
+      })
+      .every((value) => value)
   );
 
-  constructor() {
-    this.delayedLoading$.subscribe((loading) => {
-      this.isLoading.set(loading);
-    });
+  private existingForms = new Map<number, FormGroup<FlightDetailsForm>>();
+
+  protected connectingFlights = computed(() => {
+    const flights = this.stopoverService.stopoverState().flights;
+
+    const forms: FormGroup<FlightDetailsForm>[] = [];
+
+    for (let i = 0; i < flights.length; i += 1) {
+      if (this.existingForms.has(i)) {
+        const existingForm = this.existingForms.get(i)!;
+        existingForm.patchValue({
+          flightNr: flights[i].flightNumber || '',
+          airline: flights[i].airlineName || '',
+          departingAirport: flights[i].departureAirport.name,
+          destinationAirport: flights[i].destinationAirport.name,
+          plannedDepartureDate: flights[i].departureTime
+            ? new Date(flights[i].departureTime)
+            : null,
+        });
+        forms.push(existingForm);
+      } else {
+        const newForm = this.createForm(flights[i]);
+        this.existingForms.set(i, newForm);
+        forms.push(newForm);
+      }
+    }
+
+    for (const [index] of this.existingForms) {
+      if (index >= flights.length) {
+        this.existingForms.delete(index);
+      }
+    }
+
+    return forms;
+  });
+
+  protected getFlight(index: number) {
+    return this.stopoverService.stopoverState().flights[index];
   }
 
-  private _isValid = signal(false);
-  private subscriptions: Subscription[] = [];
-  private caseFileService = inject(CaseFileService);
-  private fb = inject(NonNullableFormBuilder);
-  protected reward: number | null = null;
-
   protected continue() {
-    this.passDataToParent();
     this.next.emit();
   }
 
@@ -86,188 +120,46 @@ export class FlightDetailsWrapComponent implements OnInit {
     this.previous.emit();
   }
 
-  @Output() receiveMessage = new EventEmitter<Flight>();
-  @Output() rewardValueSent = new EventEmitter<string>();
-
-  public passDataToParent() {
-    const data = this.getMainFormRaw;
-    if (!data) return;
-    this.receiveMessage.emit(data);
-  }
-
-  public get getMainFormRaw(): Flight | null {
-    return this.transformFlightData();
-  }
-
-  private computeTime(datePart: Date, timePart: any): string | null {
-    if (!datePart || !timePart) {
-      return null;
-    }
-    if (timePart instanceof Date) {
-      const hours = timePart.getHours().toString().padStart(2, '0');
-      const minutes = timePart.getMinutes().toString().padStart(2, '0');
-      datePart.setHours(Number(hours));
-      datePart.setMinutes(Number(minutes));
-      const year = datePart.getFullYear();
-      const month = (datePart.getMonth() + 1).toString().padStart(2, '0');
-      const day = datePart.getDate().toString().padStart(2, '0');
-      const hour = datePart.getHours().toString().padStart(2, '0');
-      const minute = datePart.getMinutes().toString().padStart(2, '0');
-      return `${year}-${month}-${day}T${hour}:${minute}:00`;
-    }
-
-    return null;
-  }
-
-  private transformFlightData(): Flight | null {
-    const raw = this.form.getRawValue();
-
-    if (
-      !raw.plannedDepartureDate ||
-      !raw.plannedArrivalDate ||
-      !raw.plannedDepartureTime ||
-      !raw.plannedArrivalTime
-    ) {
-      return null;
-    }
-
-    const departureTime = this.computeTime(raw.plannedDepartureDate, raw.plannedDepartureTime);
-    const arrivalTime = this.computeTime(raw.plannedArrivalDate, raw.plannedArrivalTime);
-
-    if (!departureTime || !arrivalTime) {
-      return null;
-    }
-
-    return {
-      flightNumber: raw.flightNr,
-      airlineName: raw.airline,
-      departureAirport: raw.departingAirport,
-      destinationAirport: raw.destinationAirport,
-      departureTime,
-      arrivalTime,
-      firstFlight: true,
-      lastFlight: true,
-      problemFlight: true,
-    };
-  }
-
-  ///TODO : unsubscribes
-  ngOnInit(): void {
-    this.subscribeToForms();
-    this.form.statusChanges.subscribe(() => this.checkAndFetchReward());
-
-    this.connectingFlights.forEach((f) =>
-      f.statusChanges.subscribe(() => this.checkAndFetchReward())
-    );
-  }
-
-  private checkAndFetchReward() {
-    if (this.validForms()) {
-      const caseFile = this.buildCaseFileFromForms();
-      this.caseFileService.calculateReward(caseFile).subscribe((reward) => {
-        this.reward = reward;
-        this.rewardValueSent.emit('You could received up to: ' + this.reward + '$');
-      });
-    } else {
-      this.reward = null;
-      this.rewardValueSent.emit('You can not receive ny compensation');
-    }
-  }
-
-  private buildCaseFileFromForms() {
-    const allFlightForms = [this.form, ...this.connectingFlights];
-
-    const airports: FormGroup<FlightDetailsForm>[] = allFlightForms.filter(
-      (f, index) => index === 0 || index === allFlightForms.length - 1
-    );
-    return {
-      departureAirport: airports[0].controls.departingAirport.value,
-      destinationAirport: airports[airports.length - 1].controls.destinationAirport.value,
-    };
-  }
-  private subscribeToForms() {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
-    this.subscriptions = [];
-    this.subscribeToNewForm(this.form);
-    this.connectingFlights.forEach((f) => {
-      this.subscribeToNewForm(f);
+  private createForm(flight: Flight): FormGroup<FlightDetailsForm> {
+    const departureDate = flight.departureTime ? new Date(flight.departureTime) : null;
+    return this.fb.group<FlightDetailsForm>({
+      flightNr: this.fb.control(flight.flightNumber, [
+        Validators.required,
+        Validators.pattern('^[a-zA-Z]{2}[0-9]{1,4}$'),
+      ]),
+      airline: this.fb.control(flight.airlineName, Validators.required),
+      departingAirport: this.fb.control(flight.departureAirport.name),
+      destinationAirport: this.fb.control(flight.destinationAirport.name),
+      plannedDepartureDate: this.fb.control(departureDate, Validators.required),
     });
-    this.updateValidity();
   }
 
-  private updateValidity() {
-    const allValid = this.form.valid && this.connectingFlights.every((f) => f.valid);
-    this._isValid.set(allValid);
-  }
-  public form = this.createForm();
-
-  public connectingFlights: FormGroup<FlightDetailsForm>[] = [];
-
-  public validForms = computed(() => this._isValid());
-
-  private subscribeToNewForm(formToSub: FormGroup<FlightDetailsForm>): void {
-    this.subscriptions.push(formToSub.statusChanges.subscribe(() => this.updateValidity()));
+  protected updateProblemFlight(index?: number) {
+    if (index != undefined) {
+      this.stopoverService.setProblemFlightIndex(index);
+    }
   }
 
-  public addConnectingFlight() {
-    // if (!this.validForms()) return;
-
-    const newForm = this.createForm();
-    this.subscribeToNewForm(newForm);
-    this.subscribeToForms();
-    newForm.statusChanges.subscribe(() => this.checkAndFetchReward());
-    this.connectingFlights.push(newForm);
+  protected get problemFlightIndex() {
+    return this.stopoverService.problemFlightIndex();
   }
 
-  public removeConnectingFlight() {
-    if (this.connectingFlights.length === 0) return;
-    this.subscriptions.pop()?.unsubscribe();
-    this.connectingFlights.pop();
-    this.updateValidity();
-  }
-  protected readonly bindCallback = bindCallback;
-
-  private createForm() {
-    return this.fb.group<FlightDetailsForm>(
-      {
-        flightNr: this.fb.control('', [
-          Validators.required,
-          Validators.pattern('^[a-zA-Z]{2}[0-9]{1,4}$'),
-        ]),
-        airline: this.fb.control('', Validators.required),
-        departingAirport: this.fb.control('', Validators.required),
-        destinationAirport: this.fb.control('', Validators.required),
-        plannedDepartureDate: this.fb.control(null, Validators.required),
-        plannedArrivalDate: this.fb.control(null, Validators.required),
-        plannedDepartureTime: this.fb.control('', Validators.required),
-        plannedArrivalTime: this.fb.control('', Validators.required),
-      },
-      { validators: this.departureBeforeArrivalValidator() }
-    );
+  selectFlightNr(index: number, $event: string) {
+    this.stopoverService.setFlightNumber(index, $event);
   }
 
-  private departureBeforeArrivalValidator(): ValidatorFn {
-    return (group: AbstractControl): ValidationErrors | null => {
-      const actualGroup = group as FormGroup<FlightDetailsForm>;
+  selectAirline(index: any, $event: AirlineAttributes) {
+    this.stopoverService.setAirline(index, $event.name);
+  }
 
-      const depDate = actualGroup.controls.plannedDepartureDate.value;
-      const arrDate = actualGroup.controls.plannedArrivalDate.value;
-      const depTime = actualGroup.controls.plannedDepartureTime.value;
-      const arrTime = actualGroup.controls.plannedArrivalTime.value;
-      const depDateStr = depDate?.toISOString().split('T')[0];
-      const arrDateStr = arrDate?.toISOString().split('T')[0];
+  selectDate(i: number, date: Date) {
+    this.stopoverService.setFlightDepartureDate(i, date);
+    this.stopoverService.setFlightArrivalDate(i - 1, date);
+  }
 
-      if (depDateStr === arrDateStr) {
-        const [depHour, depMin] = depTime.split(':').map(Number);
-        const [arrHour, arrMin] = arrTime.split(':').map(Number);
-        const depTotal = depHour * 60 + depMin;
-        const arrTotal = arrHour * 60 + arrMin;
-
-        if (depTotal >= arrTotal) {
-          return { departureAfterArrival: true };
-        }
-      }
-      return null;
-    };
+  resetAllFlightForms() {
+    this.flightFormComponents().forEach((formComponent) => {
+      formComponent.flightForm.reset();
+    });
   }
 }

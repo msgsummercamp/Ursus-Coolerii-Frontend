@@ -18,7 +18,6 @@ import { PassengerDetailsFormComponent } from '../../passenger-details-form/pass
 import { DocumentsFormComponent } from '../../documents-form/documents-form.component';
 import { FlightDetailsWrapComponent } from '../../flight-details-wrap/flight-details-wrap.component';
 import { DisruptiveFormComponent } from '../../disruptive-form/disruptive-form.component';
-import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility/confirmation-eligibility.component';
 import {
   CaseDataWithFiles,
   DisruptionDetails,
@@ -29,6 +28,9 @@ import {
 import { UserDetailsComponent } from '../../user-details/user-details.component';
 import { AirportsService } from '../../flight-details-form/service/airport.service';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { ItineraryFormComponent } from '../../reservation-details/component/itinerary.component';
+import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility/confirmation-eligibility.component';
+import { StopoverService } from '../../../shared/services/stopover.service';
 import { Roles } from '../../../shared/enums';
 
 const AIRPLANE_WIDTH = 40;
@@ -49,6 +51,7 @@ const VERTICAL_OFFSET = -19;
     DocumentsFormComponent,
     FlightDetailsWrapComponent,
     DisruptiveFormComponent,
+    ItineraryFormComponent,
     ConfirmationEligibilityComponent,
     UserDetailsComponent,
   ],
@@ -79,10 +82,15 @@ const VERTICAL_OFFSET = -19;
 })
 export class StepperComponent implements AfterViewInit {
   protected airportService = inject(AirportsService);
+  private stopoverService = inject(StopoverService);
 
   private disruptiveFormComponent = viewChild(DisruptiveFormComponent);
   protected disruptiveFormCompleted: Signal<boolean | undefined> = computed(() =>
     this.disruptiveFormComponent()?.isEligible()
+  );
+  private reservationDetailsWrapComponent = viewChild(ItineraryFormComponent);
+  protected reservationDetailsFormCompleted: Signal<boolean | undefined> = computed(() =>
+    this.reservationDetailsWrapComponent()?.isValid()
   );
   private flightDetailsWrapComponent = viewChild(FlightDetailsWrapComponent);
   protected flightDetailsFormCompleted: Signal<boolean | undefined> = computed(() =>
@@ -114,15 +122,7 @@ export class StepperComponent implements AfterViewInit {
     this.disruptionDetails = $event;
   }
 
-  private flight: Flight | undefined;
-  public receiveFlight($event: Flight) {
-    this.flight = $event;
-  }
-
-  protected rewardMessage: string | undefined;
-  public receiveReward($event: string) {
-    this.rewardMessage = $event;
-  }
+  private flights: Flight[] = [];
 
   private passenger: Passenger | undefined;
   public receivePassenger($event: Passenger) {
@@ -158,9 +158,10 @@ export class StepperComponent implements AfterViewInit {
 
   public buildCaseFile(): CaseDataWithFiles | undefined {
     console.log(this.userDetails);
+    this.flights = this.stopoverService.stopoverState().flights;
     if (
       !this.disruptionDetails ||
-      !this.flight ||
+      !this.flights ||
       !this.passenger ||
       !this.documents ||
       !this.userDetails
@@ -170,12 +171,20 @@ export class StepperComponent implements AfterViewInit {
       caseData: {
         disruptionDetails: this.disruptionDetails,
         reservationNumber: 'mockReservation',
-        flights: [this.flight],
+        flights: this.flights,
         passenger: this.passenger,
         userEmail: this.userDetails.email,
       },
       files: this.documents,
     };
+  }
+
+  @ViewChild(ItineraryFormComponent) itineraryFormComponent?: ItineraryFormComponent;
+  @ViewChild(FlightDetailsWrapComponent) flightWrapComponent?: FlightDetailsWrapComponent;
+
+  onResetForms() {
+    this.itineraryFormComponent?.reservationForm.reset();
+    this.flightWrapComponent?.resetAllFlightForms();
   }
 
   @ViewChild('stepper', { static: true }) stepper!: MatStepper;

@@ -6,6 +6,7 @@ export type AirportAttributes = {
 };
 
 export type Case = {
+  caseId: string;
   contractId: string;
   caseDate: Date | string;
   flightNr: string;
@@ -16,11 +17,25 @@ export type Case = {
   status: CaseStatus;
   colleague?: string;
 };
+
+export type Role = {
+  name: string;
+};
+
+export type User = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: Role[];
+  casesCount?: number;
+};
+
 export type Flight = {
   flightNumber: string;
   airlineName: string;
-  departureAirport: string;
-  destinationAirport: string;
+  departureAirport: AirportAttributes;
+  destinationAirport: AirportAttributes;
   departureTime: string;
   arrivalTime: string;
   firstFlight: boolean;

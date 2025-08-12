@@ -6,31 +6,57 @@
     animationDuration="300"
     (selectionChange)="onStepChange($event)"
   >
-    <mat-step [completed]="disruptiveFormCompleted()"  [editable]="!disableStepper">
+    <mat-step [completed]="disruptiveFormCompleted()" [editable]="!disableStepper">
       <ng-template matStepLabel>{{ translate('disruption-motives') }}</ng-template>
-      <app-disruptive-form (receiveMessage)="receiveDisruptionDetails($event)" (next)="stepper.next()"  />
+      <app-disruptive-form
+        (receiveMessage)="receiveDisruptionDetails($event)"
+        (next)="stepper.next()"
+        (resetForms)="onResetForms()"
+      />
+    </mat-step>
+    <mat-step [completed]="reservationDetailsFormCompleted()">
+      <ng-template matStepLabel>Itinerary</ng-template>
+      <app-reservation-details (next)="stepper.next()" (previous)="stepper.previous()" />
     </mat-step>
     <mat-step [completed]="flightDetailsFormCompleted()" [editable]="!disableStepper">
       <ng-template matStepLabel>{{ translate('flight-details') }}</ng-template>
-      <app-flight-details-wrap (rewardValueSent)="receiveReward($event)" (receiveMessage)="receiveFlight($event)" (previous)="stepper.previous()" (next)="stepper.next()" />
+      <app-flight-details-wrap (previous)="stepper.previous()" (next)="stepper.next()" />
     </mat-step>
     <mat-step [completed]="passengerDetailsFormCompleted()" [editable]="!disableStepper">
       <ng-template matStepLabel>{{ translate('passenger-details') }}</ng-template>
       <app-passenger-details-form (receiveMessage)="receivePassenger($event)" (next)="stepper.next()" (previous)="stepper.previous()" />
+      <app-passenger-details-form
+        (receiveMessage)="receivdePassenger($event)"
+        (next)="stepper.next()"
+        (previous)="stepper.previous()"
+      />
     </mat-step>
     <mat-step [completed]="documentsFormCompleted()" [editable]="!disableStepper">
       <ng-template matStepLabel>{{ translate('documents') }}</ng-template>
-      <app-documents-form (receiveMessage)="receiveDocuments($event)" (next)="stepper.next()" (previous)="stepper.previous()" />
-    </mat-step >
-  <mat-step [completed]="userFormCompleted()" [editable]="!disableStepper">
-    <ng-template matStepLabel> {{ translate('userDetails') }}</ng-template>
-    <app-user-details (receiveMessage)="receiveUserDetails($event)" (next)="stepper.next()" (previous)="stepper.previous()"></app-user-details>
-  </mat-step>
-  <mat-step [editable]="!disableStepper">
-    <ng-template matStepLabel>{{ translate('done') }}</ng-template>
-    <app-confirmation-eligibility-form (disableStepper)="onDisableStepper()" [rewardMessage]="rewardMessage" [buildUserDetails]="buildUserDetails.bind(this)" (previous)="stepper.previous()"  [buildCaseFileFn]="buildCaseFile.bind(this)" />
-  </mat-step>
-</mat-stepper>
+      <app-documents-form
+        (receiveMessage)="receiveDocuments($event)"
+        (next)="stepper.next()"
+        (previous)="stepper.previous()"
+      />
+    </mat-step>
+    <mat-step [completed]="userFormCompleted()" [editable]="!disableStepper">
+      <ng-template matStepLabel> {{ translate('userDetails') }}</ng-template>
+      <app-user-details
+        (receiveMessage)="receiveUserDetails($event)"
+        (next)="stepper.next()"
+        (previous)="stepper.previous()"
+      ></app-user-details>
+    </mat-step>
+    <mat-step [editable]="!disableStepper">
+      <ng-template matStepLabel>{{ translate('done') }}</ng-template>
+      <app-confirmation-eligibility-form
+        (disableStepper)="onDisableStepper()"
+        [buildUserDetails]="buildUserDetails.bind(this)"
+        (previous)="stepper.previous()"
+        [buildCaseFileFn]="buildCaseFile.bind(this)"
+      />
+    </mat-step>
+  </mat-stepper>
   @if (airplaneReady) {
     <svg
       class="airplane"
@@ -39,9 +65,9 @@
       [style.top.px]="airplaneTop"
       [style.transform]="isBackward ? 'rotate(180deg)' : 'none'"
       [@flyToStep]="{
-      value: activeStep,
-      params: animationParams,
-    }"
+        value: activeStep,
+        params: animationParams,
+      }"
       (@flyToStep.done)="onAnimationDone()"
     >
       <g transform="translate(0,27.63782)">

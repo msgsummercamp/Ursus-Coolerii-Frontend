@@ -35,6 +35,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { LoadingSpinnerComponent } from '../loading-spinner/component/loading-spinner.component';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { CaseFileService } from '../layout/services/case-file.service';
 
 @Component({
   selector: 'app-confirmation-eligibility-form',
@@ -59,7 +60,9 @@ import { MatCheckbox } from '@angular/material/checkbox';
 })
 export class ConfirmationEligibilityComponent {
   private eligibilityService = inject(EligibilityService);
+  private caseFileService = inject(CaseFileService);
   private saveService = inject(SaveService);
+
   public saveError = signal('');
   readonly dialog = inject(MatDialog);
   private fb = inject(FormBuilder);
@@ -96,7 +99,7 @@ export class ConfirmationEligibilityComponent {
   }
   @Input() buildCaseFileFn!: () => CaseDataWithFiles | undefined;
   @Input() buildUserDetails!: () => SignupRequest | undefined;
-  @Input() rewardMessage!: string | undefined;
+  protected rewardMessage = this.caseFileService.getReward();
   public eligibleMessage = computed(() => {
     const isEligible = this.eligibilityService.eligibility();
     if (isEligible === null) return 'checking';
