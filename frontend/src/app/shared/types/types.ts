@@ -31,6 +31,18 @@ export type User = {
   casesCount?: number;
 };
 
+export type FlightDTO = {
+  flightNumber: string;
+  airlineName: string;
+  departureAirport: string;
+  destinationAirport: string;
+  departureTime: string;
+  arrivalTime: string;
+  firstFlight: boolean;
+  lastFlight: boolean;
+  problemFlight: boolean;
+};
+
 export type Flight = {
   flightNumber: string;
   airlineName: string;
@@ -62,7 +74,7 @@ export type DisruptionDetails = {
 export type CaseData = {
   disruptionDetails: DisruptionDetails;
   reservationNumber: string;
-  flights: Flight[];
+  flights: FlightDTO[];
   passenger: Passenger;
   userEmail: string;
 };
