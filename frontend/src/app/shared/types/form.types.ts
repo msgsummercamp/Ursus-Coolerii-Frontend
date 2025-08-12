@@ -1,4 +1,13 @@
 import { FormControl } from '@angular/forms';
+import { AirportAttributes } from './types';
+
+export type ReservationDetailsForm = {
+  departingAirport: FormControl<string>;
+  destinationAirport: FormControl<string>;
+  plannedDepartureDate: FormControl<Date | null>;
+  plannedArrivalDate: FormControl<Date | null>;
+  stopover: FormControl<AirportAttributes>;
+};
 
 export type FlightDetailsForm = {
   flightNr: FormControl<string>;
@@ -6,9 +15,6 @@ export type FlightDetailsForm = {
   departingAirport: FormControl<string>;
   destinationAirport: FormControl<string>;
   plannedDepartureDate: FormControl<Date | null>;
-  plannedArrivalDate: FormControl<Date | null>;
-  plannedDepartureTime: FormControl<string>;
-  plannedArrivalTime: FormControl<string>;
 };
 
 export type LoginForm = {
