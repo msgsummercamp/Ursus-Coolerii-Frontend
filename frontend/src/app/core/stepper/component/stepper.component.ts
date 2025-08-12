@@ -32,6 +32,7 @@ import { ItineraryFormComponent } from '../../reservation-details/component/itin
 import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility/confirmation-eligibility.component';
 import { StopoverService } from '../../../shared/services/stopover.service';
 import { Roles } from '../../../shared/enums';
+import { UserListComponent } from '../../user-list/user-list.component';
 
 const AIRPLANE_WIDTH = 40;
 const VERTICAL_OFFSET = -19;
@@ -54,6 +55,7 @@ const VERTICAL_OFFSET = -19;
     ItineraryFormComponent,
     ConfirmationEligibilityComponent,
     UserDetailsComponent,
+    UserListComponent,
   ],
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss',

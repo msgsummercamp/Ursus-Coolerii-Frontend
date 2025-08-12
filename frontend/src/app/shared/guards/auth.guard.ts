@@ -1,25 +1,26 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Subject } from 'rxjs';
+import { map, tap } from 'rxjs';
 
 export const authGuard: CanActivateFn = (route) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
   const routeName = route.routeConfig?.path;
-  authService.isAuthenticated();
-  const isAuthenticated = authService.isAuthenticated();
-  const subject = new Subject<boolean>();
-  isAuthenticated.subscribe((res) => {
-    if (!res && routeName !== 'login') {
-      router.navigate(['/login']);
-    }
-    if (res && routeName === 'login') {
-      router.navigate(['/home']);
-    }
-    subject.next(res);
-  });
-
-  return true;
+  return authService.isAuthenticated().pipe(
+    tap((isAuth) => {
+      if (!isAuth && routeName === 'form') {
+        router.navigate(['/login']);
+      }
+      if (isAuth && routeName === 'login') {
+        router.navigate(['/home']);
+      }
+    }),
+    map((isAuth) => {
+      if (!isAuth && routeName === 'form') return false;
+      if (isAuth && routeName === 'login') return false;
+      return true;
+    })
+  );
 };

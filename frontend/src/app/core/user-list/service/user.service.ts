@@ -38,14 +38,16 @@ export class UserService {
   }
 
   private fetchUsersFromApi() {
-    return this.httpClient.get<User[]>(environment.apiURL + '/users').pipe(
-      map((users) =>
-        users.map((u) => ({
-          ...u,
-          userId: u.id,
-        }))
-      )
-    );
+    return this.httpClient
+      .get<User[]>(environment.apiURL + '/users', { withCredentials: true })
+      .pipe(
+        map((users) =>
+          users.map((u) => ({
+            ...u,
+            userId: u.id,
+          }))
+        )
+      );
   }
 
   deleteUser(userId: string): Observable<void> {

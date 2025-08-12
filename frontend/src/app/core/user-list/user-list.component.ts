@@ -53,9 +53,7 @@ export class UserListComponent implements OnInit {
     'edit',
   ];
 
-  constructor(private userService: UserService) {
-    console.log(this.userService.usersSignal());
-  }
+  constructor(private userService: UserService) {}
 
   get users(): User[] {
     return this.userService.usersSignal();

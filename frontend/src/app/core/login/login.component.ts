@@ -12,6 +12,7 @@ import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/in
 import { MatButton } from '@angular/material/button';
 import { AuthService } from '../../shared/services/auth.service';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -36,6 +37,7 @@ export class LoginComponent {
   private fb = inject(NonNullableFormBuilder);
   protected form: FormGroup<LoginForm>;
   private loginService = inject(AuthService);
+  router = inject(Router);
 
   protected loginError = signal('');
 
@@ -51,7 +53,7 @@ export class LoginComponent {
       .login(this.form.controls.email.value, this.form.controls.password.value)
       .subscribe({
         next: (response) => {
-          console.log(response.token);
+          this.router.navigate(['/home']);
         },
         error: (err) => {
           this.loginError.set(err.error);
