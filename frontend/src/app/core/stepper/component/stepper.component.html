@@ -54,7 +54,6 @@
       <ng-template matStepLabel>{{ translate('done') }}</ng-template>
       <app-confirmation-eligibility-form
         (disableStepper)="onDisableStepper()"
-        [rewardMessage]="rewardMessage"
         [buildUserDetails]="buildUserDetails.bind(this)"
         (previous)="stepper.previous()"
         [buildCaseFileFn]="buildCaseFile.bind(this)"
