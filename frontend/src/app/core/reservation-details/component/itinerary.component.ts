@@ -156,9 +156,15 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   private filterAirports(value: string): AirportAttributes[] {
     const val = value.toLowerCase();
     const airports = this.airportsSignal();
+    const selectedAirports = new Set([
+      this.stopoverService.stopoverState().departureAirport?.iata,
+      ...this.stopoverService.stopoverState().stopovers.map((airport) => airport.iata),
+      this.stopoverService.stopoverState().destinationAirport?.iata,
+    ]);
     return airports.filter(
       (airport) =>
-        airport.name?.toLowerCase().includes(val) || airport.iata?.toLowerCase().includes(val)
+        !selectedAirports.has(airport.iata) &&
+        (airport.name?.toLowerCase().includes(val) || airport.iata?.toLowerCase().includes(val))
     );
   }
 
@@ -219,7 +225,6 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
       this.stopoverDisplayValue.set('');
     }
   }
-
   protected removeStopover(stopoverIndex: number) {
     this.stopoverService.removeStopover(stopoverIndex);
   }
@@ -231,7 +236,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   protected readonly translate = translate;
 
   public isLongAirportName(name: string): boolean {
-    return name.length > 35 || name.includes('\n');
+    return name.length > 30 || name.includes('\n');
   }
 
   protected setDepartureDate($event: MatDatepickerInputEvent<Date>) {
