@@ -11,7 +11,6 @@ export class CaseFileService {
   constructor(private http: HttpClient) {}
 
   public calculateReward(departureAirport: string, destinationAirport: string): void {
-    console.log(departureAirport);
     this.http
       .post<number>('http://localhost:8080/api/case-files/calculate-reward', {
         departureAirport: departureAirport,
@@ -19,7 +18,6 @@ export class CaseFileService {
       })
       .pipe(
         tap((value) => {
-          console.log(value);
           this.reward.set(value);
         })
       )
