@@ -164,6 +164,17 @@
   },
   "yes": "Da",
   "no": "Nu",
+
+  "userList": {
+    "firstName": "Prenume",
+    "lastName": "Nume",
+    "email": "Email",
+    "role": "Rol",
+    "casesCount": "Nr. Cazuri",
+    "deleteUser": "Șterge Utilizator",
+    "editUser": "Editează Utilizator"
+  },
+
   "caseList": {
     "caseDate": "Data Cazului",
     "flightNr": "Nr. Zbor",

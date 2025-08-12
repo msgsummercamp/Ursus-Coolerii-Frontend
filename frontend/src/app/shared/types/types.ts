@@ -16,6 +16,20 @@ export type Case = {
   status: CaseStatus;
   colleague?: string;
 };
+
+export type Role = {
+  name: string;
+};
+
+export type User = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: Role[];
+  casesCount?: number;
+};
+
 export type Flight = {
   flightNumber: string;
   airlineName: string;
