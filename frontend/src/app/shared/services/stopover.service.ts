@@ -52,6 +52,7 @@ export class StopoverService {
       ...stopoverState,
       stopovers: this.filteredStopovers(stopoverIndex),
     }));
+    this.generateFlights();
   }
 
   private filteredStopovers(stopoverIndex: number) {
@@ -139,8 +140,8 @@ export class StopoverService {
       let currentAirport = airports[i];
       let nextAirport = airports[i + 1];
       let newFlight: Flight = {
-        departureAirport: currentAirport.name,
-        destinationAirport: nextAirport.name,
+        departureAirport: currentAirport,
+        destinationAirport: nextAirport,
         firstFlight: i === 0,
         lastFlight: i === airports.length - 2,
         problemFlight: this.problemFlightIndex() === i,

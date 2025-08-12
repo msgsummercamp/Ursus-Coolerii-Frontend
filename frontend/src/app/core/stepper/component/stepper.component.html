@@ -11,6 +11,7 @@
       <app-disruptive-form
         (receiveMessage)="receiveDisruptionDetails($event)"
         (next)="stepper.next()"
+        (resetForms)="onResetForms()"
       />
     </mat-step>
     <mat-step [completed]="reservationDetailsFormCompleted()">
