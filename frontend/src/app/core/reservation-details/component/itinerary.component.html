@@ -12,7 +12,7 @@
       <form [formGroup]="reservationForm" class="special-form">
         <div>
           <div class="depart-wrapper">
-            <mat-form-field appearance="fill" class="depart">
+            <mat-form-field appearance="fill" class="special-form-field">
               <mat-label>{{ 'flightDetails.departingAirport' | transloco }}</mat-label>
               <input
                 type="text"
@@ -97,7 +97,7 @@
 
         <div>
           <div class="depDate">
-            <mat-form-field class="date">
+            <mat-form-field class="special-form-field">
               <mat-label>{{ 'flightDetails.plannedDepartureDate' | transloco }}</mat-label>
               <input
                 matInput
@@ -117,7 +117,7 @@
           </div>
 
           <div class="destDate">
-            <mat-form-field class="date">
+            <mat-form-field class="special-form-field">
               <mat-label>{{ 'flightDetails.plannedArrivalDate' | transloco }}</mat-label>
               <input
                 matInput
@@ -140,7 +140,7 @@
 
         <div>
           <div class="dest-wrapper">
-            <mat-form-field appearance="fill" class="dest">
+            <mat-form-field appearance="fill" class="special-form-field">
               <mat-label>Stopover</mat-label>
               <input
                 type="text"
