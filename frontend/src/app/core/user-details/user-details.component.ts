@@ -1,11 +1,13 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   inject,
   output,
   Output,
   signal,
+  ViewChild,
 } from '@angular/core';
 import {
   MatCard,
@@ -55,6 +57,9 @@ export class UserDetailsComponent implements AfterViewInit {
   public isValid = signal(false);
   public isValidPassengerDetails = signal(false);
 
+  @ViewChild(PassengerDetailsFormComponent)
+  passengerDetailsFormComponent!: PassengerDetailsFormComponent;
+
   public form = this.fb.group<UserDetailsForm>({
     email: this.fb.control('', Validators.required),
     registrationNo: this.fb.control('', Validators.required),
@@ -63,11 +68,16 @@ export class UserDetailsComponent implements AfterViewInit {
     isPassenger: this.fb.control(false),
   });
 
-  @Output() receiveMessage = new EventEmitter<{ email: string }>();
+  @Output() receiveMessage = new EventEmitter<{
+    email: string;
+    firstName: string;
+    lastName: string;
+  }>();
   protected emailExists = signal(false);
   private readonly API_URL = environment.apiURL;
   private onDestroy$ = new Subject<void>();
   public showPassengerDetails = false;
+  private cdr = inject(ChangeDetectorRef);
 
   ngOnDestroy(): void {
     this.onDestroy$.next();
@@ -87,6 +97,16 @@ export class UserDetailsComponent implements AfterViewInit {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 
+  public get autoFillPassengerNames() {
+    if (this.form.controls.isPassenger.value) {
+      return {
+        firstName: this.form.controls.firstName.value ?? '',
+        lastName: this.form.controls.lastName.value ?? '',
+      };
+    }
+    return undefined;
+  }
+
   passDataToParent() {
     const data = this.formRawValue;
     if (!data?.email) return;
@@ -101,21 +121,27 @@ export class UserDetailsComponent implements AfterViewInit {
         .get<{ exists: boolean }>(this.API_URL + `/email-exists?email=${email}`)
         .subscribe((response) => {
           this.emailExists.set(response.exists);
+          this.cdr.detectChanges();
         });
     }
   }
 
-  public get formRawValue(): { email: string } | undefined {
+  public get formRawValue(): { firstName: string; lastName: string; email: string } | undefined {
     const raw = this.form.getRawValue();
     if (!raw.email) return;
 
     return {
-      email: raw.email,
+      email: raw.email ?? '',
+      firstName: raw.firstName ?? '',
+      lastName: raw.lastName ?? '',
     };
   }
 
   protected continueToSubmit() {
     this.passDataToParent();
+    this.passengerDetailsFormComponent.passDataToParent();
+    console.log('User Details:', this.formRawValue);
+    console.log('Passenger Details:', this.passengerDetailsFormComponent.getFormRaw);
     this.next.emit();
   }
   protected continueToPassengerDetails() {

@@ -113,6 +113,10 @@
       },
       "lastName": {
         "required": "Last name is required!"
+      },
+      "email": {
+        "required": "Email is required!",
+        "already": "Email already exists!"
       }
     }
   },

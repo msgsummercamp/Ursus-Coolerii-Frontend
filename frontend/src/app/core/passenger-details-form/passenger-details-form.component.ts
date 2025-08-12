@@ -1,4 +1,15 @@
-import { Component, EventEmitter, inject, OnInit, Output, output, signal } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  output,
+  signal,
+  SimpleChanges,
+} from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   MatError,
@@ -35,7 +46,7 @@ import { Passenger } from '../../shared/types/types';
   templateUrl: './passenger-details-form.component.html',
   styleUrl: './passenger-details-form.component.scss',
 })
-export class PassengerDetailsFormComponent implements OnInit {
+export class PassengerDetailsFormComponent implements OnInit, OnChanges {
   private readonly formBuilder = inject(NonNullableFormBuilder);
   private readonly _isValid = signal(false);
   @Output() validityChange = new EventEmitter<boolean>();
@@ -85,6 +96,17 @@ export class PassengerDetailsFormComponent implements OnInit {
       postalCode: raw.postalCode,
     };
   }
+
+  @Input() autoFillNames?: { firstName: string; lastName: string };
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['autoFillNames'] && this.autoFillNames) {
+      this.patchValue({
+        firstName: this.autoFillNames.firstName,
+        lastName: this.autoFillNames.lastName,
+      });
+    }
+  }
+
   patchValue(value: Partial<{ firstName: string; lastName: string }>) {
     this.passengerDetailsForm.patchValue(value);
   }

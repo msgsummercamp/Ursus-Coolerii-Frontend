@@ -5,8 +5,8 @@
   </mat-card-header>
   <mat-card-content class="special-mat-content">
     <form [formGroup]="form">
-        <mat-form-field>
-          <mat-label>Email</mat-label>
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
         <input
           matInput
           formControlName="email"
@@ -15,9 +15,9 @@
           email
           (blur)="onEmailBlur()"
         />
-        </mat-form-field>
+      </mat-form-field>
       @if(emailExists()){
-        <mat-error>Email already exists!</mat-error>
+        <mat-error >{{ translate('user-details.error.email.already') }}</mat-error>
       }
 
       <mat-form-field appearance="fill" class="special-form-field">
@@ -80,7 +80,7 @@
         <mat-card-title class="special-mat-title">{{ translate('passenger-details.title') }}</mat-card-title>
       </mat-card-header>
       <mat-card-content class="special-mat-content">
-        <app-passenger-details-form   (validityChange)="isValidPassengerDetails.set($event)">
+        <app-passenger-details-form  [autoFillNames]="autoFillPassengerNames"  (validityChange)="isValidPassengerDetails.set($event)">
           </app-passenger-details-form>
       </mat-card-content>
 

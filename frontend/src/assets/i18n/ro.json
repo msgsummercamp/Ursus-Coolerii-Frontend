@@ -113,6 +113,10 @@
       },
       "lastName": {
         "required": "Numele este obligatoriu!"
+      },
+      "email": {
+        "required": "Emailul este obligatoriu!",
+        "already": "Acest email este deja înregistrat!"
       }
     }
   },
