@@ -45,6 +45,8 @@ export class UserDetailsComponent implements OnInit {
   public form = this.fb.group<UserDetailsForm>({
     email: this.fb.control('', Validators.required),
     registrationNo: this.fb.control('', Validators.required),
+    firstName: this.fb.control('', Validators.required),
+    lastName: this.fb.control('', Validators.required),
   });
 
   @Output() receiveMessage = new EventEmitter<{ email: string }>();

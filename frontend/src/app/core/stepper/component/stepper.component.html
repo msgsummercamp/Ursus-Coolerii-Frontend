@@ -16,7 +16,7 @@
     </mat-step>
     <mat-step [completed]="passengerDetailsFormCompleted()" [editable]="!disableStepper">
       <ng-template matStepLabel>{{ translate('passenger-details') }}</ng-template>
-      <app-passenger-details-form (receiveMessage)="receivdePassenger($event)" (next)="stepper.next()" (previous)="stepper.previous()" />
+      <app-passenger-details-form (receiveMessage)="receivePassenger($event)" (next)="stepper.next()" (previous)="stepper.previous()" />
     </mat-step>
     <mat-step [completed]="documentsFormCompleted()" [editable]="!disableStepper">
       <ng-template matStepLabel>{{ translate('documents') }}</ng-template>

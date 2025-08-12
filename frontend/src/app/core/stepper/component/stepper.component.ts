@@ -125,7 +125,7 @@ export class StepperComponent implements AfterViewInit {
   }
 
   private passenger: Passenger | undefined;
-  public receivdePassenger($event: Passenger) {
+  public receivePassenger($event: Passenger) {
     this.passenger = $event;
   }
 

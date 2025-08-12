@@ -52,9 +52,6 @@
       },
       "plannedArrivalTime": {
         "required": "Planned arrival time is required!"
-      },
-      "reservationNo": {
-        "required": "Reservation number is required!"
       }
     }
   },
@@ -97,7 +94,20 @@
     }
   },
   "user-details": {
-    "registrationNo": "Reservation Number"
+    "registrationNo": "Reservation Number",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "error": {
+      "registrationNo": {
+        "required": "Reservation number is required!"
+      },
+      "firstName": {
+        "required": "First name is required!"
+      },
+      "lastName": {
+        "required": "Last name is required!"
+      }
+    }
   },
   "stepper": {
     "disruption-motives": "Disruption motives",

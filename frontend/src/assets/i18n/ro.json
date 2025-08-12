@@ -52,9 +52,6 @@
       },
       "plannedArrivalTime": {
         "required": "Ora planificată de sosire este obligatorie!"
-      },
-      "reservationNo": {
-        "required": "Numărul de rezervare este obligatoriu!"
       }
     }
   },
@@ -97,7 +94,20 @@
     }
   },
   "user-details": {
-    "registrationNo": "Număr Rezervare"
+    "registrationNo": "Număr Rezervare",
+    "firstName": "Prenume",
+    "lastName": "Nume",
+    "error": {
+      "registrationNo": {
+        "required": "Numărul de rezervare este obligatoriu!"
+      },
+      "firstName": {
+        "required": "Prenumele este obligatoriu!"
+      },
+      "lastName": {
+        "required": "Numele este obligatoriu!"
+      }
+    }
   },
   "stepper": {
     "disruption-motives": "Motiv de perturbare",

@@ -10,7 +10,7 @@
           matInput
           formControlName="email"
           type="text"
-          id="firstName"
+          id="email"
           email
         />
         </mat-form-field>
@@ -27,10 +27,38 @@
           id="registrationNo"
           [placeholder]="translate('user-details.registrationNo')"
         />
+        @if(form.controls.registrationNo.errors?.['required']) {
+          <mat-error>{{ translate('user-details.error.registrationNo.required') }}</mat-error>
+        }
       </mat-form-field>
-      @if(form.controls.registrationNo.errors?.['required']) {
-        <mat-error>{{ translate('error.reservationNo.required') }}</mat-error>
-      }
+
+      <mat-form-field appearance="fill" class="special-form-field">
+        <mat-label>{{ 'user-details.firstName' | transloco }}</mat-label>
+        <input
+          matInput
+          formControlName="firstName"
+          type="text"
+          id="firstName"
+          [placeholder]="translate('user-details.firstName')"
+        />
+        @if(form.controls.firstName.errors?.['required']) {
+          <mat-error>{{ translate('user-details.error.firstName.required') }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="special-form-field">
+        <mat-label>{{ 'user-details.lastName' | transloco }}</mat-label>
+        <input
+          matInput
+          formControlName="lastName"
+          type="text"
+          id="lastName"
+          [placeholder]="translate('user-details.lastName')"
+        />
+        @if(form.controls.lastName.errors?.['required']) {
+          <mat-error>{{ translate('user-details.error.lastName.required') }}</mat-error>
+        }
+      </mat-form-field>
 
       <mat-card-actions class="special-form-actions">
       <button (click)="back()" mat-flat-button>
