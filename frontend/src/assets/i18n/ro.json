@@ -13,9 +13,7 @@
     "departingAirport": "Aeroport de Plecare",
     "destinationAirport": "Aeroport de Destinație",
     "plannedDepartureDate": "Data Planificată de Plecare",
-    "plannedDepartureTime": "Ora Planificată de Plecare",
     "plannedArrivalDate": "Data Planificată de Sosire",
-    "plannedArrivalTime": "Ora Planificată de Sosire",
     "connectingFlight": "Zbor de Legătură",
     "noConnectingFlight": "Fără Zboruri de Legătură",
     "typeFlightNr": "Introduceți Numărul Zborului...",
@@ -53,6 +51,13 @@
       "plannedArrivalTime": {
         "required": "Ora planificată de sosire este obligatorie!"
       }
+    },
+    "itinerary": {
+      "title": "Itinerariu",
+      "addStopover": "Adaugă escală",
+      "stopover": "Escală",
+      "stopovers": "Escale",
+      "noStopovers": "Nu există escale."
     }
   },
   "passenger-details": {
