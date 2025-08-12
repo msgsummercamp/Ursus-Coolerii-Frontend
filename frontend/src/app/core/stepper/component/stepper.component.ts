@@ -22,6 +22,7 @@ import {
   CaseDataWithFiles,
   DisruptionDetails,
   Flight,
+  FlightDTO,
   Passenger,
   SignupRequest,
 } from '../../../shared/types/types';
@@ -159,6 +160,19 @@ export class StepperComponent implements AfterViewInit {
   public buildCaseFile(): CaseDataWithFiles | undefined {
     console.log(this.userDetails);
     this.flights = this.stopoverService.stopoverState().flights;
+    const flightDTOs = this.flights.map(
+      (flight): FlightDTO => ({
+        flightNumber: flight.flightNumber,
+        airlineName: flight.airlineName,
+        departureAirport: flight.departureAirport.name,
+        destinationAirport: flight.destinationAirport.name,
+        departureTime: flight.departureTime,
+        arrivalTime: flight.arrivalTime,
+        firstFlight: flight.firstFlight,
+        lastFlight: flight.lastFlight,
+        problemFlight: flight.problemFlight,
+      })
+    );
     if (
       !this.disruptionDetails ||
       !this.flights ||
@@ -171,7 +185,7 @@ export class StepperComponent implements AfterViewInit {
       caseData: {
         disruptionDetails: this.disruptionDetails,
         reservationNumber: 'mockReservation',
-        flights: this.flights,
+        flights: flightDTOs,
         passenger: this.passenger,
         userEmail: this.userDetails.email,
       },
