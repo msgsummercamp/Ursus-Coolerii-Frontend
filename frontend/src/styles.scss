@@ -2,8 +2,8 @@
 // For more information: https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 @use './styles/_theme-colors.scss' as theme-colors;
-@import 'styles/layout';
-@import 'styles/case-entry';
+@use './styles/layout';
+@use './styles/case-entry';
 
 html {
   @include mat.theme(
@@ -14,10 +14,10 @@ html {
         tertiary: theme-colors.$tertiary-palette,
       ),
       typography: (
-              plain-family: Roboto,
-              bold-weight: 800,
-              medium-weight: 500,
-              regular-weight: 300,
+        plain-family: Roboto,
+        bold-weight: 800,
+        medium-weight: 500,
+        regular-weight: 300,
       ),
       density: 0,
     )
