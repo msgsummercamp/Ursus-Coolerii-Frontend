@@ -33,6 +33,7 @@ import { AirlineAttributes, AirlineService } from '../service/airline.service';
 import { FlightDetailsForm } from '../../../shared/types/form.types';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { StopoverService } from '../../../shared/services/stopover.service';
+import { Flight } from '../../../shared/types/types';
 
 @Component({
   selector: 'app-flight-details-form',
@@ -63,6 +64,7 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   @Output() flightNr: EventEmitter<string> = new EventEmitter<string>();
 
   @Input() flightForm!: FormGroup<FlightDetailsForm>;
+  @Input() flight!: Flight;
 
   private airlineService = inject(AirlineService);
 
@@ -71,6 +73,7 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
 
   private airlines: AirlineAttributes[] = [];
   private onDestroy$ = new Subject<void>();
+
   protected filteredAirlines: AirlineAttributes[] = [];
 
   public isValid = this._isValid.asReadonly();

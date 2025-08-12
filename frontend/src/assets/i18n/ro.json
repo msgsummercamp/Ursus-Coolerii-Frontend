@@ -111,7 +111,8 @@
     "chooseFileError": "Vă rog, alegeți măcar un fișier!"
   },
   "connecting-flight": {
-    "title": "Zbor de Legătură"
+    "title": "Zbor",
+    "problem": "Zbor Problemă?"
   },
   "disruptiveMotive": {
     "title": "Motiv de Perturbare",

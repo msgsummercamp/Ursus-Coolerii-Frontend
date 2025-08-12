@@ -85,8 +85,8 @@ export class FlightDetailsWrapComponent {
         existingForm.patchValue({
           flightNr: flights[i].flightNumber || '',
           airline: flights[i].airlineName || '',
-          departingAirport: flights[i].departureAirport,
-          destinationAirport: flights[i].destinationAirport,
+          departingAirport: flights[i].departureAirport.name,
+          destinationAirport: flights[i].destinationAirport.name,
           plannedDepartureDate: flights[i].departureTime
             ? new Date(flights[i].departureTime)
             : null,
@@ -108,6 +108,10 @@ export class FlightDetailsWrapComponent {
     return forms;
   });
 
+  protected getFlight(index: number) {
+    return this.stopoverService.stopoverState().flights[index];
+  }
+
   protected continue() {
     this.next.emit();
   }
@@ -124,8 +128,8 @@ export class FlightDetailsWrapComponent {
         Validators.pattern('^[a-zA-Z]{2}[0-9]{1,4}$'),
       ]),
       airline: this.fb.control(flight.airlineName, Validators.required),
-      departingAirport: this.fb.control(flight.departureAirport),
-      destinationAirport: this.fb.control(flight.destinationAirport),
+      departingAirport: this.fb.control(flight.departureAirport.name),
+      destinationAirport: this.fb.control(flight.destinationAirport.name),
       plannedDepartureDate: this.fb.control(departureDate, Validators.required),
     });
   }

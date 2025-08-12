@@ -111,7 +111,8 @@
     "chooseFileError": "Please choose at least one file!"
   },
   "connecting-flight": {
-    "title": "Connecting Flight"
+    "title": "Flight",
+    "problem": "Problem Flight?"
   },
   "disruptiveMotive": {
     "title": "Disruptive Motive",

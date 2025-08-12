@@ -14,12 +14,13 @@
           (date)="selectDate(i, $event)"
           (flightNr)="selectFlightNr(i, $event)"
           [flightForm]="flight"
+          [flight]="getFlight(i)"
         />
         <mat-checkbox
           [disabled]="problemFlightIndex === i"
           [checked]="problemFlightIndex === i"
           (change)="updateProblemFlight(i)"
-          >Problem flight?</mat-checkbox
+          >{{ 'connecting-flight.problem' | transloco }}</mat-checkbox
         >
       </div>
     </mat-card-content>
