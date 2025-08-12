@@ -199,9 +199,15 @@
         }
       </form>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-flat-button (click)="back()">{{ translate('stepper.back') }}</button>
-      <button mat-flat-button [disabled]="reservationForm.invalid" (click)="continue()"
+    <mat-card-actions class="special-form-actions">
+      <button mat-flat-button class="special-mat-sec-button" (click)="back()">{{
+        translate('stepper.back')
+      }}</button>
+      <button
+        mat-flat-button
+        class="special-mat-prim-button"
+        [disabled]="reservationForm.invalid"
+        (click)="continue()"
         >{{ translate('stepper.next') }}
       </button>
     </mat-card-actions>
