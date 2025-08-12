@@ -13,9 +13,7 @@
     "departingAirport": "Aeroport de Plecare",
     "destinationAirport": "Aeroport de Destinație",
     "plannedDepartureDate": "Data Planificată de Plecare",
-    "plannedDepartureTime": "Ora Planificată de Plecare",
     "plannedArrivalDate": "Data Planificată de Sosire",
-    "plannedArrivalTime": "Ora Planificată de Sosire",
     "connectingFlight": "Zbor de Legătură",
     "noConnectingFlight": "Fără Zboruri de Legătură",
     "typeFlightNr": "Introduceți Numărul Zborului...",
@@ -25,6 +23,7 @@
     "add": "Adaugă Zbor de Legătură",
     "deleteConnectingFlight": "Șterge Zbor de Legătură",
     "next": "Mai Departe",
+    "reset": "Resetează",
     "rewardMessage": "Puteți primi până la {{reward}} EURO pentru acest zbor!",
     "connectingFlightPlaceholder": "Introduceți zborul de legătură...",
     "error": {
@@ -53,6 +52,13 @@
       "plannedArrivalTime": {
         "required": "Ora planificată de sosire este obligatorie!"
       }
+    },
+    "itinerary": {
+      "title": "Itinerariu",
+      "addStopover": "Adaugă escală",
+      "stopover": "Escală",
+      "stopovers": "Escale",
+      "noStopovers": "Nu există escale."
     }
   },
   "passenger-details": {
@@ -111,7 +117,8 @@
     "chooseFileError": "Vă rog, alegeți măcar un fișier!"
   },
   "connecting-flight": {
-    "title": "Zbor de Legătură"
+    "title": "Zbor",
+    "problem": "Zbor Problemă?"
   },
   "disruptiveMotive": {
     "title": "Motiv de Perturbare",
