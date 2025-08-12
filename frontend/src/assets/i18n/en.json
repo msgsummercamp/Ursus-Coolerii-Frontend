@@ -156,6 +156,7 @@
   },
   "yes": "Yes",
   "no": "No",
+
   "caseList": {
     "caseDate": "Case Date",
     "flightNr": "Flight Nr.",
@@ -171,6 +172,18 @@
       "NOT_ELIGIBLE": "Not Eligible"
     }
   },
+
+  "userList": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phoneNumber": "Phone Number",
+    "role": "Role",
+    "casesCount": "Nr. Cases",
+    "deleteUser": "Delete User",
+    "editUser": "Edit User"
+  },
+
   "home": {
     "title": "Air Assist",
     "subtitle": "Fill in the form to claim your compensation",
