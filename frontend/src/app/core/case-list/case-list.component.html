@@ -2,7 +2,7 @@
   <ng-container matColumnDef="contractId">
     <th mat-header-cell *matHeaderCellDef>ID</th>
     <td mat-cell *matCellDef="let c">
-      <a [routerLink]="['/cases', c.contractId]">{{ c.contractId }}</a>
+      <a [routerLink]="['/cases', c.caseId]">{{ c.contractId }}</a>
     </td>
   </ng-container>
   <ng-container matColumnDef="caseDate">

@@ -6,6 +6,7 @@ export type AirportAttributes = {
 };
 
 export type Case = {
+  caseId: string;
   contractId: string;
   caseDate: Date | string;
   flightNr: string;
@@ -149,6 +150,7 @@ export interface CommentDTO {
 }
 
 export interface CaseDetailsDTO {
+  caseId: string;
   contractId: string;
   reservationNumber: string;
   flights: FlightDetailsDTO[];

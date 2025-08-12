@@ -31,7 +31,7 @@ export const routes: Routes = [
       import('./core/case-list/case-list.component').then((m) => m.CaseListComponent),
   },
   {
-    path: 'cases/:contractId',
+    path: 'cases/:caseId',
     loadComponent: () =>
       import('./core/case-details/case-details.component').then((m) => m.CaseDetailsComponent),
   },

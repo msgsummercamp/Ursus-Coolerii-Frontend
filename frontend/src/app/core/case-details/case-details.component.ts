@@ -29,10 +29,12 @@ export class CaseDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const contractId = this.route.snapshot.paramMap.get('contractId');
-    if (contractId) {
-      this.caseFileService.getCaseDetailsByContractId(contractId).subscribe((data) => {
+    const caseId = this.route.snapshot.paramMap.get('caseId');
+    if (caseId) {
+      console.log(caseId);
+      this.caseFileService.getCaseDetailsByCaseId(caseId).subscribe((data) => {
         this.caseDetails = data;
+        console.log(data);
       });
     }
   }
