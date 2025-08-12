@@ -179,6 +179,14 @@ export class StepperComponent implements AfterViewInit {
     };
   }
 
+  @ViewChild(ItineraryFormComponent) itineraryFormComponent?: ItineraryFormComponent;
+  @ViewChild(FlightDetailsWrapComponent) flightWrapComponent?: FlightDetailsWrapComponent;
+
+  onResetForms() {
+    this.itineraryFormComponent?.reservationForm.reset();
+    this.flightWrapComponent?.resetAllFlightForms();
+  }
+
   @ViewChild('stepper', { static: true }) stepper!: MatStepper;
   airplaneLeft = 0;
   airplaneTop = 0;

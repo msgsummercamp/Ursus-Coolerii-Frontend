@@ -156,4 +156,10 @@ export class FlightDetailsWrapComponent {
     this.stopoverService.setFlightDepartureDate(i, date);
     this.stopoverService.setFlightArrivalDate(i - 1, date);
   }
+
+  resetAllFlightForms() {
+    this.flightFormComponents().forEach((formComponent) => {
+      formComponent.flightForm.reset();
+    });
+  }
 }

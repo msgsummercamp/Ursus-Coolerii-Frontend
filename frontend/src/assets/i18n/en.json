@@ -23,6 +23,7 @@
     "add": "Add Connecting Flight",
     "deleteConnectingFlight": "Delete Connecting Flight",
     "next": "Next",
+    "reset": "Reset",
     "rewardMessage": "You can receive up to {{reward}} EUROS for this flight!",
     "connectingFlightPlaceholder": "Type connecting flight...",
     "error": {

@@ -23,6 +23,7 @@
     "add": "Adaugă Zbor de Legătură",
     "deleteConnectingFlight": "Șterge Zbor de Legătură",
     "next": "Mai Departe",
+    "reset": "Resetează",
     "rewardMessage": "Puteți primi până la {{reward}} EURO pentru acest zbor!",
     "connectingFlightPlaceholder": "Introduceți zborul de legătură...",
     "error": {
