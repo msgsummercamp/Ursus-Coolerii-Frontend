@@ -4,30 +4,36 @@
 <div class="flight-form-wrapper-container">
   <mat-card class="special-mat-card">
     <mat-card-header class="special-mat-header">
-      <mat-card-title class="special-mat-title">{{
-        'flightDetails.title' | transloco
-      }}</mat-card-title>
+      <mat-card-title class="special-mat-title">Flight Details</mat-card-title>
     </mat-card-header>
     <mat-card-content class="special-mat-content">
-      <app-flight-details-form [flightForm]="form" (next)="continue()" (previous)="back()" />
-      <div *ngFor="let flight of connectingFlights; let i = index">
+      <div *ngFor="let flight of connectingFlights(); let i = index">
         <h2 class="mat-headline-5">{{ 'connecting-flight.title' | transloco }} #{{ i + 1 }}</h2>
-        <app-flight-details-form [flightForm]="flight" />
+        <app-flight-details-form
+          (airline)="selectAirline(i, $event)"
+          (date)="selectDate(i, $event)"
+          (flightNr)="selectFlightNr(i, $event)"
+          [flightForm]="flight"
+        />
+        <mat-checkbox
+          [disabled]="problemFlightIndex === i"
+          [checked]="problemFlightIndex === i"
+          (change)="updateProblemFlight(i)"
+          >Problem flight?</mat-checkbox
+        >
       </div>
     </mat-card-content>
     <mat-card-actions *transloco="let translate" class="special-form-actions">
       <button mat-stroked-button class="special-mat-sec-button" (click)="back()">{{
         translate('stepper.back')
       }}</button>
-      <button mat-stroked-button class="special-mat-sec-button" (click)="addConnectingFlight()"
-        >{{ translate('flightDetails.connectingFlightPlaceholder') }}
-      </button>
       <button
         mat-flat-button
         class="special-mat-prim-button"
-        [disabled]="form.invalid"
+        [disabled]="!this.validForms()"
         (click)="continue()"
-        >{{ translate('stepper.next') }}
+      >
+        {{ translate('stepper.next') }}
       </button>
     </mat-card-actions>
   </mat-card>

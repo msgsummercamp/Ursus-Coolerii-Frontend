@@ -8,15 +8,30 @@
   >
     <mat-step [completed]="disruptiveFormCompleted()"  [editable]="!disableStepper">
       <ng-template matStepLabel>{{ translate('disruption-motives') }}</ng-template>
-      <app-disruptive-form (receiveMessage)="receiveDisruptionDetails($event)" (next)="stepper.next()"  />
+      <app-disruptive-form
+        (receiveMessage)="receiveDisruptionDetails($event)"
+        (next)="stepper.next()"
+      />
+    </mat-step>
+    <mat-step [completed]="reservationDetailsFormCompleted()">
+      <ng-template matStepLabel>Itinerary</ng-template>
+      <app-reservation-details (next)="stepper.next()" (previous)="stepper.previous()" />
     </mat-step>
     <mat-step [completed]="flightDetailsFormCompleted()" [editable]="!disableStepper">
       <ng-template matStepLabel>{{ translate('flight-details') }}</ng-template>
-      <app-flight-details-wrap (rewardValueSent)="receiveReward($event)" (receiveMessage)="receiveFlight($event)" (previous)="stepper.previous()" (next)="stepper.next()" />
+      <app-flight-details-wrap
+        (rewardValueSent)="receiveReward($event)"
+        (previous)="stepper.previous()"
+        (next)="stepper.next()"
+      />
     </mat-step>
     <mat-step [completed]="passengerDetailsFormCompleted()" [editable]="!disableStepper">
       <ng-template matStepLabel>{{ translate('passenger-details') }}</ng-template>
-      <app-passenger-details-form (receiveMessage)="receivdePassenger($event)" (next)="stepper.next()" (previous)="stepper.previous()" />
+      <app-passenger-details-form
+        (receiveMessage)="receivdePassenger($event)"
+        (next)="stepper.next()"
+        (previous)="stepper.previous()"
+      />
     </mat-step>
     <mat-step [completed]="documentsFormCompleted()" [editable]="!disableStepper">
       <ng-template matStepLabel>{{ translate('documents') }}</ng-template>
