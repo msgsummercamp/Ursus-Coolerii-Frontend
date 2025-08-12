@@ -13,9 +13,7 @@
     "departingAirport": "Departing Airport",
     "destinationAirport": "Destination Airport",
     "plannedDepartureDate": "Planned Departure Date",
-    "plannedDepartureTime": "Planned Departure Time",
     "plannedArrivalDate": "Planned Arrival Date",
-    "plannedArrivalTime": "Planned Arrival Time",
     "connectingFlight": "Connecting Flight",
     "noConnectingFlight": "No Connecting Flights",
     "typeFlightNr": "Type Flight Number...",
@@ -53,6 +51,13 @@
       "plannedArrivalTime": {
         "required": "Planned arrival time is required!"
       }
+    },
+    "itinerary": {
+      "title": "Itinerary",
+      "addStopover": "Add stopover",
+      "stopover": "Stopover",
+      "stopovers": "Stopovers",
+      "noStopovers": "There are no stopovers."
     }
   },
   "passenger-details": {
@@ -111,7 +116,8 @@
     "chooseFileError": "Please choose at least one file!"
   },
   "connecting-flight": {
-    "title": "Connecting Flight"
+    "title": "Flight",
+    "problem": "Problem Flight?"
   },
   "disruptiveMotive": {
     "title": "Disruptive Motive",
