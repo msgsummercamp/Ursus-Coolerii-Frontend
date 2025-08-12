@@ -35,6 +35,7 @@ import {
   MatCardHeader,
   MatCardTitle,
 } from '@angular/material/card';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-disruptive-form',
@@ -56,6 +57,7 @@ import {
     MatCardHeader,
     MatCardContent,
     MatCardActions,
+    MatTooltip,
   ],
   templateUrl: './disruptive-form.component.html',
   styleUrl: './disruptive-form.component.scss',
@@ -113,13 +115,30 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
     this.next.emit();
   }
 
+  protected reset() {
+    Object.keys(this.formDisruption.controls).forEach((key) => {
+      this.formDisruption.get(key)?.setValue('');
+    });
+  }
+
   ngOnInit(): void {
     this.motives = Object.values(DisruptiveMotiveLabels);
+    this.formDisruption.controls.disruptionMotive.valueChanges.subscribe(() => {
+      this.formDisruption.patchValue({
+        daysBeforeCancellation: '',
+        hoursLateArrival: '',
+        gaveSeatVoluntarly: '',
+        deniedBoardingMotive: '',
+        airlineMentionedMotive: null,
+        communicatedMotive: '',
+        optionalComments: '',
+      });
+    });
+
     this.formDisruption.statusChanges.subscribe(() => {
       this.service.checkEligibility(this.formDisruption).subscribe({
         next: (result) => {
           this.isEligible.set(result.valueOf());
-          console.log('Eligibility result:', result);
           this.eligibilityService.setEligibility(result.valueOf());
         },
         error: (err) => {
