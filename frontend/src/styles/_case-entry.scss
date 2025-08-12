@@ -51,3 +51,22 @@
     }
   }
 }
+
+.passenger-details-form-card {
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    overflow: hidden;
+
+    & > div {
+      display: flex;
+      gap: 2rem;
+
+      > * {
+        flex: 1;
+      }
+    }
+  }
+}

@@ -1,3 +1,4 @@
+@if(!showPassengerDetails){
 <mat-card class="special-mat-card">
   <mat-card-header class="special-mat-header">
     <mat-card-title class="special-mat-title">{{ translate('userDetails.title') }}</mat-card-title>
@@ -12,6 +13,7 @@
           type="text"
           id="email"
           email
+          (blur)="onEmailBlur()"
         />
         </mat-form-field>
       @if(emailExists()){
@@ -59,15 +61,36 @@
           <mat-error>{{ translate('user-details.error.lastName.required') }}</mat-error>
         }
       </mat-form-field>
-
-      <mat-card-actions class="special-form-actions">
+      <mat-checkbox formControlName="isPassenger">{{ translate('user-details.iAmPassenger') }}</mat-checkbox>
+    </form>
+  </mat-card-content>
+    <mat-card-actions class="special-form-actions">
       <button (click)="back()" mat-flat-button>
-        {{ translate('stepper.back')}}
+        {{ translate('stepper.back') }}
       </button>
-      <button (click)="continue()" mat-flat-button [disabled]="!isValid()">
+      <button (click)="continueToPassengerDetails()" mat-flat-button [disabled]="!isValid()">
         {{ translate('stepper.next') }}
       </button>
     </mat-card-actions>
-    </form>
-  </mat-card-content>
 </mat-card>
+  }
+  @if(showPassengerDetails){
+    <mat-card class="passenger-details-form-card special-mat-card">
+      <mat-card-header class="special-mat-header ">
+        <mat-card-title class="special-mat-title">{{ translate('passenger-details.title') }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="special-mat-content">
+        <app-passenger-details-form   (validityChange)="isValidPassengerDetails.set($event)">
+          </app-passenger-details-form>
+      </mat-card-content>
+
+    <mat-card-actions class="special-form-actions">
+      <button (click)="backToUserDetails()" mat-flat-button>
+        {{ translate('stepper.back')}}
+      </button>
+      <button (click)="continueToSubmit()" mat-flat-button [disabled]="!isValidPassengerDetails()">
+        {{ translate('stepper.next') }}
+      </button>
+    </mat-card-actions>
+    </mat-card>
+  }

@@ -103,6 +103,7 @@
     "registrationNo": "Reservation Number",
     "firstName": "First Name",
     "lastName": "Last Name",
+    "iAmPassenger": "I am the passenger",
     "error": {
       "registrationNo": {
         "required": "Reservation number is required!"

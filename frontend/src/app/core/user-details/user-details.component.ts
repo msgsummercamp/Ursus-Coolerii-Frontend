@@ -1,4 +1,12 @@
-import { Component, EventEmitter, inject, OnInit, output, Output, signal } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  inject,
+  output,
+  Output,
+  signal,
+} from '@angular/core';
 import {
   MatCard,
   MatCardActions,
@@ -11,9 +19,11 @@ import { UserDetailsForm } from '../../shared/types/form.types';
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { translate, TranslocoPipe } from '@jsverse/transloco';
-import { debounceTime, distinctUntilChanged, filter, Subject, switchMap } from 'rxjs';
+import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { PassengerDetailsFormComponent } from '../passenger-details-form/passenger-details-form.component';
 
 @Component({
   selector: 'app-user-details',
@@ -30,51 +40,46 @@ import { environment } from '../../../environments/environment';
     MatCardActions,
     MatError,
     TranslocoPipe,
+    MatCheckbox,
+    PassengerDetailsFormComponent,
   ],
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.scss',
 })
-export class UserDetailsComponent implements OnInit {
+export class UserDetailsComponent implements AfterViewInit {
   private fb = inject(FormBuilder);
   protected readonly next = output<void>();
   protected readonly previous = output<void>();
   protected http = inject(HttpClient);
 
   public isValid = signal(false);
+  public isValidPassengerDetails = signal(false);
 
   public form = this.fb.group<UserDetailsForm>({
     email: this.fb.control('', Validators.required),
     registrationNo: this.fb.control('', Validators.required),
     firstName: this.fb.control('', Validators.required),
     lastName: this.fb.control('', Validators.required),
+    isPassenger: this.fb.control(false),
   });
 
   @Output() receiveMessage = new EventEmitter<{ email: string }>();
   protected emailExists = signal(false);
   private readonly API_URL = environment.apiURL;
   private onDestroy$ = new Subject<void>();
+  public showPassengerDetails = false;
 
   ngOnDestroy(): void {
     this.onDestroy$.next();
     this.onDestroy$.complete();
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.onDestroy$.next();
     this.onDestroy$.complete();
-    this.form.controls.email.valueChanges
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        filter((email) => this.isValidEmail(email)),
-        switchMap((email) =>
-          this.http.get<{ exists: boolean }>(this.API_URL + `/email-exists?email=${email}`)
-        )
-      )
-      .subscribe((response) => {
-        this.isValid.set(!response.exists);
-        this.emailExists.set(response.exists);
-      });
+    this.form.statusChanges.subscribe((status) => {
+      this.isValid.set(status === 'VALID');
+    });
   }
 
   isValidEmail(email: string | null): boolean {
@@ -89,6 +94,17 @@ export class UserDetailsComponent implements OnInit {
     this.receiveMessage.emit(data);
   }
 
+  onEmailBlur() {
+    const email = this.form.controls.email.value;
+    if (this.isValidEmail(email)) {
+      this.http
+        .get<{ exists: boolean }>(this.API_URL + `/email-exists?email=${email}`)
+        .subscribe((response) => {
+          this.emailExists.set(response.exists);
+        });
+    }
+  }
+
   public get formRawValue(): { email: string } | undefined {
     const raw = this.form.getRawValue();
     if (!raw.email) return;
@@ -98,13 +114,20 @@ export class UserDetailsComponent implements OnInit {
     };
   }
 
-  protected continue() {
+  protected continueToSubmit() {
     this.passDataToParent();
     this.next.emit();
+  }
+  protected continueToPassengerDetails() {
+    this.showPassengerDetails = true;
   }
 
   protected back() {
     this.previous.emit();
+  }
+
+  protected backToUserDetails() {
+    this.showPassengerDetails = false;
   }
 
   protected readonly translate = translate;

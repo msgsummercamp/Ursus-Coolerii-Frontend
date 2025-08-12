@@ -46,7 +46,6 @@ const VERTICAL_OFFSET = -19;
     MatFormFieldModule,
     MatInputModule,
     TranslocoDirective,
-    PassengerDetailsFormComponent,
     FlightDetailsWrapComponent,
     DocumentsFormComponent,
     FlightDetailsWrapComponent,

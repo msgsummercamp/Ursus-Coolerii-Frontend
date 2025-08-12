@@ -27,6 +27,7 @@ export type UserDetailsForm = {
   registrationNo: FormControl<string | null>;
   firstName: FormControl<string | null>;
   lastName: FormControl<string | null>;
+  isPassenger: FormControl<boolean | null>;
 };
 
 export type PassengerDetailsForm = {

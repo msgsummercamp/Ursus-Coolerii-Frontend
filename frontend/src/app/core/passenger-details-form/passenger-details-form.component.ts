@@ -13,17 +13,9 @@ import {
   MatDatepickerInput,
   MatDatepickerToggle,
 } from '@angular/material/datepicker';
-import { MatButton } from '@angular/material/button';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { PassengerDetailsForm } from '../../shared/types/form.types';
 import { Passenger } from '../../shared/types/types';
-import {
-  MatCard,
-  MatCardActions,
-  MatCardContent,
-  MatCardHeader,
-  MatCardTitle,
-} from '@angular/material/card';
 
 @Component({
   selector: 'app-passenger-details-form',
@@ -38,13 +30,7 @@ import {
     MatDatepicker,
     MatHint,
     MatSuffix,
-    MatButton,
     TranslocoDirective,
-    MatCard,
-    MatCardHeader,
-    MatCardTitle,
-    MatCardContent,
-    MatCardActions,
   ],
   templateUrl: './passenger-details-form.component.html',
   styleUrl: './passenger-details-form.component.scss',
@@ -52,6 +38,7 @@ import {
 export class PassengerDetailsFormComponent implements OnInit {
   private readonly formBuilder = inject(NonNullableFormBuilder);
   private readonly _isValid = signal(false);
+  @Output() validityChange = new EventEmitter<boolean>();
 
   protected readonly currentDate = new Date();
 
@@ -80,7 +67,7 @@ export class PassengerDetailsFormComponent implements OnInit {
 
   ngOnInit() {
     this.passengerDetailsForm.statusChanges.subscribe((status) => {
-      this._isValid.set(status === 'VALID');
+      this.validityChange.emit(status === 'VALID');
     });
   }
 
@@ -97,6 +84,9 @@ export class PassengerDetailsFormComponent implements OnInit {
       address: raw.address,
       postalCode: raw.postalCode,
     };
+  }
+  patchValue(value: Partial<{ firstName: string; lastName: string }>) {
+    this.passengerDetailsForm.patchValue(value);
   }
 
   protected continue() {

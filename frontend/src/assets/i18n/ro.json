@@ -103,6 +103,7 @@
     "registrationNo": "Număr Rezervare",
     "firstName": "Prenume",
     "lastName": "Nume",
+    "iAmPassenger": "Eu sunt pasagerul",
     "error": {
       "registrationNo": {
         "required": "Numărul de rezervare este obligatoriu!"
