@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DisruptiveMotiveLabels, EligibilityRequest } from '../../../shared/types/types';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
@@ -16,7 +16,7 @@ export class DisruptiveFormService {
 
   public createForm(): FormGroup<DisruptiveMotiveForm> {
     return this.fb.group<DisruptiveMotiveForm>({
-      disruptionMotive: this.fb.control(''),
+      disruptionMotive: this.fb.control('', Validators.required),
       daysBeforeCancellation: this.fb.control(''),
       hoursLateArrival: this.fb.control(''),
       gaveSeatVoluntarly: this.fb.control(''),
