@@ -4,6 +4,7 @@
 @use './styles/_theme-colors.scss' as theme-colors;
 @use './styles/layout';
 @use './styles/case-entry';
+@use './styles/_case-view';
 
 html {
   @include mat.theme(

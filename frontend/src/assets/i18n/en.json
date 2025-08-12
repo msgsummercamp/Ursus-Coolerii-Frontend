@@ -187,8 +187,7 @@
     "phoneNumber": "Phone Number",
     "role": "Role",
     "casesCount": "Nr. Cases",
-    "deleteUser": "Delete User",
-    "editUser": "Edit User"
+    "actionUser": "Actions"
   },
 
   "home": {

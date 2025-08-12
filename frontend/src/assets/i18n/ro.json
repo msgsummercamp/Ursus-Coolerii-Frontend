@@ -178,8 +178,7 @@
     "email": "Email",
     "role": "Rol",
     "casesCount": "Nr. Cazuri",
-    "deleteUser": "Șterge Utilizator",
-    "editUser": "Editează Utilizator"
+    "actionUser": "Acțiuni"
   },
 
   "caseList": {
