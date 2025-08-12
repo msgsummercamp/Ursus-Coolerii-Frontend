@@ -64,6 +64,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 })
 export class DisruptiveFormComponent implements OnInit, OnDestroy {
   @Output() receiveMessage = new EventEmitter<DisruptionDetails>();
+  @Output() resetForms = new EventEmitter<void>();
 
   passDataToParent() {
     const data = this.getFormRaw;
@@ -119,6 +120,7 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
     Object.keys(this.formDisruption.controls).forEach((key) => {
       this.formDisruption.get(key)?.setValue('');
     });
+    this.resetForms.emit();
   }
 
   ngOnInit(): void {
