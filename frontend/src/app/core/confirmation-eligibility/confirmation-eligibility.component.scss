@@ -1,3 +1,41 @@
 .checkbox{
   display: block;
 }
+
+.centered-mat-label {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+
+.info-content {
+  margin-bottom: 2rem;
+}
+.info-content > p {
+  display: block;
+}
+
+.confirmation-sub-title {
+  color: var(--mat-sys-primary);
+}
+
+.reward-label {
+  display: flex;
+  justify-content: center;
+  color: var(--mat-sys-primary);
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.not-checked-error {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  justify-content: center;
+  display: flex;
+}
+
+.gdpr-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}

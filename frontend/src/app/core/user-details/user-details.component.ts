@@ -42,14 +42,6 @@ export class UserDetailsComponent implements OnInit {
 
   public isValid = signal(false);
 
-  private messages = [
-    'Already have an account? Click here to sign in',
-    "Don't have an account? Click here to sign up",
-  ];
-
-  protected togglePageSignal = signal(false);
-  protected togglePageMessage = signal(this.messages.at(0));
-
   public form = this.fb.group<UserDetailsForm>({
     email: this.fb.control('', Validators.required),
     registrationNo: this.fb.control('', Validators.required),

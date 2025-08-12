@@ -61,6 +61,7 @@ export type SignupRequest = {
   email: string;
   firstName: string;
   lastName: string;
+  role: string;
 };
 
 export type SaveRequest = {
@@ -98,4 +99,17 @@ export const CaseStatusLabels: Record<CaseStatus, string> = {
   [CaseStatus.assigned]: 'Assigned',
   [CaseStatus.eligible]: 'Won',
   [CaseStatus.notEligible]: 'Lost',
+};
+
+export type LoginResponse = {
+  token: string;
+  user: {
+    id: number;
+    role: string;
+  };
+};
+
+export type LoginRequest = {
+  email: string;
+  password: string;
 };
