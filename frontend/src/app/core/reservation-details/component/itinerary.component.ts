@@ -221,6 +221,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   }
 
   protected removeStopover(stopoverIndex: number) {
+    console.log('removing', stopoverIndex);
     this.stopoverService.removeStopover(stopoverIndex);
   }
 

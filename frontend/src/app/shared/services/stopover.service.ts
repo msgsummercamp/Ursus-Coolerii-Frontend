@@ -52,6 +52,7 @@ export class StopoverService {
       ...stopoverState,
       stopovers: this.filteredStopovers(stopoverIndex),
     }));
+    this.generateFlights();
   }
 
   private filteredStopovers(stopoverIndex: number) {
