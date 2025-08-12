@@ -32,6 +32,7 @@ import {
   MatCardTitle,
 } from '@angular/material/card';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { CaseFileService } from '../../layout/services/case-file.service';
 
 const emptyAirport: AirportAttributes = {
   name: '',
@@ -69,6 +70,7 @@ const emptyAirport: AirportAttributes = {
 export class ItineraryFormComponent implements OnInit, OnDestroy {
   private airportService = inject(AirportsService);
   private stopoverService = inject(StopoverService);
+  private caseFileService = inject(CaseFileService);
 
   protected stopoverDisplayValue = signal('');
 
@@ -126,6 +128,10 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.reservationForm.statusChanges.subscribe((status) => {
       this._isValid.set(status === 'VALID');
+      this.caseFileService.calculateReward(
+        this.reservationForm.controls.departingAirport.value,
+        this.reservationForm.controls.destinationAirport.value
+      );
     });
 
     this.reservationForm.controls.departingAirport.valueChanges

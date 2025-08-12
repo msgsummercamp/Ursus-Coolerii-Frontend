@@ -60,11 +60,9 @@ export class FlightDetailsWrapComponent {
 
   protected readonly next = output<void>();
   protected readonly previous = output<void>();
-
   protected isLoading = signal(false);
 
   @Output() receiveMessage = new EventEmitter<Flight>();
-  @Output() rewardValueSent = new EventEmitter<string>();
 
   public validForms = computed(() =>
     this.flightFormComponents()
