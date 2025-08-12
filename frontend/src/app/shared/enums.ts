@@ -11,6 +11,12 @@ export enum CaseStatus {
   notEligible = 'NOT_ELIGIBLE',
 }
 
+export enum Roles {
+  passenger = 'PASSENGER',
+  employee = 'EMPLOYEE',
+  admin = 'ADMIN',
+}
+
 export enum DeniedBoardingMotive {
   overBooked = 'Flight overbooked',
   aggresive = 'Aggressive behavior with staff',

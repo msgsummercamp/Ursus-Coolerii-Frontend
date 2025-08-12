@@ -31,6 +31,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { ItineraryFormComponent } from '../../reservation-details/component/itinerary.component';
 import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility/confirmation-eligibility.component';
 import { StopoverService } from '../../../shared/services/stopover.service';
+import { Roles } from '../../../shared/enums';
 
 const AIRPLANE_WIDTH = 40;
 const VERTICAL_OFFSET = -19;
@@ -105,6 +106,12 @@ export class StepperComponent implements AfterViewInit {
     this.documentsForm()?.isValid()
   );
 
+  disableStepper = false;
+
+  onDisableStepper() {
+    this.disableStepper = true;
+  }
+
   private userForm = viewChild(UserDetailsComponent);
   protected userFormCompleted: Signal<boolean | undefined> = computed(() =>
     this.userForm()?.isValid()
@@ -149,8 +156,8 @@ export class StepperComponent implements AfterViewInit {
       email: this.userDetails.email,
       firstName: this.passenger.firstName,
       lastName: this.passenger.lastName,
+      role: Roles.passenger,
     };
-    console.log('DATA' + usr);
     return usr;
   }
 

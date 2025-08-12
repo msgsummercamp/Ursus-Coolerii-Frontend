@@ -1,52 +1,49 @@
-import { inject, Injectable, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
-import {environment} from "../../../environments/environment";
-
-type ResponseType = {
-  token: string;
-  user: {
-    id: number;
-    role: string;
-  };
-};
+import { environment } from '../../../environments/environment';
+import { LoginRequest, LoginResponse } from '../types/types';
+import { map, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly _isLoggedIn = signal(false);
-
-  public readonly isLoggedIn = this._isLoggedIn.asReadonly();
-
-  private readonly router = inject(Router);
   private readonly http = inject(HttpClient);
   private readonly cookieService = inject(CookieService);
   private readonly API_URL = environment.apiURL;
 
-  constructor() {
-    if (this.cookieService.get('token') != '') {
-      this._isLoggedIn.set(true);
-      this.router.navigate(['/form']);
-    }
-  }
-
-  public login(username: string, password: string) {
+  public isAuthenticated(): Observable<boolean> {
+    const subject = new Subject<boolean>();
     this.http
-      .post<ResponseType>(this.API_URL + '/auth/login', { username, password })
+      .get<{ status: boolean }>(this.API_URL + '/auth/check', {
+        withCredentials: true,
+      })
+      .pipe(map((response) => response.status))
       .subscribe({
-        next: (response) => {
-          this.cookieService.set('token', response.token);
-          this._isLoggedIn.set(true);
-          this.router.navigate(['/form']);
+        next: (res) => {
+          subject.next(true);
+        },
+        error: (error) => {
+          subject.next(false);
         },
       });
+    return subject.asObservable();
+  }
+
+  public login(email: string, password: string) {
+    const request: LoginRequest = {
+      email: email,
+      password: password,
+    };
+
+    return this.http.post<LoginResponse>(this.API_URL + '/auth/login', request, {
+      withCredentials: true,
+    });
   }
 
   public logout() {
     this.cookieService.delete('token');
-    this._isLoggedIn.set(false);
   }
 
   public getToken() {
