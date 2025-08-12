@@ -124,11 +124,6 @@ export class StepperComponent implements AfterViewInit {
 
   private flights: Flight[] = [];
 
-  protected rewardMessage: string | undefined;
-  public receiveReward($event: string) {
-    this.rewardMessage = $event;
-  }
-
   private passenger: Passenger | undefined;
   public receivdePassenger($event: Passenger) {
     this.passenger = $event;
