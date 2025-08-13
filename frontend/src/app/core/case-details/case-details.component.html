@@ -1,87 +1,117 @@
-<div class="caseDetails">
-  <h2 class="case-title">
-    {{ 'caseDetails.title' | transloco: { contractId: caseDetails?.contractId } }}
-  </h2>
+<mat-sidenav-container class="special-layout">
+  <mat-sidenav mode="side" opened class="special-navbar">
+    <mat-nav-list class="special-nav-list">
+      <mat-list-item
+        class="special-nav-item"
+        (click)="selectedSection = 'flights'"
+        [class.active]="selectedSection === 'flights'"
+      >
+        <mat-icon class="nav-arrow-icon">arrow_forward</mat-icon>
+        {{ 'flightDetails.title' | transloco }}
+      </mat-list-item>
+      <mat-list-item
+        class="special-nav-item"
+        (click)="selectedSection = 'passenger'"
+        [class.active]="selectedSection === 'passenger'"
+      >
+        <mat-icon class="nav-arrow-icon">arrow_forward</mat-icon>
+        {{ 'passenger-details.title' | transloco }}
+      </mat-list-item>
+      <mat-list-item
+        class="special-nav-item"
+        (click)="selectedSection = 'documents'"
+        [class.active]="selectedSection === 'documents'"
+      >
+        <mat-icon class="nav-arrow-icon">arrow_forward</mat-icon>
+        {{ 'documents.title' | transloco }}
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
 
-  <mat-card class="special-mat-card">
-    <mat-card-header class="special-mat-header">
-      <mat-card-title class="special-mat-title">{{
-        'flightDetails.title' | transloco
-      }}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="special-mat-content">
-      <div *ngFor="let flight of caseDetails?.flights">
-        <div
-          >{{ 'flightDetails.flightDate' | transloco }}:
-          {{ flight.plannedDepartureTime | date }}</div
+  <mat-sidenav-content class="special-content">
+    <ng-container *ngIf="selectedSection === 'flights'">
+      <mat-tab-group class="special-tab-group">
+        <mat-tab
+          *ngFor="let flight of caseDetails?.flights; let i = index"
+          [label]="'Flight ' + (i + 1)"
         >
-        <div>{{ 'flightDetails.flightNr' | transloco }}: {{ flight.flightNumber }}</div>
-        <div>{{ 'flightDetails.airline' | transloco }}: {{ flight.airline }}</div>
-        <div
-          >{{ 'flightDetails.reservationNumber' | transloco }}: {{ flight.reservationNumber }}</div
-        >
-        <div>{{ 'flightDetails.departingAirport' | transloco }}: {{ flight.departureAirport }}</div>
-        <div
-          >{{ 'flightDetails.destinationAirport' | transloco }}:
-          {{ flight.destinationAirport }}</div
-        >
-        <div>
-          {{ 'caseDetails.problemFlight' | transloco }}:
-          {{ flight.problemFlight ? ('yes' | transloco) : ('no' | transloco) }}
+          <div class="details-panel fullwidth-panel">
+            <div class="section-header">
+              <mat-icon class="section-header-icon">flight</mat-icon>
+              <h2>{{ flight.airline }} - {{ flight.flightNumber }}</h2>
+            </div>
+            <div class="detail-row">
+              <span>{{ 'flightDetails.flightDate' | transloco }}:</span>
+              <strong>{{ flight.plannedDepartureTime | date }}</strong>
+            </div>
+            <div class="detail-row">
+              <span>{{ 'flightDetails.departingAirport' | transloco }}:</span>
+              <strong>{{ flight.departureAirport }}</strong>
+            </div>
+            <div class="detail-row">
+              <span>{{ 'flightDetails.destinationAirport' | transloco }}:</span>
+              <strong>{{ flight.destinationAirport }}</strong>
+            </div>
+            <div class="detail-row">
+              <span>{{ 'flightDetails.reservationNumber' | transloco }}:</span>
+              <strong>{{ flight.reservationNumber }}</strong>
+            </div>
+            <div class="detail-row">
+              <span>{{ 'caseDetails.problemFlight' | transloco }}:</span>
+              <strong>{{ flight.problemFlight ? ('yes' | transloco) : ('no' | transloco) }}</strong>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </ng-container>
+
+    <ng-container *ngIf="selectedSection === 'passenger'">
+      <div class="details-panel fullwidth-panel">
+        <div class="section-header">
+          <mat-icon class="section-header-icon">person</mat-icon>
+          <h2>{{ 'passenger-details.title' | transloco }}</h2>
         </div>
-        <div
-          >{{ 'flightDetails.plannedDepartureDate' | transloco }}:
-          {{ flight.plannedDepartureTime | date }}</div
-        >
-        <div
-          >{{ 'flightDetails.plannedArrivalDate' | transloco }}:
-          {{ flight.plannedArrivalTime | date }}</div
-        >
-        <hr />
+        <div class="detail-row">
+          <span>{{ 'passenger-details.firstName' | transloco }}:</span>
+          <strong>{{ caseDetails?.passenger.firstName }}</strong>
+        </div>
+        <div class="detail-row">
+          <span>{{ 'passenger-details.lastName' | transloco }}:</span>
+          <strong>{{ caseDetails?.passenger.lastName }}</strong>
+        </div>
+        <div class="detail-row">
+          <span>{{ 'passenger-details.dateOfBirth' | transloco }}:</span>
+          <strong>{{ caseDetails?.passenger.dateOfBirth | date }}</strong>
+        </div>
+        <div class="detail-row">
+          <span>{{ 'userDetails.email' | transloco }}:</span>
+          <strong>{{ caseDetails?.passenger.email }}</strong>
+        </div>
       </div>
-    </mat-card-content>
-  </mat-card>
+    </ng-container>
 
-  <mat-card class="special-mat-card">
-    <mat-card-header class="special-mat-header">
-      <mat-card-title class="special-mat-title">{{
-        'passenger-details.title' | transloco
-      }}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="special-mat-content">
-      <div
-        >{{ 'passenger-details.firstName' | transloco }}:
-        {{ caseDetails?.passenger.firstName }}</div
-      >
-      <div
-        >{{ 'passenger-details.lastName' | transloco }}: {{ caseDetails?.passenger.lastName }}</div
-      >
-      <div
-        >{{ 'passenger-details.dateOfBirth' | transloco }}:
-        {{ caseDetails?.passenger.dateOfBirth | date }}</div
-      >
-      <div>{{ 'userDetails.email' | transloco }}: {{ caseDetails?.passenger.email }}</div>
-      <div
-        >{{ 'passenger-details.phoneNumber' | transloco }}: {{ caseDetails?.passenger.phone }}</div
-      >
-      <div>{{ 'passenger-details.address' | transloco }}: {{ caseDetails?.passenger.address }}</div>
-      <div
-        >{{ 'passenger-details.postalCode' | transloco }}:
-        {{ caseDetails?.passenger.postalCode }}</div
-      >
-    </mat-card-content>
-  </mat-card>
+    <ng-container *ngIf="selectedSection === 'documents'">
+      <div class="details-panel fullwidth-panel">
+        <div class="section-header">
+          <mat-icon class="section-header-icon">description</mat-icon>
+          <h2>{{ 'documents.title' | transloco }}</h2>
+        </div>
+        <ul class="document-list">
+          <li *ngFor="let doc of caseDetails?.documents">
+            {{ doc.filename }} ({{ doc.uploadTimestamp | date }})
+          </li>
+        </ul>
+      </div>
+    </ng-container>
 
-  <mat-card class="special-mat-card">
-    <mat-card-header class="special-mat-header">
-      <mat-card-title class="special-mat-title">{{ 'documents.title' | transloco }}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="special-mat-content">
-      <ul>
-        <li *ngFor="let doc of caseDetails?.documents">
-          {{ doc.filename }} ({{ doc.uploadTimestamp | date }})
-        </li>
-      </ul>
-    </mat-card-content>
-  </mat-card>
-</div>
+    <!--    <mat-card-actions-->
+    <!--      *transloco="let translate; prefix: 'stepper'"-->
+    <!--      class="special-form-actions back-btn-actions"-->
+    <!--    >-->
+    <!--      <button mat-stroked-button class="special-mat-sec-button" (click)="back()">-->
+    <!--        <mat-icon>arrow_back</mat-icon>-->
+    <!--        {{ translate('back') }}-->
+    <!--      </button>-->
+    <!--    </mat-card-actions>-->
+  </mat-sidenav-content>
+</mat-sidenav-container>

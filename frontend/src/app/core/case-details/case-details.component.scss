@@ -1,9 +1,51 @@
-:host {
-  display: block;
-  height: 100%;
-  overflow-y: auto;
+.fullwidth-panel {
+  max-width: none;
+  border-radius: 0;
+  width: 100%;
+  box-shadow: none;
+  padding: 2rem;
 }
 
-.case-title {
-  text-align: center;
+.details-panel {
+  background: var(--mat-sys-background);
+  padding: 1.5rem;
 }
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.document-list {
+  padding: 2rem;
+  margin: 0;
+
+  li {
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+  }
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-header-icon {
+  color: var(--mat-sys-primary);
+}
+
+.nav-arrow-icon {
+  vertical-align: middle;
+  margin-right: 1rem;
+  color: var(--mat-sys-primary);
+  font-size: 1.2rem;
+}
+
+//.back-btn-actions {
+//  position: absolute;
+//  left: 1rem;
+//  bottom: 1.5rem;
+//}
