@@ -120,7 +120,17 @@ export class UserDetailsComponent implements AfterViewInit {
       this.http
         .get<{ exists: boolean }>(this.API_URL + `/email-exists?email=${email}`)
         .subscribe((response) => {
-          this.emailExists.set(response.exists);
+          if (response.exists) {
+            this.form.controls.email.setErrors({ emailExists: true });
+          } else {
+            const errors = this.form.controls.email.errors;
+            if (errors) {
+              delete errors['emailExists'];
+              this.form.controls.email.setErrors(Object.keys(errors));
+            } else {
+              this.form.controls.email.setErrors(null);
+            }
+          }
           this.cdr.detectChanges();
         });
     }

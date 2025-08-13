@@ -15,10 +15,10 @@
           email
           (blur)="onEmailBlur()"
         />
+        @if(form.controls.email.errors?.['emailExists']) {
+          <mat-error>{{ translate('user-details.error.email.already') }}</mat-error>
+        }
       </mat-form-field>
-      @if(emailExists()){
-        <mat-error >{{ translate('user-details.error.email.already') }}</mat-error>
-      }
 
       <mat-form-field appearance="fill" class="special-form-field">
         <mat-label>{{ 'user-details.registrationNo' | transloco }}</mat-label>
