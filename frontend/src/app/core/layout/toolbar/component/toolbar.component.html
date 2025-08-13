@@ -2,9 +2,17 @@
   <a routerLink="/home" class="logo-link">
     <img src="assets/airlogo.png" alt="Logo" class="logo" />
   </a>
-  <span class="spacer"></span>
   <button mat-icon-button routerLink="/home" aria-label="Home" class="home-icon-btn">
     <mat-icon>home</mat-icon>
   </button>
-  <app-language-switcher />
+  <span class="spacer"></span>
+  <div class="toolbar-right">
+    <button *showIfLoggedOut routerLink="/login" class="home-icon-btn" mat-icon-button>
+      Login
+    </button>
+    <button *showIfLogged (click)="logout()" routerLink="/home" class="home-icon-btn" mat-icon-button>
+      Logout
+    </button>
+    <app-language-switcher class="language-switcher"></app-language-switcher>
+  </div>
 </mat-toolbar>

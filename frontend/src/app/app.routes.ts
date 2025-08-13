@@ -3,6 +3,7 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { ConfirmationEligibilityComponent } from './core/confirmation-eligibility/confirmation-eligibility.component';
 import { LoginComponent } from './core/login/login.component';
 import { authGuard } from './shared/guards/auth.guard';
+import { authorizationGuard } from './shared/guards/authorization.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -39,6 +40,7 @@ export const routes: Routes = [
     path: 'users',
     loadComponent: () =>
       import('./core/user-list/user-list.component').then((m) => m.UserListComponent),
+    canActivate: [authorizationGuard],
   },
   { path: 'confirmation', component: ConfirmationEligibilityComponent },
   { path: '**', component: NotFoundComponent },

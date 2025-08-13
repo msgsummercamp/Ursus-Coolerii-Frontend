@@ -15,7 +15,7 @@ import { DatePipe } from '@angular/common';
 import { CaseService } from './service/case.service';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { CaseStatusLabels } from '../../shared/types/types';
-import { RouterLink } from '@angular/router';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-case-list',
@@ -32,7 +32,7 @@ import { RouterLink } from '@angular/router';
     MatRowDef,
     DatePipe,
     TranslocoPipe,
-    RouterLink,
+    MatPaginator,
   ],
   templateUrl: './case-list.component.html',
   styleUrl: './case-list.component.scss',
@@ -54,7 +54,7 @@ export class CaseListComponent implements OnInit {
     'colleague',
   ];
 
-  constructor(private caseService: CaseService) {
+  constructor(protected caseService: CaseService) {
     this.cases = this.caseService.casesSignal;
     this.statusList = Object.values(CaseStatusLabels);
   }
@@ -62,5 +62,9 @@ export class CaseListComponent implements OnInit {
   ngOnInit() {
     this.caseService.fetchCases();
     this.statusList = Object.values(CaseStatusLabels);
+  }
+
+  onPageChange(event: PageEvent) {
+    this.caseService.fetchCases(event.pageIndex, event.pageSize);
   }
 }

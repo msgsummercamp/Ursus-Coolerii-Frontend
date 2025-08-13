@@ -1,11 +1,7 @@
-.language-switcher {
-  padding-top: 0.75rem;
-  height: 4.375rem;
-  position: absolute;
-  right: 1rem;
-  top: 0;
-}
-
 mat-icon {
   color: var(--mat-sys-on-primary);
+}
+
+.language-switcher {
+  display: inline;
 }

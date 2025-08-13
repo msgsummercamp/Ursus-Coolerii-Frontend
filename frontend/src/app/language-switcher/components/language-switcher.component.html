@@ -1,12 +1,12 @@
 <ng-container *transloco="let translate; prefix: 'language-switcher'">
-  <div class="language-switcher">
-    <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon fontIcon="language" /></button>
-    <mat-menu #menu="matMenu">
-      @for (lang of languages; track $index) {
-        <button mat-menu-item [value]="lang" (click)="selectLanguage(lang)">{{
-          translate(lang)
-        }}</button>
-      }
-    </mat-menu>
-  </div>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon fontIcon="language" class="toolbar-icon" />
+  </button>
+  <mat-menu #menu="matMenu">
+    @for (lang of languages; track $index) {
+      <button mat-menu-item [value]="lang" (click)="selectLanguage(lang)">{{
+        translate(lang)
+      }}</button>
+    }
+  </mat-menu>
 </ng-container>

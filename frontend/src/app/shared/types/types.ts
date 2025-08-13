@@ -128,6 +128,15 @@ export const CaseStatusLabels: Record<CaseStatus, string> = {
   [CaseStatus.notEligible]: 'Lost',
 };
 
+export type UserRole = {
+  name: string;
+};
+
+export type LoggedUserInfo = {
+  username: string;
+  role: UserRole[];
+};
+
 export interface FlightDetailsDTO {
   flightNumber: string;
   airline: string;

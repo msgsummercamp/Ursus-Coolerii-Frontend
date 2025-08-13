@@ -99,6 +99,27 @@
       }
     }
   },
+  "user-details": {
+    "registrationNo": "Număr Rezervare",
+    "firstName": "Prenume",
+    "lastName": "Nume",
+    "iAmPassenger": "Eu sunt pasagerul",
+    "error": {
+      "registrationNo": {
+        "required": "Numărul de rezervare este obligatoriu!"
+      },
+      "firstName": {
+        "required": "Prenumele este obligatoriu!"
+      },
+      "lastName": {
+        "required": "Numele este obligatoriu!"
+      },
+      "email": {
+        "required": "Emailul este obligatoriu!",
+        "already": "Acest email este deja înregistrat!"
+      }
+    }
+  },
   "stepper": {
     "disruption-motives": "Motiv de perturbare",
     "flight-details": "Detalii Zbor",
@@ -165,20 +186,26 @@
   },
   "home": {
     "title": "Air Assist",
-    "subtitle": "Completați formularul pentru a solicita despăgubirea",
-    "startButton": "Start"
+    "greeting": "Ați avut vreodată o problemă cu zborul, unde nu ați fost lăsat să zburați, zborul a fost anulat sau întârziat? Dacă da, atunci sunteți în locul potrivit!",
+    "beforeStart": "Noi vă putem ajuta să obțineți compensația pe care o meritați! Doar trebuie să completați formularul de mai jos și ne vom ocupa noi de restul.",
+    "startButton": "Începeți acum!",
+    "beforeInfo": "Despre noi:",
+    "info": "Noi suntem o echipă de profesioniști dedicați, cu pasiunea de a ajuta pasagerii să obțină compensațiile pe care le merită.",
+    "beforeLinks": "Dacă aveți întrebări sau aveți nevoie de asistență, nu ezitați să ne contactați pe unul dintre canalele noastre de mai jos:",
+    "link1": "email: ",
+    "link2": "tel: "
   },
   "yes": "Da",
   "no": "Nu",
 
   "userList": {
+    "title": "Lista Utilizatorilor",
     "firstName": "Prenume",
     "lastName": "Nume",
     "email": "Email",
     "role": "Rol",
     "casesCount": "Nr. Cazuri",
-    "deleteUser": "Șterge Utilizator",
-    "editUser": "Editează Utilizator"
+    "actionUser": "Acțiuni"
   },
 
   "caseList": {

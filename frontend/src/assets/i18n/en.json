@@ -99,6 +99,27 @@
       }
     }
   },
+  "user-details": {
+    "registrationNo": "Reservation Number",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "iAmPassenger": "I am the passenger",
+    "error": {
+      "registrationNo": {
+        "required": "Reservation number is required!"
+      },
+      "firstName": {
+        "required": "First name is required!"
+      },
+      "lastName": {
+        "required": "Last name is required!"
+      },
+      "email": {
+        "required": "Email is required!",
+        "already": "Email already exists!"
+      }
+    }
+  },
   "stepper": {
     "disruption-motives": "Disruption motives",
     "flight-details": "Flight Details",
@@ -180,20 +201,26 @@
   },
 
   "userList": {
+    "title": "User List",
     "firstName": "First Name",
     "lastName": "Last Name",
     "email": "Email",
     "phoneNumber": "Phone Number",
     "role": "Role",
     "casesCount": "Nr. Cases",
-    "deleteUser": "Delete User",
-    "editUser": "Edit User"
+    "actionUser": "Actions"
   },
 
   "home": {
     "title": "Air Assist",
-    "subtitle": "Fill in the form to claim your compensation",
-    "startButton": "Start"
+    "greeting": "Ever had a flight disruption, where you were denied boarding, your flight was canceled or delayed? If yes, you have come to the right place!",
+    "beforeStart": "We can help you get compensation in no time! Just complete the form below and we will take care of the rest.",
+    "startButton": "Get Started!",
+    "beforeInfo": "About us:",
+    "info": "We are a team of dedicated professionals with a passion for helping passengers get the compensation they deserve.",
+    "beforeLinks": "If you have any questions or need assistance, please don't hesitate to contact us in one of the following ways:",
+    "link1": "email: ",
+    "link2": "tel: "
   },
   "userDetails": {
     "title": "User details",

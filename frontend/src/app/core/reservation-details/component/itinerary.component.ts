@@ -15,7 +15,7 @@ import {
   MatDatepickerInputEvent,
   MatDatepickerToggle,
 } from '@angular/material/datepicker';
-import { delay, iif, of, Subject, switchMap, takeUntil } from 'rxjs';
+import { delay, iif, of, Subject, switchMap } from 'rxjs';
 import { ReservationDetailsForm } from '../../../shared/types/form.types';
 import { AirportAttributes } from '../../../shared/types/types';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -33,6 +33,7 @@ import {
 } from '@angular/material/card';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { CaseFileService } from '../../layout/services/case-file.service';
+import { MatAutocomplete, MatAutocompleteTrigger, MatOption } from '@angular/material/autocomplete';
 
 const emptyAirport: AirportAttributes = {
   name: '',
@@ -65,6 +66,9 @@ const emptyAirport: AirportAttributes = {
     MatCardTitle,
     MatCardContent,
     MatCardActions,
+    MatOption,
+    MatAutocompleteTrigger,
+    MatAutocomplete,
   ],
 })
 export class ItineraryFormComponent implements OnInit, OnDestroy {
@@ -76,9 +80,6 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
   private onDestroy$ = new Subject<void>();
 
-  public showDepartDropdown = false;
-  public showDestDropdown = false;
-  public showStopoverDropdown = false;
   public filteredDepartAirports: AirportAttributes[] = [];
   public filteredDestAirports: AirportAttributes[] = [];
   public filteredStopoverAirports: AirportAttributes[] = [];
@@ -97,8 +98,6 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   public readonly isValid = this._isValid.asReadonly();
 
   public readonly airportsSignal = this.airportService.airportsSignal;
-
-  public searchValue = signal('');
 
   private isLoading$ = toObservable(this.airportService.isLoading);
   private delayedLoading$ = this.isLoading$.pipe(
@@ -133,12 +132,6 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
         this.reservationForm.controls.destinationAirport.value
       );
     });
-
-    this.reservationForm.controls.departingAirport.valueChanges
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe((value: string) => {
-        this.searchValue.set(value || '');
-      });
   }
 
   ngOnDestroy(): void {
@@ -156,55 +149,67 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   private filterAirports(value: string): AirportAttributes[] {
     const val = value.toLowerCase();
     const airports = this.airportsSignal();
+    const selectedAirports = new Set([
+      this.stopoverService.stopoverState().departureAirport?.iata,
+      ...this.stopoverService.stopoverState().stopovers.map((airport) => airport.iata),
+      this.stopoverService.stopoverState().destinationAirport?.iata,
+    ]);
     return airports.filter(
       (airport) =>
-        airport.name?.toLowerCase().includes(val) || airport.iata?.toLowerCase().includes(val)
+        !selectedAirports.has(airport.iata) &&
+        (airport.name?.toLowerCase().includes(val) || airport.iata?.toLowerCase().includes(val))
     );
   }
 
+  private updateAirportFilter(value: string, type: 'depart' | 'dest' | 'stopover') {
+    const filteredAirports = this.filterAirports(value);
+
+    switch (type) {
+      case 'depart':
+        this.filteredDepartAirports = filteredAirports;
+        break;
+      case 'dest':
+        this.filteredDestAirports = filteredAirports;
+        break;
+      case 'stopover':
+        this.filteredStopoverAirports = filteredAirports;
+        break;
+    }
+
+    this.updateViewportHeight(filteredAirports);
+  }
+
   public onDepartInput(value: string) {
-    this.filteredDepartAirports = this.filterAirports(value);
-    this.showDepartDropdown = true;
+    this.updateAirportFilter(value, 'depart');
   }
 
   public onDestInput(value: string) {
-    this.filteredDestAirports = this.filterAirports(value);
-    this.showDestDropdown = true;
+    this.updateAirportFilter(value, 'dest');
   }
 
   public onStopoverInput(value: string) {
-    this.filteredStopoverAirports = this.filterAirports(value);
-    this.showStopoverDropdown = true;
+    this.updateAirportFilter(value, 'stopover');
   }
 
-  public hideDropdownWithDelay() {
-    setTimeout(() => (this.showDepartDropdown = false), 200);
-  }
-
-  public hideDestDropdownWithDelay() {
-    setTimeout(() => (this.showDestDropdown = false), 200);
-  }
-
-  public hideStopoverDropdownWithDelay() {
-    setTimeout(() => (this.showStopoverDropdown = false), 200);
+  public trackByAirport(_index: number, airport: AirportAttributes): string {
+    return airport.iata;
   }
 
   public selectDepartAirport(airport: AirportAttributes) {
     this.reservationForm.controls.departingAirport.setValue(airport.name);
-    this.showDepartDropdown = false;
     this.stopoverService.setDepartureAirport(airport);
+    this.filteredDepartAirports = [];
   }
 
   public selectDestAirport(airport: AirportAttributes) {
     this.reservationForm.controls.destinationAirport.setValue(airport.name);
-    this.showDestDropdown = false;
     this.stopoverService.setDestinationAirport(airport);
+    this.filteredDestAirports = [];
   }
 
   public selectStopoverAirport(airport: AirportAttributes) {
     this.reservationForm.controls.stopover.setValue(airport);
     this.stopoverDisplayValue.set(airport.name);
-    this.showStopoverDropdown = false;
   }
 
   protected addStopover() {
@@ -218,10 +223,11 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
       this.stopoverService.addStopover(this.reservationForm.controls.stopover.value);
       this.stopoverDisplayValue.set('');
     }
+    this.filteredStopoverAirports = [];
   }
-
   protected removeStopover(stopoverIndex: number) {
     this.stopoverService.removeStopover(stopoverIndex);
+    this.stopoverService.setProblemFlightIndex(0);
   }
 
   protected get stopovers() {
@@ -230,15 +236,16 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
   protected readonly translate = translate;
 
-  public isLongAirportName(name: string): boolean {
-    return name.length > 35 || name.includes('\n');
-  }
-
   protected setDepartureDate($event: MatDatepickerInputEvent<Date>) {
     this.stopoverService.setDepartureDate($event.value);
   }
 
   protected setDestinationDate($event: MatDatepickerInputEvent<Date>) {
     this.stopoverService.setDestinationDate($event.value);
+  }
+
+  private updateViewportHeight(airportList: AirportAttributes[]) {
+    const itemCount = airportList.length;
+    document.documentElement.style.setProperty('--item-count', itemCount.toString());
   }
 }

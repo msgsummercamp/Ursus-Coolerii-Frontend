@@ -4,6 +4,7 @@
 @use './styles/_theme-colors.scss' as theme-colors;
 @use './styles/layout';
 @use './styles/case-entry';
+@use './styles/_case-view';
 
 html {
   @include mat.theme(
@@ -12,12 +13,6 @@ html {
         theme-type: light,
         primary: theme-colors.$primary-palette,
         tertiary: theme-colors.$tertiary-palette,
-      ),
-      typography: (
-        plain-family: Roboto,
-        bold-weight: 800,
-        medium-weight: 500,
-        regular-weight: 300,
       ),
       density: 0,
     )
