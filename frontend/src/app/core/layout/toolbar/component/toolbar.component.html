@@ -1,10 +1,18 @@
 <mat-toolbar>
-  <a routerLink="/home" class="logo-link">
-    <img src="assets/airlogo.png" alt="Logo" class="logo" />
-  </a>
+  <div class="logo-container">
+    <img
+      class="logo"
+      role="link"
+      routerLink="/home"
+      ngSrc="assets/airlogo.png"
+      alt="Logo"
+      fill
+      priority
+    />
+  </div>
   <span class="spacer"></span>
-  <button mat-icon-button routerLink="/home" aria-label="Home" class="home-icon-btn">
-    <mat-icon>home</mat-icon>
+  <button mat-icon-button routerLink="/home">
+    <mat-icon fontIcon="home" class="toolbar-icon" />
   </button>
   <app-language-switcher />
 </mat-toolbar>
