@@ -142,12 +142,10 @@ export class ConfirmationEligibilityComponent {
 
     this.saveService.saveCase(saveRequest, createdCase.files).subscribe({
       next: (response) => {
-        console.log('response:', response);
         this.saveError.set('');
         this.saved.set(true);
         this.disableStep();
         this.caseId = response;
-        console.log('caseId set:', this.caseId);
       },
       error: (err) => {
         this.saveError.set('Error saving the case: ' + err.error);
@@ -160,7 +158,6 @@ export class ConfirmationEligibilityComponent {
   }
 
   public downloadPdf(caseId: string) {
-    console.log('downloadPdf called with:', caseId);
     fetch(`${environment.apiURL}/case-files/pdf/${caseId}`, {
       method: 'GET',
       headers: {
