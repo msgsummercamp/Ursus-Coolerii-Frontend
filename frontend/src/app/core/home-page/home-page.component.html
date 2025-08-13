@@ -1,9 +1,42 @@
-<div class="home-container">
-  <h1 class="title">{{ 'home.title' | transloco }}</h1>
-  <p class="subtitle">{{ 'home.subtitle' | transloco }}</p>
-  <div class="special-form-actions">
-    <button mat-flat-button (click)="goToForm()">
-      {{ 'home.startButton' | transloco }}
-    </button>
+<div class="home-page-container">
+  <div class="home-page-content-wrapper">
+    <ng-container *transloco="let translate; prefix: 'home'">
+      <h1> {{ translate('title') }}</h1>
+      <h2> {{ translate('greeting') }}</h2>
+      <div class="cards">
+        <mat-card>
+          <mat-card-header class="card-header">
+            <mat-icon fontIcon="info" />
+          </mat-card-header>
+          <mat-card-content class="card-content">
+            <p>{{ translate('info') }}</p>
+          </mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-header class="card-header">
+            <mat-icon fontIcon="flight" />
+          </mat-card-header>
+          <mat-card-content class="card-content">
+            <p>{{ translate('beforeStart') }}</p>
+            <button mat-flat-button (click)="goToForm()">
+              {{ translate('startButton') }}
+            </button>
+          </mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-header class="card-header">
+            <mat-icon fontIcon="help_center" />
+          </mat-card-header>
+          <mat-card-content class="card-content">
+            <p>{{ translate('beforeLinks') }}</p>
+            <p
+              >{{ translate('link1') }}
+              <a href="mailto:airassist0@gmail.com">airassist0&#64;gmail.com</a></p
+            >
+            <p>{{ translate('link2') }}0123456789</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </ng-container>
   </div>
 </div>
