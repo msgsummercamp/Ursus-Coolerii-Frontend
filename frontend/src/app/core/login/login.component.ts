@@ -60,11 +60,16 @@ export class LoginComponent {
     debugger;
   }
 
+  //TODO: fix error bad credentials handling
   public login() {
     this.loginService
       .login(this.form.controls.email.value, this.form.controls.password.value)
       .subscribe({
         next: (response) => {
+          if (!response) {
+            this.loginError.set('Bad credentials');
+            return;
+          }
           debugger;
           if (this.withRedirect) {
             this.router.navigate(['/home']);

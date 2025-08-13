@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from '../../../environments/environment';
 import { LoginRequest, LoginResponse } from '../types/types';
-import { BehaviorSubject, catchError, map } from 'rxjs';
+import { BehaviorSubject, catchError, map, of } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
@@ -53,11 +53,12 @@ export class AuthService {
       .pipe(
         map((response) => {
           this.loggedIn.next(true);
-          return response.token;
+          return response.token !== '';
         }),
+
         catchError((error) => {
           this.loggedIn.next(false);
-          return '';
+          return of(false);
         })
       );
   }
@@ -66,8 +67,4 @@ export class AuthService {
     this.cookieService.delete('jwt');
     this.loggedIn.next(false);
   }
-
-  /*  public get jwtToken(): Observable<string> {
-    return this.token.asObservable();
-  }*/
 }
