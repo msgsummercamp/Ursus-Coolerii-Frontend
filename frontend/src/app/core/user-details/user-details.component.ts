@@ -65,7 +65,7 @@ export class UserDetailsComponent implements AfterViewInit {
   passengerDetailsFormComponent!: PassengerDetailsFormComponent;
 
   public form = this.fb.group<UserDetailsForm>({
-    email: this.fb.control('', Validators.required),
+    email: this.fb.control('', [Validators.required, Validators.email]),
     registrationNo: this.fb.control('', Validators.required),
     firstName: this.fb.control('', Validators.required),
     lastName: this.fb.control('', Validators.required),
@@ -121,10 +121,12 @@ export class UserDetailsComponent implements AfterViewInit {
   }
 
   onEmailBlur() {
-    const email = this.form.controls.email.value;
-    if (this.isValidEmail(email)) {
+    const emailControl = this.form.controls.email;
+    if (emailControl && emailControl.valid) {
       this.http
-        .get<{ exists: boolean }>(this.API_URL + `/email-exists?email=${email}`)
+        .get<{
+          exists: boolean;
+        }>(this.API_URL + `/email-exists?email=${emailControl.value}`)
         .subscribe((response) => {
           if (response.exists) {
             this.form.controls.email.setErrors({ emailExists: true });

@@ -57,7 +57,6 @@ export class LoginComponent {
       return;
     }
     this.withRedirect = data.withRedirect;
-    debugger;
   }
 
   //TODO: fix error bad credentials handling

@@ -121,7 +121,6 @@ export class ConfirmationEligibilityComponent {
   public email: string | undefined;
   public submit() {
     const userDetails = this.buildUserDetails();
-    console.log('userDetails', userDetails);
     const createdCase = this.buildCaseFileFn();
 
     if (!createdCase || !userDetails) return;

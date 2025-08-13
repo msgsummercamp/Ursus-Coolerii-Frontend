@@ -33,7 +33,6 @@ import { ItineraryFormComponent } from '../../reservation-details/component/itin
 import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility/confirmation-eligibility.component';
 import { StopoverService } from '../../../shared/services/stopover.service';
 import { Roles } from '../../../shared/enums';
-import { UserListComponent } from '../../user-list/user-list.component';
 
 const AIRPLANE_WIDTH = 40;
 const VERTICAL_OFFSET = -19;
@@ -55,7 +54,6 @@ const VERTICAL_OFFSET = -19;
     ItineraryFormComponent,
     ConfirmationEligibilityComponent,
     UserDetailsComponent,
-    UserListComponent,
   ],
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss',
@@ -129,7 +127,6 @@ export class StepperComponent implements AfterViewInit {
   private passenger: Passenger | undefined;
   public receivePassenger($event: Passenger) {
     this.passenger = $event;
-    console.log(this.passenger);
   }
 
   public documents: File[] | undefined;
@@ -181,7 +178,6 @@ export class StepperComponent implements AfterViewInit {
       !this.userDetails
     )
       return;
-    console.log('passenger', this.passenger);
     return {
       caseData: {
         disruptionDetails: this.disruptionDetails,
