@@ -289,7 +289,6 @@
   },
   "caseDetails": {
     "title": "Caz {{contractId}}",
-    "problemFlight": "Zbor cu Problemă",
-    "noCommentsYet": "Nu există comentarii încă"
+    "problemFlight": "Zbor cu Problemă"
   }
 }

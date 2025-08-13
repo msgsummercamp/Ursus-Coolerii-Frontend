@@ -84,22 +84,4 @@
       </ul>
     </mat-card-content>
   </mat-card>
-
-  <mat-card class="special-mat-card">
-    <mat-card-header class="special-mat-header">
-      <mat-card-title class="special-mat-title">Comments</mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="special-mat-content">
-      @if (caseDetails?.comments?.length > 0) {
-        <ul>
-          <li *ngFor="let comment of caseDetails?.comments">
-            {{ comment.userEmail }} ({{ comment.userType }}) {{ 'at' | transloco }}
-            {{ comment.timestamp | date }}: {{ comment.content }}
-          </li>
-        </ul>
-      } @else {
-        <div>{{ 'caseDetails.noCommentsYet' | transloco }}</div>
-      }
-    </mat-card-content>
-  </mat-card>
 </div>

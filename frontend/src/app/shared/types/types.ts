@@ -137,6 +137,8 @@ export interface FlightDetailsDTO {
   plannedArrivalTime: string;
   reservationNumber: string;
   problemFlight: boolean;
+  isFirstFlight: boolean;
+  isLastFlight: boolean;
 }
 
 export interface PassengerDTO {

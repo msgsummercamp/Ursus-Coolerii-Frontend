@@ -201,8 +201,7 @@
   },
   "caseDetails": {
     "title": "Case {{contractId}}",
-    "problemFlight": "Problematic Flight",
-    "noCommentsYet": "No comments yet"
+    "problemFlight": "Problematic Flight"
   },
   "login": {
     "title": "Login",
