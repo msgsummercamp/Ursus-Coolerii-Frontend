@@ -182,7 +182,6 @@ export class StepperComponent implements AfterViewInit {
     return {
       caseData: {
         disruptionDetails: this.disruptionDetails,
-        // TODO capture reservation number
         reservationNumber: 'mockReservation',
         flights: flightDTOs,
         passenger: this.passenger,
