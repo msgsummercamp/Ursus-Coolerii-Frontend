@@ -36,6 +36,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { LoadingSpinnerComponent } from '../loading-spinner/component/loading-spinner.component';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { CaseFileService } from '../layout/services/case-file.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-confirmation-eligibility-form',
@@ -62,6 +63,7 @@ export class ConfirmationEligibilityComponent {
   private eligibilityService = inject(EligibilityService);
   private caseFileService = inject(CaseFileService);
   private saveService = inject(SaveService);
+  public caseId?: string;
 
   public saveError = signal('');
   readonly dialog = inject(MatDialog);
@@ -144,6 +146,7 @@ export class ConfirmationEligibilityComponent {
         this.saveError.set('');
         this.saved.set(true);
         this.disableStep();
+        this.caseId = response;
       },
       error: (err) => {
         this.saveError.set('Error saving the case: ' + err.error);
@@ -153,5 +156,38 @@ export class ConfirmationEligibilityComponent {
 
   openDialog() {
     this.dialog.open(PopUpGdprComponent, { autoFocus: false });
+  }
+
+  public downloadPdf(caseId: string) {
+    fetch(`${environment.apiURL}/case-files/pdf/${caseId}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/pdf',
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch PDF: ${response.status}`);
+        }
+        const contentType = response.headers.get('Content-Type');
+        if (!contentType || !contentType.includes('application/pdf')) {
+          throw new Error('Response is not a PDF');
+        }
+        return response.blob();
+      })
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `case_${caseId}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((err) => {
+        console.error('PDF download error:', err);
+        alert('Could not download PDF. Please try again.');
+      });
   }
 }

@@ -71,5 +71,10 @@
         <p>{{ 'confirmationEligibility.nextStep3' | transloco }}</p>
       </div>
     </mat-card-content>
+    @if (caseId) {
+      <a href="#" (click)="downloadPdf(caseId!); $event.preventDefault()" class="download-link">
+        Download PDF
+      </a>
+    }
   </mat-card>
 }

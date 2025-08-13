@@ -18,6 +18,7 @@ import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { User } from '../../shared/types/types';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-user-list',
@@ -37,23 +38,15 @@ import { User } from '../../shared/types/types';
     MatIconButton,
     RouterLink,
     UserListRolePipe,
+    MatPaginator,
   ],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.scss',
 })
 export class UserListComponent implements OnInit {
-  displayedColumns: string[] = [
-    'userId',
-    'firstName',
-    'lastName',
-    'email',
-    'role',
-    'casesCount',
-    'delete',
-    'edit',
-  ];
+  displayedColumns: string[] = ['actions', 'firstName', 'lastName', 'email', 'role', 'casesCount'];
 
-  constructor(private userService: UserService) {}
+  constructor(protected userService: UserService) {}
 
   get users(): User[] {
     return this.userService.usersSignal();
@@ -61,6 +54,10 @@ export class UserListComponent implements OnInit {
 
   ngOnInit() {
     this.userService.fetchUsers();
+  }
+
+  onPageChange(event: PageEvent) {
+    this.userService.fetchUsers(event.pageIndex, event.pageSize);
   }
 
   deleteUser(userId: string): void {
