@@ -33,6 +33,7 @@ import {
 } from '@angular/material/card';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { CaseFileService } from '../../layout/services/case-file.service';
+import { MatAutocomplete, MatAutocompleteTrigger, MatOption } from '@angular/material/autocomplete';
 
 const emptyAirport: AirportAttributes = {
   name: '',
@@ -65,6 +66,9 @@ const emptyAirport: AirportAttributes = {
     MatCardTitle,
     MatCardContent,
     MatCardActions,
+    MatOption,
+    MatAutocompleteTrigger,
+    MatAutocomplete,
   ],
 })
 export class ItineraryFormComponent implements OnInit, OnDestroy {
@@ -179,8 +183,14 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   }
 
   public onStopoverInput(value: string) {
-    this.filteredStopoverAirports = this.filterAirports(value);
+    this.filteredStopoverAirports = this.filterAirports(value).slice(0, 32);
+    console.log(this.filteredStopoverAirports);
     this.showStopoverDropdown = true;
+    setTimeout(() => {}, 0);
+  }
+
+  public trackByAirport(_index: number, airport: AirportAttributes): string {
+    return airport.iata;
   }
 
   public hideDropdownWithDelay() {
@@ -224,6 +234,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
       this.stopoverService.addStopover(this.reservationForm.controls.stopover.value);
       this.stopoverDisplayValue.set('');
     }
+    this.filteredStopoverAirports = [];
   }
   protected removeStopover(stopoverIndex: number) {
     this.stopoverService.removeStopover(stopoverIndex);
@@ -246,4 +257,6 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   protected setDestinationDate($event: MatDatepickerInputEvent<Date>) {
     this.stopoverService.setDestinationDate($event.value);
   }
+
+  protected readonly Math = Math;
 }
