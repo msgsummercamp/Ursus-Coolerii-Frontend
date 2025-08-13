@@ -1,12 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Roles } from '../enums';
-import { UserRole } from '../types/types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthorizationService {
-  public hasRoleAdmin(roles: UserRole[]): boolean {
-    return roles.some((role) => role.name === Roles.admin);
+  private getAuthoritiesFromToken(token: string): string[] {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.authorities || [];
+    } catch {
+      return [];
+    }
+  }
+  public hasRoleAdmin(token: string): boolean {
+    const roles = this.getAuthoritiesFromToken(token);
+    return roles.some((role) => role === Roles.admin);
   }
 }

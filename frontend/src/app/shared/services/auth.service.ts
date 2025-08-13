@@ -1,9 +1,10 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from '../../../environments/environment';
-import { LoginRequest, LoginResponse, UserRole } from '../types/types';
-import { BehaviorSubject, catchError, map, Observable, of, shareReplay } from 'rxjs';
+import { LoginRequest, LoginResponse } from '../types/types';
+import { BehaviorSubject, catchError, map } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
@@ -12,48 +13,30 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly cookieService = inject(CookieService);
   private readonly API_URL = environment.apiURL;
-  private subjectRoles$ = new BehaviorSubject<UserRole[] | undefined>([]);
+  private loggedIn = new BehaviorSubject<boolean>(false);
+  public loggedIn$ = this.loggedIn.asObservable();
+  public loggedInSignal: Signal<boolean> = toSignal(this.loggedIn$, { initialValue: false });
 
-  public isAuthenticated(): Observable<boolean> {
-    return this.http
-      .get<{ loggedIn: boolean }>(this.API_URL + '/auth/check', {
-        withCredentials: true,
-      })
-      .pipe(
-        map((response) => {
-          return response.loggedIn;
-        }),
-        catchError((error) => {
-          return of(false);
-        })
-      );
+  public get sessionToken(): string {
+    return this.cookieService.get('jwt');
   }
 
-  public me() {
-    return this.http
-      .get<{ roles: UserRole[] }>(this.API_URL + '/auth/me', {
-        withCredentials: true,
-      })
-      .pipe(
-        map((response) => {
-          return response.roles;
-        }),
-        catchError((error) => {
-          return of(undefined);
-        })
-      );
+  public isAuthenticated(): boolean {
+    return this.isTokenValid(this.sessionToken);
   }
 
-  public getRoles(): Observable<UserRole[] | undefined> {
-    if (this.subjectRoles$.getValue()?.length === 0) {
-      return this.me().pipe(
-        map((response) => {
-          this.subjectRoles$.next(response);
-          return response;
-        })
-      );
-    } else {
-      return this.subjectRoles$.asObservable();
+  public isTokenValid(token: string): boolean {
+    if (!token) return false;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const expiry = payload.exp;
+      if (!expiry) return false;
+
+      const now = Math.floor(Date.now() / 1000);
+      return expiry > now;
+    } catch (e) {
+      return false;
     }
   }
 
@@ -69,14 +52,19 @@ export class AuthService {
       })
       .pipe(
         map((response) => {
-          return response;
+          this.loggedIn.next(true);
+          return response.token;
         }),
-        shareReplay(2)
+        catchError((error) => {
+          this.loggedIn.next(false);
+          return '';
+        })
       );
   }
 
   public logout() {
-    this.cookieService.delete('token');
+    this.cookieService.delete('jwt');
+    this.loggedIn.next(false);
   }
 
   /*  public get jwtToken(): Observable<string> {

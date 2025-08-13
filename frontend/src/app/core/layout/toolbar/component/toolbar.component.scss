@@ -14,6 +14,13 @@ mat-toolbar {
   color: var(--mat-sys-on-primary);
 }
 
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .spacer {
   flex: 1 1 auto;
+  margin: 0;
 }
