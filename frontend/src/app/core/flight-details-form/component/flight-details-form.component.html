@@ -1,8 +1,8 @@
 <div class="flight-details-form-container">
   <form [formGroup]="flightForm">
     <h2 class="mat-headline-5">
-      {{ flightForm.controls.departingAirport.value }} -
-      {{ flightForm.controls.destinationAirport.value }}
+      {{ flight.departureAirport.iata }} -
+      {{ flight.destinationAirport.iata }}
     </h2>
     <div>
       <mat-form-field appearance="fill">

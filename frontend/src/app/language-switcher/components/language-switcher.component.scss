@@ -1,5 +1,8 @@
 mat-icon {
   color: var(--mat-sys-on-primary);
+.toolbar-icon {
+  color: var(--mat-sys-on-primary) !important;
+  cursor: pointer;
 }
 
 .language-switcher {

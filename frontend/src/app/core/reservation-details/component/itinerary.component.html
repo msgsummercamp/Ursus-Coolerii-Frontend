@@ -4,7 +4,9 @@
 <div class="reservation-details-form-container">
   <mat-card class="flight-form-wrapper-card special-mat-card">
     <mat-card-header class="special-mat-header">
-      <mat-card-title class="special-mat-title">Itinerary</mat-card-title>
+      <mat-card-title class="special-mat-title">
+        {{ 'flightDetails.itinerary.title' | transloco }}
+      </mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <form [formGroup]="reservationForm">
@@ -41,11 +43,9 @@
                   <div
                     class="dropdown-option"
                     *cdkVirtualFor="let airport of filteredDepartAirports"
-                    (mousedown)="selectDepartAirport(airport)"
-                    (selectionchange)="selectDepartAirport(airport)"
                   >
-                    <div class="list-item">
-                      {{ airport.name }}
+                    <div class="list-item" (click)="selectDepartAirport(airport)">
+                      {{ airport.name }} - {{ airport.iata }}
                     </div>
                   </div>
                 </cdk-virtual-scroll-viewport>
@@ -84,14 +84,9 @@
                           : 32)
                   "
                 >
-                  <div
-                    class="dropdown-option"
-                    *cdkVirtualFor="let airport of filteredDestAirports"
-                    (mousedown)="selectDestAirport(airport)"
-                    (selectionchange)="selectDepartAirport(airport)"
-                  >
-                    <div class="list-item">
-                      {{ airport.name }}
+                  <div class="dropdown-option" *cdkVirtualFor="let airport of filteredDestAirports">
+                    <div class="list-item" (click)="selectDestAirport(airport)">
+                      {{ airport.name }} - {{ airport.iata }}
                     </div>
                   </div>
                 </cdk-virtual-scroll-viewport>
@@ -176,22 +171,23 @@
                   <div
                     class="dropdown-option"
                     *cdkVirtualFor="let airport of filteredStopoverAirports"
-                    (mousedown)="selectStopoverAirport(airport)"
                   >
-                    <div class="list-item">
-                      {{ airport.name }}
+                    <div class="list-item" (click)="selectStopoverAirport(airport)">
+                      {{ airport.name }} - {{ airport.iata }}
                     </div>
                   </div>
                 </cdk-virtual-scroll-viewport>
               </div>
             }
           </div>
-          <button mat-flat-button (click)="addStopover()">Add stopover</button>
+          <button mat-flat-button (click)="addStopover()">
+            {{ 'flightDetails.itinerary.addStopover' | transloco }}
+          </button>
         </div>
 
-        <h2>Stopovers:</h2>
+        <h2>{{ 'flightDetails.itinerary.stopovers' | transloco }}:</h2>
         @if (stopovers.length == 0) {
-          <p>There are no stopovers.</p>
+          <p>{{ 'flightDetails.itinerary.noStopovers' | transloco }}</p>
         }
         @for (stopover of stopovers; track $index) {
           <div class="stopover">

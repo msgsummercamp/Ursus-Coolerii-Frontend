@@ -32,7 +32,8 @@
       background: var(--mat-sys-primary);
 
       &[disabled] {
-        opacity: 0.8;
+        color: white;
+        opacity: 0.5;
       }
     }
 
@@ -47,6 +48,25 @@
 
     .special-form-field {
       width: 100%;
+    }
+  }
+}
+
+.passenger-details-form-card {
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    overflow: hidden;
+
+    & > div {
+      display: flex;
+      gap: 2rem;
+
+      > * {
+        flex: 1;
+      }
     }
   }
 }

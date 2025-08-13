@@ -22,6 +22,7 @@ import {
   CaseDataWithFiles,
   DisruptionDetails,
   Flight,
+  FlightDTO,
   Passenger,
   SignupRequest,
 } from '../../../shared/types/types';
@@ -47,7 +48,6 @@ const VERTICAL_OFFSET = -19;
     MatFormFieldModule,
     MatInputModule,
     TranslocoDirective,
-    PassengerDetailsFormComponent,
     FlightDetailsWrapComponent,
     DocumentsFormComponent,
     FlightDetailsWrapComponent,
@@ -126,14 +126,10 @@ export class StepperComponent implements AfterViewInit {
 
   private flights: Flight[] = [];
 
-  protected rewardMessage: string | undefined;
-  public receiveReward($event: string) {
-    this.rewardMessage = $event;
-  }
-
   private passenger: Passenger | undefined;
-  public receivdePassenger($event: Passenger) {
+  public receivePassenger($event: Passenger) {
     this.passenger = $event;
+    console.log(this.passenger);
   }
 
   public documents: File[] | undefined;
@@ -166,6 +162,19 @@ export class StepperComponent implements AfterViewInit {
   public buildCaseFile(): CaseDataWithFiles | undefined {
     console.log(this.userDetails);
     this.flights = this.stopoverService.stopoverState().flights;
+    const flightDTOs = this.flights.map(
+      (flight): FlightDTO => ({
+        flightNumber: flight.flightNumber,
+        airlineName: flight.airlineName,
+        departureAirport: flight.departureAirport.name,
+        destinationAirport: flight.destinationAirport.name,
+        departureTime: flight.departureTime,
+        arrivalTime: flight.arrivalTime,
+        firstFlight: flight.firstFlight,
+        lastFlight: flight.lastFlight,
+        problemFlight: flight.problemFlight,
+      })
+    );
     if (
       !this.disruptionDetails ||
       !this.flights ||
@@ -174,16 +183,25 @@ export class StepperComponent implements AfterViewInit {
       !this.userDetails
     )
       return;
+    console.log('passenger', this.passenger);
     return {
       caseData: {
         disruptionDetails: this.disruptionDetails,
         reservationNumber: 'mockReservation',
-        flights: this.flights,
+        flights: flightDTOs,
         passenger: this.passenger,
         userEmail: this.userDetails.email,
       },
       files: this.documents,
     };
+  }
+
+  @ViewChild(ItineraryFormComponent) itineraryFormComponent?: ItineraryFormComponent;
+  @ViewChild(FlightDetailsWrapComponent) flightWrapComponent?: FlightDetailsWrapComponent;
+
+  onResetForms() {
+    this.itineraryFormComponent?.reservationForm.reset();
+    this.flightWrapComponent?.resetAllFlightForms();
   }
 
   @ViewChild('stepper', { static: true }) stepper!: MatStepper;

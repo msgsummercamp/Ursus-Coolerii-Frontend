@@ -1,13 +1,15 @@
 mat-toolbar {
   position: sticky;
   z-index: 10;
-  background-color: var(--mat-sys-primary);
-}
+  background-color: var(--mat-sys-primary) !important;
 
-.logo {
-  height: 45px;
-  background-color: var(--mat-sys-secondary-container);
-}
+  .toolbar-icon {
+    color: var(--mat-sys-on-primary) !important;
+    cursor: pointer;
+  }
+
+  .logo {
+    background-color: var(--mat-sys-secondary-container);
 
 .home-icon-btn {
   margin-right: 3rem;
@@ -23,4 +25,8 @@ mat-toolbar {
 .spacer {
   flex: 1 1 auto;
   margin: 0;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }

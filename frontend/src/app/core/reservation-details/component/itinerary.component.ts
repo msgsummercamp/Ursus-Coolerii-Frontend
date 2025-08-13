@@ -32,6 +32,7 @@ import {
   MatCardTitle,
 } from '@angular/material/card';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { CaseFileService } from '../../layout/services/case-file.service';
 
 const emptyAirport: AirportAttributes = {
   name: '',
@@ -69,6 +70,7 @@ const emptyAirport: AirportAttributes = {
 export class ItineraryFormComponent implements OnInit, OnDestroy {
   private airportService = inject(AirportsService);
   private stopoverService = inject(StopoverService);
+  private caseFileService = inject(CaseFileService);
 
   protected stopoverDisplayValue = signal('');
 
@@ -126,6 +128,10 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.reservationForm.statusChanges.subscribe((status) => {
       this._isValid.set(status === 'VALID');
+      this.caseFileService.calculateReward(
+        this.reservationForm.controls.departingAirport.value,
+        this.reservationForm.controls.destinationAirport.value
+      );
     });
 
     this.reservationForm.controls.departingAirport.valueChanges
@@ -150,7 +156,16 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   private filterAirports(value: string): AirportAttributes[] {
     const val = value.toLowerCase();
     const airports = this.airportsSignal();
-    return airports.filter((airport) => airport.name?.toLowerCase().includes(val));
+    const selectedAirports = new Set([
+      this.stopoverService.stopoverState().departureAirport?.iata,
+      ...this.stopoverService.stopoverState().stopovers.map((airport) => airport.iata),
+      this.stopoverService.stopoverState().destinationAirport?.iata,
+    ]);
+    return airports.filter(
+      (airport) =>
+        !selectedAirports.has(airport.iata) &&
+        (airport.name?.toLowerCase().includes(val) || airport.iata?.toLowerCase().includes(val))
+    );
   }
 
   public onDepartInput(value: string) {
@@ -210,7 +225,6 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
       this.stopoverDisplayValue.set('');
     }
   }
-
   protected removeStopover(stopoverIndex: number) {
     this.stopoverService.removeStopover(stopoverIndex);
   }
@@ -222,7 +236,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   protected readonly translate = translate;
 
   public isLongAirportName(name: string): boolean {
-    return name.length > 35 || name.includes('\n');
+    return name.length > 30 || name.includes('\n');
   }
 
   protected setDepartureDate($event: MatDatepickerInputEvent<Date>) {
