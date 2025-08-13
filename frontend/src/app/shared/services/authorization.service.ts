@@ -13,6 +13,11 @@ export class AuthorizationService {
       return [];
     }
   }
+
+  public getRoles(token: string): string[] {
+    const roles = this.getAuthoritiesFromToken(token);
+    return roles;
+  }
   public hasRoleAdmin(token: string): boolean {
     const roles = this.getAuthoritiesFromToken(token);
     return roles.some((role) => role === Roles.admin);

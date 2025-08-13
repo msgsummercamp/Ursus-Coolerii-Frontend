@@ -41,6 +41,20 @@ export class AuthService {
     return this.extractLastNameFromToken(this.sessionToken);
   }
 
+  public get getId(): string | undefined {
+    return this.extractIdFromToken(this.sessionToken);
+  }
+
+  private extractIdFromToken(token: string): string | undefined {
+    if (!token) return undefined;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.id;
+    } catch {
+      return undefined;
+    }
+  }
+
   private extractFirstNameFromToken(token: string): string | undefined {
     if (!token) return undefined;
     try {

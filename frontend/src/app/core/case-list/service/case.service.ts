@@ -1,5 +1,5 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { finalize, map, retry, Subject, switchMap } from 'rxjs';
 import { Case } from '../../../shared/types/types';
 import { environment } from '../../../../environments/environment';
@@ -25,12 +25,18 @@ const initialState: CaseState = {
 
 @Injectable({ providedIn: 'root' })
 export class CaseService {
-  private _fetchCases$ = new Subject<{ pageIndex: number; pageSize: number }>();
+  private _fetchCases$ = new Subject<{
+    pageIndex: number;
+    pageSize: number;
+    passengerId: string | null;
+  }>();
   private readonly casesState = signal(initialState);
   private httpClient = inject(HttpClient);
   private cases$ = this._fetchCases$.pipe(
-    switchMap(({ pageIndex, pageSize }) =>
-      this.fetchCasesFromApi(pageIndex, pageSize).pipe(finalize(() => this.setIsLoading(false)))
+    switchMap(({ pageIndex, pageSize, passengerId }) =>
+      this.fetchCasesFromApi(pageIndex, pageSize, passengerId).pipe(
+        finalize(() => this.setIsLoading(false))
+      )
     ),
     retry(3)
   );
@@ -41,29 +47,24 @@ export class CaseService {
   private authService = inject(AuthService);
   private authorizationService = inject(AuthorizationService);
 
-  public fetchCases(pageIndex: number = 0, pageSize: number = 5) {
+  public fetchCases(pageIndex: number = 0, pageSize: number = 5, passengerId: string | null) {
     this.setIsLoading(true);
-    this._fetchCases$.next({ pageIndex, pageSize });
+    this._fetchCases$.next({ pageIndex, pageSize, passengerId });
   }
 
   private setIsLoading(isLoading: boolean) {
     this.casesState.update((state) => ({ ...state, isLoading }));
   }
 
-  private fetchCasesFromApi(pageIndex: number, pageSize: number) {
-    const token = this.authService.sessionToken;
-    let params: any = {
-      pageIndex: pageIndex.toString(),
-      pageSize: pageSize.toString(),
-    };
-
-    if (this.authorizationService.hasRolePassenger(token)) {
-      try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        if (payload.passengerId) {
-          params.passengerId = payload.passengerId;
-        }
-      } catch {}
+  private fetchCasesFromApi(pageIndex: number, pageSize: number, passengerId: string | null) {
+    let builtParams = new HttpParams()
+      .set('pageIndex', pageIndex.toString())
+      .set('pageSize', pageSize.toString());
+    if (passengerId) {
+      builtParams = new HttpParams()
+        .set('pageIndex', pageIndex.toString())
+        .set('pageSize', pageSize.toString())
+        .set('passengerId', passengerId);
     }
 
     return this.httpClient
@@ -74,10 +75,7 @@ export class CaseService {
         number: number;
         size: number;
       }>(`${environment.apiURL}/case-files`, {
-        params: {
-          pageIndex: pageIndex.toString(),
-          pageSize: pageSize.toString(),
-        },
+        params: builtParams,
         withCredentials: true,
       })
       .pipe(

@@ -185,6 +185,9 @@ export class UserDetailsComponent implements AfterViewInit {
     this.passengerDetailsFormComponent.passDataToParent();
     this.next.emit();
   }
+  protected continueToPassengerDetails() {
+    this.showPassengerDetails = true;
+  }
 
   protected back() {
     this.previous.emit();
