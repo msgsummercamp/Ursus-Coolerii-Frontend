@@ -17,6 +17,10 @@ export class AuthService {
   public loggedIn$ = this.loggedIn.asObservable();
   public loggedInSignal: Signal<boolean> = toSignal(this.loggedIn$, { initialValue: false });
 
+  constructor() {
+    this.loggedIn.next(this.isAuthenticated());
+  }
+
   public get sessionToken(): string {
     return this.cookieService.get('jwt');
   }

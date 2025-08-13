@@ -1,11 +1,13 @@
-import { Directive, effect, inject, TemplateRef, ViewContainerRef } from '@angular/core';
+import { computed, Directive, effect, inject, TemplateRef, ViewContainerRef } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 
 @Directive({
   selector: '[showIfLoggedOut]',
 })
 export class AuthLogoutDirective {
-  private authService = inject(AuthService);
+  private service = inject(AuthService);
+
+  private isAuthenticated = computed(() => this.service.loggedInSignal());
   private hasView = false;
 
   constructor(
@@ -13,14 +15,17 @@ export class AuthLogoutDirective {
     private viewContainer: ViewContainerRef
   ) {
     effect(() => {
-      const loggedIn = this.authService.loggedInSignal();
-      if (loggedIn && !this.hasView) {
-        this.viewContainer.createEmbeddedView(this.templateRef);
-        this.hasView = true;
-      } else if (!loggedIn && this.hasView) {
-        this.viewContainer.clear();
-        this.hasView = false;
-      }
+      this.updateView();
     });
+  }
+
+  private updateView() {
+    if (!this.isAuthenticated() && !this.hasView) {
+      this.viewContainer.createEmbeddedView(this.templateRef);
+      this.hasView = true;
+    } else if (this.isAuthenticated()) {
+      this.viewContainer.clear();
+      this.hasView = false;
+    }
   }
 }

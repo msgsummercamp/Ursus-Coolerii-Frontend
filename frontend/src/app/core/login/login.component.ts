@@ -70,15 +70,11 @@ export class LoginComponent {
             this.loginError.set('Bad credentials');
             return;
           }
-          debugger;
           if (this.withRedirect) {
             this.router.navigate(['/home']);
-            debugger;
           } else if (this.dialogRef) {
             this.dialogRef.close();
-            debugger;
           }
-          debugger;
         },
         error: (err) => {
           this.loginError.set(err.error);
