@@ -23,10 +23,10 @@
               placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
             />
             <mat-autocomplete #departure="matAutocomplete">
-              <cdk-virtual-scroll-viewport itemSize="48" minBufferPx="100" maxBufferPx="200">
+              <cdk-virtual-scroll-viewport itemSize="48" minBufferPx="200" maxBufferPx="300">
                 <mat-option
                   *cdkVirtualFor="let airport of filteredDepartAirports; trackBy: trackByAirport"
-                  [value]="airport"
+                  [value]="airport.name"
                   (onSelectionChange)="selectDepartAirport(airport)"
                 >
                   {{ airport.name }} - {{ airport.iata }}
@@ -47,10 +47,10 @@
               placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
             />
             <mat-autocomplete #destination="matAutocomplete">
-              <cdk-virtual-scroll-viewport itemSize="48" minBufferPx="100" maxBufferPx="200">
+              <cdk-virtual-scroll-viewport itemSize="48" minBufferPx="200" maxBufferPx="300">
                 <mat-option
                   *cdkVirtualFor="let airport of filteredDestAirports; trackBy: trackByAirport"
-                  [value]="airport"
+                  [value]="airport.name"
                   (onSelectionChange)="selectDestAirport(airport)"
                 >
                   {{ airport.name }} - {{ airport.iata }}
@@ -111,7 +111,7 @@
               [value]="stopoverDisplayValue()"
             />
             <mat-autocomplete #stopover="matAutocomplete">
-              <cdk-virtual-scroll-viewport itemSize="48" minBufferPx="100" maxBufferPx="200">
+              <cdk-virtual-scroll-viewport itemSize="48" minBufferPx="200" maxBufferPx="300">
                 <mat-option
                   *cdkVirtualFor="let airport of filteredStopoverAirports; trackBy: trackByAirport"
                   [value]="airport"

@@ -15,7 +15,7 @@ import {
   MatDatepickerInputEvent,
   MatDatepickerToggle,
 } from '@angular/material/datepicker';
-import { delay, iif, of, Subject, switchMap, takeUntil } from 'rxjs';
+import { delay, iif, of, Subject, switchMap } from 'rxjs';
 import { ReservationDetailsForm } from '../../../shared/types/form.types';
 import { AirportAttributes } from '../../../shared/types/types';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -99,8 +99,6 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
   public readonly airportsSignal = this.airportService.airportsSignal;
 
-  public searchValue = signal('');
-
   private isLoading$ = toObservable(this.airportService.isLoading);
   private delayedLoading$ = this.isLoading$.pipe(
     switchMap((loading) => iif(() => loading, of(loading).pipe(delay(500)), of(loading)))
@@ -134,12 +132,6 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
         this.reservationForm.controls.destinationAirport.value
       );
     });
-
-    this.reservationForm.controls.departingAirport.valueChanges
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe((value: string) => {
-        this.searchValue.set(value || '');
-      });
   }
 
   ngOnDestroy(): void {
@@ -169,19 +161,34 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
     );
   }
 
+  private updateAirportFilter(value: string, type: 'depart' | 'dest' | 'stopover') {
+    const filteredAirports = this.filterAirports(value);
+
+    switch (type) {
+      case 'depart':
+        this.filteredDepartAirports = filteredAirports;
+        break;
+      case 'dest':
+        this.filteredDestAirports = filteredAirports;
+        break;
+      case 'stopover':
+        this.filteredStopoverAirports = filteredAirports;
+        break;
+    }
+
+    this.updateViewportHeight(filteredAirports);
+  }
+
   public onDepartInput(value: string) {
-    this.filteredDepartAirports = this.filterAirports(value);
-    this.updateViewportHeight(this.filteredDepartAirports);
+    this.updateAirportFilter(value, 'depart');
   }
 
   public onDestInput(value: string) {
-    this.filteredDestAirports = this.filterAirports(value);
-    this.updateViewportHeight(this.filteredDestAirports);
+    this.updateAirportFilter(value, 'dest');
   }
 
   public onStopoverInput(value: string) {
-    this.filteredStopoverAirports = this.filterAirports(value);
-    this.updateViewportHeight(this.filteredStopoverAirports);
+    this.updateAirportFilter(value, 'stopover');
   }
 
   public trackByAirport(_index: number, airport: AirportAttributes): string {
