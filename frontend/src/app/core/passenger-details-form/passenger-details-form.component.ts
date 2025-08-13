@@ -68,12 +68,12 @@ export class PassengerDetailsFormComponent implements OnInit, OnChanges {
   public readonly isValid = this._isValid.asReadonly();
   public readonly next = output<void>();
   public readonly previous = output<void>();
-  @Output() receiveMessage = new EventEmitter<Passenger>();
+  @Output() receiveMessagePassenger = new EventEmitter<Passenger>();
 
   passDataToParent() {
     const data = this.getFormRaw;
     if (!data) return;
-    this.receiveMessage.emit(data);
+    this.receiveMessagePassenger.emit(data);
   }
 
   ngOnInit() {

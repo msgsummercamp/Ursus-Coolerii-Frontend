@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, Inject, inject, Optional, signal } from '@angular/core';
 import {
   MatCard,
   MatCardActions,
@@ -12,6 +12,7 @@ import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/in
 import { MatButton } from '@angular/material/button';
 import { AuthService } from '../../shared/services/auth.service';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -28,6 +29,8 @@ import { TranslocoPipe } from '@jsverse/transloco';
     MatButton,
     MatError,
     TranslocoPipe,
+    MatDialogActions,
+    MatDialogClose,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -39,9 +42,11 @@ export class LoginComponent {
 
   protected loginError = signal('');
 
-  constructor() {
+  constructor(
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: { email: string; withRedirect: boolean }
+  ) {
     this.form = this.fb.group<LoginForm>({
-      email: this.fb.control('', Validators.required),
+      email: this.fb.control(data?.email ?? '', Validators.required),
       password: this.fb.control('', Validators.required),
     });
   }

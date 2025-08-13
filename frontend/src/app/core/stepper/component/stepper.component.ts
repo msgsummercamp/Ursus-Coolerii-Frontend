@@ -127,6 +127,7 @@ export class StepperComponent implements AfterViewInit {
   private passenger: Passenger | undefined;
   public receivePassenger($event: Passenger) {
     this.passenger = $event;
+    console.log(this.passenger);
   }
 
   public documents: File[] | undefined;
@@ -180,6 +181,7 @@ export class StepperComponent implements AfterViewInit {
       !this.userDetails
     )
       return;
+    console.log('passenger', this.passenger);
     return {
       caseData: {
         disruptionDetails: this.disruptionDetails,

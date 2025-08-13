@@ -26,6 +26,9 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { PassengerDetailsFormComponent } from '../passenger-details-form/passenger-details-form.component';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginComponent } from '../login/login.component';
+import { Passenger } from '../../shared/types/types';
 
 @Component({
   selector: 'app-user-details',
@@ -53,6 +56,7 @@ export class UserDetailsComponent implements AfterViewInit {
   protected readonly next = output<void>();
   protected readonly previous = output<void>();
   protected http = inject(HttpClient);
+  protected readonly dialog = inject(MatDialog);
 
   public isValid = signal(false);
   public isValidPassengerDetails = signal(false);
@@ -73,6 +77,7 @@ export class UserDetailsComponent implements AfterViewInit {
     firstName: string;
     lastName: string;
   }>();
+  @Output() receiveMessagePassenger = new EventEmitter<Passenger>();
   protected emailExists = signal(false);
   private readonly API_URL = environment.apiURL;
   private onDestroy$ = new Subject<void>();
@@ -112,6 +117,7 @@ export class UserDetailsComponent implements AfterViewInit {
     if (!data?.email) return;
 
     this.receiveMessage.emit(data);
+    this.receiveMessagePassenger.emit(this.passengerDetailsFormComponent?.getFormRaw || undefined);
   }
 
   onEmailBlur() {
@@ -131,6 +137,7 @@ export class UserDetailsComponent implements AfterViewInit {
               this.form.controls.email.setErrors(null);
             }
           }
+          this.emailExists.set(response.exists);
           this.cdr.detectChanges();
         });
     }
@@ -147,6 +154,15 @@ export class UserDetailsComponent implements AfterViewInit {
     };
   }
 
+  openDialog() {
+    const email = this.form.controls.email.value;
+    this.dialog.open(LoginComponent, {
+      autoFocus: false,
+      width: '60%',
+      height: '60%',
+      data: { email, withRedirect: false },
+    });
+  }
   protected continueToSubmit() {
     this.passDataToParent();
     this.passengerDetailsFormComponent.passDataToParent();
@@ -167,4 +183,8 @@ export class UserDetailsComponent implements AfterViewInit {
   }
 
   protected readonly translate = translate;
+
+  handleReceiveMessage(data: Passenger) {
+    this.receiveMessagePassenger.emit(data);
+  }
 }

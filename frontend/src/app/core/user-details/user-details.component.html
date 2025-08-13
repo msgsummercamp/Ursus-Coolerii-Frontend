@@ -71,6 +71,7 @@
       <button (click)="continueToPassengerDetails()" mat-flat-button [disabled]="!isValid()">
         {{ translate('stepper.next') }}
       </button>
+      <button (click)="openDialog()" mat-flat-button [disabled]="!emailExists()">{{ translate('login.button') }}</button>
     </mat-card-actions>
 </mat-card>
   }
@@ -80,7 +81,7 @@
         <mat-card-title class="special-mat-title">{{ translate('passenger-details.title') }}</mat-card-title>
       </mat-card-header>
       <mat-card-content class="special-mat-content">
-        <app-passenger-details-form  [autoFillNames]="autoFillPassengerNames"  (validityChange)="isValidPassengerDetails.set($event)">
+        <app-passenger-details-form  (receiveMessagePassenger)="handleReceiveMessage($event)" [autoFillNames]="autoFillPassengerNames"  (validityChange)="isValidPassengerDetails.set($event)">
           </app-passenger-details-form>
       </mat-card-content>
 
