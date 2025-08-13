@@ -1,15 +1,7 @@
-::ng-deep .mat-mdc-autocomplete-panel {
-  max-height: 256px !important; // Set max height for the panel
-
-  .cdk-virtual-scroll-viewport {
-    //height: 200px; // Fixed height required for virtual scrolling
-    height: clamp(100px, 150px, 200px);
-    width: 100%;
-  }
-
-  .cdk-virtual-scroll-content-wrapper {
-    width: 100%;
-  }
+::ng-deep .cdk-virtual-scroll-viewport {
+  height: calc(var(--item-count, 1) * 48px);
+  max-height: 200px;
+  width: 100%;
 }
 
 .reservation-details-form-container {
@@ -43,34 +35,6 @@
         background-color: var(--mat-sys-primary-container);
       }
     }
-
-    .depart,
-    .dest {
-      width: 100%;
-    }
-
-    //.custom-dropdown-absolute {
-    //  position: absolute;
-    //  top: calc(100% - 20px);
-    //  left: 0;
-    //  width: 100%;
-    //  background: white;
-    //  z-index: 1000;
-    //}
-
-    //.dropdown-option {
-    //  cursor: pointer;
-    //  background: white;
-    //  &:hover {
-    //    background: #f0f0f0;
-    //  }
-    //
-    //  .list-item {
-    //    height: auto;
-    //    padding: 0.5rem;
-    //    display: flex;
-    //  }
-    //}
 
     .stopover {
       display: flex;

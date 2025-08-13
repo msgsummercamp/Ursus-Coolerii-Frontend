@@ -17,9 +17,7 @@
               type="text"
               matInput
               formControlName="departingAirport"
-              (focus)="showDepartDropdown = true"
               (input)="onDepartInput($any($event.target).value)"
-              (blur)="hideDropdownWithDelay()"
               [matAutocomplete]="departure"
               autocomplete="on"
               placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
@@ -43,9 +41,7 @@
               type="text"
               matInput
               formControlName="destinationAirport"
-              (focus)="showDepartDropdown = true"
               (input)="onDestInput($any($event.target).value)"
-              (blur)="hideDropdownWithDelay()"
               [matAutocomplete]="destination"
               autocomplete="on"
               placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
@@ -113,8 +109,6 @@
               (input)="onStopoverInput($any($event.target).value)"
               [matAutocomplete]="stopover"
               [value]="stopoverDisplayValue()"
-              (focus)="showStopoverDropdown = true"
-              (blur)="hideStopoverDropdownWithDelay()"
             />
             <mat-autocomplete #stopover="matAutocomplete">
               <cdk-virtual-scroll-viewport itemSize="48" minBufferPx="100" maxBufferPx="200">
