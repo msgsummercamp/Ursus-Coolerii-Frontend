@@ -1,16 +1,22 @@
+::ng-deep .cdk-virtual-scroll-viewport {
+  height: calc(var(--item-count, 1) * 48px);
+  max-height: 200px;
+  width: 100%;
+}
+
 .reservation-details-form-container {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 
   form {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1rem;
     width: 100%;
-    overflow: hidden;
 
     & > div {
       display: flex;
@@ -20,40 +26,31 @@
       }
     }
 
-    .depart-wrapper,
-    .dest-wrapper {
-      position: relative;
-    }
+    .button-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-    .depart,
-    .dest {
-      width: 100%;
-    }
-
-    .custom-dropdown.absolute {
-      position: absolute;
-      top: calc(100% - 20px);
-      left: 0;
-      width: 100%;
-      background: white;
-      z-index: 1000;
-    }
-
-    .dropdown-option {
-      cursor: pointer;
-      &:hover {
-        background: #f0f0f0;
+      button {
+        background-color: var(--mat-sys-primary-container);
       }
+    }
 
-      .list-item {
-        height: auto;
-        padding: 0.5rem;
-        display: flex;
-      }
+    .stopovers {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
     }
 
     .stopover {
-      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      ::ng-deep .mat-mdc-icon-button {
+        color: var(--mat-sys-error);
+      }
     }
   }
 }
