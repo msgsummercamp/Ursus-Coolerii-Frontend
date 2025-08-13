@@ -7,11 +7,11 @@
   </button>
   <span class="spacer"></span>
   <div class="toolbar-right">
-    <button *showIfLoggedOut routerLink="/login" class="home-icon-btn" mat-icon-button>
-      <mat-icon>login</mat-icon>
+    <button *showIfLogged routerLink="/login" class="home-icon-btn" mat-icon-button>
+      Login
     </button>
-    <button *showIfLogged (click)="logout()" routerLink="/home" class="home-icon-btn" mat-icon-button>
-      <mat-icon>logout</mat-icon>
+    <button *showIfLoggedOut (click)="logout()" routerLink="/home" class="home-icon-btn" mat-icon-button>
+      Logout
     </button>
     <app-language-switcher class="language-switcher"></app-language-switcher>
   </div>

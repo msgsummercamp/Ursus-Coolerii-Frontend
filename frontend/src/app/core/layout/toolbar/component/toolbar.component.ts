@@ -7,7 +7,6 @@ import { MatIcon } from '@angular/material/icon';
 import { AuthService } from '../../../../shared/services/auth.service';
 import { AuthDirectiveLogin } from '../../../../shared/directives/auth.login.directive';
 import { AuthLogoutDirective } from '../../../../shared/directives/auth-logout.directive';
-import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-toolbar',
@@ -19,14 +18,6 @@ import { NgOptimizedImage } from '@angular/common';
     MatIcon,
     AuthDirectiveLogin,
     AuthLogoutDirective,
-  ],
-  imports: [
-    MatToolbar,
-    LanguageSwitcherComponent,
-    RouterLink,
-    MatIconButton,
-    MatIcon,
-    NgOptimizedImage,
   ],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss',

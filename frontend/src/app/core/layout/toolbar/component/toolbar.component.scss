@@ -1,32 +1,20 @@
 mat-toolbar {
   position: sticky;
   z-index: 10;
-  background-color: var(--mat-sys-primary) !important;
+  background-color: var(--mat-sys-primary);
+}
 
-  .toolbar-icon {
-    color: var(--mat-sys-on-primary) !important;
-    cursor: pointer;
-  }
-
-  .logo {
-    background-color: var(--mat-sys-secondary-container);
+.logo {
+  height: 45px;
+  background-color: var(--mat-sys-secondary-container);
+}
 
 .home-icon-btn {
   margin-right: 3rem;
   color: var(--mat-sys-on-primary);
 }
 
-.toolbar-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .spacer {
   flex: 1 1 auto;
   margin: 0;
-    &:hover {
-      cursor: pointer;
-    }
-  }
 }

@@ -37,6 +37,8 @@ export class CaseService {
   }
 
   private fetchCasesFromApi() {
-    return this.httpClient.get<Case[]>(environment.apiURL + '/case-files');
+    return this.httpClient.get<Case[]>(environment.apiURL + '/case-files', {
+      withCredentials: true,
+    });
   }
 }

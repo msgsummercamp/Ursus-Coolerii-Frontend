@@ -14,10 +14,10 @@ export class AuthLogoutDirective {
   ) {
     effect(() => {
       const loggedIn = this.authService.loggedInSignal();
-      if (!loggedIn && !this.hasView) {
+      if (loggedIn && !this.hasView) {
         this.viewContainer.createEmbeddedView(this.templateRef);
         this.hasView = true;
-      } else if (loggedIn && this.hasView) {
+      } else if (!loggedIn && this.hasView) {
         this.viewContainer.clear();
         this.hasView = false;
       }

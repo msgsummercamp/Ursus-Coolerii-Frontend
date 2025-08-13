@@ -16,7 +16,6 @@ export const routes: Routes = [
     path: 'form',
     loadComponent: () =>
       import('./core/stepper/component/stepper.component').then((m) => m.StepperComponent),
-    canActivate: [authGuard],
   },
   {
     path: 'login',

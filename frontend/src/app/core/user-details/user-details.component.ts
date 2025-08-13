@@ -156,12 +156,13 @@ export class UserDetailsComponent implements AfterViewInit {
 
   openDialog() {
     const email = this.form.controls.email.value;
-    this.dialog.open(LoginComponent, {
+    const dialogRef = this.dialog.open(LoginComponent, {
       autoFocus: false,
       width: '60%',
       height: '60%',
       data: { email, withRedirect: false },
     });
+    dialogRef.componentInstance.dialogRef = dialogRef;
   }
   protected continueToSubmit() {
     this.passDataToParent();
