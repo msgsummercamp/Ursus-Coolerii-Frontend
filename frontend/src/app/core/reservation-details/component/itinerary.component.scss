@@ -40,12 +40,17 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 1rem;
+      gap: 0;
     }
 
     .stopover {
       display: flex;
       align-items: center;
+      gap: 1rem;
+
+      ::ng-deep .mat-mdc-icon-button {
+        color: var(--mat-sys-error);
+      }
     }
   }
 }
