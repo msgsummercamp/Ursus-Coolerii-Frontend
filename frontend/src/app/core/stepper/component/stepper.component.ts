@@ -158,7 +158,6 @@ export class StepperComponent implements AfterViewInit {
   }
 
   public buildCaseFile(): CaseDataWithFiles | undefined {
-    console.log(this.userDetails);
     this.flights = this.stopoverService.stopoverState().flights;
     const flightDTOs = this.flights.map(
       (flight): FlightDTO => ({
