@@ -193,8 +193,14 @@
 
   "home": {
     "title": "Air Assist",
-    "subtitle": "Fill in the form to claim your compensation",
-    "startButton": "Start"
+    "greeting": "Ever had a flight disruption, where you were denied boarding, your flight was canceled or delayed? If yes, you have come to the right place!",
+    "beforeStart": "We can help you get compensation in no time! Just complete the form below and we will take care of the rest.",
+    "startButton": "Get Started!",
+    "beforeInfo": "About us:",
+    "info": "We are a team of dedicated professionals with a passion for helping passengers get the compensation they deserve.",
+    "beforeLinks": "If you have any questions or need assistance, please don't hesitate to contact us in one of the following ways:",
+    "link1": "email: ",
+    "link2": "tel: "
   },
   "userDetails": {
     "title": "User details"
