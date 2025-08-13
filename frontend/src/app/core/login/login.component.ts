@@ -53,10 +53,11 @@ export class LoginComponent {
       email: this.fb.control(data?.email ?? '', Validators.required),
       password: this.fb.control('', Validators.required),
     });
-    if (!data || !data.withRedirect) {
+    if (!data || !data.withRedirect == null) {
       return;
     }
     this.withRedirect = data.withRedirect;
+    debugger;
   }
 
   public login() {
@@ -64,11 +65,15 @@ export class LoginComponent {
       .login(this.form.controls.email.value, this.form.controls.password.value)
       .subscribe({
         next: (response) => {
+          debugger;
           if (this.withRedirect) {
             this.router.navigate(['/home']);
+            debugger;
           } else if (this.dialogRef) {
             this.dialogRef.close();
+            debugger;
           }
+          debugger;
         },
         error: (err) => {
           this.loginError.set(err.error);
