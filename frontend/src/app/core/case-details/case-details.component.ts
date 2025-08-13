@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CaseFileService } from '../layout/services/case-file.service';
-import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
-import { DatePipe, NgForOf, NgIf } from '@angular/common';
+import { translate, TranslocoPipe } from '@jsverse/transloco';
+import { DatePipe, NgForOf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatListItem, MatNavList } from '@angular/material/list';
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
@@ -27,10 +27,8 @@ import { MatButton } from '@angular/material/button';
     MatSidenavContainer,
     MatSidenav,
     MatNavList,
-    NgIf,
     MatIcon,
     MatCardActions,
-    TranslocoDirective,
     MatButton,
   ],
 })
@@ -56,4 +54,6 @@ export class CaseDetailsComponent implements OnInit {
   back() {
     this.router.navigate(['/cases']);
   }
+
+  protected readonly translate = translate;
 }

@@ -316,6 +316,7 @@
   },
   "caseDetails": {
     "title": "Caz {{contractId}}",
-    "problemFlight": "Zbor cu Problemă"
+    "problemFlight": "Zbor cu Problemă",
+    "docs": "Documente"
   }
 }
