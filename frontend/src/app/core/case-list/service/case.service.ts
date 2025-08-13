@@ -4,6 +4,8 @@ import { finalize, map, retry, Subject, switchMap } from 'rxjs';
 import { Case } from '../../../shared/types/types';
 import { environment } from '../../../../environments/environment';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { AuthService } from '../../../shared/services/auth.service';
+import { AuthorizationService } from '../../../shared/services/authorization.service';
 
 type CaseState = {
   caseList: Case[];
@@ -36,6 +38,9 @@ export class CaseService {
   public casesSignal = toSignal(this.cases$.pipe(map((res) => res.caseList)), { initialValue: [] });
   public totalCasesSignal = computed(() => this.casesState().totalCases);
 
+  private authService = inject(AuthService);
+  private authorizationService = inject(AuthorizationService);
+
   public fetchCases(pageIndex: number = 0, pageSize: number = 5) {
     this.setIsLoading(true);
     this._fetchCases$.next({ pageIndex, pageSize });
@@ -46,6 +51,21 @@ export class CaseService {
   }
 
   private fetchCasesFromApi(pageIndex: number, pageSize: number) {
+    const token = this.authService.sessionToken;
+    let params: any = {
+      pageIndex: pageIndex.toString(),
+      pageSize: pageSize.toString(),
+    };
+
+    if (this.authorizationService.hasRolePassenger(token)) {
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        if (payload.passengerId) {
+          params.passengerId = payload.passengerId;
+        }
+      } catch {}
+    }
+
     return this.httpClient
       .get<{
         content: Case[];
@@ -54,10 +74,7 @@ export class CaseService {
         number: number;
         size: number;
       }>(`${environment.apiURL}/case-files`, {
-        params: {
-          pageIndex: pageIndex.toString(),
-          pageSize: pageSize.toString(),
-        },
+        params,
         withCredentials: true,
       })
       .pipe(
