@@ -209,12 +209,14 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
     this.reservationForm.controls.departingAirport.setValue(airport.name);
     this.showDepartDropdown = false;
     this.stopoverService.setDepartureAirport(airport);
+    this.filteredDepartAirports = [];
   }
 
   public selectDestAirport(airport: AirportAttributes) {
     this.reservationForm.controls.destinationAirport.setValue(airport.name);
     this.showDestDropdown = false;
     this.stopoverService.setDestinationAirport(airport);
+    this.filteredDestAirports = [];
   }
 
   public selectStopoverAirport(airport: AirportAttributes) {
