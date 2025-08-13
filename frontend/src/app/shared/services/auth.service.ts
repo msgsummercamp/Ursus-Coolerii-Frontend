@@ -1,9 +1,10 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from '../../../environments/environment';
 import { LoginRequest, LoginResponse } from '../types/types';
-import { map, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, catchError, map, of } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
@@ -12,23 +13,35 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly cookieService = inject(CookieService);
   private readonly API_URL = environment.apiURL;
+  private loggedIn = new BehaviorSubject<boolean>(false);
+  public loggedIn$ = this.loggedIn.asObservable();
+  public loggedInSignal: Signal<boolean> = toSignal(this.loggedIn$, { initialValue: false });
 
-  public isAuthenticated(): Observable<boolean> {
-    const subject = new Subject<boolean>();
-    this.http
-      .get<{ status: boolean }>(this.API_URL + '/auth/check', {
-        withCredentials: true,
-      })
-      .pipe(map((response) => response.status))
-      .subscribe({
-        next: (res) => {
-          subject.next(true);
-        },
-        error: (error) => {
-          subject.next(false);
-        },
-      });
-    return subject.asObservable();
+  constructor() {
+    this.loggedIn.next(this.isAuthenticated());
+  }
+
+  public get sessionToken(): string {
+    return this.cookieService.get('jwt');
+  }
+
+  public isAuthenticated(): boolean {
+    return this.isTokenValid(this.sessionToken);
+  }
+
+  public isTokenValid(token: string): boolean {
+    if (!token) return false;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const expiry = payload.exp;
+      if (!expiry) return false;
+
+      const now = Math.floor(Date.now() / 1000);
+      return expiry > now;
+    } catch (e) {
+      return false;
+    }
   }
 
   public login(email: string, password: string) {
@@ -37,16 +50,25 @@ export class AuthService {
       password: password,
     };
 
-    return this.http.post<LoginResponse>(this.API_URL + '/auth/login', request, {
-      withCredentials: true,
-    });
+    return this.http
+      .post<LoginResponse>(this.API_URL + '/auth/login', request, {
+        withCredentials: true,
+      })
+      .pipe(
+        map((response) => {
+          this.loggedIn.next(true);
+          return response.token !== '';
+        }),
+
+        catchError((error) => {
+          this.loggedIn.next(false);
+          return of(false);
+        })
+      );
   }
 
   public logout() {
-    this.cookieService.delete('token');
-  }
-
-  public getToken() {
-    return this.cookieService.get('token');
+    this.cookieService.delete('jwt');
+    this.loggedIn.next(false);
   }
 }

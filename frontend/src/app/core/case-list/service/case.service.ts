@@ -58,6 +58,7 @@ export class CaseService {
           pageIndex: pageIndex.toString(),
           pageSize: pageSize.toString(),
         },
+        withCredentials: true,
       })
       .pipe(
         map((res) => {
