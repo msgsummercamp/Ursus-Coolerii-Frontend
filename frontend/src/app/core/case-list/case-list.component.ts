@@ -16,6 +16,7 @@ import { CaseService } from './service/case.service';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { CaseStatusLabels } from '../../shared/types/types';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-case-list',
@@ -33,6 +34,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
     DatePipe,
     TranslocoPipe,
     MatPaginator,
+    RouterLink,
   ],
   templateUrl: './case-list.component.html',
   styleUrl: './case-list.component.scss',
