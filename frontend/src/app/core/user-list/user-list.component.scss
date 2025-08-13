@@ -1,7 +1,12 @@
-th {
-  font-weight: bold;
-}
-
 tr:hover td {
   background-color: var(--mat-sys-tertiary-container);
+}
+
+th,
+td {
+  text-align: center;
+}
+
+th {
+  font-weight: bold;
 }

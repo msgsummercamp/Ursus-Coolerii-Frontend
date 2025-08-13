@@ -4,10 +4,18 @@ import { LanguageSwitcherComponent } from '../../../../language-switcher/compone
 import { RouterLink } from '@angular/router';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-toolbar',
-  imports: [MatToolbar, LanguageSwitcherComponent, RouterLink, MatIconButton, MatIcon],
+  imports: [
+    MatToolbar,
+    LanguageSwitcherComponent,
+    RouterLink,
+    MatIconButton,
+    MatIcon,
+    NgOptimizedImage,
+  ],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss',
 })

@@ -181,14 +181,14 @@
   },
 
   "userList": {
+    "title": "User List",
     "firstName": "First Name",
     "lastName": "Last Name",
     "email": "Email",
     "phoneNumber": "Phone Number",
     "role": "Role",
     "casesCount": "Nr. Cases",
-    "deleteUser": "Delete User",
-    "editUser": "Edit User"
+    "actionUser": "Actions"
   },
 
   "home": {
