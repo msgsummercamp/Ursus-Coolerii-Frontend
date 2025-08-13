@@ -181,6 +181,7 @@
   },
 
   "userList": {
+    "title": "User List",
     "firstName": "First Name",
     "lastName": "Last Name",
     "email": "Email",

@@ -44,19 +44,9 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
   styleUrl: './user-list.component.scss',
 })
 export class UserListComponent implements OnInit {
-  displayedColumns: string[] = [
-    'actions',
-    'userId',
-    'firstName',
-    'lastName',
-    'email',
-    'role',
-    'casesCount',
-  ];
+  displayedColumns: string[] = ['actions', 'firstName', 'lastName', 'email', 'role', 'casesCount'];
 
-  constructor(protected userService: UserService) {
-    console.log(this.userService.usersSignal());
-  }
+  constructor(protected userService: UserService) {}
 
   get users(): User[] {
     return this.userService.usersSignal();

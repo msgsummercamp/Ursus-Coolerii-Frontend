@@ -173,6 +173,7 @@
   "no": "Nu",
 
   "userList": {
+    "title": "Lista Utilizatorilor",
     "firstName": "Prenume",
     "lastName": "Nume",
     "email": "Email",

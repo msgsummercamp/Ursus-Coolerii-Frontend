@@ -1,4 +1,5 @@
 <div class="special-table">
+  <h1>{{ 'userList.title' | transloco }}</h1>
   <table mat-table [dataSource]="users">
     <!--    actionsBtn-->
     <ng-container matColumnDef="actions">
@@ -11,11 +12,6 @@
           <mat-icon fontIcon="edit" />
         </button>
       </td>
-    </ng-container>
-    <!--    ID-->
-    <ng-container matColumnDef="userId">
-      <th mat-header-cell *matHeaderCellDef>ID</th>
-      <td mat-cell *matCellDef="let u">{{ u.userId }}</td>
     </ng-container>
     <!--    firstName-->
     <ng-container matColumnDef="firstName">
