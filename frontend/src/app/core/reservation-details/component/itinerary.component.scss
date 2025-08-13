@@ -36,9 +36,16 @@
       }
     }
 
+    .stopovers {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
     .stopover {
       display: flex;
-      justify-content: flex-end;
+      align-items: center;
     }
   }
 }

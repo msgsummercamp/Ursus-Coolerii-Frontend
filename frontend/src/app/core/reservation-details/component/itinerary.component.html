@@ -130,17 +130,19 @@
         </div>
 
         <h2>{{ 'flightDetails.itinerary.stopovers' | transloco }}:</h2>
-        @if (stopovers.length == 0) {
-          <p>{{ 'flightDetails.itinerary.noStopovers' | transloco }}</p>
-        }
-        @for (stopover of stopovers; track $index) {
-          <div class="stopover">
-            <p>{{ stopover.name }}</p>
-            <button mat-icon-button (click)="removeStopover($index)"
-              ><mat-icon fontIcon="delete"
-            /></button>
-          </div>
-        }
+        <div class="stopovers">
+          @if (stopovers.length == 0) {
+            <p>{{ 'flightDetails.itinerary.noStopovers' | transloco }}</p>
+          }
+          @for (stopover of stopovers; track $index) {
+            <div class="stopover">
+              <p>{{ stopover.name }}</p>
+              <button mat-icon-button (click)="removeStopover($index)">
+                <mat-icon fontIcon="delete" />
+              </button>
+            </div>
+          }
+        </div>
       </form>
     </mat-card-content>
     <mat-card-actions class="special-form-actions">
