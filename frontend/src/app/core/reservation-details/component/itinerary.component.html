@@ -105,10 +105,9 @@
 
         <div>
           <mat-form-field appearance="fill" class="special-form-field">
-            <mat-label>Stopover</mat-label>
+            <mat-label>{{ 'flightDetails.itinerary.stopover' | transloco }}</mat-label>
             <input
               type="text"
-              placeholder="Pick one"
               aria-label="Number"
               matInput
               (input)="onStopoverInput($any($event.target).value)"

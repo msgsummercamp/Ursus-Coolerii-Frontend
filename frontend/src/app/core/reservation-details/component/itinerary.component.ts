@@ -197,10 +197,6 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
     setTimeout(() => (this.showDepartDropdown = false), 200);
   }
 
-  public hideDestDropdownWithDelay() {
-    setTimeout(() => (this.showDestDropdown = false), 200);
-  }
-
   public hideStopoverDropdownWithDelay() {
     setTimeout(() => (this.showStopoverDropdown = false), 200);
   }
@@ -240,6 +236,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   }
   protected removeStopover(stopoverIndex: number) {
     this.stopoverService.removeStopover(stopoverIndex);
+    this.stopoverService.setProblemFlightIndex(0);
   }
 
   protected get stopovers() {
@@ -248,10 +245,6 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
   protected readonly translate = translate;
 
-  public isLongAirportName(name: string): boolean {
-    return name.length > 30 || name.includes('\n');
-  }
-
   protected setDepartureDate($event: MatDatepickerInputEvent<Date>) {
     this.stopoverService.setDepartureDate($event.value);
   }
@@ -259,6 +252,4 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   protected setDestinationDate($event: MatDatepickerInputEvent<Date>) {
     this.stopoverService.setDestinationDate($event.value);
   }
-
-  protected readonly Math = Math;
 }
