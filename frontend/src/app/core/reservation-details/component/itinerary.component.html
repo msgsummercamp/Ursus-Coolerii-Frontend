@@ -2,206 +2,158 @@
   <app-loading-spinner />
 }
 <div class="reservation-details-form-container">
-  <mat-card class="flight-form-wrapper-card special-mat-card">
+  <mat-card class="special-mat-card">
     <mat-card-header class="special-mat-header">
       <mat-card-title class="special-mat-title">
         {{ 'flightDetails.itinerary.title' | transloco }}
       </mat-card-title>
     </mat-card-header>
-    <mat-card-content>
+    <mat-card-content class="special-mat-content">
       <form [formGroup]="reservationForm">
         <div>
-          <div class="depart-wrapper">
-            <mat-form-field appearance="fill" class="depart">
-              <mat-label>{{ 'flightDetails.departingAirport' | transloco }}</mat-label>
-              <input
-                type="text"
-                matInput
-                formControlName="departingAirport"
-                (focus)="showDepartDropdown = true"
-                (input)="onDepartInput($any($event.target).value)"
-                (blur)="hideDropdownWithDelay()"
-                autocomplete="on"
-                placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
-              />
-            </mat-form-field>
-            @if (showDepartDropdown && filteredDepartAirports.length) {
-              <div class="custom-dropdown absolute" (mousedown)="$event.preventDefault()">
-                <cdk-virtual-scroll-viewport
-                  itemSize="filteredDepartAirports.length === 1 && isLongAirportName(filteredDepartAirports[0].name) ? 64 : 32"
-                  class="airport-list"
-                  [style.height.px]="
-                    filteredDepartAirports.length > 4
-                      ? 192
-                      : filteredDepartAirports.length *
-                        (filteredDepartAirports.length === 1 &&
-                        isLongAirportName(filteredDepartAirports[0].name)
-                          ? 64
-                          : 32)
-                  "
+          <mat-form-field appearance="fill" class="special-form-field">
+            <mat-label>{{ 'flightDetails.departingAirport' | transloco }}</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="departingAirport"
+              (input)="onDepartInput($any($event.target).value)"
+              [matAutocomplete]="departure"
+              autocomplete="on"
+              placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
+            />
+            <mat-autocomplete #departure="matAutocomplete">
+              <cdk-virtual-scroll-viewport itemSize="48" minBufferPx="200" maxBufferPx="300">
+                <mat-option
+                  *cdkVirtualFor="let airport of filteredDepartAirports; trackBy: trackByAirport"
+                  [value]="airport.name"
+                  (onSelectionChange)="selectDepartAirport(airport)"
                 >
-                  <div
-                    class="dropdown-option"
-                    *cdkVirtualFor="let airport of filteredDepartAirports"
-                  >
-                    <div class="list-item" (click)="selectDepartAirport(airport)">
-                      {{ airport.name }} - {{ airport.iata }}
-                    </div>
-                  </div>
-                </cdk-virtual-scroll-viewport>
-              </div>
-            }
-          </div>
+                  {{ airport.name }} - {{ airport.iata }}
+                </mat-option>
+              </cdk-virtual-scroll-viewport>
+            </mat-autocomplete>
+          </mat-form-field>
 
-          <div class="dest-wrapper">
-            <mat-form-field appearance="fill" class="dest">
-              <mat-label>{{ 'flightDetails.destinationAirport' | transloco }}</mat-label>
-              <input
-                type="text"
-                matInput
-                formControlName="destinationAirport"
-                (focus)="showDestDropdown = true"
-                (input)="onDestInput($any($event.target).value)"
-                (blur)="hideDestDropdownWithDelay()"
-                autocomplete="on"
-                placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
-              />
-            </mat-form-field>
-            @if (showDestDropdown && filteredDestAirports.length) {
-              <div class="custom-dropdown absolute" (mousedown)="$event.preventDefault()">
-                <cdk-virtual-scroll-viewport
-                  itemSize="filteredDestAirports.length === 1 && isLongAirportName(filteredDestAirports[0].name)
-        ? 64
-        : 32"
-                  class="airport-list"
-                  [style.height.px]="
-                    filteredDestAirports.length > 4
-                      ? 192
-                      : filteredDestAirports.length *
-                        (filteredDestAirports.length === 1 &&
-                        isLongAirportName(filteredDestAirports[0].name)
-                          ? 64
-                          : 32)
-                  "
+          <mat-form-field appearance="fill" class="special-form-field">
+            <mat-label>{{ 'flightDetails.destinationAirport' | transloco }}</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="destinationAirport"
+              (input)="onDestInput($any($event.target).value)"
+              [matAutocomplete]="destination"
+              autocomplete="on"
+              placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
+            />
+            <mat-autocomplete #destination="matAutocomplete">
+              <cdk-virtual-scroll-viewport itemSize="48" minBufferPx="200" maxBufferPx="300">
+                <mat-option
+                  *cdkVirtualFor="let airport of filteredDestAirports; trackBy: trackByAirport"
+                  [value]="airport.name"
+                  (onSelectionChange)="selectDestAirport(airport)"
                 >
-                  <div class="dropdown-option" *cdkVirtualFor="let airport of filteredDestAirports">
-                    <div class="list-item" (click)="selectDestAirport(airport)">
-                      {{ airport.name }} - {{ airport.iata }}
-                    </div>
-                  </div>
-                </cdk-virtual-scroll-viewport>
-              </div>
-            }
-          </div>
+                  {{ airport.name }} - {{ airport.iata }}
+                </mat-option>
+              </cdk-virtual-scroll-viewport>
+            </mat-autocomplete>
+          </mat-form-field>
         </div>
 
         <div>
-          <div class="depDate">
-            <mat-form-field class="date">
-              <mat-label>{{ 'flightDetails.plannedDepartureDate' | transloco }}</mat-label>
-              <input
-                matInput
-                [matDatepicker]="departureDatePicker"
-                formControlName="plannedDepartureDate"
-                (dateChange)="setDepartureDate($event)"
-              />
-              <mat-hint>DD/MM/YYYY</mat-hint>
-              <mat-datepicker-toggle matIconSuffix [for]="departureDatePicker" />
-              <mat-datepicker #departureDatePicker />
-              @if (reservationForm.controls.plannedDepartureDate.errors?.['required']) {
-                <mat-error>{{
-                  'flightDetails.error.plannedDepartureDate.required' | transloco
-                }}</mat-error>
-              }
-            </mat-form-field>
-          </div>
+          <mat-form-field class="special-form-field">
+            <mat-label>{{ 'flightDetails.plannedDepartureDate' | transloco }}</mat-label>
+            <input
+              matInput
+              [matDatepicker]="departureDatePicker"
+              formControlName="plannedDepartureDate"
+              (dateChange)="setDepartureDate($event)"
+            />
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="departureDatePicker" />
+            <mat-datepicker #departureDatePicker />
+            @if (reservationForm.controls.plannedDepartureDate.errors?.['required']) {
+              <mat-error>{{
+                'flightDetails.error.plannedDepartureDate.required' | transloco
+              }}</mat-error>
+            }
+          </mat-form-field>
 
-          <div class="destDate">
-            <mat-form-field class="date">
-              <mat-label>{{ 'flightDetails.plannedArrivalDate' | transloco }}</mat-label>
-              <input
-                matInput
-                [matDatepicker]="arrivalDatePicker"
-                formControlName="plannedArrivalDate"
-                (dateChange)="setDestinationDate($event)"
-                [min]="reservationForm.get('plannedDepartureDate')?.value"
-              />
-              <mat-hint>DD/MM/YYYY</mat-hint>
-              <mat-datepicker-toggle matIconSuffix [for]="arrivalDatePicker" />
-              <mat-datepicker #arrivalDatePicker />
-              @if (reservationForm.controls.plannedArrivalDate.errors?.['required']) {
-                <mat-error>{{
-                  'flightDetails.error.plannedArrivalDate.required' | transloco
-                }}</mat-error>
-              }
-            </mat-form-field>
-          </div>
+          <mat-form-field class="special-form-field">
+            <mat-label>{{ 'flightDetails.plannedArrivalDate' | transloco }}</mat-label>
+            <input
+              matInput
+              [matDatepicker]="arrivalDatePicker"
+              formControlName="plannedArrivalDate"
+              (dateChange)="setDestinationDate($event)"
+              [min]="reservationForm.get('plannedDepartureDate')?.value"
+            />
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="arrivalDatePicker" />
+            <mat-datepicker #arrivalDatePicker />
+            @if (reservationForm.controls.plannedArrivalDate.errors?.['required']) {
+              <mat-error>{{
+                'flightDetails.error.plannedArrivalDate.required' | transloco
+              }}</mat-error>
+            }
+          </mat-form-field>
         </div>
 
         <div>
-          <div class="dest-wrapper">
-            <mat-form-field appearance="fill" class="dest">
-              <mat-label>Stopover</mat-label>
-              <input
-                type="text"
-                matInput
-                (focus)="showStopoverDropdown = true"
-                (input)="onStopoverInput($any($event.target).value)"
-                (blur)="hideStopoverDropdownWithDelay()"
-                [value]="stopoverDisplayValue()"
-                autocomplete="on"
-                placeholder="{{ 'flightDetails.searchAirport' | transloco }}"
-              />
-            </mat-form-field>
-            @if (showStopoverDropdown && filteredStopoverAirports.length) {
-              <div class="custom-dropdown absolute" (mousedown)="$event.preventDefault()">
-                <cdk-virtual-scroll-viewport
-                  itemSize="filteredStopoverAirports.length === 1 && isLongAirportName(filteredStopoverAirports[0].name) ? 64 : 32"
-                  class="airport-list"
-                  [style.height.px]="
-                    filteredStopoverAirports.length > 4
-                      ? 192
-                      : filteredStopoverAirports.length *
-                        (filteredStopoverAirports.length === 1 &&
-                        isLongAirportName(filteredStopoverAirports[0].name)
-                          ? 64
-                          : 32)
-                  "
+          <mat-form-field appearance="fill" class="special-form-field">
+            <mat-label>{{ 'flightDetails.itinerary.stopover' | transloco }}</mat-label>
+            <input
+              type="text"
+              aria-label="Number"
+              matInput
+              (input)="onStopoverInput($any($event.target).value)"
+              [matAutocomplete]="stopover"
+              [value]="stopoverDisplayValue()"
+            />
+            <mat-autocomplete #stopover="matAutocomplete">
+              <cdk-virtual-scroll-viewport itemSize="48" minBufferPx="200" maxBufferPx="300">
+                <mat-option
+                  *cdkVirtualFor="let airport of filteredStopoverAirports; trackBy: trackByAirport"
+                  [value]="airport"
+                  (onSelectionChange)="selectStopoverAirport(airport)"
                 >
-                  <div
-                    class="dropdown-option"
-                    *cdkVirtualFor="let airport of filteredStopoverAirports"
-                  >
-                    <div class="list-item" (click)="selectStopoverAirport(airport)">
-                      {{ airport.name }} - {{ airport.iata }}
-                    </div>
-                  </div>
-                </cdk-virtual-scroll-viewport>
-              </div>
-            }
+                  {{ airport.name }} - {{ airport.iata }}
+                </mat-option>
+              </cdk-virtual-scroll-viewport>
+            </mat-autocomplete>
+          </mat-form-field>
+          <div class="button-wrapper">
+            <button mat-stroked-button (click)="addStopover()" class="special-mat-sec-button">
+              {{ 'flightDetails.itinerary.addStopover' | transloco }}
+            </button>
           </div>
-          <button mat-flat-button (click)="addStopover()">
-            {{ 'flightDetails.itinerary.addStopover' | transloco }}
-          </button>
         </div>
 
         <h2>{{ 'flightDetails.itinerary.stopovers' | transloco }}:</h2>
-        @if (stopovers.length == 0) {
-          <p>{{ 'flightDetails.itinerary.noStopovers' | transloco }}</p>
-        }
-        @for (stopover of stopovers; track $index) {
-          <div class="stopover">
-            <p>{{ stopover.name }}</p>
-            <button mat-icon-button (click)="removeStopover($index)"
-              ><mat-icon>delete</mat-icon></button
-            >
-          </div>
-        }
+        <div class="stopovers">
+          @if (stopovers.length == 0) {
+            <p>{{ 'flightDetails.itinerary.noStopovers' | transloco }}</p>
+          }
+          @for (stopover of stopovers; track $index) {
+            <div class="stopover">
+              <p>{{ stopover.name }}</p>
+              <button mat-icon-button (click)="removeStopover($index)">
+                <mat-icon fontIcon="delete" />
+              </button>
+            </div>
+          }
+        </div>
       </form>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-flat-button (click)="back()">{{ translate('stepper.back') }}</button>
-      <button mat-flat-button [disabled]="reservationForm.invalid" (click)="continue()"
+    <mat-card-actions class="special-form-actions">
+      <button mat-stroked-button class="special-mat-sec-button" (click)="back()">{{
+        translate('stepper.back')
+      }}</button>
+      <button
+        mat-flat-button
+        class="special-mat-prim-button"
+        [disabled]="reservationForm.invalid"
+        (click)="continue()"
         >{{ translate('stepper.next') }}
       </button>
     </mat-card-actions>

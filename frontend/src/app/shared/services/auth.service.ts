@@ -29,6 +29,48 @@ export class AuthService {
     return this.isTokenValid(this.sessionToken);
   }
 
+  public get getEmail(): string | undefined {
+    return this.extractEmailFromToken(this.sessionToken);
+  }
+
+  public get getFirstName(): string | undefined {
+    return this.extractFirstNameFromToken(this.sessionToken);
+  }
+
+  public get getLastName(): string | undefined {
+    return this.extractLastNameFromToken(this.sessionToken);
+  }
+
+  private extractFirstNameFromToken(token: string): string | undefined {
+    if (!token) return undefined;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.firstName;
+    } catch {
+      return undefined;
+    }
+  }
+
+  private extractLastNameFromToken(token: string): string | undefined {
+    if (!token) return undefined;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.lastName;
+    } catch {
+      return undefined;
+    }
+  }
+
+  private extractEmailFromToken(token: string): string | undefined {
+    if (!token) return undefined;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.sub;
+    } catch {
+      return undefined;
+    }
+  }
+
   public isTokenValid(token: string): boolean {
     if (!token) return false;
 
