@@ -10,6 +10,8 @@ import {
 import { MatIcon } from '@angular/material/icon';
 import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
 import { MatButton } from '@angular/material/button';
+import { AuthService } from '../../shared/services/auth.service';
+import { AuthorizationService } from '../../shared/services/authorization.service';
 
 @Component({
   selector: 'app-home-page',
@@ -28,9 +30,24 @@ import { MatButton } from '@angular/material/button';
   ],
 })
 export class HomePageComponent {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private authorizationService: AuthorizationService
+  ) {}
 
-  goToForm() {
+  public goToForm() {
     this.router.navigate(['/form']);
+  }
+
+  public goToCases() {
+    const token = this.authService.sessionToken;
+    if (this.authorizationService.hasRoleEmployee(token)) {
+      this.router.navigate(['/cases']);
+    } else if (this.authorizationService.hasRolePassenger(token)) {
+      this.router.navigate(['/cases'], { queryParams: { myCases: true } });
+    } else {
+      console.log('No access to cases');
+    }
   }
 }
