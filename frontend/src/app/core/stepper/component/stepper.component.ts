@@ -148,13 +148,12 @@ export class StepperComponent implements AfterViewInit {
       !this.passenger.lastName
     )
       return;
-    const usr = {
+    return {
       email: this.userDetails.email,
       firstName: this.passenger.firstName,
       lastName: this.passenger.lastName,
       role: Roles.passenger,
     };
-    return usr;
   }
 
   public buildCaseFile(): CaseDataWithFiles | undefined {
@@ -183,6 +182,7 @@ export class StepperComponent implements AfterViewInit {
     return {
       caseData: {
         disruptionDetails: this.disruptionDetails,
+        // TODO capture reservation number
         reservationNumber: 'mockReservation',
         flights: flightDTOs,
         passenger: this.passenger,
