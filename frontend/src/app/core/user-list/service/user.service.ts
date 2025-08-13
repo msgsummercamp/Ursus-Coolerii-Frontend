@@ -81,6 +81,7 @@ export class UserService {
         })
       );
   }
+
   public getPageIndex(): number {
     return this.userState().pageIndex;
   }

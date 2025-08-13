@@ -47,7 +47,6 @@ const VERTICAL_OFFSET = -19;
     MatFormFieldModule,
     MatInputModule,
     TranslocoDirective,
-    PassengerDetailsFormComponent,
     FlightDetailsWrapComponent,
     DocumentsFormComponent,
     FlightDetailsWrapComponent,
@@ -126,7 +125,7 @@ export class StepperComponent implements AfterViewInit {
   private flights: Flight[] = [];
 
   private passenger: Passenger | undefined;
-  public receivdePassenger($event: Passenger) {
+  public receivePassenger($event: Passenger) {
     this.passenger = $event;
   }
 
@@ -148,13 +147,12 @@ export class StepperComponent implements AfterViewInit {
       !this.passenger.lastName
     )
       return;
-    const usr = {
+    return {
       email: this.userDetails.email,
       firstName: this.passenger.firstName,
       lastName: this.passenger.lastName,
       role: Roles.passenger,
     };
-    return usr;
   }
 
   public buildCaseFile(): CaseDataWithFiles | undefined {

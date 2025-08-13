@@ -99,6 +99,27 @@
       }
     }
   },
+  "user-details": {
+    "registrationNo": "Număr Rezervare",
+    "firstName": "Prenume",
+    "lastName": "Nume",
+    "iAmPassenger": "Eu sunt pasagerul",
+    "error": {
+      "registrationNo": {
+        "required": "Numărul de rezervare este obligatoriu!"
+      },
+      "firstName": {
+        "required": "Prenumele este obligatoriu!"
+      },
+      "lastName": {
+        "required": "Numele este obligatoriu!"
+      },
+      "email": {
+        "required": "Emailul este obligatoriu!",
+        "already": "Acest email este deja înregistrat!"
+      }
+    }
+  },
   "stepper": {
     "disruption-motives": "Motiv de perturbare",
     "flight-details": "Detalii Zbor",

@@ -4,7 +4,6 @@ import { finalize, retry, Subject, switchMap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { NonNullableFormBuilder } from '@angular/forms';
 
 type AirportsState = {
   airportList: AirportAttributes[];
@@ -27,11 +26,10 @@ export class AirportsService {
   private readonly airportState = signal(initialState);
 
   private httpClient = inject(HttpClient);
-  private fb = inject(NonNullableFormBuilder);
 
   private airports$ = this._fetchAirport$.pipe(
     switchMap(() => this.fetchAirportsFromApi().pipe(finalize(() => this.setIsLoading(false)))),
-    retry(3)
+    retry()
   );
 
   public airportsSignal = toSignal(this.airports$, { initialValue: [] });

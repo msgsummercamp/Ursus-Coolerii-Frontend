@@ -99,6 +99,27 @@
       }
     }
   },
+  "user-details": {
+    "registrationNo": "Reservation Number",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "iAmPassenger": "I am the passenger",
+    "error": {
+      "registrationNo": {
+        "required": "Reservation number is required!"
+      },
+      "firstName": {
+        "required": "First name is required!"
+      },
+      "lastName": {
+        "required": "Last name is required!"
+      },
+      "email": {
+        "required": "Email is required!",
+        "already": "Email already exists!"
+      }
+    }
+  },
   "stepper": {
     "disruption-motives": "Disruption motives",
     "flight-details": "Flight Details",

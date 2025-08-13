@@ -1,4 +1,7 @@
-.toolbar-icon {
-  color: var(--mat-sys-on-primary) !important;
-  cursor: pointer;
+mat-icon {
+  color: var(--mat-sys-on-primary);
+}
+
+.language-switcher {
+  display: inline;
 }
