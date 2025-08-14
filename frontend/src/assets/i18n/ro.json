@@ -248,7 +248,8 @@
     "nextSubtitle": "Ce urmează?",
     "nextStep1": "1. Vom aloca un coleg dedicat cazului dvs.",
     "nextStep2": "2. Colegul nostru va analiza cu atenție toate detaliile cererii dvs.",
-    "nextStep3": "3. După ce avem o rezoluție, vă vom contacta pentru a discuta rezultatul."
+    "nextStep3": "3. După ce avem o rezoluție, vă vom contacta pentru a discuta rezultatul.",
+    "downloadButton": "Descarcă PDF"
   },
   "gdprDialog": {
     "title": "Ursus Coolerii Air Assist",

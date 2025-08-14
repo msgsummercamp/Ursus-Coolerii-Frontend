@@ -262,7 +262,8 @@
     "nextSubtitle": "What happens next?",
     "nextStep1": "1. We will assign a dedicated colleague to your case.",
     "nextStep2": "2. Our colleague will carefully review all the details of your claim.",
-    "nextStep3": "3. Once we have a resolution, we will contact you to discuss the outcome."
+    "nextStep3": "3. Once we have a resolution, we will contact you to discuss the outcome.",
+    "downloadButton": "Download PDF"
   },
   "gdprDialog": {
     "title": "Ursus Coolerii Air Assist",
