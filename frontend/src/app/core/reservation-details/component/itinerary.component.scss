@@ -44,7 +44,7 @@
       align-items: center;
       gap: 1rem;
 
-      ::ng-deep .mat-mdc-icon-button {
+      ::ng-deep .mat-mdc-icon-button:hover {
         color: var(--mat-sys-error);
       }
     }
