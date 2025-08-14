@@ -6,8 +6,8 @@
     animationDuration="300"
     (selectionChange)="onStepChange($event)"
   >
-    <mat-step [completed]="reservationDetailsFormCompleted()">
-      <ng-template matStepLabel>Itinerary</ng-template>
+    <mat-step [completed]="reservationDetailsFormCompleted()" [editable]="!disableStepper">
+      <ng-template matStepLabel>{{ translate('itinerary') }}</ng-template>
       <app-reservation-details (next)="stepper.next()" (previous)="stepper.previous()" />
     </mat-step>
     <mat-step [completed]="flightDetailsFormCompleted()" [editable]="!disableStepper">

@@ -113,4 +113,27 @@ export class DocumentsFormComponent implements OnInit {
   }
 
   protected readonly translate = translate;
+
+  protected isDragOver = false;
+
+  protected onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    this.isDragOver = true;
+  }
+
+  protected onDragLeave(event: DragEvent): void {
+    event.preventDefault();
+    this.isDragOver = false;
+  }
+
+  protected onFileDropped(event: DragEvent): void {
+    event.preventDefault();
+    this.isDragOver = false;
+
+    if (!event.dataTransfer?.files?.length) return;
+
+    const fileList = event.dataTransfer.files;
+    const inputEvent = { target: { files: fileList } } as unknown as Event;
+    this.onFileSelected(inputEvent);
+  }
 }

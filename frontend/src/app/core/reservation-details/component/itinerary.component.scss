@@ -30,10 +30,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-
-      button {
-        background-color: var(--mat-sys-primary-container);
-      }
     }
 
     .stopovers {
@@ -48,7 +44,7 @@
       align-items: center;
       gap: 1rem;
 
-      ::ng-deep .mat-mdc-icon-button {
+      ::ng-deep .mat-mdc-icon-button:hover {
         color: var(--mat-sys-error);
       }
     }

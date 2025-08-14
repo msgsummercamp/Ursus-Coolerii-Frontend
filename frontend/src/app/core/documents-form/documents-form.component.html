@@ -6,32 +6,45 @@
       </mat-card-header>
       <mat-card-content class="special-mat-content">
         <form [formGroup]="documentsFormGroup">
-          <button mat-stroked-button (click)="fileInput.click()" class="special-mat-sec-button">
-            <mat-icon>upload</mat-icon> {{ translate('chooseFile') }}</button
-          >
           <input
             #fileInput
             type="file"
-            (change)="onFileSelected($event)"
             multiple
             hidden
             accept=".jpg,.jpeg,.png,.pdf"
+            (change)="onFileSelected($event)"
           />
 
-          @if (documentsFormGroup.get('files')?.value?.length) {
-            <mat-list>
-              @for (file of documentsFormGroup.get('files')?.value; track file) {
-                <mat-list-item class="file-list-item">
-                  <mat-icon matListIcon>insert_drive_file</mat-icon>
-                  <span matLine>{{ file.name }}</span>
-                  <span class="spacer"></span>
-                  <button mat-icon-button color="warn" (click)="removeFile(file)">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                </mat-list-item>
-              }
-            </mat-list>
-          }
+          <div
+            class="file-drop-zone"
+            (click)="fileInput.click()"
+            (dragover)="onDragOver($event)"
+            (dragleave)="onDragLeave($event)"
+            (drop)="onFileDropped($event)"
+            [class.drag-over]="isDragOver"
+          >
+            <mat-icon fontIcon="cloud_upload" class="cloud"></mat-icon>
+            @if (!documentsFormGroup.get('files')?.value?.length) {
+              <p>{{ translate('dragDropPrompt') }}</p>
+              <small>{{ translate('allowedFormats') }}</small>
+            }
+
+            @if (documentsFormGroup.get('files')?.value?.length) {
+              <mat-list>
+                @for (file of documentsFormGroup.get('files')?.value; track file) {
+                  <mat-list-item>
+                    <div class="item">
+                      <mat-icon fontIcon="insert_drive_file" />
+                      <span matLine>{{ file.name }}</span>
+                      <button mat-icon-button (click)="removeFile(file); $event.stopPropagation()">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                  </mat-list-item>
+                }
+              </mat-list>
+            }
+          </div>
           @if (
             documentsFormGroup.controls.files.invalid && documentsFormGroup.controls.files.touched
           ) {
@@ -40,16 +53,17 @@
         </form>
       </mat-card-content>
       <mat-card-actions *transloco="let translate; prefix: 'stepper'" class="special-form-actions">
-        <button mat-stroked-button class="special-mat-sec-button" (click)="back()">{{
-          translate('back')
-        }}</button>
+        <button mat-stroked-button (click)="back()"
+          >{{ translate('back') }}
+          <mat-icon fontIcon="arrow_back" />
+        </button>
         <button
           mat-flat-button
           class="special-mat-prim-button"
           [disabled]="documentsFormGroup.invalid"
           (click)="continue()"
-          >{{ translate('next') }}</button
-        >
+          >{{ translate('next') }} <mat-icon fontIcon="arrow_forward" />
+        </button>
       </mat-card-actions>
     </mat-card>
   </ng-container>

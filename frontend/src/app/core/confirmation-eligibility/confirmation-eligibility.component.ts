@@ -38,6 +38,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { CaseFileService } from '../layout/services/case-file.service';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../shared/services/auth.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-confirmation-eligibility-form',
@@ -56,6 +57,7 @@ import { AuthService } from '../../shared/services/auth.service';
     LoadingSpinnerComponent,
     MatCheckbox,
     ReactiveFormsModule,
+    MatIcon,
   ],
   templateUrl: './confirmation-eligibility.component.html',
   styleUrl: './confirmation-eligibility.component.scss',

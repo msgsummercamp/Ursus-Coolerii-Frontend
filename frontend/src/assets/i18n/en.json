@@ -26,6 +26,7 @@
     "reset": "Reset",
     "rewardMessage": "You can receive up to {{reward}} EUROS for this flight!",
     "connectingFlightPlaceholder": "Type connecting flight...",
+    "resetTooltip": "Try again!",
     "error": {
       "flightNumber": {
         "required": "Flight number is required!",
@@ -124,6 +125,7 @@
     "disruption-motives": "Disruption motives",
     "flight-details": "Flight Details",
     "passenger-details": "Passenger Details",
+    "itinerary": "Itinerary",
     "documents": "Documents",
     "userDetails": "User Details",
     "done": "Submit",
@@ -135,6 +137,8 @@
   "documents": {
     "title": "Upload Documents",
     "chooseFile": "Choose File(s)",
+    "dragDropPrompt": "Drag and drop your files here or click to select files",
+    "allowedFormats": "Allowed formats: PDF, JPG, JPEG, PNG",
     "chooseFileError": "Please choose at least one file!"
   },
   "connecting-flight": {
@@ -258,7 +262,8 @@
     "nextSubtitle": "What happens next?",
     "nextStep1": "1. We will assign a dedicated colleague to your case.",
     "nextStep2": "2. Our colleague will carefully review all the details of your claim.",
-    "nextStep3": "3. Once we have a resolution, we will contact you to discuss the outcome."
+    "nextStep3": "3. Once we have a resolution, we will contact you to discuss the outcome.",
+    "downloadButton": "Download PDF"
   },
   "gdprDialog": {
     "title": "Ursus Coolerii Air Assist",

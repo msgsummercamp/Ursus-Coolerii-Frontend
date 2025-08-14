@@ -14,6 +14,7 @@ import { AuthService } from '../../shared/services/auth.service';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
@@ -30,6 +31,7 @@ import { Router } from '@angular/router';
     MatButton,
     MatError,
     TranslocoPipe,
+    MatIcon,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
