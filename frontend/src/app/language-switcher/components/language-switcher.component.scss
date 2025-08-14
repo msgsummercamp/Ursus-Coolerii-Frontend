@@ -5,3 +5,10 @@ mat-icon {
 .language-switcher {
   display: inline;
 }
+
+.language-icon{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
