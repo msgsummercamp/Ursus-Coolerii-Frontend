@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { UserService } from './service/user.service';
 import {
   MatCell,
@@ -19,6 +19,8 @@ import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { User } from '../../shared/types/types';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteConfirmationDialogComponent } from '../../shared/components/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 @Component({
   selector: 'app-user-list',
@@ -44,7 +46,16 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
   styleUrl: './user-list.component.scss',
 })
 export class UserListComponent implements OnInit {
-  displayedColumns: string[] = ['actions', 'firstName', 'lastName', 'email', 'role', 'casesCount'];
+  protected displayedColumns: string[] = [
+    'actions',
+    'firstName',
+    'lastName',
+    'email',
+    'role',
+    'casesCount',
+  ];
+
+  private readonly dialog = inject(MatDialog);
 
   constructor(protected userService: UserService) {}
 
@@ -60,9 +71,21 @@ export class UserListComponent implements OnInit {
     this.userService.fetchUsers(event.pageIndex, event.pageSize);
   }
 
-  deleteUser(userId: string): void {
+  private deleteUser(userId: string) {
     this.userService.deleteUser(userId).subscribe(() => {
       this.userService.fetchUsers();
+    });
+  }
+
+  protected openDialog(userId: string) {
+    let dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
+      width: '250px',
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.deleteUser(userId);
+      }
     });
   }
 }

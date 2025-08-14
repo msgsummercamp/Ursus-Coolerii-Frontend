@@ -318,5 +318,11 @@
     "title": "Caz {{contractId}}",
     "problemFlight": "Zbor cu Problemă",
     "docs": "Documente"
+  },
+  "confirmation-dialog": {
+    "title": "Ștergeți obiectul?",
+    "text": "Sunteți sigur că vreți să ștergeți obiectul? Acțiunea aceasta este ireversibilă.",
+    "yes": "Da",
+    "no": "Nu"
   }
 }
