@@ -1,0 +1,114 @@
+<mat-sidenav-container class="special-layout">
+  <mat-sidenav mode="side" opened class="special-navbar">
+    <mat-nav-list class="special-nav-list">
+      <mat-list-item
+        class="special-nav-item"
+        (click)="selectedSection = 'flights'"
+        [class.active]="selectedSection === 'flights'"
+      >
+        <mat-icon class="nav-arrow-icon">arrow_forward</mat-icon>
+        {{ 'flightDetails.title' | transloco }}
+      </mat-list-item>
+      <mat-list-item
+        class="special-nav-item"
+        (click)="selectedSection = 'passenger'"
+        [class.active]="selectedSection === 'passenger'"
+      >
+        <mat-icon class="nav-arrow-icon">arrow_forward</mat-icon>
+        {{ 'passenger-details.title' | transloco }}
+      </mat-list-item>
+      <mat-list-item
+        class="special-nav-item"
+        (click)="selectedSection = 'documents'"
+        [class.active]="selectedSection === 'documents'"
+      >
+        <mat-icon class="nav-arrow-icon">arrow_forward</mat-icon>
+        {{ 'caseDetails.docs' | transloco }}
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="special-content">
+    @if (selectedSection === 'flights') {
+      <mat-tab-group class="special-tab-group">
+        <mat-tab
+          *ngFor="let flight of caseDetails?.flights; let i = index"
+          [label]="'Flight ' + (i + 1)"
+        >
+          <div class="details-panel fullwidth-panel">
+            <div class="section-header">
+              <mat-icon class="section-header-icon">flight</mat-icon>
+              <h2>{{ flight.airline }} - {{ flight.flightNumber }}</h2>
+            </div>
+            <div class="detail-row">
+              <span>{{ 'flightDetails.flightDate' | transloco }}:</span>
+              <strong>{{ flight.plannedDepartureTime | date }}</strong>
+            </div>
+            <div class="detail-row">
+              <span>{{ 'flightDetails.departingAirport' | transloco }}:</span>
+              <strong>{{ flight.departureAirport }}</strong>
+            </div>
+            <div class="detail-row">
+              <span>{{ 'flightDetails.destinationAirport' | transloco }}:</span>
+              <strong>{{ flight.destinationAirport }}</strong>
+            </div>
+            <div class="detail-row">
+              <span>{{ 'flightDetails.reservationNumber' | transloco }}:</span>
+              <strong>{{ flight.reservationNumber }}</strong>
+            </div>
+            <div class="detail-row">
+              <span>{{ 'caseDetails.problemFlight' | transloco }}:</span>
+              <strong>{{ flight.problemFlight ? ('yes' | transloco) : ('no' | transloco) }}</strong>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    }
+
+    @if (selectedSection === 'passenger') {
+      <div class="details-panel fullwidth-panel">
+        <div class="section-header">
+          <mat-icon class="section-header-icon">person</mat-icon>
+          <h2>{{ 'passenger-details.title' | transloco }}</h2>
+        </div>
+        <div class="detail-row">
+          <span>{{ 'passenger-details.firstName' | transloco }}:</span>
+          <strong>{{ caseDetails?.passenger.firstName }}</strong>
+        </div>
+        <div class="detail-row">
+          <span>{{ 'passenger-details.lastName' | transloco }}:</span>
+          <strong>{{ caseDetails?.passenger.lastName }}</strong>
+        </div>
+        <div class="detail-row">
+          <span>{{ 'passenger-details.dateOfBirth' | transloco }}:</span>
+          <strong>{{ caseDetails?.passenger.dateOfBirth | date }}</strong>
+        </div>
+        <div class="detail-row">
+          <span>{{ 'userDetails.email' | transloco }}:</span>
+          <strong>{{ caseDetails?.passenger.email }}</strong>
+        </div>
+      </div>
+    }
+
+    @if (selectedSection === 'documents') {
+      <div class="details-panel fullwidth-panel">
+        <div class="section-header">
+          <mat-icon class="section-header-icon">description</mat-icon>
+          <h2>{{ 'caseDetails.docs' | transloco }}</h2>
+        </div>
+        <ul class="document-list">
+          <li *ngFor="let doc of caseDetails?.documents">
+            {{ doc.filename }} ({{ doc.uploadTimestamp | date }})
+          </li>
+        </ul>
+      </div>
+    }
+
+    <mat-card-actions class="special-form-actions">
+      <button mat-stroked-button class="special-mat-sec-button" (click)="back()">
+        <mat-icon>arrow_back</mat-icon>
+        {{ translate('stepper.back') }}</button
+      >
+    </mat-card-actions>
+  </mat-sidenav-content>
+</mat-sidenav-container>
