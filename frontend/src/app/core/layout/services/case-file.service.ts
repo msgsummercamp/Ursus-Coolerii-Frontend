@@ -2,6 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CaseDetailsDTO } from '../../../shared/types/types';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -34,6 +35,6 @@ export class CaseFileService {
   }
 
   getCaseDetailsByCaseId(caseId: string) {
-    return this.http.get<CaseDetailsDTO>(`http://localhost:8080/api/case-files/contract/${caseId}`);
+    return this.http.get<CaseDetailsDTO>(`${environment.apiURL}/case-files/contract/${caseId}`);
   }
 }
