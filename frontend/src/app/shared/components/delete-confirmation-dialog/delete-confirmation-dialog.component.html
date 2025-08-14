@@ -1,8 +1,8 @@
-<h2 mat-dialog-title>Delete item?</h2>
-<mat-dialog-content>
-  Are you sure you want to delete this item? This action is irreversible.
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-stroked-button (click)="handleCancel()">No</button>
-  <button mat-flat-button (click)="handleConfirmation()">Yes</button>
-</mat-dialog-actions>
+<ng-container *transloco="let translate; prefix: 'confirmation-dialog'">
+  <h2 mat-dialog-title>{{ translate('title') }}</h2>
+  <mat-dialog-content>{{ translate('text') }}</mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-stroked-button (click)="handleCancel()">{{ translate('no') }}</button>
+    <button mat-flat-button (click)="handleConfirmation()">{{ translate('yes') }}</button>
+  </mat-dialog-actions>
+</ng-container>

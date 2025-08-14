@@ -6,10 +6,11 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatButton } from '@angular/material/button';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-delete-confirmation-dialog',
-  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatButton],
+  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatButton, TranslocoDirective],
   templateUrl: './delete-confirmation-dialog.component.html',
   styleUrl: './delete-confirmation-dialog.component.scss',
 })

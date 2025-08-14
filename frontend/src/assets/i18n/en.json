@@ -321,5 +321,11 @@
     "changesTitle": "13. Changes to This Policy",
     "changesText": "We reserve the right to update this privacy policy from time to time. We will notify you of any significant changes by posting the new policy on our website.",
     "close": "Close"
+  },
+  "confirmation-dialog": {
+    "title": "Delete item?",
+    "text": "Are you sure you want to delete this item? This action is irreversible.",
+    "yes": "Yes",
+    "no": "No"
   }
 }
