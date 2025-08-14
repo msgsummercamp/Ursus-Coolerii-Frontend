@@ -6,28 +6,20 @@
     animationDuration="300"
     (selectionChange)="onStepChange($event)"
   >
+    <mat-step [completed]="reservationDetailsFormCompleted()">
+      <ng-template matStepLabel>Itinerary</ng-template>
+      <app-reservation-details (next)="stepper.next()" (previous)="stepper.previous()" />
+    </mat-step>
+    <mat-step [completed]="flightDetailsFormCompleted()" [editable]="!disableStepper">
+      <ng-template matStepLabel>{{ translate('flight-details') }}</ng-template>
+      <app-flight-details-wrap (previous)="stepper.previous()" (next)="stepper.next()" />
+    </mat-step>
     <mat-step [completed]="disruptiveFormCompleted()" [editable]="!disableStepper">
       <ng-template matStepLabel>{{ translate('disruption-motives') }}</ng-template>
       <app-disruptive-form
         (receiveMessage)="receiveDisruptionDetails($event)"
         (next)="stepper.next()"
         (resetForms)="onResetForms()"
-      />
-    </mat-step>
-    <mat-step [completed]="reservationDetailsFormCompleted()" [editable]="!disableStepper">
-      <ng-template matStepLabel>Itinerary</ng-template>
-      <app-reservation-details (next)="stepper.next()" (previous)="stepper.previous()"  />
-    </mat-step>
-    <mat-step [completed]="flightDetailsFormCompleted()" [editable]="!disableStepper">
-      <ng-template matStepLabel>{{ translate('flight-details') }}</ng-template>
-      <app-flight-details-wrap (previous)="stepper.previous()" (next)="stepper.next()" />
-    </mat-step>
-    <mat-step [completed]="documentsFormCompleted()" [editable]="!disableStepper">
-      <ng-template matStepLabel>{{ translate('documents') }}</ng-template>
-      <app-documents-form
-        (receiveMessage)="receiveDocuments($event)"
-        (next)="stepper.next()"
-        (previous)="stepper.previous()"
       />
     </mat-step>
     <mat-step [completed]="userFormCompleted()" [editable]="!disableStepper">
@@ -38,6 +30,14 @@
         (next)="stepper.next()"
         (previous)="stepper.previous()"
       ></app-user-details>
+    </mat-step>
+    <mat-step [completed]="documentsFormCompleted()" [editable]="!disableStepper">
+      <ng-template matStepLabel>{{ translate('documents') }}</ng-template>
+      <app-documents-form
+        (receiveMessage)="receiveDocuments($event)"
+        (next)="stepper.next()"
+        (previous)="stepper.previous()"
+      />
     </mat-step>
     <mat-step [editable]="!disableStepper">
       <ng-template matStepLabel>{{ translate('done') }}</ng-template>
