@@ -24,7 +24,6 @@ export class AuthorizationService {
   }
   public hasRolePassenger(token: string): boolean {
     const roles = this.getAuthoritiesFromToken(token);
-    debugger;
     return roles.some((role) => role === Roles.passenger);
   }
   public hasRoleEmployee(token: string): boolean {

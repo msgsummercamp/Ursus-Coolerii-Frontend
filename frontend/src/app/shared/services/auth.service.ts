@@ -91,11 +91,17 @@ export class AuthService {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
       const expiry = payload.exp;
-      if (!expiry) return false;
+      if (!expiry) {
+        this.cookieService.delete('jwt');
+        return false;
+      }
 
       const now = Math.floor(Date.now() / 1000);
+      if (expiry <= now) this.cookieService.delete('jwt');
+
       return expiry > now;
     } catch (e) {
+      this.cookieService.delete('jwt');
       return false;
     }
   }
