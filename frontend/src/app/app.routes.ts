@@ -33,6 +33,12 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'cases/:caseId',
+    loadComponent: () =>
+      import('./core/case-details/case-details.component').then((m) => m.CaseDetailsComponent),
+    canActivate: [authGuard],
+  },
+  {
     path: 'users',
     loadComponent: () =>
       import('./core/user-list/user-list.component').then((m) => m.UserListComponent),
