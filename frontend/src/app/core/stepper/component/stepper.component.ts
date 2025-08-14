@@ -25,6 +25,7 @@ import {
   FlightDTO,
   Passenger,
   SignupRequest,
+  UserDetails,
 } from '../../../shared/types/types';
 import { UserDetailsComponent } from '../../user-details/user-details.component';
 import { AirportsService } from '../../flight-details-form/service/airport.service';
@@ -33,6 +34,7 @@ import { ItineraryFormComponent } from '../../reservation-details/component/itin
 import { ConfirmationEligibilityComponent } from '../../confirmation-eligibility/confirmation-eligibility.component';
 import { StopoverService } from '../../../shared/services/stopover.service';
 import { Roles } from '../../../shared/enums';
+import { AuthService } from '../../../shared/services/auth.service';
 
 const AIRPLANE_WIDTH = 40;
 const VERTICAL_OFFSET = -19;
@@ -83,6 +85,7 @@ const VERTICAL_OFFSET = -19;
 export class StepperComponent implements AfterViewInit {
   protected airportService = inject(AirportsService);
   private stopoverService = inject(StopoverService);
+  private authService = inject(AuthService);
 
   private disruptiveFormComponent = viewChild(DisruptiveFormComponent);
   protected disruptiveFormCompleted: Signal<boolean | undefined> = computed(() =>
@@ -134,8 +137,8 @@ export class StepperComponent implements AfterViewInit {
     this.documents = $event;
   }
 
-  public userDetails: { email: string } | undefined;
-  receiveUserDetails($event: { email: string }) {
+  public userDetails: UserDetails | undefined;
+  receiveUserDetails($event: UserDetails) {
     this.userDetails = $event;
   }
 
@@ -181,7 +184,7 @@ export class StepperComponent implements AfterViewInit {
     return {
       caseData: {
         disruptionDetails: this.disruptionDetails,
-        reservationNumber: 'mockReservation',
+        reservationNumber: this.userDetails.reservationNumber,
         flights: flightDTOs,
         passenger: this.passenger,
         userEmail: this.userDetails.email,

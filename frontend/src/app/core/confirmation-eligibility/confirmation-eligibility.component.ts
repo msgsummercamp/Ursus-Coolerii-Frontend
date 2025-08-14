@@ -37,6 +37,7 @@ import { LoadingSpinnerComponent } from '../loading-spinner/component/loading-sp
 import { MatCheckbox } from '@angular/material/checkbox';
 import { CaseFileService } from '../layout/services/case-file.service';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-confirmation-eligibility-form',
@@ -63,6 +64,7 @@ export class ConfirmationEligibilityComponent {
   private eligibilityService = inject(EligibilityService);
   private caseFileService = inject(CaseFileService);
   private saveService = inject(SaveService);
+  private authService = inject(AuthService);
   public caseId?: string;
 
   public saveError = signal('');
@@ -127,8 +129,10 @@ export class ConfirmationEligibilityComponent {
 
     this.email = userDetails.email;
 
+    const isAuthenticated: boolean = this.authService.isAuthenticated();
+
     const saveRequest: SaveRequest = {
-      signupRequest: userDetails,
+      signupRequest: isAuthenticated ? null : userDetails,
       caseRequest: createdCase.caseData,
     };
 
@@ -157,6 +161,9 @@ export class ConfirmationEligibilityComponent {
     this.dialog.open(PopUpGdprComponent, { autoFocus: false });
   }
 
+  ///TODO : Move this in a service it makes the code hard to maintain if we keep logic like this in component .ts
+  ///Why this is called with fetch instead of a httpClient just like all others calls?
+  ///Refactor whole function
   public downloadPdf(caseId: string) {
     fetch(`${environment.apiURL}/case-files/pdf/${caseId}`, {
       method: 'GET',
