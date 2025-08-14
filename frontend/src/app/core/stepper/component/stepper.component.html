@@ -15,8 +15,8 @@
       />
     </mat-step>
     <mat-step [completed]="reservationDetailsFormCompleted()" [editable]="!disableStepper">
-      <ng-template matStepLabel>Itinerary</ng-template>
-      <app-reservation-details (next)="stepper.next()" (previous)="stepper.previous()"  />
+      <ng-template matStepLabel>{{ translate('itinerary') }}</ng-template>
+      <app-reservation-details (next)="stepper.next()" (previous)="stepper.previous()" />
     </mat-step>
     <mat-step [completed]="flightDetailsFormCompleted()" [editable]="!disableStepper">
       <ng-template matStepLabel>{{ translate('flight-details') }}</ng-template>

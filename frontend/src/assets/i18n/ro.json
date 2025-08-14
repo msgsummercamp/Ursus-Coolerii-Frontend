@@ -26,6 +26,7 @@
     "reset": "Resetează",
     "rewardMessage": "Puteți primi până la {{reward}} EURO pentru acest zbor!",
     "connectingFlightPlaceholder": "Introduceți zborul de legătură...",
+    "resetTooltip": "Încearcă din nou!",
     "error": {
       "flightNumber": {
         "required": "Numărul zborului este obligatoriu!",
@@ -124,6 +125,7 @@
     "disruption-motives": "Motiv de perturbare",
     "flight-details": "Detalii Zbor",
     "passenger-details": "Detalii Pasager",
+    "itinerary": "Itinerariu",
     "documents": "Documente",
     "userDetails": "Detaliile utilizatorului",
     "done": "Trimite",

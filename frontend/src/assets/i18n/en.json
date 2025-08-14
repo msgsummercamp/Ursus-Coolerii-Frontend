@@ -26,6 +26,7 @@
     "reset": "Reset",
     "rewardMessage": "You can receive up to {{reward}} EUROS for this flight!",
     "connectingFlightPlaceholder": "Type connecting flight...",
+    "resetTooltip": "Try again!",
     "error": {
       "flightNumber": {
         "required": "Flight number is required!",
@@ -124,6 +125,7 @@
     "disruption-motives": "Disruption motives",
     "flight-details": "Flight Details",
     "passenger-details": "Passenger Details",
+    "itinerary": "Itinerary",
     "documents": "Documents",
     "userDetails": "User Details",
     "done": "Submit",

@@ -123,7 +123,7 @@
     <mat-card-actions class="special-form-actions">
       <button
         mat-stroked-button
-        matTooltip="Try again!"
+        matTooltip="{{ 'flightDetails.resetTooltip' | transloco }}"
         [disabled]="!formDisruption.valid || isEligible()"
         (click)="reset()"
       >
