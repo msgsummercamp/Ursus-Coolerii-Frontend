@@ -23,15 +23,4 @@ export class HomePageComponent {
   public goToForm() {
     this.router.navigate(['/form']);
   }
-
-  public goToCases() {
-    const token = this.authService.sessionToken;
-    if (this.authorizationService.hasRoleEmployee(token)) {
-      this.router.navigate(['/cases']);
-    } else if (this.authorizationService.hasRolePassenger(token)) {
-      this.router.navigate(['/cases'], { queryParams: { myCases: true } });
-    } else {
-      console.log('No access to cases');
-    }
-  }
 }
