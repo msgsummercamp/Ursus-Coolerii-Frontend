@@ -13,8 +13,22 @@ export class AuthorizationService {
       return [];
     }
   }
+
+  public getRoles(token: string): string[] {
+    const roles = this.getAuthoritiesFromToken(token);
+    return roles;
+  }
   public hasRoleAdmin(token: string): boolean {
     const roles = this.getAuthoritiesFromToken(token);
     return roles.some((role) => role === Roles.admin);
+  }
+  public hasRolePassenger(token: string): boolean {
+    const roles = this.getAuthoritiesFromToken(token);
+    debugger;
+    return roles.some((role) => role === Roles.passenger);
+  }
+  public hasRoleEmployee(token: string): boolean {
+    const roles = this.getAuthoritiesFromToken(token);
+    return roles.some((role) => role === Roles.employee);
   }
 }

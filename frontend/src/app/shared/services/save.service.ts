@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { SaveRequest } from '../types/types';
 import { environment } from '../../../environments/environment';
 import { finalize } from 'rxjs';
+import { AuthService } from './auth.service';
 
 type SaveState = {
   isLoading: boolean;
@@ -18,6 +19,7 @@ const initialState: SaveState = {
 export class SaveService {
   private readonly http = inject(HttpClient);
   private readonly API_URL = environment.apiURL;
+  private authService = inject(AuthService);
 
   private readonly saveState = signal(initialState);
 
@@ -34,7 +36,7 @@ export class SaveService {
     formData.append('saveRequest', caseBlob);
 
     return this.http
-      .post<string>(this.API_URL + '/case-files', formData)
+      .post<string>(this.API_URL + '/case-files', formData, { withCredentials: true })
       .pipe(finalize(() => this.setIsLoading(false)));
   }
 
