@@ -30,6 +30,13 @@ export const routes: Routes = [
     path: 'cases',
     loadComponent: () =>
       import('./core/case-list/case-list.component').then((m) => m.CaseListComponent),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'cases/:caseId',
+    loadComponent: () =>
+      import('./core/case-details/case-details.component').then((m) => m.CaseDetailsComponent),
+    canActivate: [authGuard],
   },
   {
     path: 'users',

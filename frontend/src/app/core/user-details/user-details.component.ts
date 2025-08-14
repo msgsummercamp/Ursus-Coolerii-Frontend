@@ -2,10 +2,12 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
+  effect,
   EventEmitter,
   inject,
   output,
   Output,
+  Signal,
   signal,
   ViewChild,
 } from '@angular/core';
@@ -28,7 +30,8 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { PassengerDetailsFormComponent } from '../passenger-details-form/passenger-details-form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from '../login/login.component';
-import { Passenger } from '../../shared/types/types';
+import { Passenger, UserDetails } from '../../shared/types/types';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-user-details',
@@ -57,7 +60,9 @@ export class UserDetailsComponent implements AfterViewInit {
   protected readonly previous = output<void>();
   protected http = inject(HttpClient);
   protected readonly dialog = inject(MatDialog);
+  private authService = inject(AuthService);
 
+  private loggedInSignal: Signal<boolean> = this.authService.loggedInSignal;
   public isValid = signal(false);
   public isValidPassengerDetails = signal(false);
 
@@ -72,11 +77,7 @@ export class UserDetailsComponent implements AfterViewInit {
     isPassenger: this.fb.control(false),
   });
 
-  @Output() receiveMessage = new EventEmitter<{
-    email: string;
-    firstName: string;
-    lastName: string;
-  }>();
+  @Output() receiveMessage = new EventEmitter<UserDetails>();
   @Output() receiveMessagePassenger = new EventEmitter<Passenger>();
   protected emailExists = signal(false);
   private readonly API_URL = environment.apiURL;
@@ -89,17 +90,28 @@ export class UserDetailsComponent implements AfterViewInit {
     this.onDestroy$.complete();
   }
 
+  constructor() {
+    effect(() => {
+      const email = this.authService.getEmail;
+      const firstName = this.authService.getFirstName;
+      const lastName = this.authService.getLastName;
+      if (this.loggedInSignal() && email && firstName && lastName) {
+        this.form.controls.email.setValue(email);
+        this.form.controls.email.disable();
+        this.form.controls.firstName.setValue(firstName);
+        this.form.controls.firstName.disable();
+        this.form.controls.lastName.setValue(lastName);
+        this.form.controls.lastName.disable();
+      }
+    });
+  }
+
   ngAfterViewInit() {
     this.onDestroy$.next();
     this.onDestroy$.complete();
     this.form.statusChanges.subscribe((status) => {
       this.isValid.set(status === 'VALID');
     });
-  }
-
-  isValidEmail(email: string | null): boolean {
-    if (!email) return false;
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 
   public get autoFillPassengerNames() {
@@ -113,11 +125,12 @@ export class UserDetailsComponent implements AfterViewInit {
   }
 
   passDataToParent() {
-    const data = this.formRawValue;
-    if (!data?.email) return;
+    const userDetails = this.formRawValue;
+    const passengerData = this.passengerDetailsFormComponent.getFormRaw;
+    if (!userDetails?.email || !passengerData) return;
 
-    this.receiveMessage.emit(data);
-    this.receiveMessagePassenger.emit(this.passengerDetailsFormComponent?.getFormRaw || undefined);
+    this.receiveMessage.emit(userDetails);
+    this.receiveMessagePassenger.emit(passengerData);
   }
 
   onEmailBlur() {
@@ -145,14 +158,15 @@ export class UserDetailsComponent implements AfterViewInit {
     }
   }
 
-  public get formRawValue(): { firstName: string; lastName: string; email: string } | undefined {
+  public get formRawValue(): UserDetails | undefined {
     const raw = this.form.getRawValue();
-    if (!raw.email) return;
+    if (!raw.email || !raw.firstName || !raw.lastName || !raw.registrationNo) return;
 
     return {
-      email: raw.email ?? '',
-      firstName: raw.firstName ?? '',
-      lastName: raw.lastName ?? '',
+      email: raw.email,
+      firstName: raw.firstName,
+      lastName: raw.lastName,
+      reservationNumber: raw.registrationNo,
     };
   }
 
@@ -169,8 +183,6 @@ export class UserDetailsComponent implements AfterViewInit {
   protected continueToSubmit() {
     this.passDataToParent();
     this.passengerDetailsFormComponent.passDataToParent();
-    console.log('User Details:', this.formRawValue);
-    console.log('Passenger Details:', this.passengerDetailsFormComponent.getFormRaw);
     this.next.emit();
   }
   protected continueToPassengerDetails() {

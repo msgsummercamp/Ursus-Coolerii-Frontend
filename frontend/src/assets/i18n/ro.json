@@ -155,11 +155,9 @@
     "reasonDeniedBoarding": "Motivul refuzului de îmbarcare",
     "airlineMotiveIsMentioned": "A menționat compania motivul de perturbare?",
     "communicatedMotive": "Care este motivul comunicat de companie?",
-    "didArriveAtDestination": "Ați ajuns la destinație?",
     "tehnicalProblems": "Probleme tehnice",
     "meteorologicalConditions": "Condiții meteorologice",
     "strikeProblemsWithAirport": "Grevă la aeroport",
-    "airportProblems": "Probleme la aeroport",
     "crewProblems": "Problemă cu echipajul",
     "otherMotives": "Alte motive",
     "flightOverbooked": "Zbor suprarezervat",
@@ -183,7 +181,8 @@
     "notEligible": "Zborul dumneavoastră nu este eligibil pentru compensație"
   },
   "userDetails": {
-    "title": "Detaliile utilizatorului"
+    "title": "Detaliile utilizatorului",
+    "email": "Email"
   },
   "home": {
     "title": "Air Assist",
@@ -314,5 +313,10 @@
     "email": "Email",
     "password": "Parolă",
     "button": "Autentificare"
+  },
+  "caseDetails": {
+    "title": "Caz {{contractId}}",
+    "problemFlight": "Zbor cu Problemă",
+    "docs": "Documente"
   }
 }

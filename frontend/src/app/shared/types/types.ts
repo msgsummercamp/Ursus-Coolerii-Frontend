@@ -91,9 +91,16 @@ export type SignupRequest = {
   role: string;
 };
 
+export type UserDetails = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  reservationNumber: string;
+};
+
 export type SaveRequest = {
   caseRequest: CaseData;
-  signupRequest: SignupRequest;
+  signupRequest: SignupRequest | null;
 };
 
 export type EligibilityRequest = {
@@ -136,6 +143,51 @@ export type LoggedUserInfo = {
   username: string;
   role: UserRole[];
 };
+
+export interface FlightDetailsDTO {
+  flightNumber: string;
+  airline: string;
+  departureAirport: string;
+  destinationAirport: string;
+  plannedDepartureTime: string;
+  plannedArrivalTime: string;
+  reservationNumber: string;
+  problemFlight: boolean;
+  isFirstFlight: boolean;
+  isLastFlight: boolean;
+}
+
+export interface PassengerDTO {
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  phone: string;
+  address: string;
+  postalCode: string;
+  email: string;
+}
+
+export interface DocumentDTO {
+  filename: string;
+  uploadTimestamp: string;
+}
+
+export interface CommentDTO {
+  userEmail: string;
+  userType: string;
+  timestamp: string;
+  content: string;
+}
+
+export interface CaseDetailsDTO {
+  caseId: string;
+  contractId: string;
+  reservationNumber: string;
+  flights: FlightDetailsDTO[];
+  passenger: PassengerDTO;
+  documents: DocumentDTO[];
+  comments: CommentDTO[];
+}
 
 export type LoginResponse = {
   token: string;
