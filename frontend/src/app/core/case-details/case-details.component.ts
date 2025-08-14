@@ -50,7 +50,8 @@ export class CaseDetailsComponent implements OnInit {
           this.caseDetails = data;
         },
         error: (err) => {
-          this.router.navigate(['/unauthorized']);
+          ///TODO: unauthorized page
+          this.router.navigate(['/home']);
         },
       });
     }
