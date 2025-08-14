@@ -10,11 +10,37 @@
     form {
       width: 100%;
       overflow: auto;
-
-      .mat-mdc-form-field {
-        width: 100%;
-        padding-top: 1rem;
-      }
     }
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    button:hover {
+      color: var(--mat-sys-error);
+    }
+  }
+
+  .file-drop-zone {
+    margin: 1.5rem 0;
+    border: 3px dashed #ccc;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    transition: border-color 0.3s ease;
+    cursor: pointer;
+
+    .cloud {
+      color: var(--mat-sys-primary);
+      font-size: 2.5rem;
+      height: auto;
+      width: auto;
+    }
+  }
+
+  .file-drop-zone.drag-over {
+    border-color: var(--mat-sys-primary);
   }
 }

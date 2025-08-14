@@ -137,6 +137,8 @@
   "documents": {
     "title": "Upload Documents",
     "chooseFile": "Choose File(s)",
+    "dragDropPrompt": "Drag and drop your files here or click to select files",
+    "allowedFormats": "Allowed formats: PDF, JPG, JPEG, PNG",
     "chooseFileError": "Please choose at least one file!"
   },
   "connecting-flight": {

@@ -137,6 +137,8 @@
   "documents": {
     "title": "Încărcare Documente",
     "chooseFile": "Alegeți Fișier(e)",
+    "dragDropPrompt": "Trageți și Plasați fișierele aici sau faceți clic pentru a încărca",
+    "allowedFormats": "Formate permise: PDF, JPG, JPEG, PNG",
     "chooseFileError": "Vă rog, alegeți măcar un fișier!"
   },
   "connecting-flight": {
