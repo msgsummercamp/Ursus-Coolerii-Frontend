@@ -123,12 +123,12 @@
     <mat-card-actions class="special-form-actions">
       <button
         mat-stroked-button
-        matTooltip="Sorry, you are not eligible for this form, but you can try again at any time."
-        class="special-mat-sec-button"
+        matTooltip="Try again!"
         [disabled]="!formDisruption.valid || isEligible()"
         (click)="reset()"
       >
         {{ 'flightDetails.reset' | transloco }}
+        <mat-icon fontIcon="replay" />
       </button>
       <button
         mat-flat-button
@@ -136,8 +136,9 @@
         [disabled]="!isEligible()"
         (click)="continue()"
       >
-        {{ 'flightDetails.next' | transloco }}</button
-      >
+        {{ 'flightDetails.next' | transloco }}
+        <mat-icon fontIcon="arrow_forward" />
+      </button>
     </mat-card-actions>
   </mat-card>
 </div>
