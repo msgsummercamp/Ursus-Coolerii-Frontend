@@ -2,6 +2,11 @@ mat-toolbar {
   position: sticky;
   z-index: 10;
   background-color: var(--mat-sys-primary);
+  padding: 0 1.5rem;
+
+  a {
+    height: 45px;
+  }
 }
 
 .logo {
@@ -9,7 +14,7 @@ mat-toolbar {
   background-color: var(--mat-sys-secondary-container);
 }
 
-.home-icon-btn {
+.mat-icon-btn {
   margin-right: 3rem;
   color: var(--mat-sys-on-primary);
 }

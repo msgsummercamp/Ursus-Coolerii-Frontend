@@ -220,6 +220,7 @@ export class StepperComponent implements AfterViewInit {
       this.cacheStepHeaderPositions();
       this.setInitialAirplanePosition();
       this.airplaneReady = true;
+      this.airportService.fetchAirports();
     });
   }
 
@@ -251,9 +252,6 @@ export class StepperComponent implements AfterViewInit {
   }
 
   onStepChange(event: any) {
-    if (event.selectedIndex === 1) {
-      this.airportService.fetchAirports();
-    }
     const prevStep = this.activeStep;
     this.activeStep = event.selectedIndex;
     this.setAnimationParams(prevStep, this.activeStep);
