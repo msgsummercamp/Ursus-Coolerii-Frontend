@@ -63,6 +63,7 @@ export class UserService {
           pageIndex: pageIndex.toString(),
           pageSize: pageSize.toString(),
         },
+        withCredentials: true,
       })
       .pipe(
         map((res) => {

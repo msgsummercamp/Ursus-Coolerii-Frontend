@@ -8,10 +8,10 @@
   <span class="spacer"></span>
   <div class="toolbar-right">
     <button *showIfLoggedOut routerLink="/login" class="home-icon-btn" mat-icon-button>
-      Login
+      <mat-icon>login</mat-icon>
     </button>
     <button *showIfLogged (click)="logout()" routerLink="/home" class="home-icon-btn" mat-icon-button>
-      Logout
+      <mat-icon>logout</mat-icon>
     </button>
     <app-language-switcher class="language-switcher"></app-language-switcher>
   </div>

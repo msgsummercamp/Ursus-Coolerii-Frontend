@@ -91,9 +91,16 @@ export type SignupRequest = {
   role: string;
 };
 
+export type UserDetails = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  reservationNumber: string;
+};
+
 export type SaveRequest = {
   caseRequest: CaseData;
-  signupRequest: SignupRequest;
+  signupRequest: SignupRequest | null;
 };
 
 export type EligibilityRequest = {

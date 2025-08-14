@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   MatCell,
   MatCellDef,
@@ -16,6 +16,7 @@ import { CaseService } from './service/case.service';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { CaseStatusLabels } from '../../shared/types/types';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { AuthService } from '../../shared/services/auth.service';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -43,6 +44,8 @@ export class CaseListComponent implements OnInit {
   cases;
   public statusList: string[];
   protected readonly CaseStatusLabels = CaseStatusLabels;
+  private authService = inject(AuthService);
+  private currentId: string | null;
 
   displayedColumns: string[] = [
     'contractId',
@@ -57,16 +60,17 @@ export class CaseListComponent implements OnInit {
   ];
 
   constructor(protected caseService: CaseService) {
+    this.currentId = this.authService.getId ?? null;
     this.cases = this.caseService.casesSignal;
     this.statusList = Object.values(CaseStatusLabels);
   }
 
   ngOnInit() {
-    this.caseService.fetchCases();
+    this.caseService.fetchCases(0, 5, this.currentId);
     this.statusList = Object.values(CaseStatusLabels);
   }
 
   onPageChange(event: PageEvent) {
-    this.caseService.fetchCases(event.pageIndex, event.pageSize);
+    this.caseService.fetchCases(event.pageIndex, event.pageSize, this.currentId);
   }
 }
