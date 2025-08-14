@@ -4,7 +4,9 @@
 <div class="flight-form-wrapper-container">
   <mat-card class="special-mat-card">
     <mat-card-header class="special-mat-header">
-      <mat-card-title class="special-mat-title">Flight Details</mat-card-title>
+      <mat-card-title class="special-mat-title">{{
+        'flightDetails.title' | transloco
+      }}</mat-card-title>
     </mat-card-header>
     <mat-card-content class="special-mat-content">
       <div *ngFor="let flight of connectingFlights(); let i = index">
@@ -25,9 +27,10 @@
       </div>
     </mat-card-content>
     <mat-card-actions *transloco="let translate" class="special-form-actions">
-      <button mat-stroked-button class="special-mat-sec-button" (click)="back()">{{
-        translate('stepper.back')
-      }}</button>
+      <button mat-stroked-button (click)="back()"
+        >{{ translate('stepper.back') }}
+        <mat-icon fontIcon="arrow_back" />
+      </button>
       <button
         mat-flat-button
         class="special-mat-prim-button"
@@ -35,6 +38,7 @@
         (click)="continue()"
       >
         {{ translate('stepper.next') }}
+        <mat-icon fontIcon="arrow_forward" />
       </button>
     </mat-card-actions>
   </mat-card>

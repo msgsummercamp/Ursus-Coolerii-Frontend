@@ -26,6 +26,7 @@ import { StopoverService } from '../../shared/services/stopover.service';
 import { Flight } from '../../shared/types/types';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { AirlineAttributes } from '../flight-details-form/service/airline.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-flight-details-wrap',
@@ -48,6 +49,7 @@ import { AirlineAttributes } from '../flight-details-form/service/airline.servic
     MatCardActions,
     TranslocoDirective,
     MatCheckbox,
+    MatIcon,
   ],
   templateUrl: './flight-details-wrap.component.html',
   styleUrl: './flight-details-wrap.component.scss',
