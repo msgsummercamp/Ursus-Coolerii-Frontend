@@ -2,7 +2,7 @@ import { ApplicationConfig, isDevMode, provideZoneChangeDetection } from '@angul
 import { provideRouter, withViewTransitions } from '@angular/router';
 
 import { routes } from './app.routes';
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { provideTransloco } from '@jsverse/transloco';
@@ -12,14 +12,9 @@ import { credentialsInterceptor } from './shared/interceptors/credentials.interc
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useValue: credentialsInterceptor,
-      multi: true,
-    },
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withViewTransitions()),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([credentialsInterceptor])),
     provideNativeDateAdapter(),
     CookieService,
     provideHttpClient(),

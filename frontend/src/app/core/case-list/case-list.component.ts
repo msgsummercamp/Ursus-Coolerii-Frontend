@@ -17,6 +17,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { CaseStatusLabels } from '../../shared/types/types';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { AuthService } from '../../shared/services/auth.service';
+import { AuthorizationService } from '../../shared/services/authorization.service';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -46,6 +47,7 @@ export class CaseListComponent implements OnInit {
   protected readonly CaseStatusLabels = CaseStatusLabels;
   private authService = inject(AuthService);
   private currentId: string | null;
+  private authorizationService = inject(AuthorizationService);
 
   displayedColumns: string[] = [
     'contractId',
@@ -60,7 +62,9 @@ export class CaseListComponent implements OnInit {
   ];
 
   constructor(protected caseService: CaseService) {
-    this.currentId = this.authService.getId ?? null;
+    if (this.authorizationService.hasRolePassenger(this.authService.sessionToken))
+      this.currentId = this.authService.getId ?? null;
+    else this.currentId = null;
     this.cases = this.caseService.casesSignal;
     this.statusList = Object.values(CaseStatusLabels);
   }
