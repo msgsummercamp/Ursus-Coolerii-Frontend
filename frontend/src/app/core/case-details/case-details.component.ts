@@ -45,8 +45,14 @@ export class CaseDetailsComponent implements OnInit {
   ngOnInit() {
     const caseId = this.route.snapshot.paramMap.get('caseId');
     if (caseId) {
-      this.caseFileService.getCaseDetailsByCaseId(caseId).subscribe((data) => {
-        this.caseDetails = data;
+      this.caseFileService.getCaseDetailsByCaseId(caseId).subscribe({
+        next: (data) => {
+          this.caseDetails = data;
+        },
+        error: (err) => {
+          ///TODO: unauthorized page
+          this.router.navigate(['/home']);
+        },
       });
     }
   }

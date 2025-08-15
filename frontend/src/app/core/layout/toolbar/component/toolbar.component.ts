@@ -7,6 +7,7 @@ import { MatIcon } from '@angular/material/icon';
 import { AuthService } from '../../../../shared/services/auth.service';
 import { AuthDirectiveLogin } from '../../../../shared/directives/auth.login.directive';
 import { AuthLogoutDirective } from '../../../../shared/directives/auth-logout.directive';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-toolbar',
@@ -18,6 +19,7 @@ import { AuthLogoutDirective } from '../../../../shared/directives/auth-logout.d
     MatIcon,
     AuthDirectiveLogin,
     AuthLogoutDirective,
+    MatTooltip,
   ],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss',

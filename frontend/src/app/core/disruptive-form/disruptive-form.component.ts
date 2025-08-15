@@ -36,6 +36,7 @@ import {
   MatCardTitle,
 } from '@angular/material/card';
 import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-disruptive-form',
@@ -58,6 +59,7 @@ import { MatTooltip } from '@angular/material/tooltip';
     MatCardContent,
     MatCardActions,
     MatTooltip,
+    MatIcon,
   ],
   templateUrl: './disruptive-form.component.html',
   styleUrl: './disruptive-form.component.scss',

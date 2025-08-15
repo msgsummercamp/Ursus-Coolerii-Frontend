@@ -32,6 +32,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from '../login/login.component';
 import { Passenger, UserDetails } from '../../shared/types/types';
 import { AuthService } from '../../shared/services/auth.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-user-details',
@@ -50,6 +51,7 @@ import { AuthService } from '../../shared/services/auth.service';
     TranslocoPipe,
     MatCheckbox,
     PassengerDetailsFormComponent,
+    MatIcon,
   ],
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.scss',

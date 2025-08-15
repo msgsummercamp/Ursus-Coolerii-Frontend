@@ -1,0 +1,8 @@
+<ng-container *transloco="let translate; prefix: 'confirmation-dialog'">
+  <h2 mat-dialog-title>{{ translate('title') }}</h2>
+  <mat-dialog-content>{{ translate('text') }}</mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-stroked-button (click)="handleCancel()">{{ translate('no') }}</button>
+    <button mat-flat-button (click)="handleConfirmation()">{{ translate('yes') }}</button>
+  </mat-dialog-actions>
+</ng-container>
