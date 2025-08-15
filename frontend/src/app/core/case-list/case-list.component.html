@@ -115,14 +115,14 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
-      <mat-paginator
-        [length]="caseService.totalCasesSignal()"
-        [pageSize]="caseService.getPageSize()"
-        [pageIndex]="caseService.getPageIndex()"
-        [pageSizeOptions]="[5, 15, 50]"
-        (page)="onPageChange($event)"
-      ></mat-paginator>
     </div>
+    <mat-paginator
+      [length]="caseService.totalCasesSignal()"
+      [pageSize]="caseService.getPageSize()"
+      [pageIndex]="caseService.getPageIndex()"
+      [pageSizeOptions]="[5, 15, 50]"
+      (page)="onPageChange($event)"
+    ></mat-paginator>
   </div>
 }
 

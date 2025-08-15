@@ -7,6 +7,12 @@ mat-toolbar {
   a {
     height: 45px;
   }
+
+  .button-alignment {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+  }
 }
 
 .logo {
@@ -15,7 +21,6 @@ mat-toolbar {
 }
 
 .mat-icon-btn {
-  margin-right: 3rem;
   color: var(--mat-sys-on-primary);
 }
 

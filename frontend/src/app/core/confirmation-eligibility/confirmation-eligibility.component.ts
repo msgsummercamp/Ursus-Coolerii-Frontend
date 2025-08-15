@@ -39,6 +39,7 @@ import { CaseFileService } from '../layout/services/case-file.service';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../shared/services/auth.service';
 import { MatIcon } from '@angular/material/icon';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-confirmation-eligibility-form',
@@ -58,6 +59,7 @@ import { MatIcon } from '@angular/material/icon';
     MatCheckbox,
     ReactiveFormsModule,
     MatIcon,
+    NgIf,
   ],
   templateUrl: './confirmation-eligibility.component.html',
   styleUrl: './confirmation-eligibility.component.scss',
@@ -163,9 +165,6 @@ export class ConfirmationEligibilityComponent {
     this.dialog.open(PopUpGdprComponent, { autoFocus: false });
   }
 
-  ///TODO : Move this in a service it makes the code hard to maintain if we keep logic like this in component .ts
-  ///Why this is called with fetch instead of a httpClient just like all others calls?
-  ///Refactor whole function
   public downloadPdf(caseId: string) {
     fetch(`${environment.apiURL}/case-files/pdf/${caseId}`, {
       method: 'GET',
@@ -197,5 +196,9 @@ export class ConfirmationEligibilityComponent {
         console.error('PDF download error:', err);
         alert('Could not download PDF. Please try again.');
       });
+  }
+
+  public get isAuthenticated(): boolean {
+    return this.authService.isAuthenticated();
   }
 }
