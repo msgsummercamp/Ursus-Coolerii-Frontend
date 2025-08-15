@@ -138,8 +138,9 @@
     "title": "Încărcare Documente",
     "chooseFile": "Alegeți Fișier(e)",
     "dragDropPrompt": "Trageți și Plasați fișierele aici sau faceți clic pentru a încărca",
-    "allowedFormats": "Formate permise: PDF, JPG, JPEG, PNG",
-    "chooseFileError": "Vă rog, alegeți măcar un fișier!"
+    "allowedFormats": "Formate permise: PDF, JPG, JPEG, PNG. Dimensiune maximă: 5MB",
+    "chooseFileError": "Vă rog, alegeți măcar un fișier!",
+    "fileSizeError": "Fișierul depășește limita de dimensiune de 5MB!"
   },
   "connecting-flight": {
     "title": "Zbor",
@@ -236,23 +237,24 @@
     "notEligible": "Pasagerul nu este eligibil",
     "almostDone": "Aproape gata",
     "generalInfo": "Informații generale:",
-    "readGdprTerms": "Dacă sunteți eligibil, vă recomandăm să citiți GDPR și termenii",
-    "checkBoxes": "După ce ați citit cu atenție, trebuie să bifați casetele GDPR și termeni înainte de a trimite",
-    "passwordGenerated": "Parola dvs. este generată automat și trimisă la adresa de email specificată",
-    "changePassword": "Nu uitați ca după prima autentificare să schimbați parola",
+    "readGdprTerms": "Dacă sunteți eligibil, vă recomandăm să citiți GDPR și termenii.",
+    "checkBoxes": "După ce ați citit cu atenție, trebuie să bifați casetele GDPR și termeni înainte de a trimite.",
+    "passwordGenerated": "Parola dvs. este generată automat și trimisă la adresa de email specificată.",
+    "changePassword": "Nu uitați ca după prima autentificare să schimbați parola!",
     "readGdprTermsButton": "Apăsați aici pentru a citi GDPR și termenii",
     "gdprCheckbox": "Sunt de acord cu GDPR",
-    "termsCheckbox": "Sunt de acord cu termenii",
-    "marketingCheckbox": "Da, doresc să primesc emailuri",
-    "submittedTitle": "Cazul dvs. a fost trimis",
+    "termsMissing": "Este necesar să bifați caseta pentru termeni!",
+    "marketingCheckbox": "Da, doresc să primesc email-uri (motive de marketing)",
+    "submittedTitle": "Cazul dvs. a fost trimis!",
     "generalInfoSubtitle": "Informații generale",
-    "emailSent": "Un email cu parola generată a fost trimis la:",
-    "caseCreated": "Cazul dvs. a fost creat cu succes și ați primit un email cu ID-ul cazului.",
+    "caseSubmittedWithoutLogin": "Au fost trimise două emailuri — unul cu parola generată și altul cu contractul și ID-ul cazului — către:",
+    "caseSubmittedWithLogin": "Un email cu contractul și ID-ul cazului a fost trimis către:",
     "nextSubtitle": "Ce urmează?",
     "nextStep1": "1. Vom aloca un coleg dedicat cazului dvs.",
     "nextStep2": "2. Colegul nostru va analiza cu atenție toate detaliile cererii dvs.",
     "nextStep3": "3. După ce avem o rezoluție, vă vom contacta pentru a discuta rezultatul.",
-    "downloadButton": "Descarcă PDF"
+    "downloadButton": "Descarcă Contractul",
+    "compensationMessage": "Puteti primi până la {{reward}} EURO pentru acest zbor!"
   },
   "gdprDialog": {
     "title": "Ursus Coolerii Air Assist",
@@ -332,5 +334,7 @@
     "text": "Sunteți sigur că vreți să ștergeți obiectul? Acțiunea aceasta este ireversibilă.",
     "yes": "Da",
     "no": "Nu"
-  }
+  },
+  "logout": "Deconectat cu succes",
+  "close": "Închide"
 }

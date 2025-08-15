@@ -83,6 +83,17 @@ export class DocumentsFormComponent implements OnInit {
     const existingFiles = this.documentsFormGroup.get('files')?.value || [];
     const newFiles = Array.from(input.files);
 
+    const tooLarge = newFiles.some((file) => file.size > maxSize);
+    if (tooLarge) {
+      this.documentsFormGroup.get('files')?.setErrors({ limit: true });
+      this.documentsFormGroup.get('files')?.markAsTouched();
+      return;
+    } else {
+      if (this.documentsFormGroup.get('files')?.hasError('limit')) {
+        this.documentsFormGroup.get('files')?.setErrors(null);
+      }
+    }
+
     const validFiles = newFiles.filter(
       (file) => allowedTypes.includes(file.type) && file.size <= maxSize
     );
