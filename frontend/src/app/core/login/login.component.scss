@@ -12,3 +12,12 @@
 .login-form-card {
   max-width: 30vw;
 }
+
+.close-button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.login-dialog-container {
+  display: contents;
+}

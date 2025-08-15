@@ -138,8 +138,9 @@
     "title": "Încărcare Documente",
     "chooseFile": "Alegeți Fișier(e)",
     "dragDropPrompt": "Trageți și Plasați fișierele aici sau faceți clic pentru a încărca",
-    "allowedFormats": "Formate permise: PDF, JPG, JPEG, PNG",
-    "chooseFileError": "Vă rog, alegeți măcar un fișier!"
+    "allowedFormats": "Formate permise: PDF, JPG, JPEG, PNG. Dimensiune maximă: 5MB",
+    "chooseFileError": "Vă rog, alegeți măcar un fișier!",
+    "fileSizeError": "Fișierul depășește limita de dimensiune de 5MB!"
   },
   "connecting-flight": {
     "title": "Zbor",
@@ -329,5 +330,7 @@
     "text": "Sunteți sigur că vreți să ștergeți obiectul? Acțiunea aceasta este ireversibilă.",
     "yes": "Da",
     "no": "Nu"
-  }
+  },
+  "logout": "Deconectat cu succes",
+  "close": "Închide"
 }
