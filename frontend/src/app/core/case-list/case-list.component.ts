@@ -1,12 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CaseService } from './service/case.service';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { CaseStatusLabels } from '../../shared/types/types';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { AuthService } from '../../shared/services/auth.service';
 import { AuthorizationService } from '../../shared/services/authorization.service';
 import { FormsModule } from '@angular/forms';
-import { CommonModule, DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
+import { CommonModule, DatePipe, NgClass, NgForOf } from '@angular/common';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -38,7 +37,6 @@ import { CaseStatus } from '../../shared/enums';
     MatNativeDateModule,
     MatTableModule,
     RouterLink,
-    NgIf,
     NgForOf,
     NgClass,
     DatePipe,
@@ -50,7 +48,6 @@ import { CaseStatus } from '../../shared/enums';
 export class CaseListComponent implements OnInit {
   cases;
   public statusList: CaseStatus[];
-  protected readonly CaseStatusLabels = CaseStatusLabels;
   private authService = inject(AuthService);
   private authorizationService = inject(AuthorizationService);
   private currentId: string | null;
