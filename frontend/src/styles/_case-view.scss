@@ -4,4 +4,34 @@
   overflow: auto;
   display: flex;
   flex-direction: column;
+  margin-top: 2rem;
+}
+
+.special-mat-table {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--mat-sys-surface);
+
+  th {
+    background: var(--mat-sys-primary) !important;
+    font-weight: bold;
+    color: white;
+  }
+
+  td {
+    background: var(--mat-sys-surface);
+  }
+
+  tr:hover td {
+    background-color: var(--mat-sys-tertiary-container);
+  }
+
+  tr:nth-child(even) td {
+    background: var(--mat-sys-surface-variant);
+  }
+
+  mat-chip {
+    font-weight: bold;
+  }
 }
