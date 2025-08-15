@@ -8,6 +8,8 @@ import { AuthService } from '../../../../shared/services/auth.service';
 import { AuthDirectiveLogin } from '../../../../shared/directives/auth.login.directive';
 import { AuthLogoutDirective } from '../../../../shared/directives/auth-logout.directive';
 import { MatTooltip } from '@angular/material/tooltip';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { translate } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-toolbar',
@@ -26,8 +28,14 @@ import { MatTooltip } from '@angular/material/tooltip';
 })
 export class ToolbarComponent {
   private authService = inject(AuthService);
+  private snackBar = inject(MatSnackBar);
+  protected readonly translate = translate;
 
   public logout() {
     this.authService.logout();
+
+    this.snackBar.open(this.translate('logout'), this.translate('close'), {
+      duration: 3000,
+    });
   }
 }

@@ -329,5 +329,7 @@
     "text": "Sunteți sigur că vreți să ștergeți obiectul? Acțiunea aceasta este ireversibilă.",
     "yes": "Da",
     "no": "Nu"
-  }
+  },
+  "logout": "Deconectat cu succes",
+  "close": "Închide"
 }
