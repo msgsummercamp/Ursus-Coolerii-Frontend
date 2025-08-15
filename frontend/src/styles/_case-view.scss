@@ -37,3 +37,31 @@
     font-weight: bold;
   }
 }
+
+.list-header {
+  display: flex;
+  align-items: center;
+  height: 6rem;
+  gap: 1rem;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+
+  .spacer {
+    flex: 1;
+  }
+
+  mat-form-field {
+    width: 12.5rem;
+    height: 3.5rem;
+  }
+
+  .special-icon-button {
+    &.active {
+      background-color: var(--mat-sys-primary);
+      color: white;
+
+      &:hover {
+        background-color: var(--mat-sys-primary);
+      }
+    }
+  }
+}
