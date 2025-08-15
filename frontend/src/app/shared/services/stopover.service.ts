@@ -29,7 +29,7 @@ const initialState: StopoverState = {
 })
 export class StopoverService {
   private readonly stopoverSignal = signal<StopoverState>(initialState);
-  private readonly problemFlightSignal = signal<number>(0);
+  private readonly problemFlightSignal = signal<number | undefined>(undefined);
 
   public get stopoverState() {
     return this.stopoverSignal.asReadonly();
@@ -117,7 +117,7 @@ export class StopoverService {
     });
   }
 
-  public setProblemFlightIndex(i: number) {
+  public setProblemFlightIndex(i: number | undefined) {
     this.problemFlightSignal.set(i);
     this.stopoverSignal.update((stopoverState: StopoverState) => ({
       ...stopoverState,

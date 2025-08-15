@@ -6,3 +6,8 @@
   align-items: center;
   overflow: hidden;
 }
+.highlight-checkbox {
+  border: 1px solid var(--mat-sys-tertiary);
+  border-radius: 1rem;
+  padding: 0 0.5rem;
+}

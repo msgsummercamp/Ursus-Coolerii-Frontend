@@ -19,9 +19,9 @@
           [flight]="getFlight(i)"
         />
         <mat-checkbox
-          [disabled]="problemFlightIndex === i"
           [checked]="problemFlightIndex === i"
           (change)="updateProblemFlight(i)"
+          [ngClass]="{ 'highlight-checkbox': problemFlightIndex === undefined }"
           >{{ 'connecting-flight.problem' | transloco }}</mat-checkbox
         >
       </div>
