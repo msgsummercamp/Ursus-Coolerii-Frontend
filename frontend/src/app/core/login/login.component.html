@@ -7,28 +7,25 @@
       <mat-card-content>
         <mat-form-field>
           <mat-label>{{ 'login.email' | transloco }}</mat-label>
-          <input
-            matInput
-            type="text"
-            email
-            formControlName="email"
-          />
+          <input matInput type="text" email formControlName="email" />
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{ 'login.password' | transloco }}</mat-label>
-          <input
-            matInput
-            type="password"
-            formControlName="password"
-          />
+          <input matInput type="password" formControlName="password" />
         </mat-form-field>
         <mat-error>
-          {{ loginError()}}
+          {{ loginError() }}
         </mat-error>
       </mat-card-content>
       <mat-card-actions class="special-form-actions">
-        <button mat-flat-button [disabled]="form.invalid" (click)="login()">
+        <button
+          mat-flat-button
+          class="special-mat-prim-button"
+          [disabled]="form.invalid"
+          (click)="login()"
+        >
           {{ 'login.button' | transloco }}
+          <mat-icon fontIcon="login" />
         </button>
       </mat-card-actions>
     </form>

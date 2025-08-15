@@ -1,15 +1,13 @@
 <mat-toolbar>
-  <a routerLink="/home" class="logo-link">
+  <a matTooltip="Homepage" routerLink="/home">
     <img src="assets/airlogo.png" alt="Logo" class="logo" />
   </a>
   <span class="spacer"></span>
-  <div class="toolbar-right">
-    <button *showIfLoggedOut routerLink="/login" class="home-icon-btn" mat-icon-button>
-      <mat-icon>login</mat-icon>
-    </button>
-    <button *showIfLogged (click)="logout()" routerLink="/home" class="home-icon-btn" mat-icon-button>
-      <mat-icon>logout</mat-icon>
-    </button>
-    <app-language-switcher class="language-switcher"></app-language-switcher>
-  </div>
+  <button *showIfLoggedOut routerLink="/login" class="mat-icon-btn" mat-icon-button>
+    <mat-icon matTooltip="Login">login</mat-icon>
+  </button>
+  <button *showIfLogged (click)="logout()" routerLink="/home" class="mat-icon-btn" mat-icon-button>
+    <mat-icon matTooltip="Logout">logout</mat-icon>
+  </button>
+  <app-language-switcher />
 </mat-toolbar>
