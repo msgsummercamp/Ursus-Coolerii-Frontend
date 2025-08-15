@@ -1,12 +1,14 @@
 <ng-container *transloco="let translate; prefix: 'language-switcher'">
-  <button mat-icon-button [matMenuTriggerFor]="menu" class="icons">
-    @if(currentLanguage() === "ro") {
-      <img src="assets/ro-lang.svg" alt="Romania" class="language-icon">
-    }
-    @else {
-      <img src="assets/eng-lang.svg" alt="English" class="language-icon">
-    }
-  </button>
+  <div class="icons">
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="icons">
+      @if (currentLanguage() === 'ro') {
+        <img src="assets/ro-lang.svg" alt="Romania" class="language-icon" />
+      } @else {
+        <img src="assets/eng-lang.svg" alt="English" class="language-icon" />
+      }
+    </button>
+  </div>
+
   <mat-menu #menu="matMenu">
     @for (lang of languages; track $index) {
       <button mat-menu-item [value]="lang" (click)="selectLanguage(lang)">{{

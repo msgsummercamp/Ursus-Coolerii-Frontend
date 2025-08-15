@@ -2,9 +2,15 @@ mat-icon {
   color: var(--mat-sys-on-primary);
 }
 
+.icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .language-icon {
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   object-fit: cover;
 }
