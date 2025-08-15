@@ -138,8 +138,9 @@
     "title": "Upload Documents",
     "chooseFile": "Choose File(s)",
     "dragDropPrompt": "Drag and drop your files here or click to select files",
-    "allowedFormats": "Allowed formats: PDF, JPG, JPEG, PNG",
-    "chooseFileError": "Please choose at least one file!"
+    "allowedFormats": "Allowed formats: PDF, JPG, JPEG, PNG. Maximum file size: 5MB",
+    "chooseFileError": "Please choose at least one file!",
+    "fileSizeError": "File size exceeds 5MB limit!"
   },
   "connecting-flight": {
     "title": "Flight",
