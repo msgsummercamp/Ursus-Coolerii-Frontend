@@ -23,12 +23,14 @@
         'confirmationEligibility.' + eligibleMessage() | transloco
       }}</p>
       <form [formGroup]="gdprForm" (ngSubmit)="submit()" class="gdpr-form">
-        <mat-checkbox formControlName="gdpr">{{
-          'confirmationEligibility.gdprCheckbox' | transloco
-        }}</mat-checkbox>
-        <mat-checkbox formControlName="terms">{{
-          'confirmationEligibility.termsCheckbox' | transloco
-        }}</mat-checkbox>
+        <mat-checkbox formControlName="gdpr">
+          {{ 'confirmationEligibility.gdprCheckbox' | transloco }}
+          <span class="required-asterisk" *ngIf="!gdprForm.controls.gdpr.value">*</span>
+        </mat-checkbox>
+        <mat-checkbox formControlName="terms">
+          {{ 'confirmationEligibility.termsCheckbox' | transloco }}
+          <span class="required-asterisk" *ngIf="!gdprForm.controls.terms.value">*</span>
+        </mat-checkbox>
         <mat-checkbox formControlName="marketing">{{
           'confirmationEligibility.marketingCheckbox' | transloco
         }}</mat-checkbox>
@@ -37,13 +39,20 @@
     <mat-error class="not-checked-error">
       {{ notCheckedText() || saveError() }}
     </mat-error>
-    <mat-label class="reward-label">{{ rewardMessage() }}</mat-label>
+    <mat-label class="reward-label">{{
+      'confirmationEligibility.compensationMessage' | transloco: { reward: rewardMessage() }
+    }}</mat-label>
     <mat-card-actions class="special-form-actions">
       <button mat-stroked-button (click)="back()">
         {{ 'stepper.back' | transloco }}
         <mat-icon fontIcon="arrow_back" />
       </button>
-      <button mat-flat-button color="primary" (click)="submit()" [disabled]="!isEligible()">
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="submit()"
+        [disabled]="!isEligible() || !gdprForm.valid"
+      >
         {{ 'stepper.done' | transloco }}
         <mat-icon fontIcon="check" />
       </button>
@@ -61,8 +70,14 @@
         'confirmationEligibility.generalInfoSubtitle' | transloco
       }}</mat-card-subtitle>
       <div class="info-content">
-        <p>{{ 'confirmationEligibility.emailSent' | transloco }} {{ email }}</p>
-        <p>{{ 'confirmationEligibility.caseCreated' | transloco }}</p>
+        <p>
+          {{
+            isAuthenticated
+              ? ('confirmationEligibility.caseSubmittedWithLogin' | transloco)
+              : ('confirmationEligibility.caseSubmittedWithoutLogin' | transloco)
+          }}
+          {{ email }}
+        </p>
       </div>
       <mat-card-subtitle class="confirmation-sub-title">{{
         'confirmationEligibility.nextSubtitle' | transloco
@@ -74,9 +89,15 @@
       </div>
     </mat-card-content>
     @if (caseId) {
-      <a href="#" (click)="downloadPdf(caseId!); $event.preventDefault()" class="download-link">
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="downloadPdf(caseId!); $event.preventDefault()"
+        class="download-link"
+      >
         {{ 'confirmationEligibility.downloadButton' | transloco }}
-      </a>
+        <mat-icon fontIcon="download" />
+      </button>
     }
   </mat-card>
 }
