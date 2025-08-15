@@ -221,6 +221,9 @@
     "reservationNumber": "Număr Rezervare",
     "passengerName": "Numele Pasagerului",
     "colleague": "Angajat",
+    "addCase": "Adaugă Caz",
+    "clearFilters": "Șterge Filtrele",
+    "statusVal": "Stare",
     "status": {
       "NOT_ASSIGNED": "Neatribuit",
       "ASSIGNED": "Atribuit",

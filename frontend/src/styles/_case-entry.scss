@@ -97,6 +97,7 @@
 
   &.active {
     background: var(--mat-sys-primary);
+    border-radius: 0 !important;
     .mdc-list-item__primary-text {
       color: white !important;
     }
