@@ -26,6 +26,7 @@
     "reset": "Resetează",
     "rewardMessage": "Puteți primi până la {{reward}} EURO pentru acest zbor!",
     "connectingFlightPlaceholder": "Introduceți zborul de legătură...",
+    "resetTooltip": "Încearcă din nou!",
     "error": {
       "flightNumber": {
         "required": "Numărul zborului este obligatoriu!",
@@ -124,6 +125,7 @@
     "disruption-motives": "Motiv de perturbare",
     "flight-details": "Detalii Zbor",
     "passenger-details": "Detalii Pasager",
+    "itinerary": "Itinerariu",
     "documents": "Documente",
     "userDetails": "Detaliile utilizatorului",
     "done": "Trimite",
@@ -135,6 +137,8 @@
   "documents": {
     "title": "Încărcare Documente",
     "chooseFile": "Alegeți Fișier(e)",
+    "dragDropPrompt": "Trageți și Plasați fișierele aici sau faceți clic pentru a încărca",
+    "allowedFormats": "Formate permise: PDF, JPG, JPEG, PNG",
     "chooseFileError": "Vă rog, alegeți măcar un fișier!"
   },
   "connecting-flight": {
@@ -247,7 +251,8 @@
     "nextSubtitle": "Ce urmează?",
     "nextStep1": "1. Vom aloca un coleg dedicat cazului dvs.",
     "nextStep2": "2. Colegul nostru va analiza cu atenție toate detaliile cererii dvs.",
-    "nextStep3": "3. După ce avem o rezoluție, vă vom contacta pentru a discuta rezultatul."
+    "nextStep3": "3. După ce avem o rezoluție, vă vom contacta pentru a discuta rezultatul.",
+    "downloadButton": "Descarcă PDF"
   },
   "gdprDialog": {
     "title": "Ursus Coolerii Air Assist",
@@ -321,5 +326,11 @@
     "title": "Caz {{contractId}}",
     "problemFlight": "Zbor cu Problemă",
     "docs": "Documente"
+  },
+  "confirmation-dialog": {
+    "title": "Ștergeți obiectul?",
+    "text": "Sunteți sigur că vreți să ștergeți obiectul? Acțiunea aceasta este ireversibilă.",
+    "yes": "Da",
+    "no": "Nu"
   }
 }

@@ -92,14 +92,8 @@ export class UserService {
   }
 
   deleteUser(userId: string): Observable<void> {
-    return this.httpClient.delete<void>(`/users/${userId}`);
-  }
-
-  getUser(userId: string | null): Observable<any> {
-    return this.httpClient.get<User>(`/users/${userId}`);
-  }
-
-  updateUser(user: User): Observable<User> {
-    return this.httpClient.put<User>(`/users/${user.id}`, user);
+    return this.httpClient.delete<void>(`${environment.apiURL}/users/${userId}`, {
+      withCredentials: true,
+    });
   }
 }

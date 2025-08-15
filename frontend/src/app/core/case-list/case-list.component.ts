@@ -23,7 +23,6 @@ import { CaseStatus } from '../../shared/enums';
 
 @Component({
   selector: 'app-case-list',
-  standalone: true,
   imports: [
     TranslocoPipe,
     FormsModule,
@@ -46,7 +45,7 @@ import { CaseStatus } from '../../shared/enums';
     MatPaginator,
   ],
   templateUrl: './case-list.component.html',
-  styleUrls: ['./case-list.component.scss'],
+  styleUrl: './case-list.component.scss',
 })
 export class CaseListComponent implements OnInit {
   cases;
@@ -65,18 +64,16 @@ export class CaseListComponent implements OnInit {
     'flightNr',
     'flightDepartureDate',
     'flightArrivalDate',
-    'passengerName',
     'reservationNumber',
+    'passengerName',
     'status',
     'colleague',
   ];
 
   constructor(protected caseService: CaseService) {
-    if (this.authorizationService.hasRolePassenger(this.authService.sessionToken)) {
+    if (this.authorizationService.hasRolePassenger(this.authService.sessionToken))
       this.currentId = this.authService.getId ?? null;
-    } else {
-      this.currentId = null;
-    }
+    else this.currentId = null;
     this.cases = this.caseService.casesSignal;
     this.statusList = Object.values(CaseStatus);
   }
