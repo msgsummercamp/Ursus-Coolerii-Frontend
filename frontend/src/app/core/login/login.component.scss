@@ -4,5 +4,11 @@
 }
 
 .login-form-container {
+  display: flex;
   padding-top: 10vh;
+  max-width: 100vw;
+}
+
+.login-form-card {
+  max-width: 30vw;
 }

@@ -8,6 +8,8 @@ import { AuthService } from '../../../../shared/services/auth.service';
 import { AuthDirectiveLogin } from '../../../../shared/directives/auth.login.directive';
 import { AuthLogoutDirective } from '../../../../shared/directives/auth-logout.directive';
 import { MatTooltip } from '@angular/material/tooltip';
+import { MatLabel } from '@angular/material/input';
+import { AdminDirective } from '../../../../shared/directives/admin.directive';
 
 @Component({
   selector: 'app-toolbar',
@@ -20,6 +22,8 @@ import { MatTooltip } from '@angular/material/tooltip';
     AuthDirectiveLogin,
     AuthLogoutDirective,
     MatTooltip,
+    MatLabel,
+    AdminDirective,
   ],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss',
