@@ -177,6 +177,8 @@ export class UserDetailsComponent implements AfterViewInit {
       width: '60%',
       height: '60%',
       data: { email, withRedirect: false },
+      disableClose: true,
+      panelClass: 'login-dialog-container',
     });
     dialogRef.componentInstance.dialogRef = dialogRef;
   }

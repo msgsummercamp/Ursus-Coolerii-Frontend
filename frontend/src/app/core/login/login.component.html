@@ -1,5 +1,16 @@
 <div class="login-form-container">
   <mat-card class="special-mat-card">
+    @if (isInDialog()) {
+      <div class="close-button">
+        <button
+          mat-icon-button
+          class="close-button"
+          (click)="dialogRef?.close()"
+        >
+          <mat-icon fontIcon="close"/>
+        </button>
+      </div>
+    }
     <mat-card-header class="special-mat-header">
       <mat-card-title class="special-mat-title">{{ 'login.title' | transloco }}</mat-card-title>
     </mat-card-header>

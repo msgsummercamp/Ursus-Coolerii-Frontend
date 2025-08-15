@@ -9,11 +9,12 @@ import {
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginForm } from '../../shared/types/form.types';
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import { AuthService } from '../../shared/services/auth.service';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
@@ -30,6 +31,8 @@ import { Router } from '@angular/router';
     MatButton,
     MatError,
     TranslocoPipe,
+    MatIconButton,
+    MatIcon,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -47,8 +50,10 @@ export class LoginComponent {
   constructor(
     @Optional()
     @Inject(MAT_DIALOG_DATA)
-    public data: { email: string; withRedirect: boolean }
+    public data: { email: string; withRedirect: boolean },
+    @Optional() dialogRef: MatDialogRef<LoginComponent>
   ) {
+    this.dialogRef = dialogRef!;
     this.form = this.fb.group<LoginForm>({
       email: this.fb.control(data?.email ?? '', Validators.required),
       password: this.fb.control('', Validators.required),
@@ -57,6 +62,10 @@ export class LoginComponent {
       return;
     }
     this.withRedirect = data.withRedirect;
+  }
+
+  isInDialog(): boolean {
+    return !!this.dialogRef;
   }
 
   //TODO: fix error bad credentials handling

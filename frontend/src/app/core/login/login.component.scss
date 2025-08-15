@@ -6,3 +6,12 @@
 .login-form-container {
   padding-top: 10vh;
 }
+
+.close-button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.login-dialog-container {
+  display: contents;
+}
