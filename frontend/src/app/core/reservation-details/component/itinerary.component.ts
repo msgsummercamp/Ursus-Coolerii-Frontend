@@ -222,11 +222,13 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
     ) {
       this.stopoverService.addStopover(this.reservationForm.controls.stopover.value);
       this.stopoverDisplayValue.set('');
+      this.reservationForm.controls.stopover.setValue(emptyAirport);
     }
     this.filteredStopoverAirports = [];
   }
   protected removeStopover(stopoverIndex: number) {
     this.stopoverService.removeStopover(stopoverIndex);
+    this.stopoverDisplayValue.set('');
     this.stopoverService.setProblemFlightIndex(0);
   }
 
