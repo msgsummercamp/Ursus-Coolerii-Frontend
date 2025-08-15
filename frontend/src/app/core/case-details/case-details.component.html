@@ -26,6 +26,12 @@
         {{ 'caseDetails.docs' | transloco }}
       </mat-list-item>
     </mat-nav-list>
+    <div class="case-back-actions">
+      <button mat-stroked-button class="case-back-button" (click)="back()">
+        <mat-icon>arrow_back</mat-icon>
+        {{ translate('stepper.back') }}
+      </button>
+    </div>
   </mat-sidenav>
 
   <mat-sidenav-content class="special-content">
@@ -103,12 +109,5 @@
         </ul>
       </div>
     }
-
-    <mat-card-actions class="special-form-actions">
-      <button mat-stroked-button class="special-mat-sec-button" (click)="back()">
-        <mat-icon>arrow_back</mat-icon>
-        {{ translate('stepper.back') }}</button
-      >
-    </mat-card-actions>
   </mat-sidenav-content>
 </mat-sidenav-container>

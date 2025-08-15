@@ -191,12 +191,15 @@
   "no": "No",
   "caseList": {
     "caseDate": "Case Date",
-    "flightNr": "Flight Nr.",
+    "flightNr": "Flight Nr",
     "flightDepartureDate": "Departure Date",
     "flightArrivalDate": "Arrival Date",
     "reservationNumber": "Reservation Number",
     "passengerName": "Passenger Name",
     "colleague": "Employee",
+    "addCase": "Add Case",
+    "clearFilters": "Clear Filters",
+    "statusVal": "Status",
     "status": {
       "NOT_ASSIGNED": "Not Assigned",
       "ASSIGNED": "Assigned",
