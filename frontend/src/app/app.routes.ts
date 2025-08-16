@@ -4,6 +4,7 @@ import { ConfirmationEligibilityComponent } from './core/confirmation-eligibilit
 import { LoginComponent } from './core/login/login.component';
 import { authGuard } from './shared/guards/auth.guard';
 import { authorizationGuard } from './shared/guards/authorization.guard';
+import { UserDetailsComponent } from './core/user-details/user-details.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -33,6 +34,10 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./core/case-details/case-details.component').then((m) => m.CaseDetailsComponent),
     canActivate: [authGuard],
+  },
+  {
+    path: 'users',
+    component: UserDetailsComponent,
   },
   {
     path: 'users',

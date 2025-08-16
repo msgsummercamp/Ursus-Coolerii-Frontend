@@ -7,9 +7,16 @@ import {
   OnInit,
   Output,
   output,
+  Signal,
   signal,
 } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  AbstractControl,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+} from '@angular/forms';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgForOf } from '@angular/common';
 import {
@@ -35,6 +42,20 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { StopoverService } from '../../../shared/services/stopover.service';
 import { Flight } from '../../../shared/types/types';
 import { MatIcon } from '@angular/material/icon';
+
+function allowedAirlineValidator(
+  allowedValues: Signal<AirlineAttributes[] | undefined>,
+  errorMsg: string
+): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (!control.value || control.value === '') return null;
+    const airlines = allowedValues();
+    if (!airlines) return null;
+    return airlines.map((a) => a.name).includes(control.value)
+      ? null
+      : { invalidAirline: errorMsg };
+  };
+}
 
 @Component({
   selector: 'app-flight-details-form',
@@ -83,6 +104,8 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
   public readonly next = output<void>();
   public readonly previous = output<void>();
 
+  private allowedAirlines = signal<AirlineAttributes[] | undefined>(undefined);
+
   ngOnInit(): void {
     this.flightForm.statusChanges.subscribe((status) => {
       this._isValid.set(status === 'VALID');
@@ -130,8 +153,15 @@ export class FlightDetailsFormComponent implements OnInit, OnDestroy {
           seenNames.add(a.name);
           return true;
         });
+        this.allowedAirlines.set(this.airlines);
       });
     }
+  }
+
+  onAirlineBlur() {
+    const control = this.flightForm.controls.airline;
+    const error = allowedAirlineValidator(this.allowedAirlines, 'Invalid airline name')(control);
+    if (error) control.setErrors(error);
   }
 
   private subscribeToAirlineAutocomplete() {

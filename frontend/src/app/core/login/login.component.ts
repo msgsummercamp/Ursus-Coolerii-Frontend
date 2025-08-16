@@ -75,7 +75,6 @@ export class LoginComponent {
       .login(this.form.controls.email.value, this.form.controls.password.value)
       .subscribe({
         next: (response) => {
-          debugger;
           if (!response) {
             this.loginError.set('Bad credentials');
             return;
@@ -87,7 +86,6 @@ export class LoginComponent {
           }
         },
         error: (err: HttpErrorResponse) => {
-          debugger;
           if (err.status === 401) {
             this.loginError.set('badCredentials');
           } else {

@@ -2,10 +2,10 @@
 
   <mat-card class="special-mat-card login-form-card" >
     @if (isInDialog()) {
-      <div class="close-button">
+      <div class="close-button-container">
         <button
-          mat-icon-button
           class="close-button"
+          mat-icon-button
           (click)="dialogRef?.close()"
         >
           <mat-icon fontIcon="close"/>

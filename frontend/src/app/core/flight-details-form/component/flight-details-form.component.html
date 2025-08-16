@@ -31,6 +31,7 @@
         <input
           matInput
           type="text"
+          (blur)="onAirlineBlur()"
           formControlName="airline"
           [matAutocomplete]="autoAirline"
           placeholder="{{ 'flightDetails.typeAirline' | transloco }}"
@@ -45,11 +46,17 @@
           </mat-option>
         </mat-autocomplete>
 
-        @if (flightForm.controls.airline.errors?.['required']) {
           <mat-error>
             <mat-icon>error</mat-icon>
-            {{ 'flightDetails.error.airline.required' | transloco }}</mat-error>
-        }
+            @if (flightForm.controls.airline.errors?.['invalidAirline']) {
+
+              {{ 'flightDetails.error.airline.invalid' | transloco }}
+            }
+            @else {
+              {{ 'flightDetails.error.airline.required' | transloco }}
+
+            }
+          </mat-error>
       </mat-form-field>
     </div>
 

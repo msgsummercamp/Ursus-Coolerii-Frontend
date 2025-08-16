@@ -113,11 +113,13 @@
   display: flex;
   align-self: center;
   justify-self: center;
+  align-content: center;
+  justify-content:center;
 }
 
 .scrollable-list {
   height: 100%;
-  overflow-y: auto;
+  overflow-y: hidden;
   padding-right: 0.5rem;
   padding-bottom: 6rem;
 }
@@ -125,6 +127,8 @@
 .list-grid {
   margin-top: 1rem;
   margin-left: 1rem;
+  max-height: 70vh;
+  overflow-y: auto;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
   gap: 1rem;

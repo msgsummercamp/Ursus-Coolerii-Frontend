@@ -17,9 +17,14 @@
             email
             (blur)="onEmailBlur()"
           />
-          @if (form.controls.email.errors?.['emailExists']) {
-            <mat-error>{{ translate('user-details.error.email.already') }}</mat-error>
-          }
+            <mat-error>
+                <mat-icon>error</mat-icon>
+              @if (form.controls.email.errors?.['emailExists']) {
+                {{ translate('user-details.error.email.already') }}
+              } @else {
+                {{ translate('user-details.error.email.required')}}
+              }
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="special-form-field">
@@ -32,7 +37,9 @@
             [placeholder]="translate('user-details.registrationNo')"
           />
           @if (form.controls.registrationNo.errors?.['required']) {
-            <mat-error>{{ translate('user-details.error.registrationNo.required') }}</mat-error>
+            <mat-error>
+              <mat-icon>error</mat-icon>
+              {{ translate('user-details.error.registrationNo.required') }}</mat-error>
           }
         </mat-form-field>
 
@@ -46,7 +53,9 @@
             [placeholder]="translate('user-details.firstName')"
           />
           @if (form.controls.firstName.errors?.['required']) {
-            <mat-error>{{ translate('user-details.error.firstName.required') }}</mat-error>
+            <mat-error>
+              <mat-icon>error</mat-icon>
+              {{ translate('user-details.error.firstName.required') }}</mat-error>
           }
         </mat-form-field>
 
@@ -60,7 +69,9 @@
             [placeholder]="translate('user-details.lastName')"
           />
           @if (form.controls.lastName.errors?.['required']) {
-            <mat-error>{{ translate('user-details.error.lastName.required') }}</mat-error>
+            <mat-error>
+              <mat-icon>error</mat-icon>
+              {{ translate('user-details.error.lastName.required') }}</mat-error>
           }
         </mat-form-field>
         <mat-checkbox formControlName="isPassenger">{{

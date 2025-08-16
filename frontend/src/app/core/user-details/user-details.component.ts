@@ -178,8 +178,8 @@ export class UserDetailsComponent implements AfterViewInit {
     const email = this.form.controls.email.value;
     const dialogRef = this.dialog.open(LoginComponent, {
       autoFocus: false,
-      width: '60%',
-      height: '60%',
+      width: '30vw',
+      height: '50vh',
       data: { email, withRedirect: false },
       disableClose: true,
       panelClass: 'login-dialog-container',
