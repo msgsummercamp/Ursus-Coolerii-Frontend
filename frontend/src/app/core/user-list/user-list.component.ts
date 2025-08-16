@@ -23,8 +23,7 @@ import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/autocomplete';
 import { FormsModule } from '@angular/forms';
-import { NgClass, NgForOf, TitleCasePipe } from '@angular/common';
-import { UserListRolePipe } from '../../shared/user-list-role.pipe';
+import { NgClass, NgForOf } from '@angular/common';
 import { MatCard } from '@angular/material/card';
 import { MatChip } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -54,11 +53,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatIconButton,
     MatHeaderCellDef,
     MatCellDef,
-    UserListRolePipe,
     NgClass,
     MatCard,
     MatChip,
-    TitleCasePipe,
   ],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.scss',
@@ -142,5 +139,11 @@ export class UserListComponent implements OnInit {
         this.deleteUser(userId);
       }
     });
+  }
+
+  canDeleteUser(user: User): boolean {
+    return user.role.some(
+      (r) => r.name.toLowerCase() === 'employee' || r.name.toLowerCase() === 'passenger'
+    );
   }
 }

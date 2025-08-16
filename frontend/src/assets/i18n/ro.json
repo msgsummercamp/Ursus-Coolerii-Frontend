@@ -207,13 +207,17 @@
   "no": "Nu",
 
   "userList": {
-    "title": "Lista Utilizatorilor",
     "firstName": "Prenume",
     "lastName": "Nume",
     "email": "Email",
     "role": "Rol",
-    "casesCount": "Nr. Cazuri",
-    "actionUser": "Acțiuni"
+    "casesNr": "Nr. Cazuri",
+    "assignedCases": "Cazuri Atribuite",
+    "actionUser": "Acțiuni",
+    "casesCount": "Număr de Cazuri",
+    "roleAdmin": "Administrator",
+    "roleEmployee": "Angajat",
+    "rolePassenger": "Pasager"
   },
 
   "caseList": {
@@ -225,13 +229,21 @@
     "passengerName": "Numele Pasagerului",
     "colleague": "Angajat",
     "addCase": "Adaugă Caz",
+    "assign": "Atribuie Caz",
+    "noResultsTitle": "Nu s-au găsit rezultate",
+    "noResultsText": "Încercați să modificați filtrele.",
+    "showAllCases": "Arată toate cazurile",
+    "seeMyCases": "Vezi cazurile mele",
+    "allEmployees": "Toti angajații",
+    "selectStatus": "Selectați Starea:",
     "clearFilters": "Șterge Filtrele",
+    "notYourAssignedCase": "Acesta nu este cazul dvs. atribuit",
     "statusVal": "Stare",
     "status": {
       "NOT_ASSIGNED": "Neatribuit",
       "ASSIGNED": "Atribuit",
-      "ELIGIBLE": "Eligibil",
-      "NOT_ELIGIBLE": "Ineligibil"
+      "ELIGIBLE": "Caz Câștigat",
+      "NOT_ELIGIBLE": "Caz Pierdut"
     }
   },
   "confirmationEligibility": {

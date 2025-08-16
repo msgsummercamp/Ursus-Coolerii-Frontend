@@ -18,12 +18,38 @@
     </mat-select>
   </mat-form-field>
 
+  <span *appAdmin>
+    <mat-form-field appearance="outline" class="special-form-field">
+      <mat-label>{{ 'caseList.colleague' | transloco }}</mat-label>
+      <mat-select [(ngModel)]="selectedEmployeeFilter">
+        <mat-option [value]="null">{{ 'caseList.allEmployees' | transloco }}</mat-option>
+        <mat-option *ngFor="let e of employees" [value]="e.id">
+          {{ e.firstName }} {{ e.lastName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </span>
+
   <button mat-stroked-button class="special-clear-button" (click)="clearFilters()">
     <mat-icon>clear_all</mat-icon>
     {{ 'caseList.clearFilters' | transloco }}
   </button>
 
   <span class="spacer"></span>
+
+  <span *appEmployee>
+    <button mat-stroked-button class="see-my-cases-btn" (click)="toggleMyCases()">
+      @if (!showMyCases) {
+        <mat-icon>person</mat-icon>
+      }
+      @if (showMyCases) {
+        <mat-icon>close</mat-icon>
+      }
+      {{
+        showMyCases ? ('caseList.showAllCases' | transloco) : ('caseList.seeMyCases' | transloco)
+      }}
+    </button>
+  </span>
 
   <button mat-flat-button class="special-add-button" [routerLink]="['/form']">
     <mat-icon>add</mat-icon>
@@ -52,8 +78,8 @@
   <div class="no-results-container">
     <mat-card class="no-results-card mat-elevation-z6">
       <mat-icon class="no-results-icon" color="warn">search_off</mat-icon>
-      <h2>No results found</h2>
-      <p>Try adjusting your filters or search criteria.</p>
+      <h2>{{ 'caseList.noResultsTitle' | transloco }}</h2>
+      <p>{{ 'caseList.noResultsText' | transloco }}</p>
     </mat-card>
   </div>
 }
@@ -102,27 +128,100 @@
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef>{{ 'caseList.statusVal' | transloco }}</th>
           <td mat-cell *matCellDef="let c">
-            <mat-chip [ngClass]="'status-' + c.status">
-              {{ 'caseList.status.' + c.status | transloco }}
-            </mat-chip>
+            <span *appAdmin>
+              <mat-chip
+                [ngClass]="'status-' + c.status"
+                style="cursor: pointer"
+                (click)="openStatusDialog(c)"
+              >
+                {{ 'caseList.status.' + c.status | transloco }}
+              </mat-chip>
+            </span>
+            <span *appEmployee>
+              <mat-chip
+                [ngClass]="'status-' + c.status"
+                [style.cursor]="caseAssignedToLoggedEmployee(c) ? 'pointer' : 'default'"
+                (click)="
+                  caseAssignedToLoggedEmployee(c)
+                    ? openStatusDialog(c)
+                    : showStatusError('caseList.notYourAssignedCase', c.caseId)
+                "
+              >
+                {{ 'caseList.status.' + c.status | transloco }}
+              </mat-chip>
+              @if (statusChangeError && statusErrorCaseId === c.caseId) {
+                <mat-error>{{ statusChangeError }}</mat-error>
+              }
+            </span>
+            @if (isPassenger) {
+              <mat-chip [ngClass]="'status-' + c.status">
+                {{ 'caseList.status.' + c.status | transloco }}
+              </mat-chip>
+            }
           </td>
         </ng-container>
         <ng-container matColumnDef="colleague">
-          <th mat-header-cell *matHeaderCellDef>{{ 'caseList.colleague' | transloco }}</th>
-          <td mat-cell *matCellDef="let c">{{ c.colleague }}</td>
+          @if (hasAnyColleague()) {
+            <th mat-header-cell *matHeaderCellDef>{{ 'caseList.colleague' | transloco }}</th>
+          }
+          <td mat-cell *matCellDef="let c">
+            @if (!c.colleague) {
+              <span *appAdmin>
+                <div class="colleague-cell-row">
+                  <mat-form-field appearance="fill" class="employee-dropdown">
+                    <mat-select [(ngModel)]="selectedEmployee[c.caseId]">
+                      <mat-option *ngFor="let e of employees" [value]="e.id">
+                        {{ e.firstName }} {{ e.lastName }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <button
+                    mat-button
+                    color="primary"
+                    class="assign-btn"
+                    (click)="assignEmployee(c.caseId)"
+                  >
+                    {{ 'caseList.assign' | transloco }}
+                  </button>
+                </div>
+              </span>
+
+              <span *appEmployee>
+                <div class="colleague-cell-row">
+                  <mat-form-field appearance="fill" class="employee-dropdown">
+                    <mat-select [(ngModel)]="selectedEmployee[c.caseId]">
+                      <mat-option *ngFor="let e of employees" [value]="e.id">
+                        {{ e.firstName }} {{ e.lastName }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <button
+                    mat-button
+                    color="primary"
+                    class="assign-btn"
+                    (click)="assignEmployee(c.caseId)"
+                  >
+                    {{ 'caseList.assign' | transloco }}
+                  </button>
+                </div>
+              </span>
+            } @else {
+              <span class="employee-text">{{ c.colleague }}</span>
+            }
+          </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
+      <mat-paginator
+        [length]="caseService.totalCasesSignal()"
+        [pageSize]="caseService.getPageSize()"
+        [pageIndex]="caseService.getPageIndex()"
+        [pageSizeOptions]="[5, 15, 50]"
+        (page)="onPageChange($event)"
+      ></mat-paginator>
     </div>
-    <mat-paginator
-      [length]="caseService.totalCasesSignal()"
-      [pageSize]="caseService.getPageSize()"
-      [pageIndex]="caseService.getPageIndex()"
-      [pageSizeOptions]="[5, 15, 50]"
-      (page)="onPageChange($event)"
-    ></mat-paginator>
   </div>
 }
 
@@ -146,10 +245,79 @@
           <div>{{ 'caseList.caseDate' | transloco }}: {{ c.caseDate | date }}</div>
           <div>{{ 'caseList.flightNr' | transloco }}: {{ c.flightNr }}</div>
           <div>{{ 'caseList.passengerName' | transloco }}: {{ c.passengerName }}</div>
-          <div>{{ 'caseList.colleague' | transloco }}: {{ c.colleague }}</div>
-          <mat-chip [ngClass]="'status-' + c.status">
-            {{ 'caseList.status.' + c.status | transloco }}
-          </mat-chip>
+          <div>
+            <span>{{ 'caseList.colleague' | transloco }}: </span>
+            @if (c.colleague) {
+              <span>{{ c.colleague }}</span>
+            } @else {
+              <span *appAdmin>
+                <mat-form-field appearance="fill" class="employee-dropdown">
+                  <mat-select [(ngModel)]="selectedEmployee[c.caseId]">
+                    <mat-option *ngFor="let e of employees" [value]="e.id">
+                      {{ e.firstName }} {{ e.lastName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <button
+                  mat-button
+                  color="primary"
+                  class="assign-btn"
+                  (click)="assignEmployee(c.caseId)"
+                >
+                  {{ 'caseList.assign' | transloco }}
+                </button>
+              </span>
+              <span *appEmployee>
+                <mat-form-field appearance="fill" class="employee-dropdown">
+                  <mat-select [(ngModel)]="selectedEmployee[c.caseId]">
+                    <mat-option *ngFor="let e of employees" [value]="e.id">
+                      {{ e.firstName }} {{ e.lastName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <button
+                  mat-button
+                  color="primary"
+                  class="assign-btn"
+                  (click)="assignEmployee(c.caseId)"
+                >
+                  {{ 'caseList.assign' | transloco }}
+                </button>
+              </span>
+            }
+          </div>
+          <div>
+            @if (isPassenger) {
+              <mat-chip [ngClass]="'status-' + c.status">
+                {{ 'caseList.status.' + c.status | transloco }}
+              </mat-chip>
+            }
+            <span *appAdmin>
+              <mat-chip
+                [ngClass]="'status-' + c.status"
+                style="cursor: pointer"
+                (click)="openStatusDialog(c)"
+              >
+                {{ 'caseList.status.' + c.status | transloco }}
+              </mat-chip>
+            </span>
+            <span *appEmployee>
+              <mat-chip
+                [ngClass]="'status-' + c.status"
+                [style.cursor]="caseAssignedToLoggedEmployee(c) ? 'pointer' : 'default'"
+                (click)="
+                  caseAssignedToLoggedEmployee(c)
+                    ? openStatusDialog(c)
+                    : showStatusError('caseList.notYourAssignedCase', c.caseId)
+                "
+              >
+                {{ 'caseList.status.' + c.status | transloco }}
+              </mat-chip>
+              @if (statusChangeError && statusErrorCaseId === c.caseId) {
+                <mat-error>{{ statusChangeError }}</mat-error>
+              }
+            </span>
+          </div>
         </div>
 
         <div class="card-footer">

@@ -1,0 +1,13 @@
+<div class="status-dialog-container">
+  <h2 class="status-dialog-title">{{ 'caseList.selectStatus' | transloco }}</h2>
+  <div class="status-chip-list">
+    <mat-chip
+      *ngFor="let status of data.statusOptions"
+      [ngClass]="'status-chip status-' + status"
+      (click)="selectStatus(status)"
+      tabindex="0"
+    >
+      {{ 'caseList.status.' + status | transloco }}
+    </mat-chip>
+  </div>
+</div>
