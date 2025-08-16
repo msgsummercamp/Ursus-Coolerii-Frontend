@@ -83,8 +83,9 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
   private service = inject(DisruptiveFormService);
   private onDestroy$ = new Subject<void>();
   public readonly next = output<void>();
+  public readonly previous = output<void>();
+
   protected readonly DisruptiveMotiveLabels = DisruptiveMotiveLabels;
-  protected readonly IsMotiveSpecified = IsMotiveSpecified;
   public isEligible = signal<boolean>(false);
   public eligibleText = computed(() => (this.isEligible() ? 'Eligible' : 'Not eligible'));
   private eligibilityService = inject(EligibilityService);
@@ -113,6 +114,10 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
     };
   }
 
+  protected back() {
+    this.previous.emit();
+  }
+
   protected continue() {
     this.passDataToParent();
     this.next.emit();
@@ -122,7 +127,7 @@ export class DisruptiveFormComponent implements OnInit, OnDestroy {
     Object.keys(this.formDisruption.controls).forEach((key) => {
       this.formDisruption.get(key)?.setValue('');
     });
-    this.resetForms.emit();
+    // this.resetForms.emit();
   }
 
   ngOnInit(): void {

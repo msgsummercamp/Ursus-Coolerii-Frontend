@@ -83,6 +83,7 @@
         <mat-icon fontIcon="arrow_forward" />
       </button>
       <button
+        *ngIf="emailExists()"
         mat-flat-button
         class="special-mat-prim-button"
         (click)="openDialog()"

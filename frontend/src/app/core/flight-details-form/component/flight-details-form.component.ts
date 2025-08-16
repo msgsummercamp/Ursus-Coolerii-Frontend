@@ -34,6 +34,7 @@ import { FlightDetailsForm } from '../../../shared/types/form.types';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { StopoverService } from '../../../shared/services/stopover.service';
 import { Flight } from '../../../shared/types/types';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-flight-details-form',
@@ -56,6 +57,7 @@ import { Flight } from '../../../shared/types/types';
     MatAutocompleteTrigger,
     MatError,
     ScrollingModule,
+    MatIcon,
   ],
 })
 export class FlightDetailsFormComponent implements OnInit, OnDestroy {

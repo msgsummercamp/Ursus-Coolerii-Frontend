@@ -16,6 +16,10 @@
               </mat-option>
             }
           </mat-select>
+          <mat-error>
+            <mat-icon>error</mat-icon>
+            {{ 'disruptiveMotive.error.motive-required' | transloco}}
+          </mat-error>
         </mat-form-field>
         @if (
           formDisruption.controls.disruptionMotive.value ===
@@ -121,6 +125,10 @@
       </form>
     </mat-card-content>
     <mat-card-actions class="special-form-actions">
+      <button mat-stroked-button (click)="back()"
+      >{{ translate('stepper.back') }}
+        <mat-icon fontIcon="arrow_back" />
+      </button>
       <button
         mat-stroked-button
         matTooltip="{{ 'flightDetails.resetTooltip' | transloco }}"

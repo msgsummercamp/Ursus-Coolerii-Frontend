@@ -10,6 +10,8 @@ import { AuthLogoutDirective } from '../../../../shared/directives/auth-logout.d
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { translate } from '@jsverse/transloco';
+import { MatLabel } from '@angular/material/input';
+import { AdminDirective } from '../../../../shared/directives/admin.directive';
 
 @Component({
   selector: 'app-toolbar',
@@ -22,6 +24,8 @@ import { translate } from '@jsverse/transloco';
     AuthDirectiveLogin,
     AuthLogoutDirective,
     MatTooltip,
+    MatLabel,
+    AdminDirective,
   ],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss',

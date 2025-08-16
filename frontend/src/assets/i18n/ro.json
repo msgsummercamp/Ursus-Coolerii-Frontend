@@ -183,7 +183,10 @@
     "yes": "Da",
     "no": "Nu",
     "eligible": "Zborul dumneavoastră este eligibil pentru compensație",
-    "notEligible": "Zborul dumneavoastră nu este eligibil pentru compensație"
+    "notEligible": "Zborul dumneavoastră nu este eligibil pentru compensație",
+    "error": {
+      "motive-required": "Motivul de perturbare este obligatoriu"
+    }
   },
   "userDetails": {
     "title": "Detaliile utilizatorului",
@@ -322,7 +325,11 @@
     "title": "Autentificare",
     "email": "Email",
     "password": "Parolă",
-    "button": "Autentificare"
+    "button": "Autentificare",
+    "password-required": "Parola este obligatorie",
+    "error": {
+      "badCredentials": "Email sau parola invalid"
+    }
   },
   "caseDetails": {
     "title": "Caz {{contractId}}",
