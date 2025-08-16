@@ -237,6 +237,7 @@
     "allEmployees": "Toti angajații",
     "selectStatus": "Selectați Starea:",
     "clearFilters": "Șterge Filtrele",
+    "notYourAssignedCase": "Acesta nu este cazul dvs. atribuit",
     "statusVal": "Stare",
     "status": {
       "NOT_ASSIGNED": "Neatribuit",

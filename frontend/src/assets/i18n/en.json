@@ -209,6 +209,7 @@
     "allEmployees": "All employees",
     "selectStatus": "Selected Status:",
     "clearFilters": "Clear Filters",
+    "notYourAssignedCase": "Not your assigned case",
     "statusVal": "Status",
     "status": {
       "NOT_ASSIGNED": "Not Assigned",

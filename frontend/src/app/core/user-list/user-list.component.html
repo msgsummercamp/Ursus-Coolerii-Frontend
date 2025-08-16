@@ -83,8 +83,10 @@
           <th mat-header-cell *matHeaderCellDef>{{ 'userList.role' | transloco }}</th>
           <td mat-cell *matCellDef="let u">
             <ng-container *ngFor="let r of u.role; let last = last">
-              {{ 'userList.role' + r.name.charAt(0) + r.name.slice(1).toLowerCase() | transloco
-              }}<span *ngIf="!last">, </span>
+              {{ 'userList.role' + r.name.charAt(0) + r.name.slice(1).toLowerCase() | transloco }}
+              @if (!last) {
+                <span>, </span>
+              }
             </ng-container>
           </td>
         </ng-container>

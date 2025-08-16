@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CaseService } from './service/case.service';
-import { TranslocoPipe } from '@jsverse/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { AuthService } from '../../shared/services/auth.service';
 import { AuthorizationService } from '../../shared/services/authorization.service';
@@ -63,8 +63,11 @@ export class CaseListComponent implements OnInit {
   employees: User[] = [];
   selectedEmployee: { [caseId: string]: string } = {};
   public selectedEmployeeFilter: string | null = null;
+  public statusChangeError: string | null = null;
+  public statusErrorCaseId: string | null = null;
   showMyCases = false;
   private dialog = inject(MatDialog);
+  private translocoService = inject(TranslocoService);
 
   get displayedColumns(): string[] {
     const baseColumns = [
@@ -206,5 +209,14 @@ export class CaseListComponent implements OnInit {
           this.changeStatus(caseObj.caseId, selectedStatus);
         }
       });
+  }
+
+  public showStatusError(messageKey: string, caseId: string) {
+    this.statusChangeError = this.translocoService.translate(messageKey);
+    this.statusErrorCaseId = caseId;
+    setTimeout(() => {
+      this.statusChangeError = null;
+      this.statusErrorCaseId = null;
+    }, 3000);
   }
 }

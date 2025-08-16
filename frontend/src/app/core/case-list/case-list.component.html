@@ -141,10 +141,17 @@
               <mat-chip
                 [ngClass]="'status-' + c.status"
                 [style.cursor]="caseAssignedToLoggedEmployee(c) ? 'pointer' : 'default'"
-                (click)="caseAssignedToLoggedEmployee(c) ? openStatusDialog(c) : null"
+                (click)="
+                  caseAssignedToLoggedEmployee(c)
+                    ? openStatusDialog(c)
+                    : showStatusError('caseList.notYourAssignedCase', c.caseId)
+                "
               >
                 {{ 'caseList.status.' + c.status | transloco }}
               </mat-chip>
+              @if (statusChangeError && statusErrorCaseId === c.caseId) {
+                <mat-error>{{ statusChangeError }}</mat-error>
+              }
             </span>
             @if (isPassenger) {
               <mat-chip [ngClass]="'status-' + c.status">
@@ -298,10 +305,17 @@
               <mat-chip
                 [ngClass]="'status-' + c.status"
                 [style.cursor]="caseAssignedToLoggedEmployee(c) ? 'pointer' : 'default'"
-                (click)="caseAssignedToLoggedEmployee(c) ? openStatusDialog(c) : null"
+                (click)="
+                  caseAssignedToLoggedEmployee(c)
+                    ? openStatusDialog(c)
+                    : showStatusError('caseList.notYourAssignedCase', c.caseId)
+                "
               >
                 {{ 'caseList.status.' + c.status | transloco }}
               </mat-chip>
+              @if (statusChangeError && statusErrorCaseId === c.caseId) {
+                <mat-error>{{ statusChangeError }}</mat-error>
+              }
             </span>
           </div>
         </div>
