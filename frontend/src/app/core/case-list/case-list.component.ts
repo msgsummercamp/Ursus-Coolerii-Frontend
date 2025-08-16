@@ -19,6 +19,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 import { CaseStatus } from '../../shared/enums';
+import { User } from '../../shared/types/types';
 
 @Component({
   selector: 'app-case-list',
@@ -54,6 +55,8 @@ export class CaseListComponent implements OnInit {
   viewMode: 'grid' | 'table' = 'grid';
   selectedDate: Date | null = null;
   selectedStatus: CaseStatus | null = null;
+  employees: User[] = [];
+  selectedEmployee: { [caseId: string]: string } = {};
 
   protected displayedColumns: string[] = [
     'contractId',
@@ -78,6 +81,12 @@ export class CaseListComponent implements OnInit {
   ngOnInit() {
     this.caseService.fetchCases(0, 5, this.currentId);
     this.statusList = Object.values(CaseStatus);
+
+    if (this.isAdminOrEmployee()) {
+      this.caseService.getEmployees().subscribe((users) => {
+        this.employees = users;
+      });
+    }
   }
 
   onPageChange(event: PageEvent) {
@@ -97,5 +106,24 @@ export class CaseListComponent implements OnInit {
   public clearFilters() {
     this.selectedDate = null;
     this.selectedStatus = null;
+  }
+
+  isAdminOrEmployee(): boolean {
+    const roles = this.authService.sessionToken
+      ? this.authorizationService.getRoles(this.authService.sessionToken)
+      : [];
+    return roles.includes('ADMIN') || roles.includes('EMPLOYEE');
+  }
+
+  assignEmployee(caseId: string) {
+    const employeeId = this.selectedEmployee[caseId];
+    if (!employeeId) return;
+    this.caseService.assignEmployee(caseId, employeeId).subscribe(() => {
+      this.caseService.fetchCases(
+        this.caseService.getPageIndex(),
+        this.caseService.getPageSize(),
+        this.currentId
+      );
+    });
   }
 }

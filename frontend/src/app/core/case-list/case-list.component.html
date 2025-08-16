@@ -109,7 +109,29 @@
         </ng-container>
         <ng-container matColumnDef="colleague">
           <th mat-header-cell *matHeaderCellDef>{{ 'caseList.colleague' | transloco }}</th>
-          <td mat-cell *matCellDef="let c">{{ c.colleague }}</td>
+          <td mat-cell *matCellDef="let c">
+            <div class="colleague-cell-row">
+              @if (isAdminOrEmployee() && !c.colleague) {
+                <mat-form-field appearance="fill" class="employee-dropdown">
+                  <mat-select [(ngModel)]="selectedEmployee[c.caseId]">
+                    <mat-option *ngFor="let e of employees" [value]="e.id">
+                      {{ e.firstName }} {{ e.lastName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <button
+                  mat-button
+                  color="primary"
+                  class="assign-btn"
+                  (click)="assignEmployee(c.caseId)"
+                >
+                  Assign
+                </button>
+              } @else {
+                <span class="employee-text">{{ c.colleague || '-' }}</span>
+              }
+            </div>
+          </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -146,7 +168,30 @@
           <div>{{ 'caseList.caseDate' | transloco }}: {{ c.caseDate | date }}</div>
           <div>{{ 'caseList.flightNr' | transloco }}: {{ c.flightNr }}</div>
           <div>{{ 'caseList.passengerName' | transloco }}: {{ c.passengerName }}</div>
-          <div>{{ 'caseList.colleague' | transloco }}: {{ c.colleague }}</div>
+          <div>
+            <span>{{ 'caseList.colleague' | transloco }}:</span>
+
+            @if (isAdminOrEmployee() && !c.colleague) {
+              <mat-form-field appearance="fill" class="employee-dropdown">
+                <mat-select [(ngModel)]="selectedEmployee[c.caseId]">
+                  <mat-option *ngFor="let e of employees" [value]="e.id">
+                    {{ e.firstName }} {{ e.lastName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <button
+                mat-button
+                color="primary"
+                class="assign-btn"
+                (click)="assignEmployee(c.caseId)"
+              >
+                Assign
+              </button>
+            } @else {
+              <span>{{ c.colleague || '-' }}</span>
+            }
+          </div>
           <mat-chip [ngClass]="'status-' + c.status">
             {{ 'caseList.status.' + c.status | transloco }}
           </mat-chip>

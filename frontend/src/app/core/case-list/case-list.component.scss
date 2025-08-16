@@ -64,3 +64,18 @@
   display: flex;
   align-items: center;
 }
+
+.colleague-cell-row {
+  display: flex;
+  align-items: center;
+  height: 32px;
+}
+
+.employee-text {
+  width: 100%;
+}
+
+.employee-dropdown {
+  width: 100px;
+  height: 70px;
+}
