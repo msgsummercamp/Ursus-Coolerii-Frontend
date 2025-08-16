@@ -138,8 +138,9 @@
     "title": "Upload Documents",
     "chooseFile": "Choose File(s)",
     "dragDropPrompt": "Drag and drop your files here or click to select files",
-    "allowedFormats": "Allowed formats: PDF, JPG, JPEG, PNG",
-    "chooseFileError": "Please choose at least one file!"
+    "allowedFormats": "Allowed formats: PDF, JPG, JPEG, PNG. Maximum file size: 5MB",
+    "chooseFileError": "Please choose at least one file!",
+    "fileSizeError": "File size exceeds 5MB limit!"
   },
   "connecting-flight": {
     "title": "Flight",
@@ -184,7 +185,10 @@
     "yes": "Yes",
     "no": "No",
     "eligible": "Your flight is eligible for compensation",
-    "notEligible": "Your flight is not eligible for compensation"
+    "notEligible": "Your flight is not eligible for compensation",
+    "error": {
+      "motive-required": "Disruptive motive is required"
+    }
   },
   "yes": "Yes",
   "no": "No",
@@ -242,7 +246,11 @@
     "title": "Login",
     "email": "Email",
     "password": "Password",
-    "button": "Login"
+    "button": "Login",
+    "password-required": "Password is required",
+    "error": {
+        "badCredentials": "Invalid email or password"
+    }
   },
   "confirmationEligibility": {
     "checking": "Checking...",
@@ -250,23 +258,24 @@
     "notEligible": "Passenger is not eligible",
     "almostDone": "Almost done",
     "generalInfo": "General Info:",
-    "readGdprTerms": "In case you are eligible, we first recommend you to read the GDPR and the terms",
-    "checkBoxes": "After carefully reading, you first have to check the GDPR and the terms boxes before submitting",
-    "passwordGenerated": "Your password is automatically generated and sent to the specified email",
-    "changePassword": "Please don't forget that after the first login you have to change the password",
+    "readGdprTerms": "In case you are eligible, we first recommend you to read the GDPR and the terms.",
+    "checkBoxes": "After carefully reading, you first have to check the GDPR and the terms boxes before submitting.",
+    "passwordGenerated": "Your password is automatically generated and sent to the specified email.",
+    "changePassword": "Please don't forget that after the first login you have to change the password!",
     "readGdprTermsButton": "Click here to read GDPR and terms",
     "gdprCheckbox": "I agree with the GDPR",
     "termsCheckbox": "I agree with the terms",
-    "marketingCheckbox": "Yes, I'd like to receive emails",
-    "submittedTitle": "Your case has been submitted",
+    "marketingCheckbox": "Yes, I'd like to receive emails (marketing purposes)",
+    "submittedTitle": "Your case has been submitted!",
     "generalInfoSubtitle": "General Info",
-    "emailSent": "An email with your generated password has been sent to:",
-    "caseCreated": "Your case has been successfully created and you have received an email containing the case ID.",
+    "caseSubmittedWithoutLogin": "Two separate emails have been sent — one with your generated password, and another with your contract and case ID — to:",
+    "caseSubmittedWithLogin": "An email with your contract and case ID has been sent to:",
     "nextSubtitle": "What happens next?",
     "nextStep1": "1. We will assign a dedicated colleague to your case.",
     "nextStep2": "2. Our colleague will carefully review all the details of your claim.",
     "nextStep3": "3. Once we have a resolution, we will contact you to discuss the outcome.",
-    "downloadButton": "Download PDF"
+    "downloadButton": "Download Contract",
+    "compensationMessage": "You can receive up to {{reward}} EUROS for this flight!"
   },
   "gdprDialog": {
     "title": "Ursus Coolerii Air Assist",
@@ -335,5 +344,7 @@
     "text": "Are you sure you want to delete this item? This action is irreversible.",
     "yes": "Yes",
     "no": "No"
-  }
+  },
+  "logout": "Successfully logged out",
+  "close": "Close"
 }
