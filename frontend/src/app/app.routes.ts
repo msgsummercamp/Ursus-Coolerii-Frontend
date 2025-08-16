@@ -4,7 +4,6 @@ import { ConfirmationEligibilityComponent } from './core/confirmation-eligibilit
 import { LoginComponent } from './core/login/login.component';
 import { authGuard } from './shared/guards/auth.guard';
 import { authorizationGuard } from './shared/guards/authorization.guard';
-import { DisruptiveFormComponent } from './core/disruptive-form/disruptive-form.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -22,14 +21,6 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     canActivate: [authGuard],
-  },
-  {
-    path: 'disruptive',
-    component: DisruptiveFormComponent,
-  },
-  {
-    path: 'confirmation',
-    component: ConfirmationEligibilityComponent,
   },
   {
     path: 'cases',
