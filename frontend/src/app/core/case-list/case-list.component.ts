@@ -50,12 +50,12 @@ export class CaseListComponent implements OnInit {
   public statusList: CaseStatus[];
   private authService = inject(AuthService);
   private authorizationService = inject(AuthorizationService);
-  private currentId: string | null;
+  private readonly currentId: string | null;
   viewMode: 'grid' | 'table' = 'grid';
   selectedDate: Date | null = null;
   selectedStatus: CaseStatus | null = null;
 
-  displayedColumns: string[] = [
+  protected displayedColumns: string[] = [
     'contractId',
     'caseDate',
     'flightNr',
@@ -84,7 +84,7 @@ export class CaseListComponent implements OnInit {
     this.caseService.fetchCases(event.pageIndex, event.pageSize, this.currentId);
   }
 
-  filteredCases() {
+  public filteredCases() {
     return this.cases().filter((c: any) => {
       const dateMatches =
         !this.selectedDate ||
@@ -94,7 +94,7 @@ export class CaseListComponent implements OnInit {
     });
   }
 
-  clearFilters() {
+  public clearFilters() {
     this.selectedDate = null;
     this.selectedStatus = null;
   }
