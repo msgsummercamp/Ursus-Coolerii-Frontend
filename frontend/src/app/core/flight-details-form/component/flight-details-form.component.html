@@ -20,9 +20,7 @@
             {{ 'flightDetails.error.flightNumber.required' | transloco }}</mat-error>
         }
         @if (flightForm.controls.flightNr.errors?.['pattern']) {
-          <mat-error>
-            <mat-icon>error</mat-icon>
-            {{ 'flightDetails.error.flightNumber.pattern' | transloco }}</mat-error>
+          <mat-error>{{ 'flightDetails.error.flightNumber.pattern' | transloco }}</mat-error>
         }
       </mat-form-field>
 
