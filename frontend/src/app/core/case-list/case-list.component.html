@@ -1,4 +1,4 @@
-<div class="case-list-header special-table-header">
+<div class="list-header special-table-header">
   <mat-icon>filter_list</mat-icon>
 
   <mat-form-field appearance="outline" class="special-form-field">
@@ -127,8 +127,8 @@
 }
 
 @if (viewMode === 'grid' && filteredCases().length > 0) {
-  <div class="scrollable-case-list">
-    <div class="case-grid">
+  <div class="scrollable-list">
+    <div class="list-grid">
       <mat-card *ngFor="let c of filteredCases()" class="case-card mat-elevation-z4">
         <div class="card-header">
           <div>
