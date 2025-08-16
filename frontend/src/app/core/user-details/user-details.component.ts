@@ -33,6 +33,7 @@ import { LoginComponent } from '../login/login.component';
 import { Passenger, UserDetails } from '../../shared/types/types';
 import { AuthService } from '../../shared/services/auth.service';
 import { MatIcon } from '@angular/material/icon';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-user-details',
@@ -52,6 +53,7 @@ import { MatIcon } from '@angular/material/icon';
     MatCheckbox,
     PassengerDetailsFormComponent,
     MatIcon,
+    NgIf,
   ],
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.scss',

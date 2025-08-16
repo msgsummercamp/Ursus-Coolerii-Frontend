@@ -87,6 +87,7 @@ export class DocumentsFormComponent implements OnInit {
     if (tooLarge) {
       this.documentsFormGroup.get('files')?.setErrors({ limit: true });
       this.documentsFormGroup.get('files')?.markAsTouched();
+      input.value = '';
       return;
     } else {
       if (this.documentsFormGroup.get('files')?.hasError('limit')) {
@@ -105,13 +106,20 @@ export class DocumentsFormComponent implements OnInit {
 
     this.documentsFormGroup.get('files')?.setValue(mergedFiles);
     this.documentsFormGroup.get('files')?.markAsTouched();
+
+    input.value = '';
   }
 
   protected removeFile(fileToRemove: File): void {
     const files = this.documentsFormGroup.get('files')?.value || [];
     const updatedFiles = files.filter((file: File) => file !== fileToRemove);
-    this.documentsFormGroup.get('files')?.setValue(updatedFiles);
-    this.documentsFormGroup.get('files')?.markAsTouched();
+    const control = this.documentsFormGroup.get('files');
+
+    control?.setValue(updatedFiles);
+
+    if (updatedFiles.length === 0) {
+      control?.markAsUntouched();
+    }
   }
 
   protected continue() {

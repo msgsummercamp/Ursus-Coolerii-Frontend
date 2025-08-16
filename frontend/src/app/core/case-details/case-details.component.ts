@@ -10,6 +10,7 @@ import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { MatIcon } from '@angular/material/icon';
 import { MatCardActions } from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
+import { LoadingSpinnerComponent } from '../loading-spinner/component/loading-spinner.component';
 
 @Component({
   selector: 'app-case-details',
@@ -30,6 +31,7 @@ import { MatButton } from '@angular/material/button';
     MatIcon,
     MatCardActions,
     MatButton,
+    LoadingSpinnerComponent,
   ],
 })
 export class CaseDetailsComponent implements OnInit {

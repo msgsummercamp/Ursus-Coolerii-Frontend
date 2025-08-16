@@ -15,6 +15,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -74,6 +75,7 @@ export class LoginComponent {
       .login(this.form.controls.email.value, this.form.controls.password.value)
       .subscribe({
         next: (response) => {
+          debugger;
           if (!response) {
             this.loginError.set('Bad credentials');
             return;
@@ -84,8 +86,13 @@ export class LoginComponent {
             this.dialogRef.close();
           }
         },
-        error: (err) => {
-          this.loginError.set(err.error);
+        error: (err: HttpErrorResponse) => {
+          debugger;
+          if (err.status === 401) {
+            this.loginError.set('badCredentials');
+          } else {
+            this.loginError.set('An unexpected error has occurred.');
+          }
         },
       });
   }

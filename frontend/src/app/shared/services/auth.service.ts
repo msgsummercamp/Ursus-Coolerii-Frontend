@@ -1,9 +1,9 @@
 import { inject, Injectable, Signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from '../../../environments/environment';
 import { LoginRequest, LoginResponse } from '../types/types';
-import { BehaviorSubject, catchError, map, of } from 'rxjs';
+import { BehaviorSubject, catchError, map, throwError } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
@@ -122,9 +122,9 @@ export class AuthService {
           return response.token !== '';
         }),
 
-        catchError((error) => {
+        catchError((error: HttpErrorResponse) => {
           this.loggedIn.next(false);
-          return of(false);
+          return throwError(() => error);
         })
       );
   }
