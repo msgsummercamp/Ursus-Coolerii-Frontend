@@ -19,11 +19,13 @@
           [flight]="getFlight(i)"
         />
         <mat-checkbox
-          [disabled]="problemFlightIndex === i"
           [checked]="problemFlightIndex === i"
           (change)="updateProblemFlight(i)"
+          [ngClass]="{ 'highlight-checkbox': problemFlightIndex === undefined }"
           >{{ 'connecting-flight.problem' | transloco }}</mat-checkbox
         >
+        <span class="required-asterisk"  *ngIf="!isCheckBoxValid()">*</span>
+
       </div>
     </mat-card-content>
     <mat-card-actions *transloco="let translate" class="special-form-actions">

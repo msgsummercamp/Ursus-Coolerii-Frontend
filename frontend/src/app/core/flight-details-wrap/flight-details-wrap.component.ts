@@ -11,7 +11,7 @@ import {
 import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { FlightDetailsFormComponent } from '../flight-details-form/component/flight-details-form.component';
-import { NgForOf } from '@angular/common';
+import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { FlightDetailsForm } from '../../shared/types/form.types';
 import {
   MatCard,
@@ -50,6 +50,8 @@ import { MatIcon } from '@angular/material/icon';
     TranslocoDirective,
     MatCheckbox,
     MatIcon,
+    NgClass,
+    NgIf,
   ],
   templateUrl: './flight-details-wrap.component.html',
   styleUrl: './flight-details-wrap.component.scss',
@@ -66,13 +68,16 @@ export class FlightDetailsWrapComponent {
 
   @Output() receiveMessage = new EventEmitter<Flight>();
 
-  public validForms = computed(() =>
-    this.flightFormComponents()
-      .map((form) => {
-        return form.isValid();
-      })
-      .every((value) => value)
+  public validForms = computed(
+    () =>
+      this.flightFormComponents()
+        .map((form) => {
+          return form.isValid();
+        })
+        .every((value) => value) && this.problemFlightIndex !== undefined
   );
+
+  public isCheckBoxValid = signal(false);
 
   private existingForms = new Map<number, FormGroup<FlightDetailsForm>>();
 
@@ -137,8 +142,18 @@ export class FlightDetailsWrapComponent {
   }
 
   protected updateProblemFlight(index?: number) {
-    if (index != undefined) {
-      this.stopoverService.setProblemFlightIndex(index);
+    if (index !== undefined) {
+      if (this.problemFlightIndex === index) {
+        this.isCheckBoxValid.set(false);
+
+        this.stopoverService.setProblemFlightIndex(undefined);
+      } else {
+        this.isCheckBoxValid.set(true);
+
+        this.stopoverService.setProblemFlightIndex(index);
+      }
+    } else {
+      this.isCheckBoxValid.set(false);
     }
   }
 

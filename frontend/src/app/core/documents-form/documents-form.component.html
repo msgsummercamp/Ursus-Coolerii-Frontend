@@ -45,10 +45,16 @@
               </mat-list>
             }
           </div>
-          @if (
+          @if (documentsFormGroup.controls.files.errors?.['limit']) {
+            <mat-error>
+              {{ translate('fileSizeError') }}
+            </mat-error>
+          } @else if (
             documentsFormGroup.controls.files.invalid && documentsFormGroup.controls.files.touched
           ) {
-            <mat-error>{{ translate('chooseFileError') }}</mat-error>
+            <mat-error>
+              {{ translate('chooseFileError') }}
+            </mat-error>
           }
         </form>
       </mat-card-content>

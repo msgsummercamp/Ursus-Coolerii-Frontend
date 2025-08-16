@@ -1,5 +1,17 @@
 <div class="login-form-container">
-  <mat-card class="special-mat-card">
+
+  <mat-card class="special-mat-card login-form-card" >
+    @if (isInDialog()) {
+      <div class="close-button">
+        <button
+          mat-icon-button
+          class="close-button"
+          (click)="dialogRef?.close()"
+        >
+          <mat-icon fontIcon="close"/>
+        </button>
+      </div>
+    }
     <mat-card-header class="special-mat-header">
       <mat-card-title class="special-mat-title">{{ 'login.title' | transloco }}</mat-card-title>
     </mat-card-header>
@@ -8,13 +20,23 @@
         <mat-form-field>
           <mat-label>{{ 'login.email' | transloco }}</mat-label>
           <input matInput type="text" email formControlName="email" />
+          <mat-error>
+            <mat-icon>error</mat-icon>
+            {{ 'user-details.error.email.required' | transloco }}
+          </mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{ 'login.password' | transloco }}</mat-label>
           <input matInput type="password" formControlName="password" />
+          <mat-error>
+            <mat-icon>error</mat-icon>
+            {{ 'login.password-required' | transloco}}
+          </mat-error>
         </mat-form-field>
-        <mat-error>
-          {{ loginError() }}
+        <mat-error class="error-container">
+          @if(loginError() !== ''){
+            {{ 'login.error.' + loginError() | transloco }}
+          }
         </mat-error>
       </mat-card-content>
       <mat-card-actions class="special-form-actions">
