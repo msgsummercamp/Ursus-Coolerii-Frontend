@@ -1,11 +1,12 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { finalize, map, retry, Subject, switchMap } from 'rxjs';
-import { Case } from '../../../shared/types/types';
+import { finalize, map, Observable, retry, Subject, switchMap } from 'rxjs';
+import { Case, User } from '../../../shared/types/types';
 import { environment } from '../../../../environments/environment';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../../shared/services/auth.service';
 import { AuthorizationService } from '../../../shared/services/authorization.service';
+import { CaseStatus } from '../../../shared/enums';
 
 type CaseState = {
   caseList: Case[];
@@ -102,5 +103,32 @@ export class CaseService {
 
   public getPageSize(): number {
     return this.casesState().pageSize;
+  }
+
+  public getEmployees() {
+    return this.httpClient
+      .get<{
+        content: User[];
+      }>(`${environment.apiURL}/users?pageIndex=0&pageSize=100`, { withCredentials: true })
+      .pipe(map((res) => res.content.filter((u) => u.role.some((r) => r.name === 'EMPLOYEE'))));
+  }
+
+  public assignEmployee(caseId: string, employeeId: string): Observable<void> {
+    return this.httpClient.put<void>(
+      `${environment.apiURL}/case-files/${caseId}/assign-employee`,
+      null,
+      {
+        params: { employeeId },
+        withCredentials: true,
+      }
+    );
+  }
+
+  public updateCaseStatus(caseId: string, status: CaseStatus, employeeId: string | null) {
+    return this.httpClient.patch<void>(
+      `${environment.apiURL}/case-files/${caseId}/status?status=${status}${employeeId ? `&employeeId=${employeeId}` : ''}`,
+      {},
+      { withCredentials: true }
+    );
   }
 }
