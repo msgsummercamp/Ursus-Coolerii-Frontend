@@ -201,25 +201,35 @@
     "passengerName": "Passenger Name",
     "colleague": "Employee",
     "addCase": "Add Case",
+    "assign": "Assign",
+    "noResultsTitle": "No results found",
+    "noResultsText": "Try adjusting your filters or search criteria.",
+    "showAllCases": "Show All Cases",
+    "seeMyCases": "See My Cases",
+    "allEmployees": "All employees",
+    "selectStatus": "Selected Status:",
     "clearFilters": "Clear Filters",
     "statusVal": "Status",
     "status": {
       "NOT_ASSIGNED": "Not Assigned",
       "ASSIGNED": "Assigned",
-      "ELIGIBLE": "Eligible",
-      "NOT_ELIGIBLE": "Not Eligible"
+      "ELIGIBLE": "Case Won",
+      "NOT_ELIGIBLE": "Case Lost"
     }
   },
 
   "userList": {
-    "title": "User List",
     "firstName": "First Name",
     "lastName": "Last Name",
     "email": "Email",
-    "phoneNumber": "Phone Number",
     "role": "Role",
-    "casesCount": "Nr. Cases",
-    "actionUser": "Actions"
+    "casesNr": "Nr. Cases",
+    "assignedCases": "Nr. Assigned Cases",
+    "actionUser": "Actions",
+    "casesCount": "Cases Count",
+    "roleAdmin": "Admin",
+    "roleEmployee": "Employee",
+    "rolePassenger": "Passenger"
   },
 
   "home": {
@@ -249,7 +259,7 @@
     "button": "Login",
     "password-required": "Password is required",
     "error": {
-        "badCredentials": "Invalid email or password"
+      "badCredentials": "Invalid email or password"
     }
   },
   "confirmationEligibility": {

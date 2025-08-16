@@ -2,19 +2,18 @@
   <mat-icon>filter_list</mat-icon>
 
   <mat-form-field appearance="outline" class="special-form-field">
-    <mat-label>Role</mat-label>
+    <mat-label>{{ 'userList.role' | transloco }}</mat-label>
     <mat-select [(value)]="selectedRole">
       <mat-option *ngFor="let r of roleList" [value]="r">
-        {{ r }}
+        {{ 'userList.role' + r.charAt(0) + r.slice(1).toLowerCase() | transloco }}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="special-form-field">
-    <mat-label>Cases Count</mat-label>
+    <mat-label>{{ 'userList.casesCount' | transloco }}</mat-label>
     <input matInput type="number" [(ngModel)]="casesCountFilter" />
   </mat-form-field>
-
   <button mat-stroked-button class="special-clear-button" (click)="clearFilters()">
     <mat-icon>clear_all</mat-icon>
     {{ 'caseList.clearFilters' | transloco }}
@@ -44,8 +43,8 @@
   <div class="no-results-container">
     <mat-card class="no-results-card mat-elevation-z6">
       <mat-icon class="no-results-icon" color="warn">search_off</mat-icon>
-      <h2>No results found</h2>
-      <p>Try adjusting your filters or search criteria.</p>
+      <h2>{{ 'caseList.noResultsTitle' | transloco }}</h2>
+      <p>{{ 'caseList.noResultsText' | transloco }}</p>
     </mat-card>
   </div>
 }
@@ -57,9 +56,11 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>{{ 'userList.actionUser' | transloco }}</th>
           <td mat-cell *matCellDef="let u">
-            <button mat-icon-button (click)="openDialog(u.userId)">
-              <mat-icon fontIcon="delete" />
-            </button>
+            @if (canDeleteUser(u)) {
+              <button mat-icon-button (click)="openDialog(u.userId)">
+                <mat-icon fontIcon="delete"></mat-icon>
+              </button>
+            }
           </td>
         </ng-container>
         <!--    firstName-->
@@ -80,11 +81,16 @@
         <!--    role-->
         <ng-container matColumnDef="role">
           <th mat-header-cell *matHeaderCellDef>{{ 'userList.role' | transloco }}</th>
-          <td mat-cell *matCellDef="let u">{{ u.role | transform }}</td>
+          <td mat-cell *matCellDef="let u">
+            <ng-container *ngFor="let r of u.role; let last = last">
+              {{ 'userList.role' + r.name.charAt(0) + r.name.slice(1).toLowerCase() | transloco
+              }}<span *ngIf="!last">, </span>
+            </ng-container>
+          </td>
         </ng-container>
         <!--    nrCases-->
         <ng-container matColumnDef="casesCount">
-          <th mat-header-cell *matHeaderCellDef>{{ 'userList.casesCount' | transloco }}</th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'userList.casesNr' | transloco }}</th>
           <td mat-cell *matCellDef="let u">{{ u.casesCount }}</td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -110,17 +116,19 @@
             <h3>{{ u.firstName }} {{ u.lastName }}</h3>
             <p class="subtitle"> {{ 'userList.email' | transloco }}: {{ u.email }} </p>
           </div>
-          <button mat-icon-button class="delete-user-btn" (click)="openDialog(u.id)">
-            <mat-icon color="warn">delete</mat-icon>
-          </button>
+          @if (canDeleteUser(u)) {
+            <button mat-icon-button class="delete-user-btn" (click)="openDialog(u.id)">
+              <mat-icon color="warn">delete</mat-icon>
+            </button>
+          }
         </div>
 
         <div class="card-body">
-          <div>{{ 'userList.casesCount' | transloco }}: {{ u.casesCount }}</div>
+          <div>{{ 'userList.casesNr' | transloco }}: {{ u.casesCount }}</div>
           <div class="chip-row">
             <ng-container *ngFor="let r of u.role">
               <mat-chip [ngClass]="roleClass(r.name)">
-                {{ r.name | titlecase }}
+                {{ 'userList.role' + r.name.charAt(0) + r.name.slice(1).toLowerCase() | transloco }}
               </mat-chip>
             </ng-container>
           </div>

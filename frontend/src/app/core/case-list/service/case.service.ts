@@ -6,6 +6,7 @@ import { environment } from '../../../../environments/environment';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../../shared/services/auth.service';
 import { AuthorizationService } from '../../../shared/services/authorization.service';
+import { CaseStatus } from '../../../shared/enums';
 
 type CaseState = {
   caseList: Case[];
@@ -120,6 +121,14 @@ export class CaseService {
         params: { employeeId },
         withCredentials: true,
       }
+    );
+  }
+
+  public updateCaseStatus(caseId: string, status: CaseStatus, employeeId: string | null) {
+    return this.httpClient.patch<void>(
+      `${environment.apiURL}/case-files/${caseId}/status?status=${status}${employeeId ? `&employeeId=${employeeId}` : ''}`,
+      {},
+      { withCredentials: true }
     );
   }
 }
