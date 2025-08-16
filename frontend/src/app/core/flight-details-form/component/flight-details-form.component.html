@@ -15,10 +15,14 @@
           placeholder="{{ 'flightDetails.typeFlightNr' | transloco }}"
         />
         @if (flightForm.controls.flightNr.errors?.['required']) {
-          <mat-error>{{ 'flightDetails.error.flightNumber.required' | transloco }}</mat-error>
+          <mat-error>
+            <mat-icon>error</mat-icon>
+            {{ 'flightDetails.error.flightNumber.required' | transloco }}</mat-error>
         }
         @if (flightForm.controls.flightNr.errors?.['pattern']) {
-          <mat-error>{{ 'flightDetails.error.flightNumber.pattern' | transloco }}</mat-error>
+          <mat-error>
+            <mat-icon>error</mat-icon>
+            {{ 'flightDetails.error.flightNumber.pattern' | transloco }}</mat-error>
         }
       </mat-form-field>
 
@@ -42,7 +46,9 @@
         </mat-autocomplete>
 
         @if (flightForm.controls.airline.errors?.['required']) {
-          <mat-error>{{ 'flightDetails.error.airline.required' | transloco }}</mat-error>
+          <mat-error>
+            <mat-icon>error</mat-icon>
+            {{ 'flightDetails.error.airline.required' | transloco }}</mat-error>
         }
       </mat-form-field>
     </div>
@@ -62,7 +68,9 @@
         <mat-datepicker-toggle matIconSuffix [for]="departureDatePicker" />
         <mat-datepicker #departureDatePicker />
         @if (flightForm.controls.plannedDepartureDate.errors?.['required']) {
-          <mat-error>{{
+          <mat-error>
+            <mat-icon>error</mat-icon>
+            {{
             'flightDetails.error.plannedDepartureDate.required' | transloco
           }}</mat-error>
         }

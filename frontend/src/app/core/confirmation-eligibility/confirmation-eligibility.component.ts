@@ -94,8 +94,8 @@ export class ConfirmationEligibilityComponent {
       terms: FormControl<boolean | null>;
       marketing: FormControl<boolean | null>;
     }>({
-      gdpr: this.fb.control(false, Validators.required),
-      terms: this.fb.control(false, Validators.required),
+      gdpr: this.fb.control(false, Validators.requiredTrue),
+      terms: this.fb.control(false, Validators.requiredTrue),
       marketing: this.fb.control(false),
     });
   }

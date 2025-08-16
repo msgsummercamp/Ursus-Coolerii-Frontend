@@ -185,7 +185,10 @@
     "yes": "Yes",
     "no": "No",
     "eligible": "Your flight is eligible for compensation",
-    "notEligible": "Your flight is not eligible for compensation"
+    "notEligible": "Your flight is not eligible for compensation",
+    "error": {
+      "motive-required": "Disruptive motive is required"
+    }
   },
   "yes": "Yes",
   "no": "No",
@@ -243,7 +246,11 @@
     "title": "Login",
     "email": "Email",
     "password": "Password",
-    "button": "Login"
+    "button": "Login",
+    "password-required": "Password is required",
+    "error": {
+        "badCredentials": "Invalid email or password"
+    }
   },
   "confirmationEligibility": {
     "checking": "Checking...",

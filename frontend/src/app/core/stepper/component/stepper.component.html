@@ -18,6 +18,7 @@
       <ng-template matStepLabel>{{ translate('disruption-motives') }}</ng-template>
       <app-disruptive-form
         (receiveMessage)="receiveDisruptionDetails($event)"
+        (previous)="stepper.previous()"
         (next)="stepper.next()"
         (resetForms)="onResetForms()"
       />
