@@ -250,6 +250,7 @@
     "changePassword": "Nu uitați ca după prima autentificare să schimbați parola!",
     "readGdprTermsButton": "Apăsați aici pentru a citi GDPR și termenii",
     "gdprCheckbox": "Sunt de acord cu GDPR",
+    "termsCheckbox": "Sunt de acord cu termenii",
     "termsMissing": "Este necesar să bifați caseta pentru termeni!",
     "marketingCheckbox": "Da, doresc să primesc email-uri (motive de marketing)",
     "submittedTitle": "Cazul dvs. a fost trimis!",

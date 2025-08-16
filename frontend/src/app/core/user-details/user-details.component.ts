@@ -33,7 +33,6 @@ import { LoginComponent } from '../login/login.component';
 import { Passenger, UserDetails } from '../../shared/types/types';
 import { AuthService } from '../../shared/services/auth.service';
 import { MatIcon } from '@angular/material/icon';
-import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-user-details',
@@ -53,7 +52,6 @@ import { NgIf } from '@angular/common';
     MatCheckbox,
     PassengerDetailsFormComponent,
     MatIcon,
-    NgIf,
   ],
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.scss',
@@ -66,7 +64,7 @@ export class UserDetailsComponent implements AfterViewInit {
   protected readonly dialog = inject(MatDialog);
   private authService = inject(AuthService);
 
-  private loggedInSignal: Signal<boolean> = this.authService.loggedInSignal;
+  public loggedInSignal: Signal<boolean> = this.authService.loggedInSignal;
   public isValid = signal(false);
   public isValidPassengerDetails = signal(false);
 

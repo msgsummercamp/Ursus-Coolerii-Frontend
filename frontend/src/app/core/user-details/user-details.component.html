@@ -93,8 +93,8 @@
         {{ translate('stepper.next') }}
         <mat-icon fontIcon="arrow_forward" />
       </button>
+      @if(emailExists() && !this.loggedInSignal()) {
       <button
-        *ngIf="emailExists()"
         mat-flat-button
         class="special-mat-prim-button"
         (click)="openDialog()"
@@ -103,6 +103,7 @@
         {{ translate('login.button') }}
         <mat-icon fontIcon="login" />
       </button>
+      }
     </mat-card-actions>
   </mat-card>
 }
