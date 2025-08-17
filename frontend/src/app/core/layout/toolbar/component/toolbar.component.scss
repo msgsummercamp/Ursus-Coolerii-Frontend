@@ -24,10 +24,15 @@ mat-toolbar {
   cursor: pointer;
 }
 
+.firstName {
+  text-align: center;
+  color: white;
+}
+
 .hero-title {
   text-align: center;
   color: white;
-  font-weight: 600; // bolder look
+  font-weight: 600;
   margin: 1rem;
 }
 
