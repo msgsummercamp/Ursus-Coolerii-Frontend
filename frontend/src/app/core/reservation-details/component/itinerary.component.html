@@ -16,6 +16,7 @@
             <input
               type="text"
               matInput
+              (blur)="onDepartAirportBlur()"
               formControlName="departingAirport"
               (input)="onDepartInput($any($event.target).value)"
               [matAutocomplete]="departure"
@@ -35,15 +36,21 @@
             </mat-autocomplete>
             <mat-error>
               <mat-icon>error</mat-icon>
-              {{ 'flightDetails.error.departingAirport.required' | transloco }}
+              @if(reservationForm.controls.departingAirport.errors?.['invalidAirport']){
+                {{ 'flightDetails.error.departingAirport.invalid' | transloco}}
+              }
+              @else {
+                {{'flightDetails.error.departingAirport.required' | transloco }}
+              }
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="fill" class="special-form-field">
+          <mat-form-field appearance="fill" class="special-form-field" >
             <mat-label>{{ 'flightDetails.destinationAirport' | transloco }}</mat-label>
             <input
               type="text"
               matInput
+              (blur)="onDestAirportBlur()"
               formControlName="destinationAirport"
               (input)="onDestInput($any($event.target).value)"
               [matAutocomplete]="destination"
@@ -63,8 +70,13 @@
             </mat-autocomplete>
             <mat-error>
               <mat-icon>error</mat-icon>
-              {{'flightDetails.error.destinationAirport.required' | transloco }}
-            </mat-error>
+              @if(reservationForm.controls.destinationAirport.errors?.['invalidAirport']){
+                {{ 'flightDetails.error.destinationAirport.invalid' | transloco}}
+              }
+              @else {
+                {{'flightDetails.error.destinationAirport.required' | transloco }}
+              }
+              </mat-error>
           </mat-form-field>
         </div>
 

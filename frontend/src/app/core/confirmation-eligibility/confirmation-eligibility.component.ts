@@ -162,7 +162,12 @@ export class ConfirmationEligibilityComponent {
   }
 
   openDialog() {
-    this.dialog.open(PopUpGdprComponent, { autoFocus: false });
+    this.dialog.open(PopUpGdprComponent, {
+      autoFocus: false,
+      width: '50vw',
+      height: '70vh',
+      panelClass: 'gdpr-dialog-container',
+    });
   }
 
   public downloadPdf(caseId: string) {

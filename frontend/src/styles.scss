@@ -26,6 +26,26 @@ body {
   padding: 0;
 }
 
+.login-dialog-container .login-form-container,
+.login-dialog-container .special-mat-card{
+  height: 100% !important;
+  width: 90vw !important;
+  border-radius: 0 !important;
+  justify-content: normal;
+  align-items: normal;
+  margin: 0 !important;
+  overflow-x: hidden;
+  max-width: 100% !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.login-dialog-container .special-mat-card{
+  padding: 1rem !important;
+}
+
+
+
 body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
   overflow: hidden;

@@ -14,9 +14,13 @@
   max-width: 30vw;
 }
 
-.close-button {
+.close-button-container {
   display: flex;
   justify-content: flex-end;
+}
+
+.close-button:hover {
+  color: var(--mat-sys-error);
 }
 
 .login-dialog-container {

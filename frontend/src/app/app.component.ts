@@ -10,5 +10,5 @@ import { ToolbarComponent } from './core/layout/toolbar/component/toolbar.compon
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  public readonly title: string = 'ng-app';
+  public readonly title: string = 'Air-Asssit.EU';
 }
