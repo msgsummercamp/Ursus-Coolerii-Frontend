@@ -1,20 +1,32 @@
 <mat-toolbar>
-  <div  matTooltip="Homepage" class="div-logo" routerLink="/home">
+  <div matTooltip="{{ 'toolbar.homepage' | transloco }}" class="div-logo" routerLink="/home">
     <img src="assets/airlogo.png" alt="Logo" class="logo" />
-  <mat-label class="mat-display-2 hero-title">AIR-ASSIST.EU</mat-label>
+    <mat-label class="mat-display-2 hero-title">AIR-ASSIST.EU</mat-label>
   </div>
   <div class="div-page-buttons">
-    <button *showIfLogged matTooltip="Cases" class="mat-icon-btn" mat-icon-button routerLink="/cases">
+    <button
+      *showIfLogged
+      matTooltip="{{ 'toolbar.cases' | transloco }}"
+      class="mat-icon-btn"
+      mat-icon-button
+      routerLink="/cases"
+    >
       <mat-icon>description</mat-icon>
     </button>
-    <button matTooltip="Users list" *appAdmin class="mat-icon-btn" mat-icon-button routerLink="/users">
+    <button
+      matTooltip="{{ 'toolbar.usersList' | transloco }}"
+      *appAdmin
+      class="mat-icon-btn"
+      mat-icon-button
+      routerLink="/users"
+    >
       <mat-icon>group</mat-icon>
-  </button>
+    </button>
   </div>
   <span class="spacer"></span>
   <div class="button-alignment">
     <button *showIfLoggedOut routerLink="/login" class="mat-icon-btn" mat-icon-button>
-      <mat-icon matTooltip="Login">login</mat-icon>
+      <mat-icon matTooltip="{{ 'toolbar.login' | transloco }}">login</mat-icon>
     </button>
     <button
       *showIfLogged
@@ -23,7 +35,7 @@
       class="mat-icon-btn"
       mat-icon-button
     >
-      <mat-icon matTooltip="Logout">logout</mat-icon>
+      <mat-icon matTooltip="{{ 'toolbar.logout' | transloco }}">logout</mat-icon>
     </button>
     <app-language-switcher />
   </div>

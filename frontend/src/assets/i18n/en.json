@@ -4,6 +4,13 @@
     "en": "English",
     "ro": "Romanian"
   },
+  "toolbar": {
+    "homepage": "Homepage",
+    "cases": "Cases",
+    "usersList": "Users List",
+    "login": "Login",
+    "logout": "Logout"
+  },
   "flightDetails": {
     "title": "Flight Details",
     "flightNr": "Flight Nr.",
