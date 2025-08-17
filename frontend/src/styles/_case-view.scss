@@ -1,8 +1,15 @@
 .scrollable-table {
-  height: 100vh;
+  height: 100%;
   overflow-y: hidden;
   padding-right: 0.5rem;
   padding-bottom: 6rem;
+}
+
+.scrollable-table mat-paginator {
+  position: sticky;
+  bottom: 0;
+  background: var(--mat-sys-background);
+  z-index: 2;
 }
 
 .special-table {
