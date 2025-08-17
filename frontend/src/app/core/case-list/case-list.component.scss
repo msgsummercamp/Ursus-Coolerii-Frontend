@@ -1,6 +1,6 @@
 .case-card {
+  display: flex;
   padding: 1.5rem 1.5rem 1.5rem;
-
   .card-header {
     display: flex;
     justify-content: space-between;
@@ -16,6 +16,7 @@
   }
 
   .card-body {
+    flex: 1;
     div {
       margin-bottom: 0.3rem;
     }
@@ -63,4 +64,19 @@
 .contract-id-row {
   display: flex;
   align-items: center;
+}
+
+.colleague-cell-row {
+  display: flex;
+  align-items: center;
+  height: 32px;
+}
+
+.employee-text {
+  width: 100%;
+}
+
+.employee-dropdown {
+  width: 100px;
+  height: 70px;
 }

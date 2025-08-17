@@ -1,5 +1,21 @@
-import { Component, effect, inject, OnDestroy, OnInit, output, signal } from '@angular/core';
-import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  Component,
+  effect,
+  inject,
+  OnDestroy,
+  OnInit,
+  output,
+  Signal,
+  signal,
+} from '@angular/core';
+import {
+  AbstractControl,
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { translate, TranslocoPipe } from '@jsverse/transloco';
 import {
   MatError,
@@ -15,7 +31,7 @@ import {
   MatDatepickerInputEvent,
   MatDatepickerToggle,
 } from '@angular/material/datepicker';
-import { delay, iif, of, Subject, switchMap } from 'rxjs';
+import { delay, iif, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { ReservationDetailsForm } from '../../../shared/types/form.types';
 import { AirportAttributes } from '../../../shared/types/types';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -39,6 +55,20 @@ const emptyAirport: AirportAttributes = {
   name: '',
   iata: '',
 };
+
+function allowedAirportValidator(
+  allowedValues: Signal<AirportAttributes[]>,
+  errorMsg: string
+): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (!control.value || control.value === '') return null;
+    return allowedValues()
+      .map((a) => a.name)
+      .includes(control.value)
+      ? null
+      : { invalidAirport: errorMsg };
+  };
+}
 
 @Component({
   selector: 'app-reservation-details',
@@ -77,18 +107,38 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   private caseFileService = inject(CaseFileService);
 
   protected stopoverDisplayValue = signal('');
+  public readonly airportsSignal = this.airportService.airportsSignal;
 
   private onDestroy$ = new Subject<void>();
 
   public filteredDepartAirports: AirportAttributes[] = [];
   public filteredDestAirports: AirportAttributes[] = [];
   public filteredStopoverAirports: AirportAttributes[] = [];
+  private allowedAirports = this.airportsSignal;
 
   private fb = inject(NonNullableFormBuilder);
 
+  onDepartAirportBlur() {
+    const control = this.reservationForm.controls.departingAirport;
+    const error = allowedAirportValidator(
+      this.allowedAirports,
+      'Invalid departing airport'
+    )(control);
+    if (error) control.setErrors(error);
+  }
+
+  onDestAirportBlur() {
+    const control = this.reservationForm.controls.destinationAirport;
+    const error: ValidationErrors | null = allowedAirportValidator(
+      this.allowedAirports,
+      'Invalid destination airport'
+    )(control);
+    if (error) control.setErrors(error);
+  }
+
   public reservationForm = this.fb.group<ReservationDetailsForm>({
-    departingAirport: this.fb.control('', Validators.required),
-    destinationAirport: this.fb.control('', Validators.required),
+    departingAirport: this.fb.control('', [Validators.required]),
+    destinationAirport: this.fb.control('', [Validators.required]),
     plannedDepartureDate: this.fb.control(null, Validators.required),
     plannedArrivalDate: this.fb.control(null, Validators.required),
     stopover: this.fb.control(emptyAirport),
@@ -96,8 +146,6 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
   private readonly _isValid = signal(false);
   public readonly isValid = this._isValid.asReadonly();
-
-  public readonly airportsSignal = this.airportService.airportsSignal;
 
   private isLoading$ = toObservable(this.airportService.isLoading);
   private delayedLoading$ = this.isLoading$.pipe(
@@ -125,7 +173,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.reservationForm.statusChanges.subscribe((status) => {
+    this.reservationForm.statusChanges.pipe(takeUntil(this.onDestroy$)).subscribe((status) => {
       this._isValid.set(status === 'VALID');
       this.caseFileService.calculateReward(
         this.reservationForm.controls.departingAirport.value,

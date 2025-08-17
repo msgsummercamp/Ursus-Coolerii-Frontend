@@ -27,6 +27,7 @@ import {
 import { TranslocoDirective } from '@jsverse/transloco';
 import { PassengerDetailsForm } from '../../shared/types/form.types';
 import { Passenger } from '../../shared/types/types';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-passenger-details-form',
@@ -42,6 +43,7 @@ import { Passenger } from '../../shared/types/types';
     MatHint,
     MatSuffix,
     TranslocoDirective,
+    MatIcon,
   ],
   templateUrl: './passenger-details-form.component.html',
   styleUrl: './passenger-details-form.component.scss',
@@ -50,6 +52,7 @@ export class PassengerDetailsFormComponent implements OnInit, OnChanges {
   private readonly formBuilder = inject(NonNullableFormBuilder);
   private readonly _isValid = signal(false);
   @Output() validityChange = new EventEmitter<boolean>();
+  public autoFilled = signal(false);
 
   protected readonly currentDate = new Date();
 
@@ -104,6 +107,16 @@ export class PassengerDetailsFormComponent implements OnInit, OnChanges {
         firstName: this.autoFillNames.firstName,
         lastName: this.autoFillNames.lastName,
       });
+      this.passengerDetailsForm.controls.firstName.setValue(this.autoFillNames.firstName);
+      this.passengerDetailsForm.controls.firstName.disable();
+      this.passengerDetailsForm.controls.lastName.setValue(this.autoFillNames.lastName);
+      this.passengerDetailsForm.controls.lastName.disable();
+    } else {
+      this.passengerDetailsForm.controls.firstName.setValue('');
+      this.passengerDetailsForm.controls.firstName.enable();
+      this.passengerDetailsForm.controls.lastName.setValue('');
+      this.passengerDetailsForm.controls.lastName.enable();
+      this.autoFilled.set(false);
     }
   }
 

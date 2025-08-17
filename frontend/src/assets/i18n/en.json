@@ -33,13 +33,16 @@
         "pattern": "Flight number must be 2 letters followed by 1-4 digits (e.g., AB123)!"
       },
       "airline": {
-        "required": "Airline is required!"
+        "required": "Airline is required!",
+        "invalid": "Airline name is invalid!"
       },
       "departingAirport": {
-        "required": "Departing airport is required!"
+        "required": "Departing airport is required!",
+        "invalid": "Departing airport is invalid"
       },
       "destinationAirport": {
-        "required": "Destination airport is required!"
+        "required": "Destination airport is required!",
+        "invalid": "Destination airport is invalid"
       },
       "plannedDepartureDate": {
         "required": "Planned departure date is required!"
@@ -201,25 +204,36 @@
     "passengerName": "Passenger Name",
     "colleague": "Employee",
     "addCase": "Add Case",
+    "assign": "Assign",
+    "noResultsTitle": "No results found",
+    "noResultsText": "Try adjusting your filters or search criteria.",
+    "showAllCases": "Show All Cases",
+    "seeMyCases": "See My Cases",
+    "allEmployees": "All employees",
+    "selectStatus": "Selected Status:",
     "clearFilters": "Clear Filters",
+    "notYourAssignedCase": "Not your assigned case",
     "statusVal": "Status",
     "status": {
       "NOT_ASSIGNED": "Not Assigned",
       "ASSIGNED": "Assigned",
-      "ELIGIBLE": "Eligible",
-      "NOT_ELIGIBLE": "Not Eligible"
+      "ELIGIBLE": "Case Won",
+      "NOT_ELIGIBLE": "Case Lost"
     }
   },
 
   "userList": {
-    "title": "User List",
     "firstName": "First Name",
     "lastName": "Last Name",
     "email": "Email",
-    "phoneNumber": "Phone Number",
     "role": "Role",
-    "casesCount": "Nr. Cases",
-    "actionUser": "Actions"
+    "casesNr": "Nr. Cases",
+    "assignedCases": "Nr. Assigned Cases",
+    "actionUser": "Actions",
+    "casesCount": "Cases Count",
+    "roleAdmin": "Admin",
+    "roleEmployee": "Employee",
+    "rolePassenger": "Passenger"
   },
 
   "home": {
@@ -249,7 +263,7 @@
     "button": "Login",
     "password-required": "Password is required",
     "error": {
-        "badCredentials": "Invalid email or password"
+      "badCredentials": "Invalid email or password"
     }
   },
   "confirmationEligibility": {
@@ -275,7 +289,7 @@
     "nextStep2": "2. Our colleague will carefully review all the details of your claim.",
     "nextStep3": "3. Once we have a resolution, we will contact you to discuss the outcome.",
     "downloadButton": "Download Contract",
-    "compensationMessage": "You can receive up to {{reward}} EUROS for this flight!"
+    "compensationMessage": "You can receive up to {{reward}} EURO for this flight!"
   },
   "gdprDialog": {
     "title": "Ursus Coolerii Air Assist",

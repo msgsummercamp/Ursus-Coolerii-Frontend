@@ -1,0 +1,31 @@
+.status-dialog-container {
+  padding: 2.5rem 2.5rem;
+  text-align: center;
+}
+
+.status-dialog-title {
+  font-size: 1.75rem;
+  color: #1565c0;
+}
+
+.status-chip-list {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.status-ASSIGNED {
+  background: #e3f2fd;
+}
+
+.status-NOT_ASSIGNED {
+  background: #fffde7;
+}
+
+.status-ELIGIBLE {
+  background: #e8f5e9;
+}
+
+.status-NOT_ELIGIBLE {
+  background: #ffebee;
+}

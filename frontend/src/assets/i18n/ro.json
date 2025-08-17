@@ -33,13 +33,17 @@
         "pattern": "Numărul zborului trebuie să fie format din 2 litere urmate de 1-4 cifre (ex. AB123)!"
       },
       "airline": {
-        "required": "Compania aeriană este obligatorie!"
+        "required": "Compania aeriană este obligatorie!",
+        "invalid": "Nume airline invalid!"
+
       },
       "departingAirport": {
-        "required": "Aeroportul de plecare este obligatoriu!"
+        "required": "Aeroportul de plecare este obligatoriu!",
+        "invalid": "Aeroportul de plecare este invalid"
       },
       "destinationAirport": {
-        "required": "Aeroportul de destinație este obligatoriu!"
+        "required": "Aeroportul de destinație este obligatoriu!",
+        "invalid": "Aeroportul de destinatie este invalid"
       },
       "plannedDepartureDate": {
         "required": "Data planificată de plecare este obligatorie!"
@@ -207,13 +211,17 @@
   "no": "Nu",
 
   "userList": {
-    "title": "Lista Utilizatorilor",
     "firstName": "Prenume",
     "lastName": "Nume",
     "email": "Email",
     "role": "Rol",
-    "casesCount": "Nr. Cazuri",
-    "actionUser": "Acțiuni"
+    "casesNr": "Nr. Cazuri",
+    "assignedCases": "Cazuri Atribuite",
+    "actionUser": "Acțiuni",
+    "casesCount": "Număr de Cazuri",
+    "roleAdmin": "Administrator",
+    "roleEmployee": "Angajat",
+    "rolePassenger": "Pasager"
   },
 
   "caseList": {
@@ -225,13 +233,21 @@
     "passengerName": "Numele Pasagerului",
     "colleague": "Angajat",
     "addCase": "Adaugă Caz",
+    "assign": "Atribuie Caz",
+    "noResultsTitle": "Nu s-au găsit rezultate",
+    "noResultsText": "Încercați să modificați filtrele.",
+    "showAllCases": "Arată toate cazurile",
+    "seeMyCases": "Vezi cazurile mele",
+    "allEmployees": "Toti angajații",
+    "selectStatus": "Selectați Starea:",
     "clearFilters": "Șterge Filtrele",
+    "notYourAssignedCase": "Acesta nu este cazul dvs. atribuit",
     "statusVal": "Stare",
     "status": {
       "NOT_ASSIGNED": "Neatribuit",
       "ASSIGNED": "Atribuit",
-      "ELIGIBLE": "Eligibil",
-      "NOT_ELIGIBLE": "Ineligibil"
+      "ELIGIBLE": "Caz Câștigat",
+      "NOT_ELIGIBLE": "Caz Pierdut"
     }
   },
   "confirmationEligibility": {
@@ -246,6 +262,7 @@
     "changePassword": "Nu uitați ca după prima autentificare să schimbați parola!",
     "readGdprTermsButton": "Apăsați aici pentru a citi GDPR și termenii",
     "gdprCheckbox": "Sunt de acord cu GDPR",
+    "termsCheckbox": "Sunt de acord cu termenii",
     "termsMissing": "Este necesar să bifați caseta pentru termeni!",
     "marketingCheckbox": "Da, doresc să primesc email-uri (motive de marketing)",
     "submittedTitle": "Cazul dvs. a fost trimis!",
