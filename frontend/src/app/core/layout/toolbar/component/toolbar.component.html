@@ -25,6 +25,7 @@
   </div>
   <span class="spacer"></span>
   <div class="button-alignment">
+    <p class="firstName" *showIfLogged>{{ this.authService.extractFirstNameFromToken(this.authService.sessionToken) }}</p>
     <button *showIfLoggedOut routerLink="/login" class="mat-icon-btn" mat-icon-button>
       <mat-icon matTooltip="{{ 'toolbar.login' | transloco }}">login</mat-icon>
     </button>

@@ -55,7 +55,7 @@ export class AuthService {
     }
   }
 
-  private extractFirstNameFromToken(token: string): string | undefined {
+  extractFirstNameFromToken(token: string): string | undefined {
     if (!token) return undefined;
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));

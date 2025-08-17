@@ -32,7 +32,7 @@ import { AdminDirective } from '../../../../shared/directives/admin.directive';
   styleUrl: './toolbar.component.scss',
 })
 export class ToolbarComponent {
-  private authService = inject(AuthService);
+  protected authService = inject(AuthService);
   private snackBar = inject(MatSnackBar);
   protected readonly translate = translate;
 

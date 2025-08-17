@@ -116,10 +116,6 @@ export class DocumentsFormComponent implements OnInit {
     const control = this.documentsFormGroup.get('files');
 
     control?.setValue(updatedFiles);
-
-    if (updatedFiles.length === 0) {
-      control?.markAsUntouched();
-    }
   }
 
   protected continue() {
