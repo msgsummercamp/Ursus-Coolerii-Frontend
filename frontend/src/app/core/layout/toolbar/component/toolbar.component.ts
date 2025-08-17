@@ -9,7 +9,7 @@ import { AuthDirectiveLogin } from '../../../../shared/directives/auth.login.dir
 import { AuthLogoutDirective } from '../../../../shared/directives/auth-logout.directive';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { translate } from '@jsverse/transloco';
+import { translate, TranslocoPipe } from '@jsverse/transloco';
 import { MatLabel } from '@angular/material/input';
 import { AdminDirective } from '../../../../shared/directives/admin.directive';
 
@@ -26,6 +26,7 @@ import { AdminDirective } from '../../../../shared/directives/admin.directive';
     MatTooltip,
     MatLabel,
     AdminDirective,
+    TranslocoPipe,
   ],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss',

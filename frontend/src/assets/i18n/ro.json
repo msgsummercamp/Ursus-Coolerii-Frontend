@@ -4,6 +4,13 @@
     "en": "Engleză",
     "ro": "Română"
   },
+  "toolbar": {
+    "homepage": "Acasă",
+    "cases": "Cazuri",
+    "usersList": "Utilizatori",
+    "login": "Autentificare",
+    "logout": "Deconectare"
+  },
   "flightDetails": {
     "title": "Detalii Zbor",
     "flightNr": "Număr Zbor",
@@ -33,13 +40,16 @@
         "pattern": "Numărul zborului trebuie să fie format din 2 litere urmate de 1-4 cifre (ex. AB123)!"
       },
       "airline": {
-        "required": "Compania aeriană este obligatorie!"
+        "required": "Compania aeriană este obligatorie!",
+        "invalid": "Nume airline invalid!"
       },
       "departingAirport": {
-        "required": "Aeroportul de plecare este obligatoriu!"
+        "required": "Aeroportul de plecare este obligatoriu!",
+        "invalid": "Aeroportul de plecare este invalid"
       },
       "destinationAirport": {
-        "required": "Aeroportul de destinație este obligatoriu!"
+        "required": "Aeroportul de destinație este obligatoriu!",
+        "invalid": "Aeroportul de destinatie este invalid"
       },
       "plannedDepartureDate": {
         "required": "Data planificată de plecare este obligatorie!"
@@ -258,6 +268,7 @@
     "changePassword": "Nu uitați ca după prima autentificare să schimbați parola!",
     "readGdprTermsButton": "Apăsați aici pentru a citi GDPR și termenii",
     "gdprCheckbox": "Sunt de acord cu GDPR",
+    "termsCheckbox": "Sunt de acord cu termenii",
     "termsMissing": "Este necesar să bifați caseta pentru termeni!",
     "marketingCheckbox": "Da, doresc să primesc email-uri (motive de marketing)",
     "submittedTitle": "Cazul dvs. a fost trimis!",

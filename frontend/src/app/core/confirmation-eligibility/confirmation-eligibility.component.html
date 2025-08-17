@@ -2,7 +2,7 @@
   <app-loading-spinner />
 }
 @if (!saved()) {
-  <mat-card class="special-mat-card">
+  <mat-card class="special-mat-card confirmation-wrapper">
     <mat-card-header class="special-mat-header">
       <mat-card-title class="special-mat-title">{{
         'confirmationEligibility.almostDone' | transloco
@@ -36,7 +36,7 @@
         }}</mat-checkbox>
       </form>
     </mat-card-content>
-    <mat-error class="not-checked-error">
+    <mat-error class="error-container">
       {{ notCheckedText() || saveError() }}
     </mat-error>
     <mat-label class="reward-label">{{

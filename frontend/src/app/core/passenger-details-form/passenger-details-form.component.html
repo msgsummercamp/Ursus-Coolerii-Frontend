@@ -2,7 +2,7 @@
   <ng-container *transloco="let translate; prefix: 'passenger-details'">
         <form [formGroup]="passengerDetailsForm">
           <div>
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="fill" disabled="autoFilled()">
               <mat-label>{{ translate('firstName') }}</mat-label>
               <input
                 matInput
@@ -12,13 +12,16 @@
                 [placeholder]="translate('firstNamePlaceholder')"
               />
               @if (passengerDetailsForm.controls.firstName.errors?.['required']) {
-                <mat-error>{{ translate('error.firstName.required') }}</mat-error>
+                <mat-error>
+                  <mat-icon>error</mat-icon>
+                  {{ translate('error.firstName.required') }}</mat-error>
               }
             </mat-form-field>
 
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="fill" disabled="autoFilled()">
               <mat-label>{{ translate('lastName') }}</mat-label>
               <input
+                [disabled]="autoFilled()"
                 matInput
                 formControlName="lastName"
                 type="text"
@@ -26,7 +29,9 @@
                 [placeholder]="translate('lastNamePlaceholder')"
               />
               @if (passengerDetailsForm.controls.lastName.errors?.['required']) {
-                <mat-error>{{ translate('error.lastName.required') }}</mat-error>
+                <mat-error>
+                  <mat-icon>error</mat-icon>
+                  {{ translate('error.lastName.required') }}</mat-error>
               }
             </mat-form-field>
           </div>
@@ -46,7 +51,9 @@
               <mat-datepicker-toggle matIconSuffix [for]="picker" />
               <mat-datepicker #picker startView="multi-year" />
               @if (passengerDetailsForm.controls.dateOfBirth.errors?.['required']) {
-                <mat-error>{{ translate('error.dateOfBirth.required') }}</mat-error>
+                <mat-error>
+                  <mat-icon>error</mat-icon>
+                  {{ translate('error.dateOfBirth.required') }}</mat-error>
               }
             </mat-form-field>
 
@@ -60,10 +67,14 @@
                 [placeholder]="translate('phoneNumberPlaceholder')"
               />
               @if (passengerDetailsForm.controls.phoneNumber.errors?.['required']) {
-                <mat-error>{{ translate('error.phoneNumber.required') }}</mat-error>
+                <mat-error>
+                  <mat-icon>error</mat-icon>
+                  {{ translate('error.phoneNumber.required') }}</mat-error>
               }
               @if (passengerDetailsForm.controls.phoneNumber.errors?.['pattern']) {
-                <mat-error>{{ translate('error.phoneNumber.pattern') }}</mat-error>
+                <mat-error>
+                  <mat-icon>error</mat-icon>
+                  {{ translate('error.phoneNumber.pattern') }}</mat-error>
               }
             </mat-form-field>
           </div>
@@ -79,7 +90,9 @@
                 [placeholder]="translate('addressPlaceholder')"
               />
               @if (passengerDetailsForm.controls.address.errors?.['required']) {
-                <mat-error>{{ translate('error.address.required') }}</mat-error>
+                <mat-error>
+                  <mat-icon>error</mat-icon>
+                  {{ translate('error.address.required') }}</mat-error>
               }
             </mat-form-field>
 
@@ -93,10 +106,14 @@
                 [placeholder]="translate('postalCodePlaceholder')"
               />
               @if (passengerDetailsForm.controls.postalCode.errors?.['required']) {
-                <mat-error>{{ translate('error.postalCode.required') }}</mat-error>
+                <mat-error>
+                  <mat-icon>error</mat-icon>
+                  {{ translate('error.postalCode.required') }}</mat-error>
               }
               @if (passengerDetailsForm.controls.postalCode.errors?.['pattern']) {
-                <mat-error>{{ translate('error.postalCode.pattern') }}</mat-error>
+                <mat-error>
+                  <mat-icon>error</mat-icon>
+                  {{ translate('error.postalCode.pattern') }}</mat-error>
               }
             </mat-form-field>
           </div>

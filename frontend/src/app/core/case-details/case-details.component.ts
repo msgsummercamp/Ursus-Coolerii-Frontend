@@ -8,7 +8,6 @@ import { MatListItem, MatNavList } from '@angular/material/list';
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { MatIcon } from '@angular/material/icon';
-import { MatCardActions } from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
 import { LoadingSpinnerComponent } from '../loading-spinner/component/loading-spinner.component';
 
@@ -29,7 +28,6 @@ import { LoadingSpinnerComponent } from '../loading-spinner/component/loading-sp
     MatSidenav,
     MatNavList,
     MatIcon,
-    MatCardActions,
     MatButton,
     LoadingSpinnerComponent,
   ],
