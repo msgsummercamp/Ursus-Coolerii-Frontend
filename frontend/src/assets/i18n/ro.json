@@ -4,6 +4,13 @@
     "en": "Engleză",
     "ro": "Română"
   },
+  "toolbar": {
+    "homepage": "Acasă",
+    "cases": "Cazuri",
+    "usersList": "Utilizatori",
+    "login": "Autentificare",
+    "logout": "Deconectare"
+  },
   "flightDetails": {
     "title": "Detalii Zbor",
     "flightNr": "Număr Zbor",
@@ -35,7 +42,6 @@
       "airline": {
         "required": "Compania aeriană este obligatorie!",
         "invalid": "Nume airline invalid!"
-
       },
       "departingAirport": {
         "required": "Aeroportul de plecare este obligatoriu!",
